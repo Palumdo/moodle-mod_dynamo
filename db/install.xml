@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/dynamo/db" VERSION="20100913" COMMENT="XMLDB file for Moodle mod/dynamo"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="dynamo" COMMENT="Represents a single instance of dynamo">
+      <FIELDS>
+        <FIELD NAME="id"            TYPE="int"  LENGTH="10"     NOTNULL="true"  UNSIGNED="true"   SEQUENCE="true"   ENUM="false"  NEXT="course"/>
+        <FIELD NAME="course"        TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false"  ENUM="false"  PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name"          TYPE="char" LENGTH="255"    NOTNULL="false" SEQUENCE="false"                    ENUM="false"  PREVIOUS="course" NEXT="intro"/>
+        <FIELD NAME="intro"         TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false"                    ENUM="false"  PREVIOUS="name" NEXT="introformat"/>
+        <FIELD NAME="introformat"   TYPE="int"  LENGTH="4"      NOTNULL="true"  UNSIGNED="true"   SEQUENCE="false"  DEFAULT="0"   PREVIOUS="intro" NEXT="open"/>
+        <FIELD NAME="open"          TYPE="int"  LENGTH="11"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false"  ENUM="false"  COMMENT="Date beyond which students can view this activity." PREVIOUS="introformat" NEXT="close"/>
+        <FIELD NAME="close"         TYPE="int"  LENGTH="11"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false"  ENUM="false"  PREVIOUS="open" NEXT="groupid"/>
+        <FIELD NAME="groupid"       TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false"  ENUM="false"  PREVIOUS="close" NEXT="allowupdate"/>
+        <FIELD NAME="allowupdate"   TYPE="int"  LENGTH="1"      NOTNULL="false" UNSIGNED="true"   SEQUENCE="false"  ENUM="false"  COMMENT="Allow students to update their answers." PREVIOUS="groupid"/>
+        <FIELD NAME="crit1"         TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"                    ENUM="false"  PREVIOUS="groupid" NEXT="crit2"/>
+        <FIELD NAME="crit2"         TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"                    ENUM="false"  PREVIOUS="crit1" NEXT="crit3"/>
+        <FIELD NAME="crit3"         TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="crit2" NEXT="crit4"/>
+        <FIELD NAME="crit4"         TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="crit3" NEXT="crit5"/>
+        <FIELD NAME="crit5"         TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="crit5" NEXT="critopt"/>
+        <FIELD NAME="critopt"       TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="crit5" NEXT="critoptname"/>
+        <FIELD NAME="critoptname"   TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="critopt" NEXT="critopt"/>
+        <FIELD NAME="groupementid"  TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="critoptname" NEXT="critopt"/>
+        <FIELD NAME="autoeval"      TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="groupementid" NEXT="groupeval"/>
+        <FIELD NAME="groupeval"     TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="autoeval" NEXT="timemodified"/>
+        <FIELD NAME="timemodified"  TYPE="int"  LENGTH="10"     NOTNULL="true"  SEQUENCE="false"  DEFAULT="0"   PREVIOUS="groupeval" NEXT="timecreated"/>
+        <FIELD NAME="timecreated"   TYPE="int"  LENGTH="10"     NOTNULL="true"  SEQUENCE="false"  DEFAULT="0"   PREVIOUS="timemodified" NEXT="comment1"/>
+        <FIELD NAME="comment1"      TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"  PREVIOUS="timecreated"  NEXT="comment2"/>
+        <FIELD NAME="comment2"      TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"  PREVIOUS="comment1"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="dynamo_eval" COMMENT="contain one evaluation of one pair" PREVIOUS="dynamo">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="dynamoid"/>
+        <FIELD NAME="builder"       TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="id"       NEXT="evalbyid"/>
+        <FIELD NAME="evalbyid"      TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="builder"  NEXT="userid"/>
+        <FIELD NAME="userid"        TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="evalbyid" NEXT="crit1"/>
+        <FIELD NAME="crit1"         TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="dynamoid" NEXT="crit2"/>
+        <FIELD NAME="crit2"         TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="crit1"    NEXT="crit3"/>
+        <FIELD NAME="crit3"         TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="crit2"    NEXT="crit4"/>
+        <FIELD NAME="crit4"         TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="crit3"    NEXT="crit5"/>
+        <FIELD NAME="crit5"         TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="crit4"    NEXT="crit6"/>
+        <FIELD NAME="crit6"         TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="crit5"    NEXT="critgrp"/>
+        <FIELD NAME="critgrp"       TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false"  PREVIOUS="crit6"    NEXT="comment1"/>
+        <FIELD NAME="comment1"      TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"           ENUM="false"  PREVIOUS="critgrp"  NEXT="comment2"/>
+        <FIELD NAME="comment2"      TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"           ENUM="false"  PREVIOUS="comment1" NEXT="timemodified"/>
+        <FIELD NAME="timemodified"  TYPE="int" LENGTH="10"  NOTNULL="true"  SEQUENCE="false"  DEFAULT="0" PREVIOUS="comment2"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="builder" UNIQUE="false" FIELDS="builder"/>
+      </INDEXES>
+    </TABLE>
+    
+  </TABLES>
+</XMLDB>
