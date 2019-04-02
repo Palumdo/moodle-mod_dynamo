@@ -130,6 +130,7 @@ $string['dynamoevaluated']                    = 'Evaluated';
 $string['dynamoradar01title']                 = 'Radar';
 $string['dynamoradar01title2']                = 'Self Assessment vs. Average Peer Assessment';
 $string['dynamoradar01title3']                = 'Self Assessment vs. Average Peer Assessment vs self group evaluation';
+$string['dynamoradar01title4']                = 'All Self Assessment';
 
 $string['dynamoavgeval']                      = 'Average of evaluations';
 $string['dynamoautoeval']                     = 'Auto-evaluation';
@@ -167,6 +168,11 @@ $string['dynamoreport02']                     = 'All groups';
 $string['dynamoreport03']                     = 'All the students';
 $string['dynamoreport04']                     = 'Auto-evaluation vs evaluation';
 
+$string['dynamosendmail']                     = 'Send mails';
+$string['dynamoreport01mailsubject']          = 'REMINDER : peer evaluations - ';
+$string['dynamoreport01mailbody']             = 'Chèr.e.s étudiant.e.s,%0D%0A%0D%0Ala date de fin d\'évaluation par les pairs est proche.%0D%0AMerci de compléter au plus vite le formulaire sur Moodle.%0D%0AMerci d\'avance.';
+
+
 $string['dynamononoparticipant']              = 'All students have filled the form';
 $string['dynamoreports']                      = 'List of reports';
 $string['dynamogotogroup']                    = 'Go to group';
@@ -178,7 +184,7 @@ $string['dynamoremovegroupnotcomplete']       = 'Switch the groups not complete'
 $string['dynamorepbtsynthesis']               = 'Switch synthesis';
 $string['dynamorepbtsnif']                    = 'Switch NIWF';
 $string['dynamorepbtevalothers']              = 'Switch evaluation of pairs';
-$string['dynamorepbtevalothers']              = 'Switch evaluation by pairs';
+$string['dynamorepbtevalbyothers']            = 'Switch evaluation by pairs';
 $string['dynamorepbtgraphradar']              = 'Switch radars';
 $string['dynamorepbtgraphhisto']              = 'Switch histograms';
 $string['dynamorepbtcomment']                 = 'Switch comments';
@@ -188,3 +194,14 @@ $string['dynamoremovecolors']                 = 'Remove numbers colors';
 $string['dynamogroupcount']                   = 'Number of group';
 $string['dynamostudentcount']                 = 'Number of student';
 $string['dynamostudentnoanswerscount']        = 'Number of student without answers';
+
+
+
+$string['dynamokeywords0']                    = 'plagi';
+$string['dynamokeywords1']                    = 'absent';
+$string['dynamokeywords2']                    = 'présent';
+$string['dynamokeywords3']                    = 'dommage';
+$string['dynamokeywords4']                    = 'expertise';
+$string['dynamokeywords5']                    = 'problème';
+$string['dynamokeywords6']                    = 'dispense';
+$string['dynamokeywords7']                    = 'retard';

@@ -15,14 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin administration pages are defined here.
+ * Settings of the module in the administration (not used for now)
  *
  * @package     mod_dynamo
- * @category    admin
- * @copyright   2018 UCLouvain
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+ 
 defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {

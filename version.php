@@ -14,13 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-// TeamUp is a fork of the Moodle module TEAMBUILDER with an inspiration of GROUPENG 1.3 for the algorithm
+/**
+ * Dynamo is a peer by peer review module for Moodle
+ * This project followed the Team Up Module to create the groups
+ *
+ * @package     mod_dynamo
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version = 2019030200;
 $plugin->requires = 2018051700;
 $plugin->component = 'mod_dynamo';
-$plugin->maturity = MATURITY_STABLE;
+$plugin->maturity = MATURITY_BETA;
 $plugin->cron = 0;
 $plugin->release = '0.0.2.0';

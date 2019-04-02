@@ -1,5 +1,34 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * This is the survey displayed to student other peers receive note from 1 to 5 
+ * ***** **** *** ** *
+ * they've 5 mandatory criteria (participation, responsability, science 
+ * expertice, technical expertice and attitude
+ * Teacher can add a custom one.
+ *
+ * 
+ *
+ * @package     mod_dynamo
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+ 
 $bubble1 = get_string('dynamocritparticipationdefault',   'mod_dynamo').', '.$dynamo->crit1;
 $bubble2 = get_string('dynamocritresponsabilitedefault',  'mod_dynamo').', '.$dynamo->crit2;
 $bubble3 = get_string('dynamocritscientifiquedefault',    'mod_dynamo').', '.$dynamo->crit3;
@@ -50,8 +79,11 @@ echo '
 
               <tbody>
       ';        
-if($mode == 'student') echo dynamo_get_body_table($groupusers, $USER->id, $dynamo,$group->id);  // $bodytable;
-else echo dynamo_get_body_table_teacher($dynamo);
+if($mode == 'student') {
+  echo dynamo_get_body_table($groupusers, $USER->id, $dynamo,$group->id);
+} else {
+  echo dynamo_get_body_table_teacher($dynamo);
+}  
 echo '              
               </tbody>
             </table>
@@ -63,7 +95,7 @@ echo '
                     <div class="panel-heading">'.get_string('dynamocommentcontr', 'mod_dynamo').'&nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-blue"></i><span class="tooltiptext">'.$bubbleCom1.'</span></div></div>
                     
                     <div class="panel-body">
-                      <textarea maxlength="1024" id="comment1" name="comment1" class="savemecom form-control" rows="8">'.$comment->comment1.'</textarea>
+                      <textarea maxlength="1000" id="comment1" name="comment1" class="savemecom form-control" rows="8">'.$comment->comment1.'</textarea>
                     </div>
                   </div>
                 </div>
@@ -72,7 +104,7 @@ echo '
                     <div class="panel-heading">'.get_string('dynamocommentfonction', 'mod_dynamo').'&nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-blue"></i><span class="tooltiptext">'.$bubbleCom2.'</span></div></div>
                     
                     <div class="panel-body">
-                      <textarea maxlength="1024" id="comment2" name="comment2" class="savemecom form-control" rows="8">'.$comment->comment2.'</textarea>
+                      <textarea maxlength="1004" id="comment2" name="comment2" class="savemecom form-control" rows="8">'.$comment->comment2.'</textarea>
                     </div>
                   </div>
                 </div>

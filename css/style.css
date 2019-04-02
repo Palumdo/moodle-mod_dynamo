@@ -1,5 +1,5 @@
 /***************************************************************/
-/***************************************************************/
+/** Only work well on firefox...                              **/
 /***************************************************************/
 @media print {
   h4 { 
@@ -694,3 +694,13 @@ input:checked + .slider:before {
   position            : relative;
   height              : 1030px;
 }        
+
+.fa-file-excel::before {
+  content             : "\f1c3" !important;
+}
+
+
+.fa-user {
+  font-size           : 1.2em;
+  margin-left         : 2px;  
+}

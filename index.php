@@ -18,7 +18,8 @@
  * Display information about all the mod_dynamo modules in the requested course.
  *
  * @package     mod_dynamo
- * @copyright   2018 UCLouvain
+ * @copyright   2019 UCLouvain
+ * @author      code generated with Moodle module  generator
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

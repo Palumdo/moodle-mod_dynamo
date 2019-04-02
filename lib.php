@@ -18,7 +18,7 @@
  * Library of interface functions and constants.
  *
  * @package     dynamo
- * @copyright   2018 UCLouvain
+ * @copyright   2019 UCLouvain
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -245,7 +245,13 @@ function dynamo_update_grades($dynamo, $userid = 0) {
 }
 
 /**
-
+ * Get the group of a specific user.
+ *
+ *
+ * @param int $grouping id of the grouping.
+ * @param int $userid id of the user.
+ *
+ * return a recordset
  */
 function dynamo_get_group($grouping, $userid)  {
   global $CFG, $DB;
@@ -271,8 +277,14 @@ function dynamo_get_group($grouping, $userid)  {
 }
 
 /**
-
+ * Get all the groups of a specific grouping.
+ *
+ *
+ * @param int $grouping id of the grouping.
+ *
+ * return a recordset
  */
+
 function dynamo_get_groups($grouping) {
   global $CFG, $DB;
   $sql = " 
@@ -291,7 +303,12 @@ function dynamo_get_groups($grouping) {
 }  
 
 /**
-
+ * Get all the groups of a specific grouping.
+ *
+ *
+ * @param int $grouping id of the grouping.
+ *
+ * return a recordset
  */
 function dynamo_get_group_users($groupid)  {
   global $CFG, $DB;
@@ -311,7 +328,12 @@ function dynamo_get_group_users($groupid)  {
 }  
 
 /**
-
+ * Get all the users of a specific grouping.
+ *
+ *
+ * @param int $groupingid id of the grouping.
+ *
+ * return a recordset
  */
 function dynamo_get_groupment_users($groupingid)  {
   global $CFG, $DB;
@@ -335,7 +357,15 @@ function dynamo_get_groupment_users($groupingid)  {
 } 
 
 /**
-
+ * Get all the users of a specific grouping.
+ *
+ *
+ * @param array $groupusers array of users
+ * @param int $userid id of the user
+ * @param record $dynamo configuration of the activity
+ * @param int $groupid id of the group.
+ *
+ * return a formatted HTML string with a table of users data
  */
 function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
   global $CFG, $DB;
@@ -410,10 +440,17 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
   
   return $bodytable;
 }
-/**
 
+/**
+ * Get all the users of a specific grouping.
+ *
+ *
+ * @param int evalbyid id of the user that made the evaluation
+ * @param record $dynamo configuration of the activity
+ *
+ * return the user comments 
  */
-function dynamo_get_comment($evalbyid, $dynamo) {
+ function dynamo_get_comment($evalbyid, $dynamo) {
   global $CFG, $DB;
   if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' =>$evalbyid))) {
     $dynamoeval = new stdClass();
@@ -423,8 +460,15 @@ function dynamo_get_comment($evalbyid, $dynamo) {
   
   return $dynamoeval;
 }  
-/**
 
+/**
+ * Compute the sum and average of a specific evaluation.
+ *
+ *
+ * @param record $dynamoeval evaluation data
+ * @param int $crit6 5 or 6 criterion
+ *
+ * return an object with the sum and average in it
  */
 function dynamo_compute_basis($dynamoeval, $crit6) {
   $result = new stdClass();
@@ -436,8 +480,15 @@ function dynamo_compute_basis($dynamoeval, $crit6) {
   
   return $result;
 }  
-/**
 
+/**
+ * Compute multiple level used for the student evaluation.
+ *
+ *
+ * @param record $dynamo configuration of the evaluation
+ * @param int $userid the user that have to be evaluated
+ *
+ * return an object with the sum, autosum and number of evaluator
  */
 function dynamo_compute_advanced($userid, $dynamo) {
   global $CFG, $DB;
@@ -500,8 +551,14 @@ function dynamo_compute_advanced($userid, $dynamo) {
   
   return $result;
 }  
-/**
 
+/**
+ * Generate an HTML compatible excel file when you click on the icon next of the activity
+ *
+ *
+ * @param record cm_info $cm
+ *
+ * 
  */
 function dynamo_cm_info_view(cm_info $cm) {
    global $DB,$USER;
@@ -523,9 +580,14 @@ function dynamo_cm_info_view(cm_info $cm) {
   $cm->set_after_link(' <a alt="Export Excel" title="Export Excel" href="/mod/dynamo/export.php?id='.$cm->id.'&instance='.$cm->instance.'&course='.$cm->course.'"><img class="icon navicon" alt="Export" src="/theme/image.php/uclouvain/core/1539865978/i/report" tabindex="-1"></a>');
 }      
 /**
-
+ * Compute all the students evaluation sum by student.
+ *
+ *
+ * @param record $dynamo configuration of the evaluation
+ *
+ * return a dataset with all evaluations
  */
-function dynamo_get_grid($dynamo) {
+ function dynamo_get_grid($dynamo) {
   global $CFG, $DB;
   $result = new stdClass();
   
@@ -543,10 +605,16 @@ function dynamo_get_grid($dynamo) {
   return $result;
 }  
 /**
-
+ * Compute the total of the auto evaluation of a specific student
+ *
+ *
+ * @param array $arrayOfObjects evaluations
+ *
+ * return the total
  */
 function dynamo_get_total($arrayOfObjects, $id, $by ) {
   $ok = 0;
+  // validate if the student do the evaluation of the other
   foreach ($arrayOfObjects as $e) {
     if($e->evalbyid == $id) $ok = 1;
   }
@@ -841,7 +909,7 @@ function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
 
 
 function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
-  global $CFG, $DB;
+  global $CFG, $DB, $OUTPUT;
     
   $groupstat = new stdClass();  
   $participationGood  = "";
@@ -853,13 +921,22 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
   $preSnif            = -1;
   $snifStatus         = "";
   $worstColor         = "";
+  $tooltips           = "";
+  $conflit            = "";
+
   foreach ($grpusrs as $grpusr) { 
+    $avatar = new user_picture($grpusr);
+    $avatar->courseid = $dynamo->course;
+    $avatar->link = true;
+
+    $tooltips .= $OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'&#xa;<br>';
+    
     // Participation
     if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id))) {
-      $participation = $participation.'<i style="font-size:1.2em;margin-left:2px;color:green" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+      $participation = $participation.'<i style="color:green;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
     } else {
       $notperfect++;
-      $participation = $participation.'<i style="font-size:1.2em;margin-left:2px;color:#ccc" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+      $participation = $participation.'<i style="color:#ccc;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
     }
     // Implication
     $snif         = dynamo_get_snif($dynamo, $grpusrs, $grpusr->id);
@@ -881,7 +958,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
     if($color == 'red' &&  $worstColor != 'black') $worstColor = 'red';
     if($color == 'orange' &&  $worstColor == '')   $worstColor = 'orange';
     
-    $implication  = $implication . '<i style="font-size:1.2em;margin-left:2px;color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+    $implication  = $implication . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
     // Confiance
     $conf       = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
     $color      = dynamo_get_color_conf($conf);
@@ -890,20 +967,33 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
     if($color == 'black') $worstColor = 'black';
     if($color == 'red' &&  $worstColor != 'black') $worstColor = 'red';
     if($color == 'orange' &&  $worstColor == '')   $worstColor = 'orange';
-
     
-    $confiance  = $confiance . '<i style="font-size:1.2em;margin-left:2px;color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+    $confiance  = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+
+    // to be remove too experimental
+    foreach ($grpusrs as $grpusrname) {
+      if( strpos($dynamoeval->comment2, $grpusrname->firstname) !== false
+       || strpos($dynamoeval->comment2, $grpusrname->lastname)  !== false
+        ) {
+        $conflit = '<i style="font-size:1.2em;" class="fas fa-comment"></i>';
+      }
+    }
   }
   
   $groupstat->participation = $participation;
   $groupstat->implication   = $implication;
   $groupstat->confiance     = $confiance;
+  $groupstat->conflit       = $conflit;
   $groupstat->remark        = "";
+  $groupstat->tooltips      = $tooltips;
   if($notperfect == 0 ) {
-    $groupstat->remark      = '<i style="font-size:1.0em;color:green;" class="fas fa-check"></i>';
-    if($snifStatus  == 'fan') $groupstat->remark = '<i style="font-size:1.0em;color:green;" class="far fa-handshake"></i>';
+    $groupstat->remark      = '<i style="font-size:1.5em;color:green;" class="fas fa-thumbs-up"></i>';
+    if($snifStatus  == 'fan') $groupstat->remark = '<i style="font-size:1.5em;color:green;" class="far fa-handshake"></i>';
+    $groupstat->conflit       = '';
   } else {
-    $groupstat->remark      = '<i style="font-size:1.'.($notperfect*1.5).'em;color:'.$worstColor.';" class="fas fa-times"></i>';
+    $fontSize = 1.60+($notperfect/5);
+    if($fontSize > 3.5) $fontSize = 3.5;
+    $groupstat->remark      = '<i style="font-size:'.$fontSize.'em;color:'.$worstColor.';" class="fas fa-thumbs-down"></i>';
   }
   
   return $groupstat;

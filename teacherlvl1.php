@@ -1,4 +1,29 @@
 <?php 
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * This page is for the teacher
+ * it will display all the information about a specific student
+ * basically table with value and graphics too !
+ *
+ * @package     mod_dynamo
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
   require_login($course, true, $cm);
  
   $canvas = '';
@@ -21,6 +46,8 @@
   }
   echo '];';
 ?>
+  // Javascript to make an autocomplete input (from jQuery.com web site)
+  // they can have hundreds of student
   $("#students").autocomplete({
     source: local_source,
     focus: function(event, ui) {
@@ -43,13 +70,16 @@
             $("#studentshidden").val("");
           }
         }
-});
+  });
 </script>
   <?php     
   if($usrid != 0) {
       $usr = $DB->get_record('user', array('id' =>$usrid )); 
+      $avatar = new user_picture($usr);
+      $avatar->courseid = $course->id;
+      $avatar->link = true;
 
-      echo ('<h3>'.get_string('dynamoteacherlvl1title', 'mod_dynamo').' : '.$usr->firstname.' '.$usr->lastname.'</h3>');
+      echo ('<h3>'.get_string('dynamoteacherlvl1title', 'mod_dynamo').' : '.$OUTPUT->render($avatar).' '.$usr->firstname.' '.$usr->lastname.'</h3>');
       $grp =dynamo_get_group_from_user($dynamo->groupementid, $usrid);
      
       echo('<h4 class="dynagroupingtitle" style="color:white;cursor:default;"><i class="fas fa-user-cog"></i> '.$grp->name.'</h4>');
@@ -60,7 +90,7 @@
         $labels .= ',\''.$dynamo->critoptname.'\'';
       }
       $labels .= ']';
-      // user eval the others
+      // user eval the other peers
       echo (' <div class="table-container">
               <h3>'.$usr->firstname.' '.$usr->lastname.' : '.get_string('dynamoteacherlvl1evalother', 'mod_dynamo').'</h3> 
                 <table class="tablelvl0">
@@ -137,6 +167,7 @@
             </table>
           </div>');
 
+          // Display the comments
       $comment = dynamo_get_comment($usrid, $dynamo);
       echo ('<div>');
       echo('<b>'.get_string('dynamocommentcontr', 'mod_dynamo').'</b><br>');

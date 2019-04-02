@@ -1,4 +1,27 @@
 <?php 
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * This create report about students and their group whith data and graphics
+ *
+ * @package     mod_dynamo
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
   require_login($course, true, $cm);
   
   $groups = dynamo_get_groups($dynamo->groupementid);
@@ -19,7 +42,7 @@
   switch($report) {
     case 1:
       $result = dynamo_get_report_001($dynamo);
-      rep_list_no_participant($result);
+      rep_list_no_participant($result, $cm->name);
       break;
 
     case 2:
@@ -59,7 +82,7 @@
 
     echo($jscript);
 // Report 001
-function rep_list_no_participant($result) {
+function rep_list_no_participant($result, $name) {
   echo ('<h3 class="report_title">'.get_string('dynamoreport01', 'mod_dynamo').'</h3>');
   echo ('<div class="table-container">');
   echo('  <table class="table" style="text-align:center;">');
@@ -86,9 +109,17 @@ function rep_list_no_participant($result) {
   }
   echo('    </tbody>');
   echo('  </table>');
-  echo($emails);
-  if( $emails == '') echo(get_string('dynamononoparticipant', 'mod_dynamo'));
+  echo('<div style="width:100%;word-wrap:break-word;margin-bottom:20px;">'.$emails.'</div>');
+  if( $emails == '') {
+    echo(get_string('dynamononoparticipant', 'mod_dynamo'));
+  } else {
+    $subject  = get_string('dynamoreport01mailsubject', 'mod_dynamo').$name; 
+    $body     = get_string('dynamoreport01mailbody', 'mod_dynamo'); 
+    echo('<a style="border:2px solid #ccc;padding:1em 1.5em;background-color:lightgrey;color:black;text-decoration:none;border-radius:5px;" href="mailto:'.$emails.'?subject='.$subject.'&body='.$body.'">'.get_string('dynamosendmail', 'mod_dynamo').'</a>');
+  }
   echo('</div>'); 
+  
+  
 }
 
 // Report 002
@@ -314,7 +345,7 @@ function rep_list_all_participant($dynamo,$jscript, $display6) {
               <span class="slider round"></span>
             </label>
           </div>
-          <div class="box-switch">'.get_string('dynamorepbtevalothers',  'mod_dynamo').'<br>
+          <div class="box-switch">'.get_string('dynamorepbtevalbyothers',  'mod_dynamo').'<br>
             <label class="switch">
               <input type="checkbox" checked onclick="$(\'.eval_by_others_table\').toggle();">
               <span class="slider round"></span>
@@ -326,12 +357,12 @@ function rep_list_all_participant($dynamo,$jscript, $display6) {
               <span class="slider round"></span>
             </label>
           </div>
-          <div class="box-switch">'.get_string('dynamorepbtgraphhisto',  'mod_dynamo').'<br>
+          <!--<div class="box-switch">'.get_string('dynamorepbtgraphhisto',  'mod_dynamo').'<br>
             <label class="switch">
               <input type="checkbox" onclick="$(\'.graph_histo_table\').toggle();">
               <span class="slider round"></span>
             </label>
-          </div>
+          </div>-->
           <div class="box-switch">
             <button class="btn" onclick="removeColors();">'.get_string('dynamoremovecolors', 'mod_dynamo').'</button>
           </div>
@@ -352,7 +383,7 @@ function rep_list_all_participant($dynamo,$jscript, $display6) {
       display_eval_comments_table($dynamo, $grpusr->id);
       display_eval_by_others_table($dynamo, $grpusr->id, $display6);
       $jscript = display_graph_radar_table($dynamo, $grpusr->id, $display6,$jscript);
-      $jscript = display_graph_histo_table($dynamo, $grpusr->id, $display6,$jscript);
+//      $jscript = display_graph_histo_table($dynamo, $grpusr->id, $display6,$jscript);
     }  
   }
  return $jscript;      
@@ -432,17 +463,10 @@ function display_group_detail_table($dynamo, $grp) {
     echo('          <tr>');
     echo('            <td style="background-color:LightGrey;color:black;">'.get_string('dynamosnif', 'mod_dynamo').'</td>');
     
-    $red    = 1 / ((count($aGridlib)-1)*2);
-    $orange = 1 / ((count($aGridlib)-1)*1.5);
-    
     $i = count($aGridlib)-1;
     for($j=0;$j<count($aGridlib[$i]);$j++) {
       $snif = $aGridlib[$i][$j];
-      $color  = 'green';
-      if($snif/$i < $orange) $color  = 'orange';
-      if($snif/$i < $red)    $color  = 'red';
-        
-      echo('        <td class="change-color" style="color:'.$color.'">'.number_format($snif,2,',', ' ').'<br>'.(number_format(($snif/$nbstudent)*100,2,',', ' ')).'&#37;</td>');
+      echo('        <td class="change-color" style="color:'.dynamo_get_color_snif($snif).'">'.number_format($snif,2,',', ' ').'<br>'.(number_format(($snif/$nbstudent)*100,2,',', ' ')).'&#37;</td>');
     }  
     echo('          </tr>');
     

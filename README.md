@@ -1,6 +1,6 @@
 # Dynamo #
 
-Dynamo is used to follow and support the evaluation by pairs in working groups
+Dynamo is used to follow and support the evaluation by peers in working groups
 
 Dynamo is ....
 .......

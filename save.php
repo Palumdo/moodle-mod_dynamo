@@ -15,10 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of dynamo.
+ * save the evaluation of students
  *
- * @package     dynamo
- * @copyright   2018 UCLouvain
+ * @package     mod_dynamo
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -165,7 +166,6 @@ foreach ($groupusers as $user) {
   echo("<div style='width:100%;height:32px;border:1px solid green;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
   echo(get_string('dynamosavedsuccessfully', 'mod_dynamo'));
   echo("</div>");
-//echo('<script>setInterval(function(){window.history.back();},5000);</script>');
   echo('<script>setInterval(function(){location.href = "/course/view.php?id='.$cm->course.'";},5000);</script>');
   echo $OUTPUT->footer();
 

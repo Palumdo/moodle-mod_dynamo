@@ -15,10 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of dynamo.
+ * This is the manager of what will be displayed based on your rights
  *
- * @package     dynamo
- * @copyright   2018 UCLouvain
+ * @package     mod_dynamo
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -36,7 +37,7 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.drawing.rect.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.radar.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
-$PAGE->requires->css('/mod/dynamo/css/all.css');
+$PAGE->requires->css('/mod/dynamo/css/all.css');  // fontawesome
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 // Course_module ID, or
