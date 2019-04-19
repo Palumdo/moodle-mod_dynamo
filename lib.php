@@ -131,7 +131,6 @@ function dynamo_delete_instance($id) {
     $DB->delete_records('dynamo_eval', array('builder' => $id));
     $DB->delete_records('dynamo', array('id' => $id));
 
-    // must also delete sub record in dynamo_eval
     return true;
 }
 
@@ -171,7 +170,7 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
   $id = $course->id;
 
   if (has_capability('mod/dynamo:create', $context)) {
-    $url =new moodle_url($CFG->wwwroot . '/mod/dynamo/reportgrouping.php', array('id'=>$id));
+    $url  = new moodle_url($CFG->wwwroot . '/mod/dynamo/reportgrouping.php', array('id'=>$id));
     $node = navigation_node::create(get_string('dynamogrpingreport', 'mod_dynamo'), $url,navigation_node::TYPE_SETTING, null, null);
     $navref->add_node($node);
   }
@@ -257,11 +256,11 @@ function dynamo_get_group($grouping, $userid)  {
   global $CFG, $DB;
   $sql = " 
     SELECT t2.id,t2.name
-      FROM mdl_groups_members t1
-          ,mdl_groups         t2 
+      FROM {groups_members} t1
+          ,{groups}         t2 
      WHERE groupid in (
                         SELECT groupid
-                          FROM mdl_groupings_groups
+                          FROM {groupings_groups}
                          WHERE groupingid = :param1
                        )
        
@@ -289,8 +288,8 @@ function dynamo_get_groups($grouping) {
   global $CFG, $DB;
   $sql = " 
     SELECT t2.id, t2.name
-      FROM mdl_groupings_groups t1
-          ,mdl_groups t2
+      FROM {groupings_groups} t1
+          ,{groups} t2
      WHERE groupingid = :param1
        AND t1.groupid = t2.id
   ";
@@ -314,8 +313,8 @@ function dynamo_get_group_users($groupid)  {
   global $CFG, $DB;
   $sql = " 
     SELECT t2.*
-      FROM mdl_groups_members t1
-          ,mdl_user          t2 
+      FROM {groups_members} t1
+          ,{user}          t2 
      WHERE t1.groupid = :param1
        AND t2.id  = t1.userid
      ORDER BY t2.firstname,t2.lastname
@@ -339,10 +338,10 @@ function dynamo_get_groupment_users($groupingid)  {
   global $CFG, $DB;
   $sql = " 
     SELECT t4.id, t4.firstname,t4.lastname
-      FROM mdl_groupings_groups t1
-          ,mdl_groups           t2
-          ,mdl_groups_members   t3
-          ,mdl_user             t4
+      FROM {groupings_groups} t1
+          ,{groups}           t2
+          ,{groups_members}   t3
+          ,{user}             t4
      WHERE groupingid = :param1
        AND t1.groupid = t2.id
        AND t2.id      = t3.groupid
@@ -376,7 +375,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
 
   foreach ($groupusers as $user) {
     $color    = '';
-    if($userid ==  $user->id) $color    = '#6699cc';
+    if($userid ==  $user->id) $color    = '#9cb7d4';
     
     if($userid ==  $user->id && $dynamo->autoeval == 0) {
       // no auto evaluation
@@ -395,12 +394,12 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
       $bodytable = $bodytable.'
                       <tr>
                          <td style="color:'.$color.'">'.$user->firstname.' '.$user->lastname.'</td>
-                         <td><input class="saveme hiddenval" name="'.$user->id.'_1"  id="'.$user->id.'_1"  value="'.$dynamoeval->crit1.'" style="display:none;color:#black;"><i data-id="'.$user->id.'_1" data-value="1" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="2" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="3" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="4" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="5" class="mystar fa fa-user-clock"></i></td>
-                         <td><input class="saveme hiddenval" name="'.$user->id.'_2"  id="'.$user->id.'_2"  value="'.$dynamoeval->crit2.'" style="display:none;color:#black;"><i data-id="'.$user->id.'_2" data-value="1" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="2" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="3" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="4" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="5" class="mystar fa fa-medal"></i></td>
-                         <td><input class="saveme hiddenval" name="'.$user->id.'_3"  id="'.$user->id.'_3"  value="'.$dynamoeval->crit3.'" style="display:none;color:#black;"><i data-id="'.$user->id.'_3" data-value="1" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="2" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="3" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="4" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="5" class="mystar fa fa-lightbulb"></i></td>
-                         <td><input class="saveme hiddenval" name="'.$user->id.'_4"  id="'.$user->id.'_4"  value="'.$dynamoeval->crit4.'" style="display:none;color:#black;"><i data-id="'.$user->id.'_4" data-value="1" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="2" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="3" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="4" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="5" class="mystar fa fa-wrench"></i></td>
-                         <td><input class="saveme hiddenval" name="'.$user->id.'_5"  id="'.$user->id.'_5"  value="'.$dynamoeval->crit5.'" style="display:none;color:#black;"><i data-id="'.$user->id.'_5" data-value="1" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="2" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="3" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="4" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="5" class="mystar fa fa-smile"></i></td>
-                         <td style="display:'.$display6.'"><input class="saveme hiddenval" name="'.$user->id.'_6" id="'.$user->id.'_6"  value="'.$dynamoeval->crit6.'" style="display:none;color:#black;"><i data-id="'.$user->id.'_6" data-value="1" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="2" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="3" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="4" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="5" class="mystar fa fa-star"></i></td>
+                         <td><input class="saveme hiddenval" name="'.$user->id.'_1"  id="'.$user->id.'_1"  value="'.$dynamoeval->crit1.'" ><i data-id="'.$user->id.'_1" data-value="1" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="2" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="3" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="4" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="5" class="mystar fa fa-user-clock"></i></td>
+                         <td><input class="saveme hiddenval" name="'.$user->id.'_2"  id="'.$user->id.'_2"  value="'.$dynamoeval->crit2.'" ><i data-id="'.$user->id.'_2" data-value="1" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="2" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="3" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="4" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="5" class="mystar fa fa-medal"></i></td>
+                         <td><input class="saveme hiddenval" name="'.$user->id.'_3"  id="'.$user->id.'_3"  value="'.$dynamoeval->crit3.'" ><i data-id="'.$user->id.'_3" data-value="1" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="2" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="3" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="4" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="5" class="mystar fa fa-lightbulb"></i></td>
+                         <td><input class="saveme hiddenval" name="'.$user->id.'_4"  id="'.$user->id.'_4"  value="'.$dynamoeval->crit4.'" ><i data-id="'.$user->id.'_4" data-value="1" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="2" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="3" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="4" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="5" class="mystar fa fa-wrench"></i></td>
+                         <td><input class="saveme hiddenval" name="'.$user->id.'_5"  id="'.$user->id.'_5"  value="'.$dynamoeval->crit5.'" ><i data-id="'.$user->id.'_5" data-value="1" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="2" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="3" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="4" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="5" class="mystar fa fa-smile"></i></td>
+                         <td style="display:'.$display6.'"><input class="saveme hiddenval" name="'.$user->id.'_6" id="'.$user->id.'_6"  value="'.$dynamoeval->crit6.'"><i data-id="'.$user->id.'_6" data-value="1" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="2" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="3" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="4" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="5" class="mystar fa fa-star"></i></td>
                       </tr>
       ';    
     }
@@ -418,19 +417,19 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
       }
 
       $bodytable = $bodytable.'
-               <table class="table" style="border:1px solid black;">
+               <table class="table" style="border:1px solid #000;">
                  <thead>
                   <th colspan="6" style="padding:0;"></th>
                  </thead>
                  <tbody>
                 <tr>
                    <td style="min-width:200px;font-weight:bold;">Groupe</td>
-                   <td style="min-width:160px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'.$dynamoeval->crit1.'" style="display:none;color:black;"><i data-id="'.$groupid.'_1" data-criteria="1" data-value="1" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="2" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="3" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="4" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="5" class="mystar fa fa-user-clock"></i></td>
-                   <td style="min-width:160px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g2"  id="'.$groupid.'_2" value="'.$dynamoeval->crit2.'" style="display:none;color:black;"><i data-id="'.$groupid.'_2" data-criteria="2" data-value="1" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="2" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="3" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="4" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="5" class="mystar fa fa-medal"></i></td>
-                   <td style="min-width:150px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g3"  id="'.$groupid.'_3" value="'.$dynamoeval->crit3.'" style="display:none;color:black;"><i data-id="'.$groupid.'_3" data-criteria="2" data-value="1" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="2" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="3" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="4" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="5" class="mystar fa fa-lightbulb"></i></td>
-                   <td style="min-width:150px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g4"  id="'.$groupid.'_4" value="'.$dynamoeval->crit4.'" style="display:none;color:black;"><i data-id="'.$groupid.'_4" data-criteria="2" data-value="1" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="2" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="3" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="4" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="5" class="mystar fa fa-wrench"></i></td>
-                   <td style="min-width:130px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g5"  id="'.$groupid.'_5" value="'.$dynamoeval->crit5.'" style="display:none;color:black;"><i data-id="'.$groupid.'_5" data-criteria="2" data-value="1" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="2" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="3" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="4" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="5" class="mystar fa fa-smile"></i></td>
-                   <td style="min-width:200px;display:'.$display6.'"><input class="savemegrp hiddenval" name="'.$groupid.'_g6" id="'.$groupid.'_6" value="'.$dynamoeval->crit6.'" style="display:none;color:black;"><i data-id="'.$groupid.'_6" data-criteria="2" data-value="1" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="2" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="3" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="4" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="5" class="mystar fa fa-star"></i></td>
+                   <td style="min-width:160px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'.$dynamoeval->crit1.'"><i data-id="'.$groupid.'_1" data-criteria="1" data-value="1" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="2" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="3" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="4" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="5" class="mystar fa fa-user-clock"></i></td>
+                   <td style="min-width:160px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g2"  id="'.$groupid.'_2" value="'.$dynamoeval->crit2.'"><i data-id="'.$groupid.'_2" data-criteria="2" data-value="1" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="2" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="3" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="4" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="5" class="mystar fa fa-medal"></i></td>
+                   <td style="min-width:150px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g3"  id="'.$groupid.'_3" value="'.$dynamoeval->crit3.'"><i data-id="'.$groupid.'_3" data-criteria="2" data-value="1" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="2" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="3" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="4" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="5" class="mystar fa fa-lightbulb"></i></td>
+                   <td style="min-width:150px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g4"  id="'.$groupid.'_4" value="'.$dynamoeval->crit4.'"><i data-id="'.$groupid.'_4" data-criteria="2" data-value="1" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="2" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="3" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="4" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="5" class="mystar fa fa-wrench"></i></td>
+                   <td style="min-width:130px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g5"  id="'.$groupid.'_5" value="'.$dynamoeval->crit5.'"><i data-id="'.$groupid.'_5" data-criteria="2" data-value="1" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="2" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="3" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="4" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="5" class="mystar fa fa-smile"></i></td>
+                   <td style="min-width:200px;display:'.$display6.'"><input class="savemegrp hiddenval" name="'.$groupid.'_g6" id="'.$groupid.'_6" value="'.$dynamoeval->crit6.'"><i data-id="'.$groupid.'_6" data-criteria="2" data-value="1" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="2" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="3" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="4" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="5" class="mystar fa fa-star"></i></td>
                 </tr>
                  </tbody>
               </table>
@@ -496,7 +495,7 @@ function dynamo_compute_advanced($userid, $dynamo) {
   
   $sql = " 
     SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
-      FROM mdl_dynamo_eval t1
+      FROM {dynamo_eval} t1
      WHERE t1.userid    = :param1
        AND t1.evalbyid != :param2
        AND t1.builder   = :param3
@@ -509,7 +508,7 @@ function dynamo_compute_advanced($userid, $dynamo) {
   
   $sql = " 
     SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
-      FROM mdl_dynamo_eval t1
+      FROM {dynamo_eval} t1
      WHERE t1.userid    = :param1
        AND t1.evalbyid  = :param2
        AND t1.builder   = :param3
@@ -520,7 +519,7 @@ function dynamo_compute_advanced($userid, $dynamo) {
   
   $sql = " 
     SELECT count(userid) nbeval
-      FROM mdl_dynamo_eval t1
+      FROM {dynamo_eval} t1
      WHERE t1.userid    = :param1
        AND t1.evalbyid != :param2
        AND t1.builder   = :param3
@@ -532,7 +531,7 @@ function dynamo_compute_advanced($userid, $dynamo) {
 
   $sql = " 
     SELECT COALESCE(sum(t1.crit1),0) total1, COALESCE(sum(t1.crit2),0) total2, COALESCE(sum(t1.crit3),0) total3, COALESCE(sum(t1.crit4),0) total4, COALESCE(sum(t1.crit5),0) total5, COALESCE(sum(t1.crit6),0) total6
-      FROM mdl_dynamo_eval t1
+      FROM {dynamo_eval} t1
      WHERE t1.userid   = :param1
        AND t1.evalbyid != :param2
        AND t1.builder   = :param3
@@ -594,7 +593,7 @@ function dynamo_cm_info_view(cm_info $cm) {
   $sql = " 
     SELECT RAND() mainid, t1.* FROM (
     SELECT t1.userid, t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
-      FROM mdl_dynamo_eval t1
+      FROM {dynamo_eval} t1
      WHERE t1.builder   = :param1
        AND t1.critgrp   = 0
       GROUP BY t1.userid, t1.evalbyid) t1
@@ -632,9 +631,9 @@ function dynamo_get_group_from_user ($groupementid, $usrid) {
   global $CFG, $DB;
   $sql = " 
   SELECT t2.id, t2.name
-    FROM mdl_groupings_groups t1
-        ,mdl_groups t2
-        ,mdl_groups_members t3
+    FROM {groupings_groups} t1
+        ,{groups} t2
+        ,{groups_members} t3
    WHERE groupingid = :param1
      AND t1.groupid = t2.id
      AND t3.groupid = t1.groupid
@@ -796,7 +795,6 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
     $tea  = 0;
     $nbstudent = 0;
     for($j=0;$j<count($aGrid) ;$j++) {
-      //$snif += $aGrid[$j][$ki] / $aGrid[$j][count($aGrid[$j])-1];
       if($aGrid[$j][count($aGrid[$j])-1] > 0) {
         $snif += $aGrid[$j][$ki] / $aGrid[$j][count($aGrid[$j])-1];      
         $nbstudent++; // student that answers 
@@ -805,7 +803,7 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
     
     if($autoeval == 0) return 10;
     
-    $sum  = 0; // $aGrid[$ki][count($aGrid[$ki])-1];
+    $sum  = 0; 
     for($j=0;$j<count($aGrid) ;$j++) {
       if($j != $ki) $sum  += $aGrid[$j][$ki]; 
     }  
@@ -843,8 +841,8 @@ function dynamo_get_body_table_teacher($dynamo) {
   
   $sql = " 
     SELECT t2.id, t2.name
-      FROM mdl_groupings_groups t1
-          ,mdl_groups t2
+      FROM {groupings_groups} t1
+          ,{groups} t2
      WHERE groupingid = :param1
        AND t1.groupid = t2.id
   ";
@@ -856,8 +854,8 @@ function dynamo_get_body_table_teacher($dynamo) {
 
    $sql = " 
     SELECT t2.id,t2.firstname,t2.lastname
-      FROM mdl_groups_members t1
-          ,mdl_user          t2 
+      FROM {groups_members} t1
+          ,{user}          t2 
      WHERE t1.groupid = :param1
        AND t2.id  = t1.userid
      ORDER BY t2.firstname,t2.lastname
@@ -882,17 +880,15 @@ function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
   $allgroupeval->crit6 = 0;
   $i=0;
   foreach ($grpusrs as $grpusr) { // loop to all students of  groups
-//    if($usrid != $grpusr->id) {
-      if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id , 'userid' => $grpid ))) {
-        $i++;
-        $allgroupeval->crit1 += (int)$dynamoeval->crit1;
-        $allgroupeval->crit2 += (int)$dynamoeval->crit2;
-        $allgroupeval->crit3 += (int)$dynamoeval->crit3;
-        $allgroupeval->crit4 += (int)$dynamoeval->crit4;
-        $allgroupeval->crit5 += (int)$dynamoeval->crit5;
-        $allgroupeval->crit6 += (int)$dynamoeval->crit6;
-      }
-//    }
+    if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id , 'userid' => $grpid ))) {
+      $i++;
+      $allgroupeval->crit1 += (int)$dynamoeval->crit1;
+      $allgroupeval->crit2 += (int)$dynamoeval->crit2;
+      $allgroupeval->crit3 += (int)$dynamoeval->crit3;
+      $allgroupeval->crit4 += (int)$dynamoeval->crit4;
+      $allgroupeval->crit5 += (int)$dynamoeval->crit5;
+      $allgroupeval->crit6 += (int)$dynamoeval->crit6;
+    }
   }
 
   if($i > 0) {
@@ -910,21 +906,22 @@ function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
 
 function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
   global $CFG, $DB, $OUTPUT;
-    
+  
   $groupstat = new stdClass();  
-  $participationGood  = "";
-  $participationBad   = "";
   $participation      = "";
   $implication        = "";
   $confiance          = "";
   $notperfect         = 0;
-  $preSnif            = -1;
-  $snifStatus         = "";
-  $worstColor         = "";
   $tooltips           = "";
   $conflit            = "";
+  $nbUser             = 0;
+  $names              = "";
+  
+  $aWeight  = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
+  $aIcon    = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
 
   foreach ($grpusrs as $grpusr) { 
+    $nbUser++;
     $avatar = new user_picture($grpusr);
     $avatar->courseid = $dynamo->course;
     $avatar->link = true;
@@ -933,44 +930,29 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
     
     // Participation
     if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id))) {
-      $participation = $participation.'<i style="color:green;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+      $participation = $participation.'<i style="color:#006DCC;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
     } else {
-      $notperfect++;
+      $notperfect+=3;
       $participation = $participation.'<i style="color:#ccc;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
     }
+    $names .= $grpusr->firstname.' '.$grpusr->lastname.'&#10;';
     // Implication
     $snif         = dynamo_get_snif($dynamo, $grpusrs, $grpusr->id);
     $color        = dynamo_get_color_snif($snif[0]);
-    
-    if($snif[0] == $preSnif && $preSnif != -1 && $snifStatus != 'notfan') {
-      $snifStatus = 'fan';
-    }
-
-    if($snif[0] != $preSnif && $preSnif != -1) {
-      $snifStatus = 'notfan';
-    }    
-    
-    $preSnif = $snif[0];
   
-    if($color != 'green') $notperfect++;
-    
-    if($color == 'black') $worstColor = 'black';
-    if($color == 'red' &&  $worstColor != 'black') $worstColor = 'red';
-    if($color == 'orange' &&  $worstColor == '')   $worstColor = 'orange';
+    if($color == 'green') $color = '#006DCC';
+    $notperfect+=  $aWeight[$color];
     
     $implication  = $implication . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
     // Confiance
     $conf       = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
     $color      = dynamo_get_color_conf($conf);
-    if($color != 'green') $notperfect++;
-
-    if($color == 'black') $worstColor = 'black';
-    if($color == 'red' &&  $worstColor != 'black') $worstColor = 'red';
-    if($color == 'orange' &&  $worstColor == '')   $worstColor = 'orange';
+    if($color == 'green') $color = '#006DCC';
+    $notperfect+=  $aWeight[$color];
     
     $confiance  = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
 
-    // to be remove too experimental
+    // Experimental
     foreach ($grpusrs as $grpusrname) {
       if( strpos($dynamoeval->comment2, $grpusrname->firstname) !== false
        || strpos($dynamoeval->comment2, $grpusrname->lastname)  !== false
@@ -986,14 +968,13 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
   $groupstat->conflit       = $conflit;
   $groupstat->remark        = "";
   $groupstat->tooltips      = $tooltips;
+  $groupstat->names         = $names;
   if($notperfect == 0 ) {
-    $groupstat->remark      = '<i style="font-size:1.5em;color:green;" class="fas fa-thumbs-up"></i>';
-    if($snifStatus  == 'fan') $groupstat->remark = '<i style="font-size:1.5em;color:green;" class="far fa-handshake"></i>';
+    $groupstat->remark      = '<span class="hiddenidx">0</span><i style="font-size:1.5em;color:gold;" class="fas '.$aIcon[0].'"></i>';
     $groupstat->conflit       = '';
   } else {
-    $fontSize = 1.60+($notperfect/5);
-    if($fontSize > 3.5) $fontSize = 3.5;
-    $groupstat->remark      = '<i style="font-size:'.$fontSize.'em;color:'.$worstColor.';" class="fas fa-thumbs-down"></i>';
+    $grey = 255-round(50*ceil($notperfect/$nbUser/2));
+    $groupstat->remark      = '<span class="hiddenidx">'.ceil($notperfect/$nbUser/2).'</span><i style="font-size:1.5em;color:rgb('.$grey.','.$grey.','.$grey.');" class="fas '.$aIcon[ceil($notperfect/$nbUser/2)].'"></i>';
   }
   
   return $groupstat;
@@ -1010,16 +991,16 @@ function dynamo_get_report_001($dynamo) {
   
   $sql = " 
     SELECT t4.id, t4.firstname, t4.lastname, t4.email, t4.idnumber, t2.name
-      FROM mdl_groupings_groups t1
-          ,mdl_groups           t2
-          ,mdl_groups_members   t3
-          ,mdl_user             t4
+      FROM {groupings_groups} t1
+          ,{groups}           t2
+          ,{groups_members}   t3
+          ,{user}             t4
      WHERE groupingid = :param1
        AND t1.groupid = t2.id
        AND t3.groupid = t1.groupid
        AND t3.userid  = t4.id
        AND t4.id   not in (SELECT distinct(t5.evalbyid)
-                             FROM mdl_dynamo_eval t5
+                             FROM {dynamo_eval} t5
                             WHERE t5.builder = :param2
                           )  
      ORDER BY t2.name, t4.firstname, t4.lastname
@@ -1034,7 +1015,6 @@ function dynamo_get_report_001($dynamo) {
  * Return the evaluation of a participant !
  *
  * @param object $builder, $evalbyid, $usrid.
- 
  * @return object.
  */
 function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
@@ -1060,8 +1040,8 @@ function dynamo_get_groupement_stat($dynamo) {
   
   $sql = " 
     SELECT count(t2.id) nb_group
-      FROM mdl_groupings_groups t1
-          ,mdl_groups           t2
+      FROM {groupings_groups} t1
+          ,{groups}           t2
      WHERE groupingid = :param1
        AND t1.groupid = t2.id
       ";
@@ -1072,10 +1052,10 @@ function dynamo_get_groupement_stat($dynamo) {
   
   $sql = " 
     SELECT count(t4.id) nb_participant
-      FROM mdl_groupings_groups t1
-          ,mdl_groups           t2
-          ,mdl_groups_members   t3
-          ,mdl_user             t4
+      FROM {groupings_groups} t1
+          ,{groups}           t2
+          ,{groups_members}   t3
+          ,{user}             t4
      WHERE groupingid = :param1
        AND t1.groupid = t2.id
        AND t3.groupid = t1.groupid
@@ -1088,16 +1068,16 @@ function dynamo_get_groupement_stat($dynamo) {
   
   $sql = " 
     SELECT count(t4.id) nb_no_answer
-      FROM mdl_groupings_groups t1
-          ,mdl_groups           t2
-          ,mdl_groups_members   t3
-          ,mdl_user             t4
+      FROM {groupings_groups} t1
+          ,{groups}           t2
+          ,{groups_members}   t3
+          ,{user}             t4
      WHERE groupingid = :param1
        AND t1.groupid = t2.id
        AND t3.groupid = t1.groupid
        AND t3.userid  = t4.id
        AND t4.id   not in (SELECT distinct(t5.evalbyid)
-                             FROM mdl_dynamo_eval t5
+                             FROM {dynamo_eval} t5
                             WHERE t5.builder = :param2
                           )  
       ";
@@ -1144,6 +1124,7 @@ function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $a
             labelsOffset : 20,
             colors: [\'rgba(0,0,0,0)\'],
             colorsAlpha: 0.8,
+            scaleMax: 5,
             strokestyle: '.$strokestyle.',
             linewidth: 3,
             key: '.$keys.' ,
@@ -1210,11 +1191,11 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
      FROM (   
             SELECT t1.* FROM (
             SELECT t4.id groupid , t4.name ,t1.userid, t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total, t3.*
-              FROM mdl_dynamo_eval      t1
-                  ,mdl_user             t3
-                  ,mdl_groups           t4
-                  ,mdl_groups_members   t5
-                  ,mdl_groupings_groups t6
+              FROM {dynamo_eval}      t1
+                  ,{user}             t3
+                  ,{groups}           t4
+                  ,{groups_members}   t5
+                  ,{groupings_groups} t6
              WHERE t1.builder   = :param1
                AND t1.critgrp   = 0
                AND t1.userid   != t1.evalbyid
@@ -1235,7 +1216,7 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
      FROM (   
             SELECT t1.* FROM (
             SELECT t1.userid, t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
-              FROM mdl_dynamo_eval t1
+              FROM {dynamo_eval} t1
              WHERE t1.builder   = :param1
                AND t1.critgrp   = 0
                AND t1.userid    = t1.evalbyid
@@ -1256,4 +1237,275 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
   $ret->result   = $result;
 
   return $ret;
+}  
+
+function dynamo_get_clique($dynamo, $grpusrs, $debug) {
+  $grp  = []; 
+  $list = [];
+  $cnt  = 0;
+  
+  // array to array...
+  $agrpusrs = [];
+  foreach ($grpusrs as $usr) {
+    $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
+    if($autoeval->crit1 > 0) $agrpusrs[] = $usr;
+  }
+  $grpusrs = $agrpusrs;
+  /* highlight_string("<?php\n\$data =\n" . var_export($grpusrs, true) . ";\n?>"); */
+
+  // create a list with all ecart quatrique ($diff) between each student of a group
+  for ($i=0;$i<count($grpusrs); $i++ ) { // loop to all students of the group
+    $usr1   = $grpusrs[$i];
+    for ($j=$i+1;$j<count($grpusrs); $j++ ) { // compare to all the ohers in the group
+      $usr2   = $grpusrs[$j];  
+      $diff   = dynamo_get_ecart_quadrique($dynamo, $usr1->id, $usr2->id)->ecart;
+
+      if($diff != 1000 && $diff != '') {
+        $list[$cnt] = new stdClass();
+        $list[$cnt]->diff = round($diff,2);
+        $list[$cnt]->user1 = $usr1->id;
+        $list[$cnt]->user2 = $usr2->id;
+        $cnt++;
+      }
+    }
+  }    
+  // sort the list of student by the smallest difference (ecart quadrique) first
+  usort($list, "cmp");  
+  
+  // if($debug) echo('<hr>');
+  $sumDiff = 0;
+  $maxDiff = 0;
+  $maxSize = 0;
+  for($i=0;$i<count($list);$i++) {
+    $diff = $list[$i]->diff;
+    $usr1 = $list[$i]->user1;
+    $usr2 = $list[$i]->user2;
+    $sumDiff += $diff;
+    
+    if($maxDiff < $diff) $maxDiff = $diff;
+    //if($debug) echo($usr1.'*'.$usr2.'*'.$diff.'<br>');
+
+    $grpid1 = dynamo_get_group_clique($grp, $usr1);
+    $grpid2 = dynamo_get_group_clique($grp, $usr2);
+    if($grpid1 > -1) {                                  // stud1 has group
+      if($grpid2 > -1) {                                // stud2 has group
+                                                          // nothing to do
+      } else {                                          //  stud2 has no group
+        if( $diff <= 0.04) {                               // add to group stud1
+          $grp[$grpid1][count($grp[$grpid1])] = $usr2;
+        } else {                                          // add to a new group 
+          $idx = count($grp);
+          $grp[$idx]   = array($usr2);
+        }  
+      }
+    } else {                                            // stud1 has no group
+      if($grpid2 > -1) {                                // stud2 has group
+        if( $diff <= 0.04) {                               // add to  group stud2
+          $grp[$grpid2][count($grp[$grpid2])] = $usr1;    
+        } else {                                          // add to a new group 
+          $idx = count($grp);
+          $grp[$idx]   = array($usr1);
+        }  
+      } else {                                          // stud1/2 has no group
+        if( $diff <= 0.04) {                               // add both to new grp 
+          $idx = count($grp);
+          $grp[$idx]   = array($usr1, $usr2);
+        } else {                                          
+          $idx = count($grp);                             // add stud1  new grp 
+          $grp[$idx]   = array($usr1);
+          $idx = count($grp);                             // add stud2 new grp 
+          $grp[$idx]   = array($usr2);
+        }
+      }
+    }                                                     // biggest sub group
+    if($maxSize < count($grp[$idx])) $maxSize = count($grp[$idx]); 
+  }
+  
+  $result = new stdClass();
+  $result->grp  = $grp;
+  $result->type = 0;
+  $result->list = $list;
+  $result->max  = $maxDiff;
+  
+  if($maxDiff <  0.05) $result->type   = 2; // Homogène RAS
+  if($maxDiff <  0.02) $result->type   = 1; // ecole des fans
+  if($maxDiff >= 0.05) $result->type   = 3; // clustering
+  if($maxDiff >  0.1)  $result->type   = 4; // clique
+
+  if($maxSize    == 1 && $result->type   > 2) $result->type = 5;
+  if(count($grp) == 1 && $result->type  == 3) $result->type = 2;
+    
+  // Ghosts too much absent or less than 3 students
+  if(count($grp) == 0 || (count($grp) == 1 && count($grp[0]) < 3 ) ) $result->type = 6;
+  if(count($grp) == 2 && count($grp[0]) == 1 && count($grp[1]) == 1) $result->type = 6;
+  
+  return $result;
+}  
+
+function dynamo_get_group_clique($grp, $usr) {
+  for ($i=0;$i < count($grp);$i++) {
+    for ($j=0;$j < count($grp[$i]);$j++) {
+      if($grp[$i][$j] == $usr) return $i;
+    }  
+  }
+  
+  return -1;
+}  
+
+function cmp($a, $b) {
+  return $a->diff > $b->diff;
+}
+
+function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
+  global $DB;
+  
+  $avg        = 0;
+  $nbEval     = 0;
+  $sumEval    = 0;
+  $similitude = 0;
+ 
+  // Somme des évaluations
+  $sql = " 
+    SELECT t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) total 
+      FROM {dynamo_eval} t1
+     WHERE t1.builder   = :param1
+       AND t1.critgrp   = 0
+       AND evalbyid     = :param2
+  ";
+       
+  $params = array('param1' => $dynamo->id, 'param2' => $usr1);
+  $result = $DB->get_record_sql($sql, $params);      
+  $sumEval = $result->total;
+  
+  if($sumEval == 0) {
+    $result = new stdClass();
+    $result->ecart      = 1000;
+    $result->similitude = 1000;
+    return $result;
+  }
+  
+  // Nombre d'évaluations   
+  $sql = " 
+    SELECT (count(t1.crit1) + count(t1.crit2) + count(t1.crit3) + count(t1.crit4) + count(t1.crit5)) nbeval
+      FROM {dynamo_eval} t1
+     WHERE t1.builder   = :param1
+       AND t1.critgrp   = 0
+       AND evalbyid     = :param2
+  ";
+
+  $params = array('param1' => $dynamo->id, 'param2' => $usr1);
+  $result = $DB->get_record_sql($sql, $params);      
+  $nbEval = $result->nbeval;
+  
+  $avg = round($sumEval / $nbEval, 3);
+/*
+  $sql = " 
+    SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) similitude 
+      FROM (   
+            SELECT t1.userid, if(t1.crit1-t1.crit1=0,'1','0') crit1 , if(t1.crit2-t2.crit2=0,'1','0') crit2  , if(t1.crit3-t2.crit3=0,'1','0') crit3 , if(t1.crit4-t2.crit4=0,'1','0') crit4  , if(t1.crit5-t2.crit5=0,'1','0') crit5 
+              FROM {dynamo_eval} t1
+                  ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
+                      FROM {dynamo_eval} t1
+                     WHERE t1.builder   = :param1
+                       AND t1.critgrp   = 0
+                       AND t1.evalbyid  = :param2
+                    ) t2
+             WHERE t1.builder   = :param3
+               AND t1.critgrp   = 0
+               AND t1.evalbyid  = :param4
+               AND t1.userid    = t2.userid 
+    ) t1
+  ";
+
+  $params = array('param1' => $dynamo->id, 'param2' => $usr2,'param3' => $dynamo->id, 'param4' => $usr1);
+  $result = $DB->get_record_sql($sql, $params);      
+  $similitude = $result->similitude/$nbEval;
+*/
+  
+  // Sum of the 6 criteria of student 1 minus the same criteria of student2 put at POW2 and after  to square2
+  $sql = " 
+    SELECT sum(t1.crit1/".$nbEval." + t1.crit2/".$nbEval." + t1.crit3/".$nbEval." + t1.crit4/".$nbEval." + t1.crit5/".$nbEval.") ecart 
+      FROM (       
+            SELECT SQRT(POW(((t1.crit1/".$avg.") - (t2.crit1/".$avg.")),2)) crit1, SQRT(POW(((t1.crit2/".$avg.")- (t2.crit2/".$avg.")),2)) crit2, SQRT(POW(((t1.crit3/".$avg.")- (t2.crit3/".$avg.")),2)) crit3, SQRT(POW(((t1.crit4/".$avg.")- (t2.crit4/".$avg.")),2)) crit4, SQRT(POW(((t1.crit5/".$avg.")- (t2.crit5/".$avg.")),2)) crit5
+              FROM {dynamo_eval} t1
+                  ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
+                      FROM {dynamo_eval} t1
+                     WHERE t1.builder   = :param1
+                       AND t1.critgrp   = 0
+                       AND t1.evalbyid  = :param2
+                    ) t2      
+             WHERE t1.builder   = :param3
+               AND t1.critgrp   = 0
+               AND evalbyid     = :param4
+               AND t1.userid    = t2.userid 
+           ) t1
+  ";
+
+  $params = array('param1' => $dynamo->id, 'param2' => $usr2,'param3' => $dynamo->id, 'param4' => $usr1);
+  $result = $DB->get_record_sql($sql, $params);      
+  $result->similitude = $similitude;
+  return $result;
+}
+
+
+function dynamo_get_group_type($type, $grpid, $max) {
+  switch($type) {
+    case 1:
+      return ' '.'<i class="fas fa-handshake colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'&#10;'.$max.'"></i>';
+      break;
+    case 2:
+      return ' '.'<i class="fas fa-thumbs-up colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetyperas', 'mod_dynamo').'&#10;'.$max.'"></i>';
+      break;
+    case 3:
+      return ' '.'<i class="fas fa-th colok"            data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeclustering', 'mod_dynamo').'&#10;'.$max.'"></i>';
+      break;
+    case 4:
+      return ' '.'<i class="fas fa-boxes colok"         data-id="'.$grpd.'"  data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').'&#10;'.$max.'"></i>';
+      break;
+    case 5:
+      return ' '.'<i class="fas fa-hand-scissors colok" data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeheterogene', 'mod_dynamo').'&#10;'.$max.'"></i>';
+      break;
+    case 6:
+      return ' '.'<i class="fas fa-ghost colok"         data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeghost', 'mod_dynamo').'&#10;'.$max.'"></i>';
+      break;
+  }  
+  return '';
+}    
+
+
+function dynamo_get_group_climat($dynamo, $grpusrs, $grpid) {
+  global $CFG, $DB, $OUTPUT;
+  
+  $notperfect         = 0;
+  $nbUser             = 0;
+  
+  $aWeight  = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
+  $aIcon    = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
+
+  foreach ($grpusrs as $grpusr) { 
+    $nbUser++;
+    
+    // Participation
+    if (!$DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id))) {
+      $notperfect+=3;
+    }
+    // Implication
+    $snif         = dynamo_get_snif($dynamo, $grpusrs, $grpusr->id);
+    $color        = dynamo_get_color_snif($snif[0]);
+    $notperfect+=  $aWeight[$color];
+    // Confiance
+    $conf       = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
+    $color      = dynamo_get_color_conf($conf);
+    if($color == 'green') $color = '#006DCC';
+    $notperfect+=  $aWeight[$color];
+  }
+  
+  if($notperfect == 0 ) {
+    $climat = '<i style="font-size:1.5em;color:gold;padding:3px;" class="fas '.$aIcon[0].'"></i>';
+  } else {
+    $grey   = 255-round(50*ceil($notperfect/$nbUser/2));
+    $climat = '<i style="font-size:1.5em;color:rgb('.$grey.','.$grey.','.$grey.');background-color:white;padding:3px;" class="fas '.$aIcon[ceil($notperfect/$nbUser/2)].'"></i>';
+  }
+  
+  return $climat;
 }  

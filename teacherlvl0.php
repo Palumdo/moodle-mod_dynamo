@@ -28,12 +28,17 @@
 //https://www.tandfonline.com/eprint/ee2eHDqmr2aTEb9t4dB8/full
   require_login($course, true, $cm);
 
+  // Predifine rgb colors for student charts
+  $aColors = ['(112,128,144)','(123,104,238)','(0,255,0)','(0,0,255)','(255, 215, 180)','(230, 25, 75)','(0, 130, 200)','(70, 240, 240)','(255,20,147)','(60, 180, 75)','(72,209,204)','(255, 225, 25)','(245, 130, 48)','(145, 30, 180)','(240, 50, 230)','(127,255,212)','(0,191,255)','(0,206,209)','(210, 245, 60)','(250, 190, 190)','(0, 128, 128)','(230, 190, 255)','(170, 110, 40)','(255, 250, 200)','(128, 0, 0)','(170, 255, 195)','(128, 128, 0)','(0, 0, 128)','(128, 128, 128)','(0,0,128)','(0,0,205)','(0,0,255)','(0,100,0)','(0,128,0)','(0,128,128)','(0,139,139)','(0,191,255)','(0,250,154)','(0,255,0)','(0,255,127)','(100,149,237)','(102,205,170)','(105,105,105)','(106,90,205)','(127,255,212)','(128,0,0)','(128,0,128)','(128,128,0)','(128,128,128)','(119,136,153)','(127,255,0)'];
+  
   $groups = dynamo_get_groups($dynamo->groupementid);
   $jscript = '<script>
     window.onload = function ()
     {';
+    
+    
   echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '.$cm->name.'</h3>');
-  echo('<select onchange="reloadme(this);">');
+  echo('<select onchange="reloadGroupme(this);">');
   echo('  <option></option>');
 
   $grp = 0;
@@ -49,13 +54,15 @@
   
  if($grp != 0) {
     $grpusrs = dynamo_get_group_users($grp->id);
-    echo('<h4 class="dynagroupingtitle" title="'.get_string('dynamogotoparticipant', 'mod_dynamo').'"><span class="ico-white"><i class="fas fa-user-cog"></i> '.$grp->name.'</span></h4>');
+    
+    $climat = dynamo_get_group_climat($dynamo, $grpusrs, $grpid);
+    echo('<h4 class="dynagroupingtitle">'.$climat.' <span class="ico-white">'.$grp->name.'</span></h4>');
     echo('<div class="" id="'.$grp->id.'" style="display:;">');
 
     echo (' <div class="table-container">
               <table class="tablelvl0">
                 <thead>
-                  <tr><th class="dbackground">
+                  <tr><th class="dbackground" style="background-color:'.$facColor.'">
                     <div>
                       <span class="dbottom">'.get_string('dynamoevaluator', 'mod_dynamo').'</span>
                       <span class="dtop">'.get_string('dynamoevaluated', 'mod_dynamo').'</span>
@@ -67,7 +74,7 @@
       $avatar->courseid = $course->id;
       $avatar->link = true;
     
-      echo('        <th style="text-align:center;">'.$OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'</th>');
+      echo('        <th style="text-align:center;">'.$OUTPUT->render($avatar).' <a class="urlanchor" title="'.get_string('dynamogotodetail', 'mod_dynamo').'" href="#stud'.$grpusr->id.'">'.$grpusr->firstname.' '.$grpusr->lastname.' <i class="far fa-arrow-alt-circle-down"></i></a></th>');
     }
     echo('          <th style="text-align:center;">'.get_string('dynamoier', 'mod_dynamo').'</th>'); // add the total column
    
@@ -77,23 +84,23 @@
     $i = 0;
     $nbstudent = 0;
     foreach ($grpusrs as $grpusr) { // loop to all students of  groups
-      echo('        <tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusr->id.'&groupid='.$grp->id.'&tab=5\'" style="cursor:pointer;">
-                      <td style="background-color:#006DCC;color:white;text-align:center;">'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
+      echo('      <tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusr->id.'&groupid='.$grp->id.'&tab=5\'" style="cursor:pointer;" title="'.get_string('dynamotab5', 'mod_dynamo').'">
+                    <td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
       $aGridlib = dynamo_get_matrix($dynamo, $grpusrs); // get the points matrix include sum and nifs
       for ($j=0;$j<count($aGridlib[$i]);$j++) {
         if($i != $j) {
-          echo('        <td style="text-align:center;">'.$aGridlib[$i][$j].'</td>');
+          echo('      <td style="text-align:center;">'.$aGridlib[$i][$j].'</td>');
         } else {
-          echo('        <td style="text-align:center;color:#666">('.$aGridlib[$i][$j].')</td>');
+          echo('      <td style="text-align:center;color:#666">('.$aGridlib[$i][$j].')</td>');
         }
       }
-      echo('          </tr>');
+      echo('        </tr>');
       if($aGridlib[$i][$j-1] > 0) $nbstudent++;
       $i++;
     }
     // NIFS
-    echo('          <tr>');
-    echo('            <td style="background-color:LightGrey;text-align:center;">'.get_string('dynamosnif', 'mod_dynamo').'</td>');
+    echo('        <tr>');
+    echo('          <td style="background-color:dimgray;text-align:center;">'.get_string('dynamosnif', 'mod_dynamo').'</td>');
     
     $i = count($aGridlib)-1;
     for($j=0;$j<count($aGridlib[$i]);$j++) {
@@ -104,30 +111,27 @@
     
     echo('      </tbody>
               </table>
-              <table style="width:100%;" id="table-comment">
+              <table id="table-comment">
                 <tbody>');
 
     $jsadd = "";        
 
-    $i=0;
-    while ($i<1000) {
-      if (get_string_manager()->string_exists('dynamokeywords'.$i, 'mod_dynamo')) {
-        $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.get_string('dynamokeywords'.$i, 'mod_dynamo').'", "ig"),"<span style=\'background-color:orange\'>'.get_string('dynamokeywords'.$i, 'mod_dynamo').'</span>"));';
-      } else break;
-      $i++;
+    $aKeywords = explode('|', get_string('dynamokeywords', 'mod_dynamo'));
+    foreach ($aKeywords as $keyword) {
+      $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$keyword.'", "ig"),"<span class=\'incomkey\'>'.$keyword.'</span>"));';
     }
     
     foreach ($grpusrs as $grpusr) { 
       $comment = dynamo_get_comment($grpusr->id, $dynamo);
-      echo ('<tr><td style="border-bottom:1px solid #fff;background-color:#006DCC;color:white;text-align:center;vertical-align:middle;">'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
-      echo ('<td style="border-bottom:1px solid #000;"><div class="eval_comments_table">');
+      echo ('<tr><td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
+      echo ('<td><div class="eval_comments_table">');
       echo('<b>'.get_string('dynamocommentcontr', 'mod_dynamo').'</b><br>');
       echo('<span class="tdcomment">'.$comment->comment1.'</span><br>');
       echo('<b>'.get_string('dynamocommentfonction', 'mod_dynamo').'</b><br>');
       echo('<span class="tdcomment">'.$comment->comment2.'</span><br><br>');
       echo ('</div></td></tr>');
-      $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$grpusr->firstname.'", "ig"),"<span style=\'background-color:yellow\'>'.$grpusr->firstname.'</span>"));';
-      $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$grpusr->lastname.'", "ig"),"<span style=\'background-color:yellow\'>'.$grpusr->lastname.'</span>"));';
+      $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$grpusr->firstname.'", "ig"),"<span class=\'incomname\'>'.$grpusr->firstname.'</span>"));';
+      $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$grpusr->lastname.'", "ig"), "<span class=\'incomname\'>'.$grpusr->lastname.'</span>"));';
     }
     echo('      </tbody>
               </table>');
@@ -153,19 +157,21 @@
     $keyColors    = '[';
     echo('<div class="graph-block"><canvas id="cvs_'.$grp->id.'" width="960" height="360">[No canvas support]</canvas></div>');
     // end group chart  
+    $stdCnt = 0;
     
     foreach ($grpusrs as $grpusr) {
-      $usrid  = $grpusr->id;
-      $data   = dynamo_compute_advanced($usrid, $dynamo);
-      $snif   = dynamo_get_snif($dynamo, $grpusrs, $usrid);
-      $conf   = dynamo_get_conf($dynamo, $grpusrs, $usrid);
+      $userid  = $grpusr->id;
+      $data   = dynamo_compute_advanced($userid, $dynamo);
+      $snif   = dynamo_get_snif($dynamo, $grpusrs, $userid);
+      $conf   = dynamo_get_conf($dynamo, $grpusrs, $userid);
       $avatar = new user_picture($grpusr);
       $avatar->courseid = $course->id;
       $avatar->link = true;
       
-      $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid.'" width="720" height="360">[No canvas support]</canvas></div>';
-      echo('<h4 class="group_detail_title" onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusr->id.'&groupid='.$groupid.'&tab=5\'">'.$OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'</h4>');
-      $dynamoautoeval = dynamo_get_autoeval($usrid, $dynamo);
+      $canvas = '<div class="graph-block"><canvas id="cvs_'.$userid.'" width="720" height="360">[No canvas support]</canvas></div>';
+      echo ('<div id="stud'.$grpusr->id.'">&nbsp;</div>');
+      echo('<h4 class="group_detail_title" style="background-color:'.$facColor.'" title="'.get_string('dynamogotoparticipant', 'mod_dynamo').'" onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusr->id.'&groupid='.$groupid.'&tab=5\'">'.$OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'</h4>');
+      $dynamoautoeval = dynamo_get_autoeval($userid, $dynamo);
 
       // data for the spider graph 
       $autoevalstr = '['.$dynamoautoeval->crit1.','.$dynamoautoeval->crit2.','.$dynamoautoeval->crit3.','.$dynamoautoeval->crit4.','.$dynamoautoeval->crit5;
@@ -229,7 +235,7 @@
 
       $allgroupeval = "";
       if($dynamo->groupeval == 1) {
-        $allgroupeval = dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grp->id);
+        $allgroupeval = dynamo_get_group_eval_avg($dynamo, $userid, $grpusrs, $grp->id);
         echo ('<tr>');
         echo (' <td >'.get_string('dynamogroupevalby', 'mod_dynamo').'</td>');
         echo (' <td >'.$allgroupeval->crit1.'</td>');
@@ -244,8 +250,8 @@
 
       echo(' </tbody>');
       echo('</table>');
-      echo('<b>'.get_string('dynamosnif', 'mod_dynamo').'</b> :<span style="color:white;background-color:'.dynamo_get_color_snif($snif[0]).'">'.number_format($snif[0],2,',', ' ').'</span> <a href="#" data-toggle="tooltip" dyna-data-title="'.$snif[1].'">&nbsp;<i class="fas fa-info-circle ico-blue"></i></a><br>');
-      echo('<b>'.get_string('dynamoconf', 'mod_dynamo').'</b> :<span style="color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf,2,',', ' ').'</span><br>');
+      echo('<b>'.get_string('dynamosnif', 'mod_dynamo').'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_snif($snif[0]).'">'.number_format($snif[0],2,',', ' ').'</span> <a href="#" data-toggle="tooltip" dyna-data-title="'.$snif[1].'">&nbsp;<i class="fas fa-info-circle ico-blue"></i></a><br>');
+      echo('<b>'.get_string('dynamoconf', 'mod_dynamo').'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf,2,',', ' ').'</span><br>');
       echo($canvas);
       
       $allgroupevalstr = "";
@@ -255,41 +261,39 @@
         $allgroupevalstr .= ']';
       }      
       
-      $jscript = dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $grpusr->firstname, $grpusr->lastname);
+      $jscript = dynamo_get_graph_radar($jscript, $userid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $grpusr->firstname, $grpusr->lastname);
 
       // Radart group data  
       $keys       .= '"'.htmlspecialchars($grpusr->firstname,ENT_QUOTES)." ".htmlspecialchars($grpusr->lastname,ENT_QUOTES).'",';
       $datagrp    .= str_replace (",,,,","0,0,0,0,0",$autoevalstr).',';
 
-      $randomString = md5($grpusr->firstname.'-'.$grpusr->lastname);
-      $r = hexdec(substr($randomString,0,2));
-      $g = hexdec(substr($randomString,2,2));
-      $b = hexdec(substr($randomString,4,2));
-
-      $strokestyle  .= '\'rgba('.$r.','.$g.','.$b.',0.8)\',';
-      $keyColors    .= '\'rgb('.$r.','.$g.','.$b.')\',';
+      $color = $aColors[$stdCnt++];
+      if($stdCnt>= count($aColors)) $stdCnt=0;
+      $keyColors    .= '\'rgb'.$color.'\',';
+      $color        = str_replace(')','',$color);
+      $strokestyle  .= '\'rgba'.$color.',0.8)\',';     
       // End group data
       
     }  
   }    
   // This radar graphic display all auto evaluation of students
   if($datagrp != '') {
-    $datagrp      = substr($datagrp, 0,-1);
-    $keys         = substr($keys, 0,-1);
+    // remove last character (,)
+    $datagrp      = substr($datagrp,     0,-1);
+    $keys         = substr($keys,        0,-1);
     $strokestyle  = substr($strokestyle, 0,-1);
-    $keyColors    = substr($keyColors, 0,-1);
+    $keyColors    = substr($keyColors,   0,-1);
 
-    if(allgroupevalstr != "") {
+    if($allgroupevalstr != "") {
       $datagrp      .= ','.$allgroupevalstr;
       $keys         .= ',"'.get_string('dynamogroupevalby', 'mod_dynamo').'"';
-      $randomString = md5(get_string('dynamogroupevalby', 'mod_dynamo'));
-      $r = hexdec(substr($randomString,0,2));
-      $g = hexdec(substr($randomString,2,2));
-      $b = hexdec(substr($randomString,4,2));
-      $strokestyle  .= ','.'\'rgba('.$r.','.$g.','.$b.',0.8)\'';
-      $keyColors    .= ','.'\'rgb('.$r.','.$g.','.$b.')\'';
+
+      $color = $aColors[$stdCnt++];
+      $keyColors    .= ','.'\'rgb'.$color.'\',';
+      $color        = str_replace(')','',$color);
+      $strokestyle  .= ','.'\'rgba'.$color.',0.8)\',';     
     }
-    
+
     $datagrp      .= ']';
     $keys         .= ']';
     $strokestyle  .= ']';
@@ -327,7 +331,7 @@
   
   $jscript = $jscript.'
       };
-       function reloadme(obj) {
+       function reloadGroupme(obj) {
         val = $(obj).children(":selected").attr("id");
         location.href=\'view.php?id='.$id.'&usrid='.$usrid.'&groupid=\'+val+\'&tab=3\';
        }

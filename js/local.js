@@ -59,63 +59,150 @@ function displayStar(id) {
   }
 }
 
-  $('.hiddenval').each(function() {
-    var id  = this.id;
-    displayStar(id);
-  });  
+$('.hiddenval').each(function() {
+  var id  = this.id;
+  displayStar(id);
+});  
 
  // crit6 '' or none grp 0 or 1... 
- function validation(crit6, grp) {
-  var error = 0;  
-  var idList = '';
-  // pairs
-  jQuery('.saveme').each(function() {
-    var currentElement  = $(this);
-    var value           = currentElement.val(); 
-    var id              = this.id;
-    //console.log(id + ' - ' + value );
-    if(id.indexOf('_6') != -1) { // 6th criteria for pairs
-      if(crit6 == '' && value == 0) error++; 
-    } else {
-      if(value == 0) {error++;idList += id+"," } 
+function validation(crit6, grp) {
+ var error = 0;  
+ var idList = '';
+ // pairs
+ jQuery('.saveme').each(function() {
+   var currentElement  = $(this);
+   var value           = currentElement.val(); 
+   var id              = this.id;
+   //console.log(id + ' - ' + value );
+   if(id.indexOf('_6') != -1) { // 6th criteria for pairs
+     if(crit6 == '' && value == 0) error++; 
+   } else {
+     if(value == 0) {error++;idList += id+"," } 
+   }
+ });
+
+ // group
+ if(grp == 1) {
+   jQuery('.savemegrp').each(function() {
+     var currentElement  = $(this);
+     var value           = currentElement.val(); 
+     var id              = this.id;
+   
+     if(id.indexOf('_6') != -1) { // 6th criteria for group
+       if(crit6 == '' && value == 0) error++; 
+     } else {
+       if(value == 0) {error++;idList += id+"," }
+     }
+     
+   });
+ }
+
+ // comments
+ jQuery('.savemecom').each(function() {
+   var currentElement  = $(this);
+   var value           = currentElement.val(); 
+   var id              = this.id;
+ 
+   if(value == 0) error++; 
+ });  
+ 
+ 
+ if(error > 0) {  
+   window.scrollTo(0, 0); 
+   $("#errormsg").css('display','block');
+   return false;
+ }
+ 
+ return true;
+}   
+// END OF JS specific to student.php
+
+// JS specific to teacher.php
+function numTable() {
+  var nbLine = 0;
+  $(".tablelvlx > tbody  > tr").each(function() {
+    if($(this).css("display") != "none") {
+      nbLine++;
+      $(this).find("td").eq(7).html(nbLine);
     }
   });
+}  
 
-  // group
-  if(grp == 1) {
-    jQuery('.savemegrp').each(function() {
-      var currentElement  = $(this);
-      var value           = currentElement.val(); 
-      var id              = this.id;
-    
-      if(id.indexOf('_6') != -1) { // 6th criteria for group
-        if(crit6 == '' && value == 0) error++; 
-      } else {
-        if(value == 0) {error++;idList += id+"," }
-      }
-      
-    });
-  }
+function hidenoprob() {
+  var $rowsNo = $(".tablelvlx tbody tr").filter(function () {
+    if ( ($.trim($(this).find("td").eq(6).html())).search("fa-sun") > -1 ) return true;
+    else return false;        
+  }).toggle();
+  numTable();
+  
+  var $climat = $("#main-overview .overview-group").filter(function () {
+    if ( ($.trim($(this).html())).search("fa-sun") > -1 ) return true;
+    else return false;        
+  }).toggle();
+  
+}
 
-  // comments
-  jQuery('.savemecom').each(function() {
-    var currentElement  = $(this);
-    var value           = currentElement.val(); 
-    var id              = this.id;
+function hidenotcomplete() {
+  var $rowsNo = $(".tablelvlx tbody tr").filter(function () {
+   if (($.trim($(this).find("td").eq(1).html())).search("color:#ccc") > -1) return true;
+   else return false;
+  }).toggle();
+  numTable();
   
-    if(value == 0) error++; 
-  });  
-  
-  
-  if(error > 0) {  
-    window.scrollTo(0, 0); 
-    $("#errormsg").css('display','block');
-    return false;
-  }
-  
-  return true;
- }   
-// JS specific to student.php
+  $("#main-overview .abstent").toggle();
+}
+
+function switchoverview() {
+  $('#table-overview').toggle();
+  $('#main-overview').toggle();
+}
 
 
- 
+$(".tablelvlx tr").hover(function() {
+  $(this).find("td").eq(7).css("background-color","#006DCC");
+  $(this).find("td").eq(7).css("padding","15px;");
+  $(this).find("td").eq(7).css("transition","all 200ms ease-in");
+  $(this).find("td").eq(7).css("transform","scale(1.7)");
+});
+
+$(".tablelvlx tr").mouseleave(function() {
+  $(this).find("td").eq(7).css("background-color","transparent");
+  $(this).find("td").eq(7).css("padding","0;");
+  $(this).find("td").eq(7).css("transition","all 200ms ease-in");
+  $(this).find("td").eq(7).css("transform","scale(1.0)");
+});
+
+
+$(".report-yearbook-descr").hover(function() {
+  $(this).css("transition","all 200ms ease-in");
+  $(this).css("borderRadius","15px");
+  $(this).css("fontSize","14px");
+  $(this).css("transform","scale(1.7)");
+  $(this).css("zIndex","1000");
+
+});
+
+$(".report-yearbook-descr").mouseleave(function() {
+  $(this).css("transition","all 200ms ease-in");
+  $(this).css("borderRadius","0");
+  $(this).css("fontSize","20px");
+  $(this).css("transform","scale(1.0)");
+  $(this).css("zIndex","1");
+});
+
+
+$(".report-yearbook img").hover(function() {
+  $(this).css("transition","all 200ms ease-in");
+  $(this).css("transform","scale(1.7)");
+  $(this).css("zIndex","1000");
+
+});
+
+$(".report-yearbook img").mouseleave(function() {
+  $(this).css("transition","all 200ms ease-in");
+  $(this).css("transform","scale(1.0)");
+  $(this).css("zIndex","1");
+});
+
+
+

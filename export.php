@@ -50,21 +50,21 @@ if($mode == '') {
 $sql = " 
 SELECT * FROM (
 (SELECT  RAND() id, 0 crit, t5.name grouping, t6.name groupname, t3.idnumber, t3.firstname evalfirstname, t3.lastname evallastname, t4.firstname, t4.lastname, FROM_UNIXTIME(t2.timemodified , '%Y-%m-%d %h:%i:%s') date, t2.crit1, t2.crit2, t2.crit3, t2.crit4, t2.crit5, t2.crit6, t2.comment1, t2.comment2
-  FROM mdl_dynamo             t1
-      ,mdl_dynamo_eval        t2
-      ,mdl_user               t3 
-      ,mdl_user               t4
-      ,mdl_groupings          t5
+  FROM {dynamo}             t1
+      ,{dynamo_eval}        t2
+      ,{user}               t3 
+      ,{user}               t4
+      ,{groupings}          t5
       ,(SELECT tt2.name, tt3.userid
-          FROM mdl_groupings_groups tt1
-              ,mdl_groups           tt2
-              ,mdl_groups_members   tt3
+          FROM {groupings_groups} tt1
+              ,{groups}           tt2
+              ,{groups_members}   tt3
          WHERE tt1.groupingid = (SELECT groupementid
-                                   FROM mdl_dynamo tx
+                                   FROM {dynamo} tx
                                   WHERE course = :param1
                                     AND tx.id = (SELECT cm.instance
-                                                  FROM mdl_course_modules cm
-                                                  JOIN mdl_course c ON c.id = cm.course
+                                                  FROM {course_modules} cm
+                                                  JOIN {course} c ON c.id = cm.course
                                                  WHERE cm.id = :param2
                                                 )
                                  )
@@ -72,11 +72,11 @@ SELECT * FROM (
            AND tt3.groupid    = tt2.id   
                               ) t6   
  WHERE t2.builder     = (SELECT id
-                          FROM mdl_dynamo tx
+                          FROM {dynamo} tx
                          WHERE course = :param3
                            AND tx.id = (SELECT cm.instance
-                                          FROM mdl_course_modules cm
-                                          JOIN mdl_course c ON c.id = cm.course
+                                          FROM {course_modules} cm
+                                          JOIN {course} c ON c.id = cm.course
                                          WHERE cm.id = :param4
                                         )
                         )
@@ -88,21 +88,21 @@ SELECT * FROM (
    AND t6.userid      = t2.evalbyid)
 UNION
 (SELECT RAND() id,1 crit, t5.name grouping, t6.name groupname, t3.idnumber ,t3.firstname evalfirstname, t3.lastname evallastname, t4.name lastname, t4.name firstname, FROM_UNIXTIME(t2.timemodified , '%Y-%m-%d %h:%i:%s') date, t2.crit1, t2.crit2, t2.crit3, t2.crit4, t2.crit5, t2.crit6, t2.comment1, t2.comment2
-  FROM mdl_dynamo             t1
-      ,mdl_dynamo_eval        t2
-      ,mdl_user               t3 
-      ,mdl_groups             t4
-      ,mdl_groupings          t5
+  FROM {dynamo}             t1
+      ,{dynamo_eval}        t2
+      ,{user}               t3 
+      ,{groups}             t4
+      ,{groupings}          t5
       ,(SELECT tt2.name, tt3.userid
-          FROM mdl_groupings_groups tt1
-              ,mdl_groups           tt2
-              ,mdl_groups_members   tt3
+          FROM {groupings_groups} tt1
+              ,{groups}           tt2
+              ,{groups_members}   tt3
          WHERE tt1.groupingid = (SELECT groupementid
-                                   FROM mdl_dynamo tx
+                                   FROM {dynamo} tx
                                   WHERE course = :param5
                                     AND tx.id = (SELECT cm.instance
-                                                  FROM mdl_course_modules cm
-                                                  JOIN mdl_course c ON c.id = cm.course
+                                                  FROM {course_modules} cm
+                                                  JOIN {course} c ON c.id = cm.course
                                                  WHERE cm.id = :param6
                                                 )
                                  )
@@ -110,11 +110,11 @@ UNION
            AND tt3.groupid    = tt2.id   
                               ) t6   
  WHERE t2.builder     = (SELECT id
-                          FROM mdl_dynamo tx
+                          FROM {dynamo} tx
                          WHERE course = :param7
                            AND tx.id = (SELECT cm.instance
-                                          FROM mdl_course_modules cm
-                                          JOIN mdl_course c ON c.id = cm.course
+                                          FROM {course_modules} cm
+                                          JOIN {course} c ON c.id = cm.course
                                          WHERE cm.id = :param8
                                         )
                         )

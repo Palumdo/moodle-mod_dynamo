@@ -1,13 +1,26 @@
+table {
+  font-size:14px;
+}
+
+:root {
+  --main-color: #006DCC;
+}
+
 /***************************************************************/
-/** Only work well on firefox...                              **/
+/** @media print Only work well on firefox...                 **/
 /***************************************************************/
 @media print {
+ h4.nojump { 
+    page-break-before : avoid !important;
+    break-before      : avoid !important;
+  }
+  
   h4 { 
     page-break-before : always;
     break-before      : always;
   }
   
-  
+  // work around for chrome and edge but no success for now
   .break-after {
     display           : block;
     break-before      : always;
@@ -23,8 +36,29 @@
   }
   
   .button_list_subreport {
-  display           : none;
+    display           : none;
   } 
+  
+  #selreporttop {
+    display           : none;
+  } 
+  
+  #top {
+    display           : none;
+  } 
+
+  .tab {
+    display           : none;
+  } 
+  
+  .report_title {
+    display           : none;
+  } 
+  
+  .dontprint {
+    display           : none;
+  } 
+
 }  
 /***************************************************************/
 /***************************************************************/
@@ -62,7 +96,7 @@ td:nth-child(7) > i.mystar {
 }
 
 thead th {
-  background-color    : #006DCC;
+  background-color    : var(--main-color);
   color               : white;
 }
 
@@ -83,7 +117,7 @@ thead th {
   
 .dynagroupingtitle {  
   width               : 100%;
-  background-color    : #6699cc;
+  background-color    : #9cb7d4;
   color               : white;
   border-radius       : 10px 0;
   padding             : 10px;
@@ -136,7 +170,9 @@ thead th {
   padding-right       : 10px;
 }
 
-
+/*********************/
+/* Boostrap like CSS */
+/*********************/
 ::before, ::after {
   -webkit-box-sizing  : border-box;
   -moz-box-sizing     : border-box;
@@ -206,6 +242,8 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
   padding             : 15px;
   padding-right       : 30px;
 }
+/*********************/
+
 
 /* Tooltip container */
 .tooltip {
@@ -250,17 +288,15 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
 }
 
 .tablelvlx th, .tablelvlx td {
-  // padding             : 8px;
-  // line-height         : 20px;
-  text-align          : center;
-  // vertical-align      : top;
+  padding-left        : 8px;
+  text-align          : left;
   border-top          : 1px solid #ddd;
   border-right        : 1px solid #ddd;
 }
 
 
-.tablelvlx tr:hover {
-  background-color    : #007a00;
+.tablelvlx tr:hover:nth-child(even), .tablelvlx tr:hover:nth-child(odd) {
+  background-color    : rgb(0,110,204,0.9);
   color               : white;
 }
 
@@ -268,6 +304,8 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
   border-bottom       : 1px solid #ddd;
 }
 
+.tablelvlx tr:nth-child(even) {background: #F8F8F8}
+.tablelvlx tr:nth-child(odd)  {background: #FFF}
 
 .tablelvl0 {
   width: 100%;
@@ -280,6 +318,12 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
 
 .tablelvl0 tr {
   background-color    : white;
+}
+
+.tablelvl0 td:first-child {
+  background-color    : var(--main-color);
+  color               : white;
+  text-align          : center;
 }
 
 .tablelvl0 th, .tablelvl0 td {
@@ -297,6 +341,16 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
 .tablelvl0 tr {
   background-color    : white;
 }  
+
+.tablelvl0 tr:hover:nth-child(even), .tablelvl0 tr:hover:nth-child(odd) {
+  background-color    : rgb(0,110,204,0.9);
+  color               : white;
+}
+
+.tablelvl0 tr:nth-child(even) {background: #F8F8F8}
+.tablelvl0 tr:nth-child(odd)  {background: #FFF}
+
+
 
 
 .tablelvl0_rep {
@@ -321,7 +375,7 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
 }
 
 .tablelvl0_rep td:first-child {
-  background-color    : #006DCC;
+  background-color    : var(--main-color);
   color               : white;
 }  
 
@@ -335,7 +389,7 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
 
 
 .tablelvl0 tr:hover {
-  background-color    : #006DCC !important;
+  background-color    : var(--main-color) !important;
   color               : white;
 }
 
@@ -383,49 +437,38 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
   z-index             : 999999;
   border              : 2px solid #ccc;	
 }
-/*
-[dyna-data-title]:hover::after {
-  content             : '';
-  position            : absolute;
-  bottom              : -5px;
-  left                : 8px;
-  display             : inline-block;
-  color               : #fff;
-  border              : 8px solid transparent;	
-  border-bottom       : 8px solid #ccc;
-  z-index             : 999999;
-}
-*/
 
 /* Style the tab */
 .tab {
   overflow            : hidden;
+  width               : 100%;
   border              : 1px solid #ccc;
   background-color    : #f1f1f1;
-  height              : 48px;
 }
 
 /* Style the buttons inside the tab */
-.tab span {
+.tab div {
+  overflow            : hidden;
   background-color    : transparent;
   float               : left;
-  border              : none;
   outline             : none;
   cursor              : pointer;
   padding             : 14px 16px;
   transition          : 0.3s;
   font-size           : 17px;
-  border-radius       : 0px;
+  width               : 15%;
+  text-align          : center;
 }
 
 /* Change background color of buttons on hover */
-.tab span:hover {
+.tab div:hover {
   background-color    : #ddd  !important;
 }
 
 /* Create an active/current tablink class */
-.tab span.active {
+.tab div.active {
   background-color    : #ccc  !important;
+  font-weight         : bold;
 }
 
 /* Style the tab content */
@@ -452,6 +495,7 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
   padding             : 5px;
   text-align          : center;
   vertical-align      : middle;
+  color               : white;
 }  
 
 .group_detail_title_rep {
@@ -477,9 +521,7 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
 }  
 
 .group_detail_title:hover {
-  background-color    : #006DCC;
-  color               : white;
-  cursor              : pointer;  
+  background-color    : var(--main-color) !important;
 }  
 
 
@@ -516,7 +558,7 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
 }
 
 .ui-menu-item:hover {
-  background-color    : #006DCC;
+  background-color    : var(--main-color);
   color               : white;
   cursor              : pointer;  
 }
@@ -578,9 +620,10 @@ button::-moz-focus-inner {
   left                : 0;
   right               : 0;
   bottom              : 0;
-  background-color    : #2196F3;
+  background-color    : #9cb7d4;
   -webkit-transition  : .4s;
   transition          : .4s;
+  border-radius       : 3px;
 }
 
 .slider:before {
@@ -593,10 +636,11 @@ button::-moz-focus-inner {
   background-color    : white;
   -webkit-transition  : .4s;
   transition          : .4s;
+  border-radius       : 3px;
 }
 
 input:checked + .slider {
-  background-color    : #ccc;
+  background-color    : #5db3e6;
 }
 
 input:focus + .slider {
@@ -613,13 +657,28 @@ input:checked + .slider:before {
   border              : 1px solid #666;
   padding             : 5px;
   text-align          : center;
-  max-width           : 222px;
-  border-radius       : 15px;
+  max-width           : 150px;
+  min-width           : 105px;
+  min-height          : 90px;
+  border-radius       : 15px 0;
   float               : left;
   margin              : 3px;
   font-weight         : bold;
+  font-size           : 12px;
+  background-color    : #072444;
+  color               : white;  
 }
 
+.box-switch-label {
+  min-height          : 60px;
+  overflow            : hidden;
+}  
+
+.box-switch a {
+  padding             : 5px;
+  background-color    : white;
+  border-radius       : 4px;
+}
 
 /* Rounded sliders */
 .slider.round {
@@ -645,7 +704,7 @@ input:checked + .slider:before {
 
 
 .ico-blue {
-  color               : #006DCC;
+  color               : var(--main-color);
 }
 
 .savemecom {
@@ -703,4 +762,196 @@ input:checked + .slider:before {
 .fa-user {
   font-size           : 1.2em;
   margin-left         : 2px;  
+}
+
+
+.camera {
+  background-color    : var(--main-color);
+  color               : white;
+  text-align          : right !important;
+  padding-right       : 5px; 
+}
+
+.camera-border {
+  border-left         : 3px solid grey;
+  text-align          : center !important;
+  background-color    : #FCFCF6;
+}
+
+.tooltip-corr {
+  text-align          : left !important;
+  left                : 80px !important;
+}
+
+.colok {           
+  color               : var(--main-color);
+}
+
+.hiddenval {
+  display             : none; 
+}  
+
+.button_list_subreport {
+  width               : 100%;
+  overflow            : hidden;
+} 
+
+.td-num {
+  text-align          : center !important;
+  padding             : 0  !important;
+  margin              : 0  !important;
+}
+
+ 
+#table-comment {
+  width               : 100%;
+  border              : 1px solid #333;
+  margin-bottom       : 35px;
+}
+  
+#table-comment td:first-child {
+  border-bottom       : 1px solid #fff;
+  background-color    : var(--main-color);
+  color               : white;
+  text-align          : center;
+  vertical-align      : middle;
+}  
+
+#table-comment td {
+  border-bottom       : 1px solid #000;
+}  
+
+#pleasewait {
+  width               : 100%;
+  text-align          : center;
+  padding             : 48px 0 48px 0;
+  font-size           : 32px;
+  color               : #333;
+}
+
+
+.urlanchor:link,  .urlanchor:visited,  .urlanchor:active  {
+  color               : white;
+}
+
+.urlanchor:hover {
+  text-decoration     : underline;
+}
+
+
+
+.report-yearbook {
+  float               : left;
+  width               : 120px;
+  height              : 150px;
+  text-align          : center;
+  border              : 1px solid #808080;
+  border-radius       : 4px;
+  background-color    : #5db3e6;
+}
+
+.report-yearbook img {
+  width               : 50px;
+  height              : 50px;
+  padding             : 1px;
+  border              : 3px solid #fff;
+  border-radius       : 6px;
+  background-color    : #f0f0f0;
+}
+
+.report-yearbook-descr {
+  text-align          : center;
+  font-weight         : normal;
+  width               : 100%;
+  height              : 87px;
+  background-color    : #00214e;
+  color               : white;
+  vertical-align      : middle;
+  font-family         : 'Indie Flower', cursive;
+  font-size           : 20px;
+  padding-top         : 5px;
+  overflow            : hidden;
+}
+
+.report-yearbook-descr a {
+  color               : white;
+  text-decoration     : none;
+}
+
+.ui-autocomplete-input {
+  line-height         : 20px !important;
+  height              : 30px !important;
+}  
+
+.main-overview {
+  width               : 100%;
+}  
+
+.overview-group {
+  float               : left;
+  width               : 150px;
+  height              : 100px;
+  text-align          : center;
+  border              : 1px solid #808080;
+  border-radius       : 4px;
+  background-color    : #5db3e6;
+  cursor              : pointer;
+}
+
+.overview-name {
+  text-align          : center;
+  font-weight         : bold;
+  width               : 100%;
+  height              : 60px;
+  overflow            : hidden;  
+  color               : white;
+}  
+
+
+.overview-climat {
+  text-align          : center;
+  font-weight         : normal;
+  width               : 100%;
+  height              : 35px;
+  background-color    : #00214e;
+  color               : white;
+  vertical-align      : middle;
+  padding-top         : 5px;
+  overflow            : hidden;
+}
+
+.hiddenidx {
+  display             : none;
+}  
+
+.single-box-comment {
+  border              : 1px solid #ccc;
+  margin              : 5px;
+  padding             : 5px;
+  border-radius       : 15px;
+  background-color    : #eee;
+}
+
+.single-table-data {
+  border-collapse     : collapse;
+  border-spacing      : 0;
+  width               : 100%;
+  display             : table;
+}
+
+.incomkey {
+  border-radius       : 4px;
+  background-color    : #ffdb99;
+  padding             : 3px;
+}
+.incomname {
+  border-radius       : 4px;
+  background-color    : #efef95;
+  padding             : 3px;
+}
+    
+
+img.userpicture {
+  margin-right        : 0;
+  border-radius       : 5px;
 }

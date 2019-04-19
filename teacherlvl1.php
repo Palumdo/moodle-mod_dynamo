@@ -82,7 +82,7 @@
       echo ('<h3>'.get_string('dynamoteacherlvl1title', 'mod_dynamo').' : '.$OUTPUT->render($avatar).' '.$usr->firstname.' '.$usr->lastname.'</h3>');
       $grp =dynamo_get_group_from_user($dynamo->groupementid, $usrid);
      
-      echo('<h4 class="dynagroupingtitle" style="color:white;cursor:default;"><i class="fas fa-user-cog"></i> '.$grp->name.'</h4>');
+      echo('<h4 class="dynagroupingtitle" style="color:white;cursor:pointer;" title="'.get_string('dynamotab3', 'mod_dynamo').'" onclick="location.href=\'view.php?id='.$id.'&usrid='.$usrid.'&groupid='.$grp->id.'&tab=3\'"><i class="fas fa-user-cog"></i> '.$grp->name.'</h4>');
       echo('<div class="" id="'.$grp->id.'" style="display:;">');
 
       $labels = '[\''.get_string('dynamoparticipation', 'mod_dynamo').'\',\''.get_string('dynamoresponsabilite', 'mod_dynamo').'\',\''.get_string('dynamoscientifique', 'mod_dynamo').'\',\''.get_string('dynamotechnique', 'mod_dynamo').'\',\''.get_string('dynamoattitude', 'mod_dynamo').'\'';
@@ -96,8 +96,7 @@
                 <table class="tablelvl0">
                   <thead>
                      <tr>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
+                        <th style="background-color:'.$facColor.'">&nbsp;</th>
                         <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="tooltip"    dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
                         <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="tooltip"   dyna-data-title="('.get_string('dynamocritresponsabilitedefault', 'mod_dynamo').'- '.$dynamo->crit2.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
                         <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="tooltip"     dyna-data-title="('.get_string('dynamocritscientifiquedefault', 'mod_dynamo').'- '.$dynamo->crit3.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
@@ -117,8 +116,8 @@
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grp->id);
             
             $result = dynamo_compute_basis($dynamoeval, $display6);
-            echo ('<tr style="border:2px solid black;">');
-            echo (' <td class="tdteach"><b>'.get_string('dynamoevalofgroup', 'mod_dynamo').'</b></td><td>'.$grp->name.'</td>');
+            echo ('<tr style="border:2px solid #000;">');
+            echo (' <td class="tdteach"><b>'.get_string('dynamoevalofgroup', 'mod_dynamo').'</b> : '.$grp->name.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit3.'</td>');
@@ -137,17 +136,18 @@
         $grpusrs = dynamo_get_group_users($grp->id);
         foreach ($grpusrs as $grpusrsub) { // loop to all evaluation of  students
           $color = "";
-          if($usrid == $grpusrsub->id) $color = '#6699cc';
+          if($usrid == $grpusrsub->id) $color = '#9cb7d4';
 
 
           if($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {
+            // Do nothing
           } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grpusrsub->id);
             if($usrid ==  $grpusrsub->id) $dynamoautoeval[] = $dynamoeval;   
             $result = dynamo_compute_basis($dynamoeval, $display6);
 
-            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=5\'" style="cursor:pointer;">');
-            echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.'</td><td style="color:'.$color.'" class="tdteach">'.$grpusrsub->lastname.'</td>');
+            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=5\'" style="cursor:pointer;" title="'.get_string('dynamotab5', 'mod_dynamo').'">');
+            echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit3.'</td>');
@@ -169,11 +169,11 @@
 
           // Display the comments
       $comment = dynamo_get_comment($usrid, $dynamo);
-      echo ('<div>');
+      echo ('<div class="single-box-comment">');
       echo('<b>'.get_string('dynamocommentcontr', 'mod_dynamo').'</b><br>');
       echo($comment->comment1.'<br>');
       echo('<b>'.get_string('dynamocommentfonction', 'mod_dynamo').'</b><br>');
-      echo($comment->comment2.'<br><br>');
+      echo($comment->comment2.'</div>');
     //*********************************************************************
     // user eval BY the others
       echo (' <div class="table-container">
@@ -181,8 +181,7 @@
                 <table class="tablelvl0">
                   <thead>
                      <tr>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
+                        <th style="background-color:'.$facColor.'">&nbsp;</th>
                         <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="tooltip"    dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
                         <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="tooltip"   dyna-data-title="('.get_string('dynamocritresponsabilitedefault', 'mod_dynamo').'- '.$dynamo->crit2.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
                         <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="tooltip"     dyna-data-title="('.get_string('dynamocritscientifiquedefault', 'mod_dynamo').'- '.$dynamo->crit3.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
@@ -199,7 +198,7 @@
         $grpusrs = dynamo_get_group_users($grp->id);
         foreach ($grpusrs as $grpusrsub) { // loop to all evaluation of  students
           $color = "";
-          if($usrid == $grpusrsub->id) $color = '#6699cc';
+          if($usrid == $grpusrsub->id) $color = '#9cb7d4';
 
           if($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {
           } else {
@@ -208,8 +207,8 @@
 
             $result = dynamo_compute_basis($dynamoeval, $display6);
 
-            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=5\'" style="cursor:pointer;">');
-            echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.'</td><td style="color:'.$color.'" class="tdteach">'.$grpusrsub->lastname.'</td>');
+            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=5\'" style="cursor:pointer;" title="'.get_string('dynamotab5', 'mod_dynamo').'">');
+            echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit3.'</td>');
@@ -228,15 +227,14 @@
     //**********************************************************************      
         
       $data = dynamo_compute_advanced($usrid, $dynamo);
-      echo('<table style="border-collapse: collapse;border-spacing: 0;width: 100%;display: table;border: 1px solid #ccc;">');
+      echo('<div class="single-box-comment"><table class="single-table-data">');
       echo('<tr><td style="width:200px;"><b>'.get_string('dynamoavgeval', 'mod_dynamo').'</b>:</td><td>'.round(($data->sum/$data->nbeval)/$data->nbcrit,2).'<td><tr>');
-      echo('<tr style="background-color:#ccc;"><td><b>'.get_string('dynamoautoeval', 'mod_dynamo').'</b>:</td><td>'.round($data->autosum/$data->nbcrit,2).'<td><tr>');
+      echo('<tr><td><b>'.get_string('dynamoautoeval', 'mod_dynamo').'</b>:</td><td>'.round($data->autosum/$data->nbcrit,2).'<td><tr>');
       $snif = dynamo_get_snif($dynamo, $grpusrs, $usrid);
       $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid);
-      echo('<tr><td><b>'.get_string('dynamosnif', 'mod_dynamo').'</b>:</td><td><span style="color:white;background-color:'.dynamo_get_color_snif($snif[0]).'">'.number_format($snif[0],2,',', ' ').'</span> <span><a href="#" data-toggle="tooltip"    dyna-data-title="'.$snif[1].'">&nbsp;<i class="fas fa-info-circle ico-blue"></i></a></span></td></tr>');
-      echo('<tr><td><b>'.get_string('dynamoconf', 'mod_dynamo').'</b>:</td><td><span style="color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf,2,',', ' ').'</span></td></tr>');
-      echo('</table>');
-      echo ('</div>');
+      echo('<tr><td><b>'.get_string('dynamosnif', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_snif($snif[0]).'">'.number_format($snif[0],2,',', ' ').'</span> <span><a href="#" data-toggle="tooltip"    dyna-data-title="'.$snif[1].'">&nbsp;<i class="fas fa-info-circle ico-blue"></i></a></span></td></tr>');
+      echo('<tr><td><b>'.get_string('dynamoconf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf,2,',', ' ').'</span></td></tr>');
+      echo('</table></div>');
       
       $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid.'" width="720" height="360">[No canvas support]</canvas></div>
       <div class="graph-block"><canvas id="cvsh_'.$usrid.'" width="960" height="360">[No canvas support]</canvas></div>';
@@ -289,7 +287,7 @@
       $multievalsr = str_replace ("NAN","0",$multievalsr);
 
       $jscript = dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $usr->firstname, $usr->lastname);
-      echo('</div>'); // End grouping xaxisLabels: '.$labels.',
+      echo('</div>'); // End grouping 
 
       if( $allgroupevalstr == "") {
         $jscript = $jscript.'
@@ -304,15 +302,15 @@
                   colors: [\'Gradient(white:blue:blue:blue:blue)\',\'Gradient(white:#FFA500:#FFA500:#FFA500:#FFA500)\'],
                   backgroundGridVlines: false,
                   backgroundGridBorder: false,
-                  textColor: \'black\',
+                  textColor: \'#000\',
                   labels: '.$labels.',
                   textSize: 8,
                   marginLeft: 35,
                   marginBottom: 35,
                   marginTop: 15,
                   marginRight: 5,
-                  key: [\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\',\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\'], 
-                  keyColors: [\'blue\', \'#FFA500\'],
+                  key: [\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\',\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\'], 
+                  keyColors: [\'#FFA500\', \'blue\'],
                   keyInteractive: true
               }
             }).wave();';
@@ -330,7 +328,7 @@
                   colors: [\'Gradient(white:blue:blue:blue:blue)\',\'Gradient(white:#FFA500:#FFA500:#FFA500:#FFA500)\',\'Gradient(white:#aff:#aff:#aff:#aff)\'],
                   backgroundGridVlines: false,
                   backgroundGridBorder: false,
-                  textColor: \'black\',
+                  textColor: \'#000\',
                   labels: '.$labels.',
                   textSize: 8,
                   marginLeft: 35,

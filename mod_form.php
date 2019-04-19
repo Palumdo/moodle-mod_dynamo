@@ -70,9 +70,9 @@ class mod_dynamo_mod_form extends moodleform_mod {
 
         // Adding the rest of mod_dynamo settings, spreading all them into this fieldset
         // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        //$mform->addElement('static', 'label',  get_string('dynamoauto', 'mod_dynamo'));
-        $mform->addElement('advcheckbox', 'dynamo_auto', get_string('dynamoautotitle', 'mod_dynamo'), get_string('dynamoauto', 'mod_dynamo'), array('group' => 1), array(0, 1));
-        $mform->addElement('advcheckbox', 'dynamo_group_eval', get_string('dynamogroupevaltitle', 'mod_dynamo'), get_string('dynamogroupeval', 'mod_dynamo'), array('group' => 1), array(0, 1));
+        //         $mform->addElement('advcheckbox', 'dynamo_auto', get_string('dynamoautotitle', 'mod_dynamo'), get_string('dynamoauto', 'mod_dynamo'), array('group' => 1), array(0, 1));
+        $mform->addElement('hidden', 'dynamo_auto', 1);
+        $mform->addElement('advcheckbox', 'dynamo_group_eval', get_string('dynamoautotitle', 'mod_dynamo'), get_string('dynamogroupeval', 'mod_dynamo'), array('group' => 1), array(0, 1));
         $mform->addElement('static', 'label',  get_string('dynamochoice', 'mod_dynamo'));
         $agrouping = groups_get_all_groupings($COURSE->id);
         //var_dump ($agrouping);
