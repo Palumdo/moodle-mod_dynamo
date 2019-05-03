@@ -168,13 +168,13 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
   $course  = $PAGE->course;
   
   $id = $course->id;
-
+/*
   if (has_capability('mod/dynamo:create', $context)) {
     $url  = new moodle_url($CFG->wwwroot . '/mod/dynamo/reportgrouping.php', array('id'=>$id));
     $node = navigation_node::create(get_string('dynamogrpingreport', 'mod_dynamo'), $url,navigation_node::TYPE_SETTING, null, null);
     $navref->add_node($node);
   }
-  
+*/  
   return;
 }
 
@@ -1509,3 +1509,4 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $grpid) {
   
   return $climat;
 }  
+

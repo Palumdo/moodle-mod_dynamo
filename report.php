@@ -264,7 +264,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
         echo('     <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').'</th>');
         echo('     <th>'.get_string('dynamoscientifique', 'mod_dynamo').'</th>');
         echo('     <th>'.get_string('dynamotechnique', 'mod_dynamo').'</th>');
-        echo('     <th>'.get_string('dynamotechnique', 'mod_dynamo').'</th>');
+        echo('     <th>'.get_string('dynamoattitude', 'mod_dynamo').'</th>');
         if($display6 != 'none') echo('     <th>'.$dynamo->critoptname.'</th>');
 
         echo('   </tr>');

@@ -100,7 +100,8 @@
     }
     // NIFS
     echo('        <tr>');
-    echo('          <td style="background-color:dimgray;text-align:center;">'.get_string('dynamosnif', 'mod_dynamo').'</td>');
+    echo('          <td style="background-color:dimgray;text-align:center;">'.get_string('dynamosnif', 'mod_dynamo').'<a href="#" data-toggle="tooltip" dyna-data-title="'.get_string('dynamohelpsnif', 'mod_dynamo').'">&nbsp;<i class="fas fa-info-circle ico-black"></i></a>
+    </td>');
     
     $i = count($aGridlib)-1;
     for($j=0;$j<count($aGridlib[$i]);$j++) {
@@ -111,6 +112,9 @@
     
     echo('      </tbody>
               </table>
+              <div class="box-snif">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mi>I</mi><mi>W</mi><msub><mi>F</mi><mrow><mo>&#xA0;</mo><mi>j</mi><mo>&#x2260;</mo><mi>i</mi><mo>&#xA0;</mo></mrow></msub><mo>=</mo><munderover><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>(</mo><mfrac><mrow><msub><mi>R</mi><mrow><mi>j</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub><mo>&#xA0;</mo></mrow><mrow><munderover><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>&#xA0;</mo><msub><mi>R</mi><mrow><mi>K</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub></mrow></mfrac><mo>)</mo></math>
+              </div>
               <table id="table-comment">
                 <tbody>');
 
@@ -198,7 +202,7 @@
       echo('     <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').'</th>');
       echo('     <th>'.get_string('dynamoscientifique',   'mod_dynamo').'</th>');
       echo('     <th>'.get_string('dynamotechnique',      'mod_dynamo').'</th>');
-      echo('     <th>'.get_string('dynamotechnique',      'mod_dynamo').'</th>');
+      echo('     <th>'.get_string('dynamoattitude',       'mod_dynamo').'</th>');
       if($display6 != 'none') echo('     <th>'.$dynamo->critoptname.'</th>');
 
       echo('   </tr>');

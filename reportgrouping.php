@@ -31,5 +31,4 @@
   echo(get_string('dynamonotyetdesigned', 'mod_dynamo'));
   echo $OUTPUT->header();
   echo $OUTPUT->footer();
-  
 ?>    

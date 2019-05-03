@@ -126,6 +126,8 @@ thead th {
 .dbackground {  
   width               : 100px;
   height              : 50px;
+  max-width           : 100px;
+  max-height          : 50px;
   padding             : 0;
   margin              : 0;
 } 
@@ -141,8 +143,11 @@ thead th {
   
 .dbackground>div {  
   position            : relative;
-  height              : 100%;
-  width               : 100%;
+  width               : 100px;
+  height              : 50px;
+  
+/*  height              : 100%;
+  width               : 100%;*/
   top                 : 0;
   left                : 0;
 } 
@@ -274,6 +279,20 @@ clearfix::after, .dl-horizontal dd::after, .container::after, .container-fluid::
   visibility          : visible;
 }
 
+th:first-child {
+  border-radius       : 9px 0 0 0;
+  border-top          : 0 !important;
+}
+
+th:last-child {
+  border-radius       : 0 9px 0 0;
+  border-top          : 0 !important;
+}
+
+th:only-child{
+  border-radius       : 9px 9px 0 0;
+  border-top          : 0 !important;
+}
 
 .tablelvlx {
   width: 100%;
@@ -698,6 +717,10 @@ input:checked + .slider:before {
   color               : white;
 }
 
+.ico-black {
+  color               : black;
+}
+
 .ico-student {
   color               : #dddddd;
 }
@@ -943,15 +966,41 @@ input:checked + .slider:before {
   border-radius       : 4px;
   background-color    : #ffdb99;
   padding             : 3px;
+  filter              : blur(0.4px);
+  -webkit-filter      : blur(0.4px);
+  -moz-filter         : blur(0.4px);
+  -o-filter           : blur(0.4px);
+  -ms-filter          : blur(0.4px); 
 }
+
 .incomname {
   border-radius       : 4px;
   background-color    : #efef95;
   padding             : 3px;
+  filter              : blur(0.4px);
+  -webkit-filter      : blur(0.4px);
+  -moz-filter         : blur(0.4px);
+  -o-filter           : blur(0.4px);
+  -ms-filter          : blur(0.4px); 
 }
     
 
 img.userpicture {
   margin-right        : 0;
   border-radius       : 5px;
+}
+
+.box-snif {
+  border              : 1px solid #666;
+  padding             : 5px;
+  text-align          : center;
+  min-width           : 250px;
+  min-height          : 50px;
+  border-radius       : 15px 0;
+  float               : left;
+  margin-bottom       : 10px;
+  font-weight         : bold;
+  font-size           : 12px;
+  background-color    : #072444;
+  color               : white;  
 }

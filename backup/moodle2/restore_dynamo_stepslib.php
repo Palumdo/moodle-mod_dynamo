@@ -46,8 +46,10 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
         $dynamo = new restore_path_element('dynamo', '/activity/dynamo');
         $paths[] = $dynamo;
 
-        $eval = new restore_path_element('dynamo_eval', '/activity/dynamo/evals/eval');
-        $paths[] = $eval;
+        if ($userinfo) {
+          $eval = new restore_path_element('dynamo_eval', '/activity/dynamo/evals/eval');
+          $paths[] = $eval;
+        }
         
         return $this->prepare_activity_structure($paths);
     }
