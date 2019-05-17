@@ -52,8 +52,8 @@ $modulecontext = context_module::instance($cm->id);
 $group      = dynamo_get_group($dynamo->groupementid,$USER->id);
 
 if($group == null) {
-  redirect(new moodle_url('/my'));
-  die();
+    redirect(new moodle_url('/my'));
+    die();
 }  
 
 $groupusers = dynamo_get_group_users($group->id);
@@ -88,29 +88,29 @@ foreach ($groupusers as $user) {
       }
     }
 }
-
+// The all group is also evaluated
 if($dynamo->groupeval == 1) {
     $error = 0;
 
-    if($_POST[$group->id.'_g1'] <1 ||  $_POST[$group->id.'_g1'] > 5) $error++;
-    if($_POST[$group->id.'_g2'] <1 ||  $_POST[$group->id.'_g2'] > 5) $error++;
-    if($_POST[$group->id.'_g3'] <1 ||  $_POST[$group->id.'_g3'] > 5) $error++;
-    if($_POST[$group->id.'_g4'] <1 ||  $_POST[$group->id.'_g4'] > 5) $error++;
-    if($_POST[$group->id.'_g5'] <1 ||  $_POST[$group->id.'_g5'] > 5) $error++;
-
+    if($_POST[$group->id.'_g1'] <1 || $_POST[$group->id.'_g1'] > 5) $error++;
+    if($_POST[$group->id.'_g2'] <1 || $_POST[$group->id.'_g2'] > 5) $error++;
+    if($_POST[$group->id.'_g3'] <1 || $_POST[$group->id.'_g3'] > 5) $error++;
+    if($_POST[$group->id.'_g4'] <1 || $_POST[$group->id.'_g4'] > 5) $error++;
+    if($_POST[$group->id.'_g5'] <1 || $_POST[$group->id.'_g5'] > 5) $error++;
+    // display message if they've an error
     if($error > 0) {
-      echo("<div style='width:100%;height:32px;border:1px solid red;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
-      echo(get_string('dynamosavedcorrupted', 'mod_dynamo'));
-      echo("</div>");
-      die(0);
+        echo("<div style='width:100%;height:32px;border:1px solid red;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
+        echo(get_string('dynamosavedcorrupted', 'mod_dynamo'));
+        echo("</div>");
+        die(0);
     }
 }    
 
 //*********************
-// save pairs evaluation
+// save peer evaluation
 //*********************
 foreach ($groupusers as $user) {
-  if($dynamo->autoeval == 0 &&  $user->id == $USER->id) { // no auto evaluation save...
+    if($dynamo->autoeval == 0 &&  $user->id == $USER->id) { // no auto evaluation save...
     } else {
       $dynamoeval = new stdClass();
       $dynamoeval->builder      = $cm->instance;
@@ -137,8 +137,8 @@ foreach ($groupusers as $user) {
        }
     }
 }      
-  // save groupe evaluation
-  if($dynamo->groupeval == 1) {
+// save groupe evaluation
+if($dynamo->groupeval == 1) {
     $dynamoeval = new stdClass();
     $dynamoeval->builder      = $cm->instance;
     $dynamoeval->evalbyid     = $USER->id;
@@ -154,19 +154,19 @@ foreach ($groupusers as $user) {
     $dynamoeval->comment1     = $_POST['comment1']; 
     $dynamoeval->comment2     = $_POST['comment2']; 
     $dynamoeval->timemodified = time();
-    
-     if (!$id = $DB->get_record('dynamo_eval', array('builder' => $cm->instance, 'evalbyid' =>$USER->id , 'userid' =>$group->id ))) {
-      $id = $DB->insert_record('dynamo_eval', $dynamoeval);    
-     } else {
-       $dynamoeval->id = $id->id;
-       $DB->update_record('dynamo_eval', $dynamoeval);
-     }
-  }  
+  
+    if (!$id = $DB->get_record('dynamo_eval', array('builder' => $cm->instance, 'evalbyid' =>$USER->id , 'userid' =>$group->id ))) {
+        $id = $DB->insert_record('dynamo_eval', $dynamoeval);    
+    } else {
+        $dynamoeval->id = $id->id;
+        $DB->update_record('dynamo_eval', $dynamoeval);
+    }
+}  
 
-  echo("<div style='width:100%;height:32px;border:1px solid green;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
-  echo(get_string('dynamosavedsuccessfully', 'mod_dynamo'));
-  echo("</div>");
-  echo('<script>setInterval(function(){location.href = "/course/view.php?id='.$cm->course.'";},5000);</script>');
-  echo $OUTPUT->footer();
-
+// display message if all is saved successfully
+echo("<div style='width:100%;height:32px;border:1px solid green;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
+echo(get_string('dynamosavedsuccessfully', 'mod_dynamo'));
+echo("</div>");
+echo('<script>setInterval(function(){location.href = "/course/view.php?id='.$cm->course.'";},5000);</script>');
+echo $OUTPUT->footer();
 ?>

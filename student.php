@@ -15,12 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This is the survey displayed to student other peers receive note from 1 to 5 
+ * This is the survey displayed to student to evaluate other peers 
+ * they receive a note from 1 to 5 for each criteria
  * ***** **** *** ** *
  * they've 5 mandatory criteria (participation, responsability, science 
  * expertice, technical expertice and attitude
  * Teacher can add a custom one.
- *
+ * The student must also do his autoevaluation
  * 
  *
  * @package     mod_dynamo
@@ -29,6 +30,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
+// Get default toolpits text for helping students and add custom help add by the teacher
 $bubble1 = get_string('dynamocritparticipationdefault',   'mod_dynamo').', '.$dynamo->crit1;
 $bubble2 = get_string('dynamocritresponsabilitedefault',  'mod_dynamo').', '.$dynamo->crit2;
 $bubble3 = get_string('dynamocritscientifiquedefault',    'mod_dynamo').', '.$dynamo->crit3;
@@ -68,21 +70,21 @@ echo '
               <thead>
                  <tr>
                     <th style="min-width:200px;">'.$group->name.'</th>
-                    <th style="min-width:160px;">'.get_string('dynamoparticipation', 'mod_dynamo').' &nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-white"></i><span class="tooltiptext">'.$bubble1.'</span></div></th>
-                    <th style="min-width:160px;">'.get_string('dynamoresponsabilite', 'mod_dynamo').'&nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-white"></i><span class="tooltiptext">'.$bubble2.'</span></div></th>
-                    <th style="min-width:150px;">'.get_string('dynamoscientifique', 'mod_dynamo').'  &nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-white"></i><span class="tooltiptext">'.$bubble3.'</span></div></th>
-                    <th style="min-width:150px;">'.get_string('dynamotechnique', 'mod_dynamo').'     &nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-white"></i><span class="tooltiptext">'.$bubble4.'</span></div></th>
-                    <th style="min-width:130px;">'.get_string('dynamoattitude', 'mod_dynamo').'      &nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-white"></i><span class="tooltiptext">'.$bubble5.'</span></div></th>
-                    <th style="min-width:200px;display:'.$display6.'">'.$dynamo->critoptname.'       &nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-white"></i><span class="tooltiptext">'.$dynamo->critopt.'</span></th>
+                    <th style="min-width:160px;">'.get_string('dynamoparticipation', 'mod_dynamo').' &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble1.'</span></div></th>
+                    <th style="min-width:160px;">'.get_string('dynamoresponsabilite', 'mod_dynamo').'&nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble2.'</span></div></th>
+                    <th style="min-width:150px;">'.get_string('dynamoscientifique', 'mod_dynamo').'  &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble3.'</span></div></th>
+                    <th style="min-width:150px;">'.get_string('dynamotechnique', 'mod_dynamo').'     &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble4.'</span></div></th>
+                    <th style="min-width:130px;">'.get_string('dynamoattitude', 'mod_dynamo').'      &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble5.'</span></div></th>
+                    <th style="min-width:200px;display:'.$display6.'">'.$dynamo->critoptname.'       &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$dynamo->critopt.'</span></th>
                  </tr>
               </thead>
 
               <tbody>
       ';        
 if($mode == 'student') {
-  echo dynamo_get_body_table($groupusers, $USER->id, $dynamo,$group->id);
+    echo dynamo_get_body_table($groupusers, $USER->id, $dynamo,$group->id);
 } else {
-  echo dynamo_get_body_table_teacher($dynamo);
+    echo dynamo_get_body_table_teacher($dynamo);
 }  
 echo '              
               </tbody>
@@ -92,7 +94,7 @@ echo '
               <div class="row">
                 <div class="col-sm-6">
                   <div class="panel panel-default">
-                    <div class="panel-heading">'.get_string('dynamocommentcontr', 'mod_dynamo').'&nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-blue"></i><span class="tooltiptext">'.$bubbleCom1.'</span></div></div>
+                    <div class="panel-heading">'.get_string('dynamocommentcontr', 'mod_dynamo').'&nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubbleCom1.'</span></div></div>
                     
                     <div class="panel-body">
                       <textarea maxlength="1000" id="comment1" name="comment1" class="savemecom form-control" rows="8">'.$comment->comment1.'</textarea>
@@ -101,7 +103,7 @@ echo '
                 </div>
                 <div class="col-sm-6">
                   <div class="panel panel-default">
-                    <div class="panel-heading">'.get_string('dynamocommentfonction', 'mod_dynamo').'&nbsp;<div class="tooltip"><i class="fas fa-info-circle ico-blue"></i><span class="tooltiptext">'.$bubbleCom2.'</span></div></div>
+                    <div class="panel-heading">'.get_string('dynamocommentfonction', 'mod_dynamo').'&nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubbleCom2.'</span></div></div>
                     
                     <div class="panel-body">
                       <textarea maxlength="1004" id="comment2" name="comment2" class="savemecom form-control" rows="8">'.$comment->comment2.'</textarea>
@@ -111,14 +113,14 @@ echo '
               </div>
             </div>';  
 if($mode == 'student') {             
-echo '      
+    echo '      
             <div class="container">
               <div class="row">
                 <center><button class="btn btn-primary">'.get_string('save').'</button></center>
               </div>  
             </div>
             <script>setTimeout(function(){  $("#block-region-side-post").css("display","none");}, 1000);</script>
-     ';
+    ';
 }     
 echo '           
           </form>  

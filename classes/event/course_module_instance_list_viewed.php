@@ -15,20 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Dynamo is a peer by peer review module for Moodle
- * This project followed the Team Up Module to create the groups
+ * The mod_dynamo instance list viewed event.
  *
- * @package     mod_dynamo
- * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    mod_dynamo
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace mod_dynamo\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2019100500;
-$plugin->requires = 2018051700;
-$plugin->component = 'mod_dynamo';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->cron = 0;
-$plugin->release = '1.0.0.0';
+/**
+ * The mod_dynamo instance list viewed event class.
+ *
+ * @package    mod_dynamo
+ * @since      Moodle 3.5
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
+    // No need for any code here as everything is handled by the parent class.
+}

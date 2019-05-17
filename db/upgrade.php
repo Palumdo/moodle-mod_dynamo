@@ -18,8 +18,8 @@
  * Upgrade steps for dynamo.
  *
  * @package    mod_dynamo
- * @copyright  UNSW
- * @author     UNSW
+ * @copyright  2019 UCLouvain
+ * @author     Dominique Palumbo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,17 +31,17 @@ function xmldb_dynamo_upgrade($oldversion = 0) {
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2019030200) {
-      $table = new xmldb_table('dynamo');
-      $field = new xmldb_field('comment1', XMLDB_TYPE_CHAR, '1333', null, null, null, null, 'timecreated');
+        $table = new xmldb_table('dynamo');
+        $field = new xmldb_field('comment1', XMLDB_TYPE_CHAR, '1333', null, null, null, null, 'timecreated');
 
       // Conditionally launch add field tablenbline.
       if (!$dbman->field_exists($table, $field)) {
-        $dbman->add_field($table, $field);
+            $dbman->add_field($table, $field);
       }
 
       $field = new xmldb_field('comment2', XMLDB_TYPE_CHAR, '1333', null, null, null, null, 'timecreated');
       if (!$dbman->field_exists($table, $field)) {
-        $dbman->add_field($table, $field);
+            $dbman->add_field($table, $field);
       }
       
       // dynamo savepoint reached.

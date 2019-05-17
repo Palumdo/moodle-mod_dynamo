@@ -16,6 +16,10 @@
 
 /**
  * This is the manager of what will be displayed based on your rights
+ * student will see the survey
+ * teacher the results and reports
+ * (still inspired by teambuilder mod)
+ * RGraph library is used because radar graphics is not in moodle (for now)
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
@@ -37,34 +41,31 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.drawing.rect.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.radar.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
-$PAGE->requires->css('/mod/dynamo/css/all.css');  // fontawesome
+$PAGE->requires->css('/mod/dynamo/css/all.css');  // fontawesome 5.4
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
 
 // Course_module ID, or
-$id     = optional_param('id', 0, PARAM_INT);
-
+$id         = optional_param('id',      0, PARAM_INT);
 // ... module instance id.
-$d      = optional_param('d', 0, PARAM_INT);
-
-$tab    = optional_param('tab', 2, PARAM_INT);
-$report = optional_param('report', 0, PARAM_INT);
-$zoom   = optional_param('zoom', 0, PARAM_INT);
-
-// groupid
-$groupid  = optional_param('groupid', 0, PARAM_INT);
+$d          = optional_param('d',       0, PARAM_INT);
+$tab        = optional_param('tab',     2, PARAM_INT);
+$report     = optional_param('report',  1, PARAM_INT);
+$results    = optional_param('results', 0, PARAM_INT);
+$zoom       = optional_param('zoom',    0, PARAM_INT);
+$groupid    = optional_param('groupid', 0, PARAM_INT);
 
 if ($id) {
-  $cm             = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
-  $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-  $dynamo         = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
+    $cm             = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
+    $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $dynamo         = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
 } else if ($d) {
-  $dynamo         = $DB->get_record('dynamo', array('id' => $d), '*', MUST_EXIST);
-  $course         = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
-  $cm             = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);
+    $dynamo         = $DB->get_record('dynamo', array('id' => $d), '*', MUST_EXIST);
+    $course         = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
+    $cm             = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);
 } else {
-  print_error(get_string('missingidandcmid', dynamo));
+    print_error(get_string('missingidandcmid', dynamo));
 }
 
 require_login($course, true, $cm);
@@ -72,7 +73,7 @@ $modulecontext = context_module::instance($cm->id);
 
 $mode = '';
 
-// UCL faculty color
+// UCLouvain faculty colors only usefull at UCL. Other will have a default color) 
 $afcolor = [];
 $afcolor['[MEDE]']    = '#88005d';
 $afcolor['[FASB]']    = '#88005d';
@@ -100,22 +101,22 @@ if($facColor == '') {$facColor = '#032f5d';}
 
 
 if (has_capability('mod/dynamo:create', $modulecontext)) {
-  $mode = 'teacher';
+    $mode = 'teacher';
 } else {
-  require_capability('mod/dynamo:respond', $modulecontext);
-  $mode = 'student';
+    require_capability('mod/dynamo:respond', $modulecontext);
+    $mode = 'student';
 }
 
 if($mode == '') {
-  redirect(new moodle_url('/my'));
-  die();
+    redirect(new moodle_url('/my'));
+    die();
 }  
 
 $group  = dynamo_get_group($dynamo->groupementid,$USER->id);
 
 if($mode == 'student' && $group == null) {
-  redirect(new moodle_url('/my'));
-  die();
+    redirect(new moodle_url('/my'));
+    die();
 }  
 
 $groupusers = dynamo_get_group_users($group->id);
@@ -123,41 +124,51 @@ $groupusers = dynamo_get_group_users($group->id);
 $display6   = '';
 if($dynamo->critoptname == '') $display6 = 'none';
 
-
 $PAGE->set_url('/mod/dynamo/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($dynamo->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 echo $OUTPUT->header();
 
-if($mode == 'student'  /*or $group != null */ ) {
-  $comment    = dynamo_get_comment($USER->id, $dynamo);
-  require_once(__DIR__.'/student.php');
+if($mode == 'student') {
+    $comment    = dynamo_get_comment($USER->id, $dynamo);
+    require_once(__DIR__.'/student.php');
 }
 
 if($mode == 'teacher') {
-  $usrid = optional_param('usrid', 0, PARAM_INT);
+    $usrid = optional_param('usrid', 0, PARAM_INT);
 
-  require_once(__DIR__.'/tabs.php');
-  if($tab == 1) {
-    $comment    = dynamo_get_comment($usrid, $dynamo);
-    require_once(__DIR__.'/preview.php');
-  }
-  if($tab == 2) {
-    require_once(__DIR__.'/teacher.php');
-  }
-  if($tab == 3) {
-    require_once(__DIR__.'/teacherlvl0.php');
-  }
-  if($tab == 4) {
-    require_once(__DIR__.'/report.php');
-  }
-  if($tab == 5) {
-    require_once(__DIR__.'/teacherlvl1.php');
-  } 
-  if($tab == 6) {
-    require_once(__DIR__.'/help.php');
-  } 
+    require_once(__DIR__.'/tabs.php');
+    switch($tab) {
+        case 1:
+            // get the comment of the current inspected user if no user was seen
+            // comment will be empty. It's just for a preview... Dummy text can be OK !
+            // or empty...
+            $comment = dynamo_get_comment($usrid, $dynamo);
+            require_once(__DIR__.'/preview.php');
+            break;
+        case 2:
+            switch($results) {
+                case 0:
+                case 1:
+                    require_once(__DIR__.'/teacher.php');
+                    break;
+                case 2:
+                    require_once(__DIR__.'/teacherlvl0.php');
+                    break;
+                case 3:
+                    require_once(__DIR__.'/teacherlvl1.php');
+                    break;
+            } 
+            break;
+        case 3:
+            require_once(__DIR__.'/report.php');
+            break;
+
+        case 4:
+            require_once(__DIR__.'/help.php');
+            break;
+    }
 }
 
 echo $OUTPUT->footer();

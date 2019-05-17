@@ -18,7 +18,8 @@
  * Lang strings for the teamup module.
  *
  * @package    mod_dynamo
- * @copyright  UCL
+ * @copyright  2019 UCLouvain
+ * @author     Dominique Palumbo 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -95,7 +96,7 @@ $string['dynamoheademail']                    = 'Email';
 $string['dynamoheadidnumber']                 = 'NOMA';
 $string['dynamogrpingreport']                 = 'Rapport Groupement';
 $string['dynamoier']                          = 'Total';
-$string['dynamosnif']                         = 'Taux d\'implication relatif';
+$string['dynamoniwf']                         = 'Taux d\'implication relatif';
 $string['dynamoevaluator']                    = 'Evaluateur';
 $string['dynamoevaluated']                    = 'Evalué';
 $string['dynamoradar01title']                 = 'Radar';
@@ -107,38 +108,39 @@ $string['dynamoautoeval']                     = 'Autoévaluation';
 $string['dynamoopenclose']                    = 'Ouvrir/fermer';
 $string['dynamogotogroup']                    = 'Détail du groupe';
 $string['dynamogotoparticipant']              = 'Détail des participants';
-$string['dynamogroupdetailtitle']             = 'Synthèse du groupe';
-$string['dynamoconf']                         = 'Confiance';
+$string['dynamogroupdetailtitle']             = 'Rapport du groupe';
+$string['dynamoconf']                         = 'Assurance';
 $string['dynamopreview']                      = 'Prévisualisation';
 $string['dynamotab1']                         = 'Prévisualisation';
-$string['dynamotab2']                         = 'Vue d\'ensemble';
-$string['dynamotab3']                         = 'Détail du groupe';
-$string['dynamotab5']                         = 'Détail du participant';
-$string['dynamotab4']                         = 'Synthèses';
+$string['dynamotab2']                         = 'Résultats';
+$string['dynamotab3']                         = 'Rapports';
+$string['dynamoresults1']                     = 'Vue d\'ensemble';
+$string['dynamoresults2']                     = 'Détail du groupe';
+$string['dynamoresults3']                     = 'Détail du participant';
 $string['dynamoliststudent']                  = 'Liste des étudiants';
 $string['dynamotypeletters']                  = 'Tapez les premières lettres du nom ou du prénom';
 $string['dynamoheadparticiaption']            = 'Répondu';
 $string['dynamoheadimplication']              = 'Implication';
-$string['dynamoheadconfidence']               = 'Confiance';
+$string['dynamoheadconfidence']               = 'Assurance';
 $string['dynamoheadcohesion']                 = 'Cohésion';
 $string['dynamoheadconflit']                  = 'Commentaires';
 $string['dynamoheadremarque']                 = 'Climat';
 $string['dynamonocomment']                    = 'Sans commentaire spécifique';
 $string['dynamoreport01']                     = 'Liste des participants sans réponse';
-$string['dynamoreport02']                     = 'Tous les groupes';
-$string['dynamoreport03']                     = 'Tous les étudiants';
-$string['dynamoreport04']                     = 'Autoévaluation vs evaluations';
-$string['dynamoreport05']                     = 'Annuaire';
+$string['dynamoreport02']                     = 'Rapports des groupes';
+$string['dynamoreport03']                     = 'Rapports individuels';
+$string['dynamoreport04']                     = 'Graphique des assurances relatives';
+$string['dynamoreport05']                     = 'Trombinoscope';
 $string['dynamosendmail']                     = 'Envoye de mails';
 $string['dynamononoparticipant']              = 'Tous les étudiants ont rempli le formulaire';
-$string['dynamoreports']                      = 'Liste des Synthèses';
+$string['dynamoreports']                      = 'Liste des Rapports';
 $string['dynamogotogroup']                    = 'Allez au groupe';
-$string['dynamoreportselect']                 = 'Choisissez votre synthèse';
+$string['dynamoreportselect']                 = 'Choisissez votre Rapport';
 $string['dynamoremovegroupnoprobs']           = 'Masquer les groupes sans problémes';
 $string['dynamoremovegroupnotcomplete']       = 'Masquer les groupes incomplets';
 $string['dynamoswitchoverview']               = 'Changer de vue';
-$string['dynamorepbtsynthesis']               = 'Masquer synthèse';
-$string['dynamorepbtsnif']                    = 'Masquer NIWF';
+$string['dynamorepbtsynthesis']               = 'Masquer Rapport';
+$string['dynamorepbtniwf']                    = 'Masquer NIWF';
 $string['dynamorepbtevalothers']              = 'Masquer évaluation des pairs';
 $string['dynamorepbtevalbyothers']            = 'Masquer évaluation par les pairs';
 $string['dynamorepbtgraphradar']              = 'Masquer radars';
@@ -156,9 +158,17 @@ $string['dynamogroupetypeclique']             = 'Clique';
 $string['dynamogroupetypeheterogene']         = 'Hetérogène';
 $string['dynamogroupetypeghost']              = 'Fantômes';
 $string['dynamopleasewait']                   = 'Merci de votre patience...';
-$string['dynamohelp']                         = 'Page d\'aide';
+$string['dynamohelp']                         = '<div class="box-niwf">
+                                                    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mi>I</mi><mi>W</mi><msub><mi>F</mi><mrow><mo>&#xA0;</mo><mi>j</mi><mo>&#x2260;</mo><mi>i</mi><mo>&#xA0;</mo></mrow></msub><mo>=</mo><munderover><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>(</mo><mfrac><mrow><msub><mi>R</mi><mrow><mi>j</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub><mo>&#xA0;</mo></mrow><mrow><munderover><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>&#xA0;</mo><msub><mi>R</mi><mrow><mi>K</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub></mrow></mfrac><mo>)</mo></math>
+                                                </div>';
 $string['dynamonotyetdesigned']               = 'Cette fonctionnalité n\'est pas encore implémentée';
 $string['dynamotop']                          = 'Haut';
 
 $string['dynamogotodetail']                   = 'Défiler jusqu\'à';
-$string['dynamohelpsnif']                     = 'NIWF: facteur de pondération individuelle normalisé (à l\'exclusion de l\'auto-évaluation)';
+$string['dynamohelpniwf']                     = 'NIWF: facteur de pondération individuelle normalisé (à l\'exclusion de l\'auto-évaluation)';
+$string['dynamomenuresults']                  = 'Résultats';
+$string['dynamomenureports']                  = 'Rapports';
+
+$string['privacy:metadata:dynamo_eval']           = 'Informations sur l\'évaluation de l\'utilisateur sur une activité dynamo donnée';
+$string['privacy:metadata:dynamo_eval:evalbyid']  = 'L\'utilisateur qui fait l\'évaluation.';
+$string['privacy:metadata:dynamo_eval:userid']    = 'L\'utilisateur qui est évalué.';

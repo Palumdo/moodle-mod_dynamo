@@ -18,8 +18,8 @@
  * Capabilities for dynamo.
  *
  * @package    mod_dynamo
- * @copyright  UNSW
- * @author     UNSW
+ * @copyright  UCLouvain
+ * @author     Dominique Palumbo 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

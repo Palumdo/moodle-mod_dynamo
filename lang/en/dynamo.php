@@ -18,7 +18,8 @@
  * Lang strings for the teamup module.
  *
  * @package    mod_dynamo
- * @copyright  UCL
+ * @copyright  2019 UCLouvain
+ * @author     Dominique Palumbo  
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -95,7 +96,7 @@ $string['dynamoheademail']                    = 'Email';
 $string['dynamoheadidnumber']                 = 'NOMA';
 $string['dynamogrpingreport']                 = 'Report Grouping';
 $string['dynamoier']                          = 'Total';
-$string['dynamosnif']                         = 'Relatif involvement ratio';
+$string['dynamoniwf']                         = 'Relatif involvement ratio';
 $string['dynamoevaluator']                    = 'Evaluator';
 $string['dynamoevaluated']                    = 'Evaluated';
 $string['dynamoradar01title']                 = 'Radar';
@@ -108,26 +109,27 @@ $string['dynamoopenclose']                    = 'Open/close';
 $string['dynamogotogroup']                    = 'Group details';
 $string['dynamogotoparticipant']              = 'Participants detail';
 $string['dynamogroupdetailtitle']             = 'Group synthesis';
-$string['dynamoconf']                         = 'Confidence';
+$string['dynamoconf']                         = 'Assurance';
 $string['dynamopreview']                      = 'Preview';
 $string['dynamotab1']                         = 'Preview';
-$string['dynamotab2']                         = 'Overview';
-$string['dynamotab3']                         = 'Groups detail';
-$string['dynamotab5']                         = 'Participant details';
-$string['dynamotab4']                         = 'Reports';
+$string['dynamotab2']                         = 'Results';
+$string['dynamotab3']                         = 'Reports';
+$string['dynamoresults1']                     = 'Overview';
+$string['dynamoresults2']                     = 'Groups detail';
+$string['dynamoresults3']                     = 'Participant details';
 $string['dynamoliststudent']                  = 'Students list';
 $string['dynamotypeletters']                  = 'Type the first letters of the firstname or lastname';
 $string['dynamoheadparticiaption']            = 'Answered';
 $string['dynamoheadimplication']              = 'Implication';
-$string['dynamoheadconfidence']               = 'Confidence';
+$string['dynamoheadconfidence']               = 'Assurance';
 $string['dynamoheadcohesion']                 = 'Cohesion';
 $string['dynamoheadconflit']                  = 'Comments';
 $string['dynamoheadremarque']                 = 'Climate';
 $string['dynamonocomment']                    = 'No specific comment';
 $string['dynamoreport01']                     = 'List of Participants with no answers';
-$string['dynamoreport02']                     = 'All groups';
-$string['dynamoreport03']                     = 'All the students';
-$string['dynamoreport04']                     = 'Auto-evaluation vs evaluation';
+$string['dynamoreport02']                     = 'Group reports';
+$string['dynamoreport03']                     = 'Individual reports';
+$string['dynamoreport04']                     = 'Chart of relative insurance';
 $string['dynamoreport05']                     = 'Yearbook';
 $string['dynamosendmail']                     = 'Send mails';
 $string['dynamononoparticipant']              = 'All students have filled the form';
@@ -138,7 +140,7 @@ $string['dynamoremovegroupnoprobs']           = 'Hide the groups without problem
 $string['dynamoremovegroupnotcomplete']       = 'Hide the groups not complete';
 $string['dynamoswitchoverview']               = 'View change';
 $string['dynamorepbtsynthesis']               = 'Hide synthesis';
-$string['dynamorepbtsnif']                    = 'Hide NIWF';
+$string['dynamorepbtniwf']                    = 'Hide NIWF';
 $string['dynamorepbtevalothers']              = 'Hide evaluation of pairs';
 $string['dynamorepbtevalbyothers']            = 'Hide evaluation by pairs';
 $string['dynamorepbtgraphradar']              = 'Hide radars';
@@ -156,9 +158,17 @@ $string['dynamogroupetypeclique']             = 'Clique';
 $string['dynamogroupetypeheterogene']         = 'Heterogen';
 $string['dynamogroupetypeghost']              = 'Ghosts';
 $string['dynamopleasewait']                   = 'Please Wait...';
-$string['dynamohelp']                         = 'Help page';
+$string['dynamohelp']                         = '<div class="box-niwf">
+                                                    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mi>I</mi><mi>W</mi><msub><mi>F</mi><mrow><mo>&#xA0;</mo><mi>j</mi><mo>&#x2260;</mo><mi>i</mi><mo>&#xA0;</mo></mrow></msub><mo>=</mo><munderover><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>(</mo><mfrac><mrow><msub><mi>R</mi><mrow><mi>j</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub><mo>&#xA0;</mo></mrow><mrow><munderover><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>&#xA0;</mo><msub><mi>R</mi><mrow><mi>K</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub></mrow></mfrac><mo>)</mo></math>
+                                                </div>';
 $string['dynamonotyetdesigned']               = 'This functionnality is not yet developped';
 $string['dynamotop']                          = 'Top';
 
 $string['dynamogotodetail']                   = 'Scroll to';
-$string['dynamohelpsnif']                     = 'NIWF: normalised individual weighting factor (excluding self-assessment)';
+$string['dynamohelpniwf']                     = 'NIWF: normalised individual weighting factor (excluding self-assessment)';
+$string['dynamomenuresults']                  = 'Results';
+$string['dynamomenureports']                  = 'Reports';
+
+$string['privacy:metadata:dynamo_eval']           = 'Information about the user\'s evaluation on a given dynamo activity';
+$string['privacy:metadata:dynamo_eval:evalbyid']  = 'The user who do the evaluation.';
+$string['privacy:metadata:dynamo_eval:userid']    = 'The user who was evaluated.';

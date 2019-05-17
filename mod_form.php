@@ -17,10 +17,10 @@
 /**
  * The main mod_dynamo configuration form.
  *
- * @package     mod_dynamo
- * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    mod_dynamo
+ * @copyright  2019 UCLouvain
+ * @author     Dominique Palumbo 
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -31,7 +31,7 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
  * Module instance settings form.
  *
  * @package    mod_dynamo
- * @copyright  2018 UCLouvain
+ * @copyright  2019 UCLouvain
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_dynamo_mod_form extends moodleform_mod {
@@ -70,17 +70,19 @@ class mod_dynamo_mod_form extends moodleform_mod {
 
         // Adding the rest of mod_dynamo settings, spreading all them into this fieldset
         // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        //         $mform->addElement('advcheckbox', 'dynamo_auto', get_string('dynamoautotitle', 'mod_dynamo'), get_string('dynamoauto', 'mod_dynamo'), array('group' => 1), array(0, 1));
         $mform->addElement('hidden', 'dynamo_auto', 1);
         $mform->addElement('advcheckbox', 'dynamo_group_eval', get_string('dynamoautotitle', 'mod_dynamo'), get_string('dynamogroupeval', 'mod_dynamo'), array('group' => 1), array(0, 1));
         $mform->addElement('static', 'label',  get_string('dynamochoice', 'mod_dynamo'));
         $agrouping = groups_get_all_groupings($COURSE->id);
-        //var_dump ($agrouping);
+
+        // list of grouping select one for pairs evaluation    
         foreach ($agrouping as $grouping) {
           if($grouping->name != '') $options[$grouping->id] = $grouping->name;
         }
         $mform->addElement('select', 'dynamo_grouping_id', get_string('dynamoheadgrouping', 'mod_dynamo'), $options);
         
+        // Additional information in the tooltips for the students
+        // these text is added to the defaul it doesn't replace it
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit1', 'mod_dynamo') . ' : '.get_string('dynamoparticipation', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritparticipationdefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_participation', get_string('dynamocritparticipation', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
@@ -101,13 +103,13 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritattitudedefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_attitude', get_string('dynamocritattitude', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
         
-        
+        // The teacher can add a sixth critria but with no pedagogic influence on the 5 others
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocritoptname', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_optional_name', get_string('dynamocrit6', 'mod_dynamo'), array('size' => '25','maxlength'=>'30'));
         $mform->setType('dynamo_optional_name', PARAM_TEXT);
         $mform->addElement('text', 'dynamo_optional', get_string('dynamocritoptnamedescr', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
 
-        
+        // Tooltips for the two comments asked to the students
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentcontr', 'mod_dynamo') . ' (1)');
         $mform->addElement('text', 'dynamo_comment1', get_string('dynamocommentcontr', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
 
@@ -123,26 +125,27 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $this->add_action_buttons();
     }
 
+    // Load all the values from dynamo of the current activity
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
         
         $dynamo = $DB->get_record('dynamo', array('id'=>$this->current->id), '*', IGNORE_MISSING);
         if($dynamo != false) {
-          $defaultvalues['dynamo_participation']  = $dynamo->crit1;
-          $defaultvalues['dynamo_responsability'] = $dynamo->crit2;
-          $defaultvalues['dynamo_science']        = $dynamo->crit3;
-          $defaultvalues['dynamo_technical']      = $dynamo->crit4;
-          $defaultvalues['dynamo_attitude']       = $dynamo->crit5;
-          $defaultvalues['dynamo_optional_name']  = $dynamo->critoptname;
-          $defaultvalues['dynamo_optional']       = $dynamo->critopt;
-          $defaultvalues['dynamo_auto']           = $dynamo->autoeval;
-          $defaultvalues['dynamo_group_eval']     = $dynamo->groupeval;
-          $defaultvalues['dynamo_grouping_id']    = $dynamo->groupementid;
-          $defaultvalues['dynamo_comment1']       = $dynamo->comment1;
-          $defaultvalues['dynamo_comment2']       = $dynamo->comment2;
+            $defaultvalues['dynamo_participation']  = $dynamo->crit1;
+            $defaultvalues['dynamo_responsability'] = $dynamo->crit2;
+            $defaultvalues['dynamo_science']        = $dynamo->crit3;
+            $defaultvalues['dynamo_technical']      = $dynamo->crit4;
+            $defaultvalues['dynamo_attitude']       = $dynamo->crit5;
+            $defaultvalues['dynamo_optional_name']  = $dynamo->critoptname;
+            $defaultvalues['dynamo_optional']       = $dynamo->critopt;
+            $defaultvalues['dynamo_auto']           = $dynamo->autoeval;
+            $defaultvalues['dynamo_group_eval']     = $dynamo->groupeval;
+            $defaultvalues['dynamo_grouping_id']    = $dynamo->groupementid;
+            $defaultvalues['dynamo_comment1']       = $dynamo->comment1;
+            $defaultvalues['dynamo_comment2']       = $dynamo->comment2;
         } else {
-          $defaultvalues['dynamo_auto']           = 1;
-          $defaultvalues['dynamo_group_eval']     = 1;
+            $defaultvalues['dynamo_auto']           = 1;
+            $defaultvalues['dynamo_group_eval']     = 1;
         }
     }
 }

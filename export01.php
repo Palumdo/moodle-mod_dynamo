@@ -31,7 +31,7 @@ if ($id) {
     list ($course, $cm) = get_course_and_cm_from_cmid($id, 'dynamo');
     $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
 } else {
-  exit();
+    exit();
 }
 
 
@@ -45,8 +45,8 @@ if (has_capability('mod/dynamo:create', $ctxt)) {
 }
 
 if($mode == '') {
-  redirect(new moodle_url('/my'));
-  die();
+    redirect(new moodle_url('/my'));
+    die();
 }  
 
 
@@ -57,57 +57,55 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Cache-Control: private",false);
 
 
-  $groups = dynamo_get_groups($dynamo->groupementid);
-  $evals  = dynamo_get_grid($dynamo);
+$groups = dynamo_get_groups($dynamo->groupementid);
+$evals  = dynamo_get_grid($dynamo);
 
-  foreach ($groups as $grp) { // loop to all groups of grouping
-  
+foreach ($groups as $grp) { // loop to all groups of grouping
+
     $grpusrs = dynamo_get_group_users($grp->id);
     echo ('<table class="table">
                 <thead>
-                  <tr><th style="font-size:16px;font-weight:bold;">'.$grp->name.'</th>');
+                    <tr><th style="font-size:16px;font-weight:bold;">'.$grp->name.'</th>');
     foreach ($grpusrs as $grpusr) { // loop to all students of  groups
-      echo('        <th>'.$grpusr->firstname.' '.$grpusr->lastname.'</th>');
+        echo('        <th>'.$grpusr->firstname.' '.$grpusr->lastname.'</th>');
     }
     echo('          <th>'.get_string('dynamoier', 'mod_dynamo').'</th>');
 
-    
     echo ('       </tr>
-                </thead>
-                <tbody>');
+              </thead>
+              <tbody>');
     $i = 0;
     $j = 0;
     foreach ($grpusrs as $grpusr) { // loop to all students of  groups
-      $totals = 0;
-      echo('        <tr>
-                      <td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
-      $j=0;
-      foreach ($grpusrs as $grpusrev) {
-        if($grpusrev->id != $grpusr->id) {
-          $total = dynamo_get_total($evals, $grpusrev->id ,$grpusr->id);
-          $totals += $total;
-          echo('        <td>'.$total.'</td>');
-        } else {
-          $total = dynamo_get_total($evals, $grpusrev->id ,$grpusr->id);
-          echo('        <td>'.$total.'</td>');
-        }
-       $j++;
-      }  
-      echo('        <td>'.$totals.'</td>');
-      echo('        </tr>');
-      $i++;
+        $totals = 0;
+        echo('        <tr>
+                        <td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
+        $j=0;
+        foreach ($grpusrs as $grpusrev) {
+            if($grpusrev->id != $grpusr->id) {
+                $total = dynamo_get_total($evals, $grpusrev->id ,$grpusr->id);
+                $totals += $total;
+                echo('        <td>'.$total.'</td>');
+            } else {
+                $total = dynamo_get_total($evals, $grpusrev->id ,$grpusr->id);
+                echo('        <td>'.$total.'</td>');
+            }
+            j++;
+        }  
+        echo('        <td>'.$totals.'</td>');
+        echo('        </tr>');
+        $i++;
     }
-    
+  
     echo('          <tr>');
-    echo('            <td>'.get_string('dynamosnif', 'mod_dynamo').'</td>');
+    echo('            <td>'.get_string('dynamoniwf', 'mod_dynamo').'</td>');
 
-      foreach ($grpusrs as $grpusr) {
-        $snif = dynamo_get_snif($dynamo, $grpusrs, $grpusr->id);
-        echo('        <td>'.number_format($snif[0],2,',', ' ').'</td>');
-      }  
+    foreach ($grpusrs as $grpusr) {
+      $niwf = dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id);
+      echo('        <td>'.number_format($niwf[0],2,',', ' ').'</td>');
+    }  
     echo('          </tr>');
-                
-    echo ('     </tbody>
-              </table>');
-  }
+    echo('     </tbody>
+           </table>');
+}
 ?>    

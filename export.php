@@ -29,7 +29,7 @@ if ($id) {
     list ($course, $cm) = get_course_and_cm_from_cmid($id, 'dynamo');
     $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
 } else {
-  exit();
+    exit();
 }
 
 

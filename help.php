@@ -24,7 +24,6 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
-  require_login($course, true, $cm);
-
-  echo(get_string('dynamohelp', 'mod_dynamo'));
+require_login($course, true, $cm);
+echo(get_string('dynamohelp', 'mod_dynamo'));
 ?>

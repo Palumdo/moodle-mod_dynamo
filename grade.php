@@ -19,7 +19,8 @@
  *
  * @package     mod_dynamo
  * @category    grade
- * @copyright   2018 Your Name <you@example.com>
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo 
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

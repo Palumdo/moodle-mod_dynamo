@@ -17,9 +17,9 @@
 /**
  * Definition of log events for the dynamo module.
  *
- * @package    mod
- * @subpackage dynamo
- * @copyright  2018
+ * @package    mod_dynamo
+ * @copyright  2019 UCLouvain
+ * @author     Dominique Palumbo 
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,5 +28,4 @@ defined('MOODLE_INTERNAL') || die();
 $logs = array(
     array('module' => 'dynamo', 'action' => 'view', 'mtable' => 'dynamo', 'field' => 'name'),
     array('module' => 'dynamo', 'action' => 'view all', 'mtable' => 'dynamo', 'field' => 'name'),
-
 );

@@ -19,7 +19,8 @@
  *
  * @package     mod_dynamo
  * @category    restore
- * @copyright   2018 UCLouvain
+ * @copyright   2019 UCLouvain
+ * @author      Dominique Palumbo  
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
