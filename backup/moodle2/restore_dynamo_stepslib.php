@@ -63,7 +63,7 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
         $oldid                = $data->id;
         $data->course         = $this->get_courseid();
         $data->groupid        = $this->get_mappingid('group', $data->groupid);
-        $data->groupementid   = $this->get_mappingid('grouping', $data->groupementid);
+        $data->groupingid     = $this->get_mappingid('grouping', $data->groupingid);
 
         // Insert the dynamo record.
         $newid = $DB->insert_record('dynamo', $data);

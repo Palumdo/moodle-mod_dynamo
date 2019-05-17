@@ -33,7 +33,7 @@
 require_login($course, true, $cm);
  
 $stat         = dynamo_get_groupement_stat($dynamo);
-$groups       = dynamo_get_groups($dynamo->groupementid);
+$groups       = dynamo_get_groups($dynamo->groupingid);
 
 echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
         <li class="active"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=1">'.get_string('dynamoresults1', 'mod_dynamo').'</a></li>

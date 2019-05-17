@@ -131,6 +131,7 @@ $string['dynamoreport02']                     = 'Group reports';
 $string['dynamoreport03']                     = 'Individual reports';
 $string['dynamoreport04']                     = 'Chart of relative insurance';
 $string['dynamoreport05']                     = 'Yearbook';
+$string['dynamoreport06']                     = 'Excel Export';
 $string['dynamosendmail']                     = 'Send mails';
 $string['dynamononoparticipant']              = 'All students have filled the form';
 $string['dynamoreports']                      = 'List of reports';
@@ -172,3 +173,5 @@ $string['dynamomenureports']                  = 'Reports';
 $string['privacy:metadata:dynamo_eval']           = 'Information about the user\'s evaluation on a given dynamo activity';
 $string['privacy:metadata:dynamo_eval:evalbyid']  = 'The user who do the evaluation.';
 $string['privacy:metadata:dynamo_eval:userid']    = 'The user who was evaluated.';
+
+$string['dynamoexcelready']                   = 'Click on the icon to download your document';

@@ -140,7 +140,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
             $defaultvalues['dynamo_optional']       = $dynamo->critopt;
             $defaultvalues['dynamo_auto']           = $dynamo->autoeval;
             $defaultvalues['dynamo_group_eval']     = $dynamo->groupeval;
-            $defaultvalues['dynamo_grouping_id']    = $dynamo->groupementid;
+            $defaultvalues['dynamo_grouping_id']    = $dynamo->groupingid;
             $defaultvalues['dynamo_comment1']       = $dynamo->comment1;
             $defaultvalues['dynamo_comment2']       = $dynamo->comment2;
         } else {

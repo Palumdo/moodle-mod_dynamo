@@ -49,7 +49,7 @@ if ($id) {
 require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
-$group      = dynamo_get_group($dynamo->groupementid,$USER->id);
+$group      = dynamo_get_group($dynamo->groupingid,$USER->id);
 
 if($group == null) {
     redirect(new moodle_url('/my'));

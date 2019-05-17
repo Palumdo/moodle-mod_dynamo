@@ -39,13 +39,13 @@ if (!has_capability('mod/dynamo:create', $modulecontext)) {
   die;
 }    
 
-$groups = dynamo_get_groups($dynamo->groupementid);
+$groups = dynamo_get_groups($dynamo->groupingid);
 $canvas = '';
 $jscript = '
   <script>
     window.onload = function ()  {';
 
-$class = ['','','','','',''];
+$class = ['','','','','','',''];
 $class[$report] = ' class="active"';
 echo '<ul class="dynnav dynnavtabs">
         <li'.$class[1].'><a href="#" onclick="reloadme(1);">'.get_string('dynamoreport01', 'mod_dynamo').'</a></li>
@@ -53,6 +53,7 @@ echo '<ul class="dynnav dynnavtabs">
         <li'.$class[2].'><a href="#" onclick="reloadme(2);">'.get_string('dynamoreport02', 'mod_dynamo').'</a></li>
         <li'.$class[3].'><a href="#" onclick="reloadme(3);">'.get_string('dynamoreport03', 'mod_dynamo').'</a></li>
         <li'.$class[4].'><a href="#" onclick="reloadme(4);">'.get_string('dynamoreport04', 'mod_dynamo').'</a></li>
+        <li'.$class[6].'><a href="#" onclick="reloadme(6);">'.get_string('dynamoreport06', 'mod_dynamo').'</a></li>
      </ul>' ;
 
 echo ('<h3 id="top">'.get_string('dynamoreports', 'mod_dynamo').' : ('.$cm->name.')</h3>');
@@ -80,6 +81,10 @@ switch($report) {
 
   case 5:
     $jscript = rep_yearbook($dynamo,$jscript, $id);
+    break;
+
+  case 6:
+    rep_excel($cm);
     break;
     
 }
@@ -135,7 +140,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
     $nojumpclass = "nojump";
   
     echo ('<h3 class="report_title">'.get_string('dynamoreport02', 'mod_dynamo').'</h3>');
-    $groups = dynamo_get_groups($dynamo->groupementid);
+    $groups = dynamo_get_groups($dynamo->groupingid);
 
     echo('<div class="dontprint">'.get_string('dynamogotogroup', 'mod_dynamo').' : <select name="dropdpown" size="1" id="select-anchor" onchange="gototag(this);">');
     foreach ($groups as $sgrp) {
@@ -374,7 +379,7 @@ function rep_list_all_participant($dynamo,$jscript, $display6) {
             <button class="btn btn-default" style="margin:10px;" onclick="removeColors();">'.get_string('dynamoremovecolors', 'mod_dynamo').'</button>
             </div>
         </div>');
-    $groups = dynamo_get_groups($dynamo->groupementid);
+    $groups = dynamo_get_groups($dynamo->groupingid);
     foreach ($groups as $grp) { // loop to all groups of grouping  
         $grpusrs = dynamo_get_group_users($grp->id);  
         
@@ -506,7 +511,7 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
     
     $usr = $DB->get_record('user', array('id' =>$usrid )); 
     
-    $grp =dynamo_get_group_from_user($dynamo->groupementid, $usrid);
+    $grp =dynamo_get_group_from_user($dynamo->groupingid, $usrid);
     echo('<div class="eval_others_table" id="'.$grp->id.'" style="display:none;">');
     // user eval the others
     echo (' <div class="table-container">
@@ -601,7 +606,7 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
     
     $usr = $DB->get_record('user', array('id' =>$usrid )); 
     
-    $grp =dynamo_get_group_from_user($dynamo->groupementid, $usrid);
+    $grp =dynamo_get_group_from_user($dynamo->groupingid, $usrid);
     echo('<div class="eval_by_others_table" id="'.$grp->id.'" style="display:none;">');
     echo (' <div class="table-container">
                 <h3>'.$usr->firstname.' '.$usr->lastname.' : '.get_string('dynamoteacherlvl1othereval', 'mod_dynamo').'</h3> 
@@ -655,7 +660,7 @@ function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
     global $CFG, $DB;
     $dynamoautoeval = array();
     $usr      = $DB->get_record('user', array('id' =>$usrid )); 
-    $grp      = dynamo_get_group_from_user($dynamo->groupementid, $usrid);
+    $grp      = dynamo_get_group_from_user($dynamo->groupingid, $usrid);
     $grpusrs  = dynamo_get_group_users($grp->id);
     
     echo('<div class="graph_radar_table">');
@@ -704,7 +709,7 @@ function display_graph_histo_table($dynamo, $usrid, $display6, $jscript) {
     global $CFG, $DB;
     $dynamoautoeval = array();
     $usr = $DB->get_record('user', array('id' =>$usrid )); 
-    $grp =dynamo_get_group_from_user($dynamo->groupementid, $usrid);
+    $grp =dynamo_get_group_from_user($dynamo->groupingid, $usrid);
     
     echo('<div class="graph_histo_table">');
     $grpusrs = dynamo_get_group_users($grp->id);
@@ -839,7 +844,7 @@ function rep_yearbook($dynamo, $jscript, $id) {
           $(".report-yearbook-descr").css("transform","scale(1.0)");';
    
     echo('<div id="main-yearbook" style="display:table;width:100%;">');
-    $groups = dynamo_get_groups($dynamo->groupementid);
+    $groups = dynamo_get_groups($dynamo->groupingid);
     foreach ($groups as $grp) { // loop to all groups of grouping  
         $grpusrs = dynamo_get_group_users($grp->id);  
         
@@ -856,4 +861,11 @@ function rep_yearbook($dynamo, $jscript, $id) {
     
     return  $jscript;
 }  
+
+// Report 006
+function rep_excel($cm) {
+    $url  = new moodle_url('/mod/dynamo/export/xls/export.php?id='.$cm->id.'&instance='.$cm->instance.'&course='.$cm->course);  
+    echo('<div style="text-align:center;">'.get_string('dynamoexcelready', 'mod_dynamo'));
+    echo('<br><a style="font-size:24px;color:green;" alt="Export Excel" title="Export Excel" href ="'.$url.'" class="fas fa-file-excel" target="_outside"></a></div>');
+}
 ?>  

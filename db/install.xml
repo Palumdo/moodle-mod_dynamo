@@ -22,8 +22,8 @@
         <FIELD NAME="crit5"         TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="crit5" NEXT="critopt"/>
         <FIELD NAME="critopt"       TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="crit5" NEXT="critoptname"/>
         <FIELD NAME="critoptname"   TYPE="char" LENGTH="1333"   NOTNULL="false" SEQUENCE="false"  ENUM="false"                    PREVIOUS="critopt" NEXT="critopt"/>
-        <FIELD NAME="groupementid"  TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="critoptname" NEXT="critopt"/>
-        <FIELD NAME="autoeval"      TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="groupementid" NEXT="groupeval"/>
+        <FIELD NAME="groupingid"    TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="critoptname" NEXT="critopt"/>
+        <FIELD NAME="autoeval"      TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="groupingid" NEXT="groupeval"/>
         <FIELD NAME="groupeval"     TYPE="int"  LENGTH="10"     NOTNULL="false" UNSIGNED="true"   SEQUENCE="false" ENUM="false"   PREVIOUS="autoeval" NEXT="timemodified"/>
         <FIELD NAME="timemodified"  TYPE="int"  LENGTH="10"     NOTNULL="true"  SEQUENCE="false"  DEFAULT="0"   PREVIOUS="groupeval" NEXT="timecreated"/>
         <FIELD NAME="timecreated"   TYPE="int"  LENGTH="10"     NOTNULL="true"  SEQUENCE="false"  DEFAULT="0"   PREVIOUS="timemodified" NEXT="comment1"/>

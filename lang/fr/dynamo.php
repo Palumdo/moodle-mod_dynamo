@@ -131,6 +131,7 @@ $string['dynamoreport02']                     = 'Rapports des groupes';
 $string['dynamoreport03']                     = 'Rapports individuels';
 $string['dynamoreport04']                     = 'Graphique des assurances relatives';
 $string['dynamoreport05']                     = 'Trombinoscope';
+$string['dynamoreport06']                     = 'Export Excel';
 $string['dynamosendmail']                     = 'Envoye de mails';
 $string['dynamononoparticipant']              = 'Tous les étudiants ont rempli le formulaire';
 $string['dynamoreports']                      = 'Liste des Rapports';
@@ -172,3 +173,5 @@ $string['dynamomenureports']                  = 'Rapports';
 $string['privacy:metadata:dynamo_eval']           = 'Informations sur l\'évaluation de l\'utilisateur sur une activité dynamo donnée';
 $string['privacy:metadata:dynamo_eval:evalbyid']  = 'L\'utilisateur qui fait l\'évaluation.';
 $string['privacy:metadata:dynamo_eval:userid']    = 'L\'utilisateur qui est évalué.';
+
+$string['dynamoexcelready']                   = 'Cliquez sur l\'icône pour télécharger votre document';

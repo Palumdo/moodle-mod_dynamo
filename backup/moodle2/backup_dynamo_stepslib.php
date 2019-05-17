@@ -36,7 +36,7 @@ class backup_dynamo_activity_structure_step extends backup_activity_structure_st
         // Define each element separated.
         $dynamo = new backup_nested_element('dynamo', array('id'), array(
             'course', 'name', 'intro', 'introformat', 'open', 'close', 'groupid', 'allowupdate',
-            'crit1','crit2','crit3','crit4','crit5','critopt','critoptname','groupementid','autoeval','groupeval','timemodified','timecreated','comment1','comment2',
+            'crit1','crit2','crit3','crit4','crit5','critopt','critoptname','groupingid','autoeval','groupeval','timemodified','timecreated','comment1','comment2',
         ));
 
         $evals = new backup_nested_element('evals');
@@ -53,7 +53,7 @@ class backup_dynamo_activity_structure_step extends backup_activity_structure_st
 
         // Define id annotations.
         $dynamo->annotate_ids('group', 'groupid');
-        $dynamo->annotate_ids('grouping', 'groupementid');
+        $dynamo->annotate_ids('grouping', 'groupingid');
         $eval->annotate_ids('user', 'userid');
         $eval->annotate_ids('user', 'evalbyid');
 

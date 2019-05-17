@@ -30,7 +30,7 @@
 
 // get the group from the user id
 if($usrid !=0 && $groupid ==0) {
-    $groupid = dynamo_get_group_from_user($dynamo->groupementid, $usrid)->id;
+    $groupid = dynamo_get_group_from_user($dynamo->groupingid, $usrid)->id;
 }  
 
 $active = ['','','','',''];

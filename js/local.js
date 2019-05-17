@@ -327,7 +327,7 @@ function drawGraphSelfConfidence(data) {
           x   = parseInt((data[i].evals-minNote) * (width/difNote) + border);
           y   = parseInt(height - ((data[i].autoeval - minNote) * (height/difNote)) - 8);
           yy  = parseInt((data[i].autoeval - minNote) * (height/difNote)); 
-          $("#graph-balls").append("<div class=\"myballs tooltip\" id=\""+data[i].id+"\" style=\"top:"+y+"px;left:"+x+"px;\"><b>&nbsp;</b><span class=\"tooltiptext\">"+data[i].name+"("+data[i].autoeval+" - "+data[i].evals+")</span></div>");
+          $("#graph-balls").append("<div class=\"myballs toolpit\" id=\""+data[i].id+"\" style=\"top:"+y+"px;left:"+x+"px;\"><b>&nbsp;</b><span class=\"toolpittext\">"+data[i].name+"("+data[i].autoeval+" - "+data[i].evals+")</span></div>");
           ctx.beginPath();
           ctx.arc(x+4, y+4, 4, 0, 2 * Math.PI);
           ctx.strokeStyle = "rgba(0,144,0,0.5)";

@@ -45,7 +45,7 @@ echo '<input type="hidden" id="studentshidden">';
 echo '<script>';
 // datalist search
 echo 'var local_source = [';
-$students = dynamo_get_grouping_users($dynamo->groupementid);
+$students = dynamo_get_grouping_users($dynamo->groupingid);
 foreach ($students as $stu) { // loop to all students of grouping
     echo '{
         value: '.$stu->id.',
@@ -89,7 +89,7 @@ if($usrid != 0) {
     $avatar->link       = true;
 
     echo ('<h3>'.get_string('dynamoteacherlvl1title', 'mod_dynamo').' : '.$OUTPUT->render($avatar).' '.$usr->firstname.' '.$usr->lastname.'</h3>');
-    $grp = dynamo_get_group_from_user($dynamo->groupementid, $usrid);
+    $grp = dynamo_get_group_from_user($dynamo->groupingid, $usrid);
    
     echo('<h4 class="dynagroupingtitle" style="color:white;cursor:pointer;" title="'.get_string('dynamoresults1', 'mod_dynamo').'" onclick="location.href=\'view.php?id='.$id.'&usrid='.$usrid.'&groupid='.$grp->id.'&tab=2&results=2\'"><i class="fas fa-user-cog"></i> '.$grp->name.'</h4>');
     echo('<div class="" id="'.$grp->id.'" style="display:;">');

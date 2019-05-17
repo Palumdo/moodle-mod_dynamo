@@ -69,7 +69,7 @@ function dynamo_add_instance($dynamo, $mform) {
     $dynamo->crit5          = $formdata->dynamo_attitude;
     $dynamo->critopt        = $formdata->dynamo_optional;
     $dynamo->critoptname    = $formdata->dynamo_optional_name;
-    $dynamo->groupementid   = $formdata->dynamo_grouping_id;
+    $dynamo->groupingid     = $formdata->dynamo_grouping_id;
     $dynamo->autoeval       = $formdata->dynamo_auto;
     $dynamo->groupeval      = $formdata->dynamo_group_eval;
     $dynamo->comment1       = $formdata->dynamo_comment1;
@@ -106,7 +106,7 @@ function dynamo_update_instance($dynamo, $mform) {
     $dynamo->crit5          = $formdata->dynamo_attitude;
     $dynamo->critopt        = $formdata->dynamo_optional;
     $dynamo->critoptname    = $formdata->dynamo_optional_name;
-    $dynamo->groupementid   = $formdata->dynamo_grouping_id;
+    $dynamo->groupingid     = $formdata->dynamo_grouping_id;
     $dynamo->autoeval       = $formdata->dynamo_auto;
     $dynamo->groupeval      = $formdata->dynamo_group_eval;
     $dynamo->comment1       = $formdata->dynamo_comment1;
@@ -398,7 +398,7 @@ function dynamo_get_group_users($groupid)  {
 function dynamo_get_grouping_users($groupingid)  {
     global $CFG, $DB;
     $sql = " 
-        SELECT t4.id, t4.firstname,t4.lastname
+        SELECT t4.id, t4.firstname,t4.lastname,t4.email,t4.idnumber
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
@@ -610,32 +610,6 @@ function dynamo_compute_advanced($userid, $dynamo) {
     return $result;
 }  
 
-/** MUST BE REMOVED and properly implement in the report
- * Generate an HTML compatible excel file when you click on the icon next of the activity
- *
- *
- * @param record cm_info $cm
- *
- * 
- */
-function dynamo_cm_info_view(cm_info $cm) {
-    global $DB,$USER;
-    
-    $role     = $DB->get_record('role', array('shortname' => 'editingteacher'));
-    $context  = context_module::instance($cm->id);
-    
-    $isTeatcher = false;
-    if (has_capability('mod/dynamo:create', $context)) {
-        $isTeatcher = true;
-    }
-    
-    if(!$isTeatcher) return false;
-    
-    if (!$dynamo = $DB->get_record('dynamo', array('id'=>$cm->instance))) {
-        return false;
-    }
-    $cm->set_after_link(' <a alt="Export Excel" title="Export Excel" href="/mod/dynamo/export.php?id='.$cm->id.'&instance='.$cm->instance.'&course='.$cm->course.'"><img class="icon navicon" alt="Export" src="/theme/image.php/uclouvain/core/1539865978/i/report" tabindex="-1"></a>');
-}      
 /**
  * Compute all the students evaluation sum by student.
  *
@@ -657,7 +631,7 @@ function dynamo_cm_info_view(cm_info $cm) {
                    AND t1.critgrp   = 0
                  GROUP BY t1.userid, t1.evalbyid) t1
     ";
-    
+
     $params = array('param1' => $dynamo->id);
     $result = $DB->get_records_sql($sql, $params);      
     return $result;
@@ -688,13 +662,13 @@ function dynamo_get_total($arrayofobjects, $id, $by ) {
  * Get the group of a specific user.
  *
  *
- * @param int $groupementid id of the grouping.
+ * @param int $groupingid id of the grouping.
  * @param int $userid id of the user.
  *
  * return a recordset
  */
 
-function dynamo_get_group_from_user ($groupementid, $usrid) {
+function dynamo_get_group_from_user ($groupingid, $usrid) {
     global $CFG, $DB;
     
     $sql = " 
@@ -708,7 +682,7 @@ function dynamo_get_group_from_user ($groupementid, $usrid) {
        AND t3.userid  = :param2
     ";
     
-    $params = array('param1' => $groupementid, 'param2' => $usrid);
+    $params = array('param1' => $groupingid, 'param2' => $usrid);
     $result = $DB->get_records_sql($sql, $params);
     
     if( $result == false) return null;
@@ -927,7 +901,7 @@ function dynamo_get_body_table_teacher($dynamo) {
            AND t1.groupid = t2.id
     ";
     
-    $params     = array('param1' => $dynamo->groupementid);
+    $params     = array('param1' => $dynamo->groupingid);
     $result     = $DB->get_records_sql($sql, $params);
     $groupid    =  reset($result)->id;
     $groupusers = dynamo_get_group_users($groupid);
@@ -1085,7 +1059,7 @@ function dynamo_get_report_001($dynamo) {
          ORDER BY t2.name, t4.firstname, t4.lastname
         ";
     
-    $params     = array('param1' => $dynamo->groupementid, 'param2' => $dynamo->id);
+    $params     = array('param1' => $dynamo->groupingid, 'param2' => $dynamo->id);
     $result     = $DB->get_records_sql($sql, $params);
     
     return $result;
@@ -1125,7 +1099,7 @@ function dynamo_get_groupement_stat($dynamo) {
            AND t1.groupid = t2.id
         ";
     
-    $params     = array('param1' => $dynamo->groupementid);
+    $params     = array('param1' => $dynamo->groupingid);
     $result     = $DB->get_record_sql($sql, $params);
     $stat->nb_group = $result->nb_group;    
     
@@ -1141,7 +1115,7 @@ function dynamo_get_groupement_stat($dynamo) {
           AND t3.userid  = t4.id
         ";
     
-    $params     = array('param1' => $dynamo->groupementid, 'param2' => $dynamo->id);
+    $params     = array('param1' => $dynamo->groupingid, 'param2' => $dynamo->id);
     $result     = $DB->get_record_sql($sql, $params);
     $stat->nb_participant = $result->nb_participant;
     
@@ -1161,7 +1135,7 @@ function dynamo_get_groupement_stat($dynamo) {
                             )  
         ";
     
-    $params     = array('param1' => $dynamo->groupementid, 'param2' => $dynamo->id);
+    $params     = array('param1' => $dynamo->groupingid, 'param2' => $dynamo->id);
     $result     = $DB->get_record_sql($sql, $params);
     $stat->nb_no_answer = $result->nb_no_answer;
     
@@ -1373,7 +1347,7 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
                ) t2
          GROUP BY userid";
     
-    $params = array('param1' => $dynamo->id, 'param2' => $dynamo->groupementid);
+    $params = array('param1' => $dynamo->id, 'param2' => $dynamo->groupingid);
     $result = $DB->get_records_sql($sql, $params);
     
     $sql = " 
