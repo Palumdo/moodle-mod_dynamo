@@ -41,7 +41,7 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.drawing.rect.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.radar.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
-$PAGE->requires->css('/mod/dynamo/css/all.css');  // fontawesome 5.4
+$PAGE->requires->css('/mod/dynamo/css/all.css');  // fontawesome  5.8.2
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
@@ -49,9 +49,10 @@ echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="sty
 // Course_module ID, or
 $id         = optional_param('id',      0, PARAM_INT);
 // ... module instance id.
+// Default tab is the Result -> global view
 $d          = optional_param('d',       0, PARAM_INT);
-$tab        = optional_param('tab',     2, PARAM_INT);
-$report     = optional_param('report',  1, PARAM_INT);
+$tab        = optional_param('tab',     2, PARAM_INT); // global view
+$report     = optional_param('report',  1, PARAM_INT); // first report
 $results    = optional_param('results', 0, PARAM_INT);
 $zoom       = optional_param('zoom',    0, PARAM_INT);
 $groupid    = optional_param('groupid', 0, PARAM_INT);
@@ -73,7 +74,8 @@ $modulecontext = context_module::instance($cm->id);
 
 $mode = '';
 
-// UCLouvain faculty colors only usefull at UCL. Other will have a default color) 
+// UCLouvain faculty colors only usefull at UCL. Other will have a default blue color) 
+// can be easily customisable for other faculty. Faculty short name are in course category.
 $afcolor = [];
 $afcolor['[MEDE]']    = '#88005d';
 $afcolor['[FASB]']    = '#88005d';
@@ -100,6 +102,7 @@ $facColor = $afcolor[$faculty];
 if($facColor == '') {$facColor = '#032f5d';}  
 
 
+// Base security
 if (has_capability('mod/dynamo:create', $modulecontext)) {
     $mode = 'teacher';
 } else {
@@ -144,8 +147,9 @@ if($mode == 'teacher') {
             // get the comment of the current inspected user if no user was seen
             // comment will be empty. It's just for a preview... Dummy text can be OK !
             // or empty...
+            // preview of what student see for the teacher (no save button !)
             $comment = dynamo_get_comment($usrid, $dynamo);
-            require_once(__DIR__.'/preview.php');
+            require_once(__DIR__.'/student.php');
             break;
         case 2:
             switch($results) {

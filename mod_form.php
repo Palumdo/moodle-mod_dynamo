@@ -16,6 +16,10 @@
 
 /**
  * The main mod_dynamo configuration form.
+ * For each criteria used for the peer evaluation the teacher can add additional info on it.
+ * They've default text for the tooltips and here the teacher can add more info.
+ * He can also add is own sixth criteria.
+ * evaluation is based on (Participation 	Responsability 	Scientific Expertise 	Technical Expertise 	General Attitude)
  *
  * @package    mod_dynamo
  * @copyright  2019 UCLouvain
@@ -42,7 +46,11 @@ class mod_dynamo_mod_form extends moodleform_mod {
     public function definition() {
         global $CFG;
         global $COURSE;
+        global $PAGE;
 
+        $PAGE->requires->jquery();
+        $PAGE->requires->js('/mod/dynamo/js/mod.js');
+        
         $mform = $this->_form;
         
         // Adding the "general" fieldset, where all the common settings are showed.
@@ -116,6 +124,8 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentfonction', 'mod_dynamo') . ' (2)');
         $mform->addElement('text', 'dynamo_comment2', get_string('dynamocommentfonction', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
         
+        // hidden tranlated text for javascript mod.js
+        $mform->addElement('hidden', 'dynamo_newtext', get_string('dynamoactivityview', 'mod_dynamo'));
 
         // Add standard elements.
         $this->standard_grading_coursemodule_elements();

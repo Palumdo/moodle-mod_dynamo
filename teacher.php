@@ -31,10 +31,16 @@
 // https://www.tandfonline.com/eprint/ee2eHDqmr2aTEb9t4dB8/full
 //**************************************************************************
 require_login($course, true, $cm);
+$modulecontext = context_module::instance($cm->id);
+if (!has_capability('mod/dynamo:create', $modulecontext)) {
+  redirect(new moodle_url('/my'));
+  die;
+}    
  
-$stat         = dynamo_get_groupement_stat($dynamo);
-$groups       = dynamo_get_groups($dynamo->groupingid);
+$stat   = dynamo_get_grouping_stat($dynamo);
+$groups = dynamo_get_groups($dynamo->groupingid);
 
+// Sub tabulation for teacher to see student results in three levels
 echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
         <li class="active"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=1">'.get_string('dynamoresults1', 'mod_dynamo').'</a></li>
         <li><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=2">'.get_string('dynamoresults2', 'mod_dynamo').'</a></li>
@@ -44,7 +50,7 @@ echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
 echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '.$cm->name.'</h3><input id="activityid" type="hidden" value="'.$id.'">');
 echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
 
-// custom checkboxes that look like switch to hide group with no problems or group where student answer is missing and switch view 
+// Custom checkboxes that look like switch to hide group with no problems or group where student answers are missing and switch view 
 // table to div
 echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;">
         <div class="box-switch"><div class="box-switch-label">'.get_string('dynamoremovegroupnoprobs',  'mod_dynamo').'</div>
@@ -61,9 +67,9 @@ echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;
         </div>          
         
         <div class="box-switch" style="text-align:left;max-width:300px;width:300px;"><div style="padding:15px;">
-         '.get_string('dynamogroupcount', 'mod_dynamo').            ' : '.$stat->nb_group.'<br>
-         '.get_string('dynamostudentcount', 'mod_dynamo').          ' : '.$stat->nb_participant.'<br>
-         '.get_string('dynamostudentnoanswerscount', 'mod_dynamo'). ' : <a href="/mod/dynamo/view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&report=1&tab=3&results=1">'.$stat->nb_no_answer.'</a></div>
+         '.get_string('dynamogroupcount',               'mod_dynamo').' : '.$stat->nb_group.'<br>
+         '.get_string('dynamostudentcount',             'mod_dynamo').' : '.$stat->nb_participant.'<br>
+         '.get_string('dynamostudentnoanswerscount',    'mod_dynamo').' : <a href="/mod/dynamo/view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&report=1&tab=3&results=1">'.$stat->nb_no_answer.'</a></div>
         </div>
       </div>');
 echo('<div id="table-overview"><table class="tablelvlx">
@@ -71,10 +77,10 @@ echo('<div id="table-overview"><table class="tablelvlx">
           <tr>
             <th style="background-color:'.$facColor.'">&nbsp;</th>
             <th>'.get_string('dynamoheadparticiaption', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadimplication', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadconfidence', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadcohesion', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadconflit', 'mod_dynamo').'</th>
+            <th>'.get_string('dynamoheadimplication',   'mod_dynamo').'</th>
+            <th>'.get_string('dynamoheadconfidence',    'mod_dynamo').'</th>
+            <th>'.get_string('dynamoheadcohesion',      'mod_dynamo').'</th>
+            <th>'.get_string('dynamoheadconflit',       'mod_dynamo').'</th>
             <th style="border-left:3px solid grey;text-align:center;cursor:pointer;">'.get_string('dynamoheadremarque', 'mod_dynamo').' <i class="fas fa-sort"></th>
             <th></th>
           </tr>  
@@ -82,35 +88,33 @@ echo('<div id="table-overview"><table class="tablelvlx">
         <tbody>
      ');
 foreach ($groups as $grp) { // loop to all groups of grouping
-    $grpusrs    = dynamo_get_group_users($grp->id);
-    $groupstat  = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id);
-  
+    $grpusrs        = dynamo_get_group_users($grp->id);
     $coursecontext  = get_context_instance(CONTEXT_COURSE, $COURSE->id);
-    // display debug info to admin
-    if(has_capability('moodle/site:config', $coursecontext)) {   
-        $oclique       = dynamo_get_clique($dynamo, $grpusrs, true);
-    } else $oclique  = dynamo_get_clique($dynamo, $grpusrs, false);
+    $oclique        = dynamo_get_clique($dynamo, $grpusrs, false);
   
     $clique = $oclique->grp;
     $type   = $oclique->type;
     $list   = $oclique->list;
 
     $cliqueStr  = "";
-    $cnt = 0;
     foreach($clique as $cusers)  {
         if(count($cusers) > 0) {
             foreach($cusers as $cuser) {
                 $cliqueStr .= '<i class="fas fa-user colok" data-id="'.$cuser.'" data-group="'.$grp->id.'" title="'.$grpusrs[$cuser]->firstname.' '.$grpusrs[$cuser]->lastname.'"></i>';
             }  
-            $cliqueStr .= '|';
+            $cliqueStr .= '+';
         }
-        $cnt++;
     }
-    $cliqueStr = rtrim($cliqueStr, '|');
-    $cliqueStr = str_replace('>|', '><b> | </b>' ,$cliqueStr);
+    $cliqueStr = rtrim($cliqueStr, '+');
+    $cliqueStr = str_replace('>+', '><b> + </b>' ,$cliqueStr);
 
     // Add icon type conflit group 
-    $groupstat->conflit .= dynamo_get_group_type($type, $grp->id,  $oclique->max);
+    $cliqueStr = $cliqueStr .' = '.dynamo_get_group_type($type, $grp->id,  $oclique->max);
+
+    $val = [0,0,0,1,3,0,3];
+    $notperfect = ($val[$type] * count($grpusrs));
+    
+    $groupstat  = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
 
     $addClass = "";
     if(strpos($groupstat->participation, 'color:#ccc')  !==false) {
@@ -126,15 +130,16 @@ foreach ($groups as $grp) { // loop to all groups of grouping
               <td>'.$groupstat->conflit.'</td>
               <td class="camera-border">'.$groupstat->remark.'</td>
               <td class="td-num">⏲️</td>
-        </tr>');
+         </tr>');
     // usefull for more than 50 groups or hundreds of students !    
     ob_flush();
     flush();          
 }
 
 echo('
-      </tbody>
-    </table></div>');
+        </tbody>
+    </table>
+</div>');
 
 echo('<script src="js/teacher.js"></script>');
 ?>

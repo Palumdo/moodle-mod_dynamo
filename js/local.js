@@ -23,7 +23,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
-// linked to student.php
+// linked to student
 
 // Evaluation system by star 
 $(".mystar").mouseover(function() {
@@ -61,7 +61,7 @@ function displayStar(id) {
   }
 }
 
-// displaty the star based on the value (real evaluation)
+// display the stars based on the value (real evaluation)
 $('.hiddenval').each(function() {
   var id  = this.id;
   displayStar(id);
@@ -71,13 +71,13 @@ $('.hiddenval').each(function() {
 function validation(crit6, grp) {
  var error = 0;  
  var idList = '';
- // pairs
+ // peers
  jQuery('.saveme').each(function() {
    var currentElement  = $(this);
    var value           = currentElement.val(); 
    var id              = this.id;
-   //console.log(id + ' - ' + value );
-   if(id.indexOf('_6') != -1) { // 6th criteria for pairs
+
+   if(id.indexOf('_6') != -1) { // 6th criteria for peers
      if(crit6 == '' && value == 0) error++; 
    } else {
      if(value == 0) {error++;idList += id+"," } 
@@ -118,9 +118,9 @@ function validation(crit6, grp) {
  
  return true;
 }   
-// END OF JS specific to student.php
+// END OF JS specific to student
 
-// JS specific to teacher.php
+// JS specific to teacher
 
 // Add row number to the global view result
 function numTable() {
@@ -203,7 +203,7 @@ $(".report-yearbook-descr").mouseleave(function() {
 
 $(".report-yearbook img").hover(function() {
   $(this).css("transition","all 200ms ease-in");
-  $(this).css("transform","scale(1.7)");
+  $(this).css("transform","scale(2.2)");
   $(this).css("zIndex","1000");
 
 });
@@ -216,13 +216,16 @@ $(".report-yearbook img").mouseleave(function() {
 // end of animation
 
 // Reports functions 
+
+// reload the page with the selected report
 function reloadme(val) {
     var usrid      = document.getElementById("usrid").value;
     var groupid    = document.getElementById("groupid").value;
     var activityid = document.getElementById("activityid").value;
     location.href='view.php?id='+activityid+'&groupid='+groupid+'&usrid='+usrid+'&report='+val+'&tab=3';
 }
- 
+
+// Change the zoom level in the report relative insurances
 function reloadZoom(zoom) {
     val = zoom;
     if(val < 0) val = 0;
@@ -233,19 +236,22 @@ function reloadZoom(zoom) {
     location.href='view.php?id='+activityid+'&groupid='+groupid+'&usrid='+usrid+'&report=4&tab=3&zoom='+val;
 }
 
-
+// Go to the selected group
 function gototag(obj) {
     val = $(obj).children(":selected").attr("id");
     var verticalPositionOfElement = $("."+val).offset().top;
     $(window).scrollTop(verticalPositionOfElement - 50);
 }
 
+// remove color on values (orange, red green,...)
+// to not warn the student if the data are printed
 function removeColors() {
     $(".change-color").css("color","#000");
     $(".change-color").css("background-color","white");
 }
 
-function drawGraphSelfConfidence(data) {
+// Draw the graph of self insurance/confidence
+function drawGraphSelfConfidence(data, txtauto, txtpeer) {
     var canvas  = document.getElementById("confidence_gfx");
     var canvas2 = document.getElementById("layer_gfx");
 
@@ -315,8 +321,8 @@ function drawGraphSelfConfidence(data) {
         }
       }    
       ctx.font = "12px Verdana";
-      ctx.fillText("Auto", border+3, 12);
-      ctx.fillText("Pairs", width-50, height-14);
+      ctx.fillText(txtauto, border+3, 12);
+      ctx.fillText(txtpeer, width-50, height-14);
       ctx.moveTo(border, height);
       ctx.lineTo(width+border, 0);
       ctx.stroke();
@@ -381,4 +387,25 @@ function drawGraphSelfConfidence(data) {
        var activityid = document.getElementById("activityid").value;
        location.href="view.php?id="+activityid+"&groupid=0&usrid="+this.id+"&tab=2&results=3";
     });
-}    
+}  // end of function
+
+// Reload the page result with group details
+function reloadGroupme(obj) {
+    val     = $(obj).children(":selected").attr("id");
+    usrid   = document.getElementById("usrid").value;
+    id      = document.getElementById("activityid").value;
+    location.href='view.php?id='+id+'&usrid='+usrid+'&groupid='+val+'&tab=2&results=2';
+}
+
+// Order in alpha the list of students in the yearbook
+var OrderDIV = function(asc) {
+    $("div#main-yearbook").children().detach().sort(function(a,b) {
+        return (a.textContent) > (b.textContent);
+    }).appendTo("#main-yearbook");
+}
+
+OrderDIV(0);
+$(".report-yearbook img").css("transform","scale(1.0)");
+$(".report-yearbook-descr").css("transform","scale(1.0)");
+
+

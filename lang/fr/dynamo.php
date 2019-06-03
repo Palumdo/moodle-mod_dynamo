@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Lang strings for the teamup module.
+ * Lang strings for the dynamo module.
  *
  * @package    mod_dynamo
  * @copyright  2019 UCLouvain
@@ -123,7 +123,7 @@ $string['dynamoheadparticiaption']            = 'Répondu';
 $string['dynamoheadimplication']              = 'Implication';
 $string['dynamoheadconfidence']               = 'Assurance';
 $string['dynamoheadcohesion']                 = 'Cohésion';
-$string['dynamoheadconflit']                  = 'Commentaires';
+$string['dynamoheadconflit']                  = 'Appréciations';
 $string['dynamoheadremarque']                 = 'Climat';
 $string['dynamonocomment']                    = 'Sans commentaire spécifique';
 $string['dynamoreport01']                     = 'Liste des participants sans réponse';
@@ -175,3 +175,7 @@ $string['privacy:metadata:dynamo_eval:evalbyid']  = 'L\'utilisateur qui fait l\'
 $string['privacy:metadata:dynamo_eval:userid']    = 'L\'utilisateur qui est évalué.';
 
 $string['dynamoexcelready']                   = 'Cliquez sur l\'icône pour télécharger votre document';
+$string['dynamographauto']                    = 'Auto';
+$string['dynamographpeers']                   = 'Pairs';
+
+$string['dynamoactivityview']                 = 'Les étudiants doivent afficher et sauver cette activité pour la terminer';

@@ -81,7 +81,7 @@ class provider implements
                 JOIN {modules} m            ON m.id = cm.module AND m.name = :modname
                 JOIN {dynamo} t             ON t.id = cm.instance
                 JOIN {dynamo_eval} e        ON e.builder = t.id
-                WHERE (e.evalbyid = :evalbyid OR e.userid = :userid)";
+                WHERE e.evalbyid = :evalbyid";
 
         $params = [
             'modname'       => 'dynamo',
@@ -143,14 +143,14 @@ class provider implements
                 $evaldata = [];
             }
             $evaldata['evals'][] = [
-                'evalcrit1' => $eval->crit1,
-                'evalcrit2' => $eval->crit2,
-                'evalcrit3' => $eval->crit3,
-                'evalcrit4' => $eval->crit4,
-                'evalcrit5' => $eval->crit5,
-                'evalcrit6' => $eval->crit6,
-                'evalcomment1' => $eval->comment1,
-                'evalcomment2' => $eval->comment2,
+                'Participation'         => $eval->crit1,
+                'Responsability'        => $eval->crit2,
+                'Scientific Expertise'  => $eval->crit3,
+                'Technical Expertise'   => $eval->crit4,
+                'General Attitude'      => $eval->crit5,
+                'Other'                 => $eval->crit6,
+                'comment1'              => $eval->comment1,
+                'comment2'              => $eval->comment2,
             ];
             $lastcmid = $eval->cmid;
         }

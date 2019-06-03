@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * save the evaluation of students
+ * validate & save a peer evaluation made by a student
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
@@ -25,6 +25,7 @@
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
+$PAGE->requires->css('/mod/dynamo/css/style.css');
 
 global $USER;
 
@@ -66,6 +67,7 @@ echo $OUTPUT->header();
 
 //*********************
 // server side data validation
+// value must between 1 to 5 (all question are mandatory)
 //*********************
 foreach ($groupusers as $user) {
     $error = 0;
@@ -81,7 +83,7 @@ foreach ($groupusers as $user) {
       if(trim($_POST['comment2']) == '') $error++; 
     
       if($error > 0) {
-        echo("<div style='width:100%;height:32px;border:1px solid red;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
+        echo("<div class='errormsgserver'>");
         echo(get_string('dynamosavedcorrupted', 'mod_dynamo'));
         echo("</div>");
         die(0);
@@ -99,7 +101,7 @@ if($dynamo->groupeval == 1) {
     if($_POST[$group->id.'_g5'] <1 || $_POST[$group->id.'_g5'] > 5) $error++;
     // display message if they've an error
     if($error > 0) {
-        echo("<div style='width:100%;height:32px;border:1px solid red;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
+        echo("<div class='errormsgserver'>");
         echo(get_string('dynamosavedcorrupted', 'mod_dynamo'));
         echo("</div>");
         die(0);
@@ -162,9 +164,11 @@ if($dynamo->groupeval == 1) {
         $DB->update_record('dynamo_eval', $dynamoeval);
     }
 }  
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
 
 // display message if all is saved successfully
-echo("<div style='width:100%;height:32px;border:1px solid green;background-color:#ffffd2;text-align:center;vertical-align:middle;border-radius:15px;display:block;font-weight:bold;padding-top:15px;'>");
+echo("<div class='successmsgserver'>");
 echo(get_string('dynamosavedsuccessfully', 'mod_dynamo'));
 echo("</div>");
 echo('<script>setInterval(function(){location.href = "/course/view.php?id='.$cm->course.'";},5000);</script>');

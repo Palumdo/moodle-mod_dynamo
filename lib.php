@@ -1,5 +1,4 @@
 <?php
-// Ligne 845 à cointinuer
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -160,7 +159,7 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
     
     // We want to add these new nodes after the Edit settings node, and before the
     // Locally assigned roles node. Of course, both of those are controlled by capabilities.
-    // from mod_quiz
+    // code come from mod_quiz
     $keys       = $navref->get_children_key_list();
     $beforekey  = null;
     $i          = array_search('modedit', $keys);
@@ -192,18 +191,18 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
         
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid, 'tab'=>2, 'results'=>1));
-        $resultnode->add_node(navigation_node::create(get_string('dynamoresults1', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $resultnode->add_node(navigation_node::create(get_string('dynamoresults1', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
         
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid, 'tab'=>2, 'results'=>2));
-        $resultnode->add_node(navigation_node::create(get_string('dynamoresults2', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $resultnode->add_node(navigation_node::create(get_string('dynamoresults2', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
 
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid, 'tab'=>2, 'results'=>3));
-        $resultnode->add_node(navigation_node::create(get_string('dynamoresults3', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $resultnode->add_node(navigation_node::create(get_string('dynamoresults3', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
 
         // Reports tab -------------------------------------------------------------------------------------------------------------
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
@@ -213,28 +212,28 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
 
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid,'report'=>1, 'tab'=>3));
-        $reportnode->add_node(navigation_node::create(get_string('dynamoreport01', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $reportnode->add_node(navigation_node::create(get_string('dynamoreport01', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
 
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid,'report'=>5, 'tab'=>3));
-        $reportnode->add_node(navigation_node::create(get_string('dynamoreport05', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $reportnode->add_node(navigation_node::create(get_string('dynamoreport05', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
 
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid,'report'=>2, 'tab'=>3));
-        $reportnode->add_node(navigation_node::create(get_string('dynamoreport02', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $reportnode->add_node(navigation_node::create(get_string('dynamoreport02', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
 
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid,'report'=>3, 'tab'=>3));
-        $reportnode->add_node(navigation_node::create(get_string('dynamoreport03', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $reportnode->add_node(navigation_node::create(get_string('dynamoreport03', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
 
         $url    = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
                                 ,'usrid'=>$usrid,'report'=>4, 'tab'=>3));
-        $reportnode->add_node(navigation_node::create(get_string('dynamoreport04', 'dynamo'), $url, navigation_node::TYPE_SETTING, null
-                              , null, new pix_icon('i/item', '')));
+        $reportnode->add_node(navigation_node::create(get_string('dynamoreport04', 'dynamo'), $url, navigation_node::TYPE_SETTING, 
+                                null, null, new pix_icon('i/item', '')));
     }
  
     return;
@@ -452,15 +451,57 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
             }
             
             $bodytable = $bodytable.'
-                            <tr>
-                                <td style="color:'.$color.'">'.$user->firstname.' '.$user->lastname.'</td>
-                                <td><input class="saveme hiddenval" name="'.$user->id.'_1"  id="'.$user->id.'_1"  value="'.$dynamoeval->crit1.'" ><i data-id="'.$user->id.'_1" data-value="1" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="2" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="3" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="4" class="mystar fa fa-user-clock"></i><i data-id="'.$user->id.'_1" data-value="5" class="mystar fa fa-user-clock"></i></td>
-                                <td><input class="saveme hiddenval" name="'.$user->id.'_2"  id="'.$user->id.'_2"  value="'.$dynamoeval->crit2.'" ><i data-id="'.$user->id.'_2" data-value="1" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="2" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="3" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="4" class="mystar fa fa-medal"></i><i data-id="'.$user->id.'_2" data-value="5" class="mystar fa fa-medal"></i></td>
-                                <td><input class="saveme hiddenval" name="'.$user->id.'_3"  id="'.$user->id.'_3"  value="'.$dynamoeval->crit3.'" ><i data-id="'.$user->id.'_3" data-value="1" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="2" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="3" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="4" class="mystar fa fa-lightbulb"></i><i data-id="'.$user->id.'_3" data-value="5" class="mystar fa fa-lightbulb"></i></td>
-                                <td><input class="saveme hiddenval" name="'.$user->id.'_4"  id="'.$user->id.'_4"  value="'.$dynamoeval->crit4.'" ><i data-id="'.$user->id.'_4" data-value="1" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="2" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="3" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="4" class="mystar fa fa-wrench"></i><i data-id="'.$user->id.'_4" data-value="5" class="mystar fa fa-wrench"></i></td>
-                                <td><input class="saveme hiddenval" name="'.$user->id.'_5"  id="'.$user->id.'_5"  value="'.$dynamoeval->crit5.'" ><i data-id="'.$user->id.'_5" data-value="1" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="2" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="3" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="4" class="mystar fa fa-smile"></i><i data-id="'.$user->id.'_5" data-value="5" class="mystar fa fa-smile"></i></td>
-                                <td style="display:'.$display6.'"><input class="saveme hiddenval" name="'.$user->id.'_6" id="'.$user->id.'_6"  value="'.$dynamoeval->crit6.'"><i data-id="'.$user->id.'_6" data-value="1" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="2" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="3" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="4" class="mystar fa fa-star"></i><i data-id="'.$user->id.'_6" data-value="5" class="mystar fa fa-star"></i></td>
-                            </tr>
+                <tr>
+                    <td style="color:'.$color.'">'.$user->firstname.' '.$user->lastname.'</td>
+                    <td>
+                        <input class="saveme hiddenval" name="'.$user->id.'_1"  id="'.$user->id.'_1"  value="'.$dynamoeval->crit1.'">
+                        <i data-id="'.$user->id.'_1" data-value="1" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$user->id.'_1" data-value="2" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$user->id.'_1" data-value="3" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$user->id.'_1" data-value="4" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$user->id.'_1" data-value="5" class="mystar fa fa-user-clock"></i>
+                    </td>
+                    <td>
+                        <input class="saveme hiddenval" name="'.$user->id.'_2"  id="'.$user->id.'_2"  value="'.$dynamoeval->crit2.'">
+                        <i data-id="'.$user->id.'_2" data-value="1" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$user->id.'_2" data-value="2" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$user->id.'_2" data-value="3" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$user->id.'_2" data-value="4" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$user->id.'_2" data-value="5" class="mystar fa fa-medal"></i>
+                    </td>
+                    <td>
+                        <input class="saveme hiddenval" name="'.$user->id.'_3"  id="'.$user->id.'_3"  value="'.$dynamoeval->crit3.'">
+                        <i data-id="'.$user->id.'_3" data-value="1" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$user->id.'_3" data-value="2" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$user->id.'_3" data-value="3" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$user->id.'_3" data-value="4" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$user->id.'_3" data-value="5" class="mystar fa fa-lightbulb"></i>
+                    </td>
+                    <td>
+                        <input class="saveme hiddenval" name="'.$user->id.'_4"  id="'.$user->id.'_4"  value="'.$dynamoeval->crit4.'">
+                        <i data-id="'.$user->id.'_4" data-value="1" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$user->id.'_4" data-value="2" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$user->id.'_4" data-value="3" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$user->id.'_4" data-value="4" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$user->id.'_4" data-value="5" class="mystar fa fa-wrench"></i>
+                    </td>
+                    <td>
+                        <input class="saveme hiddenval" name="'.$user->id.'_5"  id="'.$user->id.'_5"  value="'.$dynamoeval->crit5.'">
+                        <i data-id="'.$user->id.'_5" data-value="1" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$user->id.'_5" data-value="2" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$user->id.'_5" data-value="3" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$user->id.'_5" data-value="4" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$user->id.'_5" data-value="5" class="mystar fa fa-smile"></i>
+                    </td>
+                    <td style="display:'.$display6.'">
+                        <input class="saveme hiddenval" name="'.$user->id.'_6" id="'.$user->id.'_6"  value="'.$dynamoeval->crit6.'">
+                        <i data-id="'.$user->id.'_6" data-value="1" class="mystar fa fa-star"></i>
+                        <i data-id="'.$user->id.'_6" data-value="2" class="mystar fa fa-star"></i>
+                        <i data-id="'.$user->id.'_6" data-value="3" class="mystar fa fa-star"></i>
+                        <i data-id="'.$user->id.'_6" data-value="4" class="mystar fa fa-star"></i>
+                        <i data-id="'.$user->id.'_6" data-value="5" class="mystar fa fa-star"></i>
+                    </td>
+                </tr>
             ';    
         }
     }
@@ -484,12 +525,54 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                     <tbody>
                 <tr>
                     <td style="min-width:200px;font-weight:bold;">Groupe</td>
-                    <td style="min-width:160px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'.$dynamoeval->crit1.'"><i data-id="'.$groupid.'_1" data-criteria="1" data-value="1" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="2" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="3" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="4" class="mystar fa fa-user-clock"></i><i data-id="'.$groupid.'_1" data-criteria="1" data-value="5" class="mystar fa fa-user-clock"></i></td>
-                    <td style="min-width:160px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g2"  id="'.$groupid.'_2" value="'.$dynamoeval->crit2.'"><i data-id="'.$groupid.'_2" data-criteria="2" data-value="1" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="2" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="3" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="4" class="mystar fa fa-medal"></i><i data-id="'.$groupid.'_2" data-criteria="2" data-value="5" class="mystar fa fa-medal"></i></td>
-                    <td style="min-width:150px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g3"  id="'.$groupid.'_3" value="'.$dynamoeval->crit3.'"><i data-id="'.$groupid.'_3" data-criteria="2" data-value="1" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="2" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="3" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="4" class="mystar fa fa-lightbulb"></i><i data-id="'.$groupid.'_3" data-criteria="2" data-value="5" class="mystar fa fa-lightbulb"></i></td>
-                    <td style="min-width:150px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g4"  id="'.$groupid.'_4" value="'.$dynamoeval->crit4.'"><i data-id="'.$groupid.'_4" data-criteria="2" data-value="1" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="2" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="3" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="4" class="mystar fa fa-wrench"></i><i data-id="'.$groupid.'_4" data-criteria="2" data-value="5" class="mystar fa fa-wrench"></i></td>
-                    <td style="min-width:130px;"><input class="savemegrp hiddenval" name="'.$groupid.'_g5"  id="'.$groupid.'_5" value="'.$dynamoeval->crit5.'"><i data-id="'.$groupid.'_5" data-criteria="2" data-value="1" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="2" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="3" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="4" class="mystar fa fa-smile"></i><i data-id="'.$groupid.'_5" data-criteria="2" data-value="5" class="mystar fa fa-smile"></i></td>
-                    <td style="min-width:200px;display:'.$display6.'"><input class="savemegrp hiddenval" name="'.$groupid.'_g6" id="'.$groupid.'_6" value="'.$dynamoeval->crit6.'"><i data-id="'.$groupid.'_6" data-criteria="2" data-value="1" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="2" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="3" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="4" class="mystar fa fa-star"></i><i data-id="'.$groupid.'_6" data-criteria="2" data-value="5" class="mystar fa fa-star"></i></td>
+                    <td style="min-width:160px;">
+                        <input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'.$dynamoeval->crit1.'">
+                        <i data-id="'.$groupid.'_1" data-criteria="1" data-value="1" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$groupid.'_1" data-criteria="1" data-value="2" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$groupid.'_1" data-criteria="1" data-value="3" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$groupid.'_1" data-criteria="1" data-value="4" class="mystar fa fa-user-clock"></i>
+                        <i data-id="'.$groupid.'_1" data-criteria="1" data-value="5" class="mystar fa fa-user-clock"></i>
+                    </td>
+                    <td style="min-width:160px;">
+                        <input class="savemegrp hiddenval" name="'.$groupid.'_g2"  id="'.$groupid.'_2" value="'.$dynamoeval->crit2.'">
+                        <i data-id="'.$groupid.'_2" data-criteria="2" data-value="1" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$groupid.'_2" data-criteria="2" data-value="2" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$groupid.'_2" data-criteria="2" data-value="3" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$groupid.'_2" data-criteria="2" data-value="4" class="mystar fa fa-medal"></i>
+                        <i data-id="'.$groupid.'_2" data-criteria="2" data-value="5" class="mystar fa fa-medal"></i>
+                    </td>
+                    <td style="min-width:150px;">
+                        <input class="savemegrp hiddenval" name="'.$groupid.'_g3"  id="'.$groupid.'_3" value="'.$dynamoeval->crit3.'">
+                        <i data-id="'.$groupid.'_3" data-criteria="2" data-value="1" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$groupid.'_3" data-criteria="2" data-value="2" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$groupid.'_3" data-criteria="2" data-value="3" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$groupid.'_3" data-criteria="2" data-value="4" class="mystar fa fa-lightbulb"></i>
+                        <i data-id="'.$groupid.'_3" data-criteria="2" data-value="5" class="mystar fa fa-lightbulb"></i>
+                    </td>
+                    <td style="min-width:150px;">
+                        <input class="savemegrp hiddenval" name="'.$groupid.'_g4"  id="'.$groupid.'_4" value="'.$dynamoeval->crit4.'">
+                        <i data-id="'.$groupid.'_4" data-criteria="2" data-value="1" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$groupid.'_4" data-criteria="2" data-value="2" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$groupid.'_4" data-criteria="2" data-value="3" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$groupid.'_4" data-criteria="2" data-value="4" class="mystar fa fa-wrench"></i>
+                        <i data-id="'.$groupid.'_4" data-criteria="2" data-value="5" class="mystar fa fa-wrench"></i>
+                    </td>
+                    <td style="min-width:130px;">
+                        <input class="savemegrp hiddenval" name="'.$groupid.'_g5"  id="'.$groupid.'_5" value="'.$dynamoeval->crit5.'">
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="1" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="2" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="3" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="4" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="5" class="mystar fa fa-smile"></i>
+                    </td>
+                    <td style="min-width:200px;display:'.$display6.'">
+                        <input class="savemegrp hiddenval" name="'.$groupid.'_g6" id="'.$groupid.'_6" value="'.$dynamoeval->crit6.'">
+                        <i data-id="'.$groupid.'_6" data-criteria="2" data-value="1" class="mystar fa fa-star"></i>
+                        <i data-id="'.$groupid.'_6" data-criteria="2" data-value="2" class="mystar fa fa-star"></i>
+                        <i data-id="'.$groupid.'_6" data-criteria="2" data-value="3" class="mystar fa fa-star"></i>
+                        <i data-id="'.$groupid.'_6" data-criteria="2" data-value="4" class="mystar fa fa-star"></i>
+                        <i data-id="'.$groupid.'_6" data-criteria="2" data-value="5" class="mystar fa fa-star"></i>
+                    </td>
                 </tr>
                     </tbody>
                 </table>
@@ -589,7 +672,8 @@ function dynamo_compute_advanced($userid, $dynamo) {
     $resultNbEval = $DB->get_record_sql($sql, $params);
     
     $sql = " 
-        SELECT COALESCE(sum(t1.crit1),0) total1, COALESCE(sum(t1.crit2),0) total2, COALESCE(sum(t1.crit3),0) total3, COALESCE(sum(t1.crit4),0) total4, COALESCE(sum(t1.crit5),0) total5, COALESCE(sum(t1.crit6),0) total6
+        SELECT COALESCE(sum(t1.crit1),0) total1, COALESCE(sum(t1.crit2),0) total2, COALESCE(sum(t1.crit3),0) total3
+              ,COALESCE(sum(t1.crit4),0) total4, COALESCE(sum(t1.crit5),0) total5, COALESCE(sum(t1.crit6),0) total6
           FROM {dynamo_eval} t1
          WHERE t1.userid   = :param1
            AND t1.evalbyid != :param2
@@ -818,7 +902,14 @@ function dynamo_get_autoeval($userid, $dynamo) {
     return $dynamoeval;
 }
 /**
-
+* Get the self confidence/assurance of a specific user
+ * (autoeval  / SumofEvaluation) * (nbStudent-1)/NIWF
+ *
+ * @param object dynamo  $dynamo
+ * @param object of user $grpusrs.
+ * @param int $userid id of the user.
+ *
+ * return an integer
  */
 function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
     $agrid    = [];            
@@ -856,19 +947,23 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
     for($j=0;$j<count($agrid) ;$j++) {
       if($agrid[$j][count($agrid[$j])-1] > 0) {
         $niwf += $agrid[$j][$ki] / $agrid[$j][count($agrid[$j])-1];      
-        $nbstudent++; // student that answers 
+        $nbstudent++; // count only student that answers 
       }
     }
     if($autoeval == 0) return 10;
     $sum  = $agrid[$ki][count($agrid[$ki])-1]; 
-    $nsa  = ($autoeval  / $sum) * ($nbstudent-1); // (count($agrid)-1);
+    $nsa  = ($autoeval  / $sum) * ($nbstudent-1); 
     $conf = $nsa / $niwf;
 
     return $conf;
 }    
 /**
-
- */
+* Get the color to display the NIWF based on his value
+* The threshold values can be calibrated
+*
+* @param float that contain the NIWF $val
+  return a string with the color...
+*/
 function dynamo_get_color_niwf($val) {
     if($val < 0.65) return 'black';
     if($val < 0.80) return 'red';
@@ -878,17 +973,25 @@ function dynamo_get_color_niwf($val) {
 }  
 
 /**
-
- */
-function dynamo_get_color_conf($val) {
+* Get the color to display the self confidence based on his value
+* The threshold values can be calibrated
+*
+* @param float that contain the self confidence/assurance
+  return a string with the color...
+*/function dynamo_get_color_conf($val) {
     if($val > 1.50) return 'black';
     if($val > 1.25) return 'red';
     if($val > 1.10) return 'orange';
     
     return 'green';
 }  
-/**
 
+/**
+* return the preview of what student see (the survey) to teacher
+ *
+ * @param object dynamo  $dynamo
+ *
+ * return a string with HTML
  */
 function dynamo_get_body_table_teacher($dynamo) {
     global $CFG, $DB;
@@ -922,6 +1025,16 @@ function dynamo_get_body_table_teacher($dynamo) {
     return dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid);
 }
 
+/**
+* return the avg evaluation of all the students on the group evaluation
+ *
+ * @param object dynamo  $dynamo
+ * @param integer id of the user $usrid
+ * @param array $grpusrs array of user
+ * @param integer $grpid id of the group
+ *
+ * return an object with the avg for all criterias on the group evaluation 
+ */
 function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
     global $CFG, $DB;
     
@@ -957,21 +1070,36 @@ function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
     return $allgroupeval;
 }  
 
-
-function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
+/**
+* return some indicators about how the group working
+ * indicators are : response or not to the survey ! (Participation)
+                    Implication 
+                    Self-confidence
+                    Conflict 
+                    If student talk about each others (experimental)
+ *
+ * @param object dynamo  $dynamo
+ * @param array $grpusrs array of user
+ * @param integer $grpid id of the group
+ * @param integer $notperfect value from the cohesion to compute the climat
+ *
+ * return an object with all indicators packed in HTML (display for teacher in global view)
+ */
+function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     global $CFG, $DB, $OUTPUT;
     
     $groupstat = new stdClass();  
     $participation      = "";
     $implication        = "";
     $confiance          = "";
-    $notperfect         = 0;
+    //$notperfect         = 0;
     $tooltips           = "";
     $conflit            = "";
     $nbuser             = 0;
     $names              = "";
     
     $aweight  = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
+    // fontawsome icon use for showing the average climat inside the group from thunder to full sun
     $aicon    = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
     
     foreach ($grpusrs as $grpusr) { 
@@ -982,12 +1110,13 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
     
         $tooltips .= $OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'&#xa;<br>';
         
-        // Participation
+        // Participation/ as answered
         if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id))) {
-            $participation = $participation.'<i style="color:#006DCC;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+            $participation = $participation.'<i style="color:#006DCC;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" 
+                                                class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         } else {
-            $notperfect+=3;
-            $participation = $participation.'<i style="color:#ccc;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+            $participation = $participation.'<i style="color:#ccc;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" 
+                                                class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         }
         $names .= $grpusr->firstname.' '.$grpusr->lastname.'&#10;';
         // Implication
@@ -997,20 +1126,36 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
         if($color == 'green') $color = '#006DCC';
         $notperfect +=  $aweight[$color];
         
-        $implication  = $implication . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
-        // Confiance
+        $implication  = $implication . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  
+                                            title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+        // self-insurance
         $conf       = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
         $color      = dynamo_get_color_conf($conf);
         if($color == 'green') $color = '#006DCC';
         $notperfect +=  $aweight[$color];
         
-        $confiance  = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+        $confiance  = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'" class="fas fa-user"  
+                                        title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
     
-        // Experimental
+        // Find firstname lastname in comments about the group
         foreach ($grpusrs as $grpusrname) {
-            if(   strpos($dynamoeval->comment2, $grpusrname->firstname) !== false
-               || strpos($dynamoeval->comment2, $grpusrname->lastname)  !== false) {
-                $conflit = '<i style="font-size:1.2em;" class="fas fa-comment"></i>';
+            if(   strpos($dynamoeval->comment2.'.', $grpusrname->firstname.' ') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'.') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.',') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.';') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'!') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'?') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.')') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'&') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.' ') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'.') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.',') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.';') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'!') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'?') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.')') !== false
+               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'&') !== false) {
+                $conflit = '<i style="font-size:1.2em;color:#006DCC;" class="fas fa-comment"></i>';
             }
         }
     }
@@ -1026,18 +1171,21 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid) {
         $groupstat->remark      = '<span class="hiddenidx">0</span><i style="font-size:1.5em;color:gold;" class="fas '.$aicon[0].'"></i>';
         $groupstat->conflit     = '';
     } else {
-        $grey = 255-round(50*ceil($notperfect/$nbuser/2));
-        $groupstat->remark      = '<span class="hiddenidx">'.ceil($notperfect/$nbuser/2).'</span><i style="font-size:1.5em;color:rgb('.$grey.','.$grey.','.$grey.');" class="fas '.$aicon[ceil($notperfect/$nbuser/2)].'"></i>';
+        $idico  = round($notperfect/$nbuser/2,0,PHP_ROUND_HALF_DOWN);
+        $grey   = 255-round(50*$idico);
+        $groupstat->remark      = '<span class="hiddenidx">'.$idico.'</span><i style="font-size:1.5em;
+                                    color:rgb('.$grey.','.$grey.','.$grey.');" class="fas '.$aicon[$idico].'"></i>';
     }
     
     return $groupstat;
 }  
 
 /**
- * Return the list of participants that do not participate !
+ * Return the list of participants that do not participate (not answer at the survey)
  *
  * @param object $dynamo record dynamo.
- * @return recordset.
+ *
+ * @return recordset with the name and email of the non-participant.
  */
 function dynamo_get_report_001($dynamo) {
     global $CFG, $DB;
@@ -1067,7 +1215,10 @@ function dynamo_get_report_001($dynamo) {
 /**
  * Return the evaluation of a participant !
  *
- * @param object $builder, $evalbyid, $usrid.
+ * @param int $builder  the builder (parent id)
+ * @param int $evalbyid id of the user that do evaluation
+ * @param int $usrid id of the evaluated user
+ *
  * @return object.
  */
 function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
@@ -1086,7 +1237,15 @@ function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
     return $dynamoeval;
 }
 
-function dynamo_get_groupement_stat($dynamo) {
+/**
+ * Return an object with some info about the grouping like number of groups, number of participants, number of participants 
+ * that not answsers
+ *
+ * @param object $dynamo record dynamo.
+ *
+ * @return an object with basic grouping stat
+ */
+function dynamo_get_grouping_stat($dynamo) {
     global $CFG, $DB;
     
     $stat = new stdClass();
@@ -1142,19 +1301,36 @@ function dynamo_get_groupement_stat($dynamo) {
     return $stat;
 }  
 
+/**
+ * Return javascript to create a radar graphic with Rgraph library for a specific student
+ *
+ * @param string $jscript the javascript string to return can already contain javascript   
+ * @param int $usrid    id of the user that will be at the heart of the graph 
+ * @param string  $pairevalstr string that contain  javascript arrays of pair evaluation
+ * @param string  $autoevalstr string that contain javascript array of self-evaluation
+ * @param string $allgroupevalstr  string that contain javascript arrays with group evaluation
+ * @param string $labels label for the grapth
+ * @param $firstname firsname of the student at the center of the graph
+ * @param $lastname lastname of the student at the center of the graph
+ *
+ * @return a string with javascript
+ */
 function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $firstname, $lastname) {
     if($allgroupevalstr == "") {
         $title        = get_string('dynamoradar01title2', 'mod_dynamo');
         $strokestyle  = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)']";
         $keycolors    = "['#FFA500', 'blue']";
-        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".htmlspecialchars($lastname,ENT_QUOTES)."']";
+        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".
+                            htmlspecialchars($lastname,ENT_QUOTES)."']";
         $data         = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr)."];";
     } else {
         $title        = get_string('dynamoradar01title3', 'mod_dynamo');
         $strokestyle  = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)', 'rgba(0,255,255,0.5)']";
         $keycolors    = "['#FFA500', 'blue', '#00FFFF']";
-        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".htmlspecialchars($lastname,ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
-        $data         = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr).", ".str_replace (",,,,","0,0,0,0,0",$allgroupevalstr)."];";
+        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".
+                            htmlspecialchars($lastname,ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
+        $data         = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr).", ".
+                            str_replace (",,,,","0,0,0,0,0",$allgroupevalstr)."];";
     }
     
     $jscript = $jscript.'
@@ -1189,6 +1365,20 @@ function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $a
     return $jscript;
 }  
 
+/**
+ * Return javascript to create a radar graphic with Rgraph library for all students of a group
+ *
+ * @param string $jscript the javascript string to return can already contain javascript   
+ * @param int    $grpid   id of the group
+ * @param string $datagrp a string that is a javascript arrays with self evaluation of all sudents of the group
+ * @param string $title title of the graphic
+ * @param string $labels label for the grapth
+ * @param string $strokestyle a string that is a javascript array with the colors of the lines one by student
+ * @param string $keys a string that is a javascript array with the name of all students of the groups
+ * @param string $keyColors a string that is a javascript array of the colors of the key
+ *
+ * @return a string with javascript
+ */
 function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels, $strokestyle, $keys, $keyColors) {
     $jscript = $jscript.'
         var data'.$grpid.' = '.$datagrp.'
@@ -1220,20 +1410,36 @@ function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels
     
     return $jscript;
 }  
-
+/**
+ * Return javascript to create a radar graphic with Rgraph library for a specific student on report
+ *
+ * @param string $jscript the javascript string to return can already contain javascript   
+ * @param int    $usrid   id of the user that will be at the heart of the graph 
+ * @param string $pairevalstr string that contain  javascript arrays of pair evaluation
+ * @param string $autoevalstr string that contain javascript array of self-evaluation
+ * @param string $allgroupevalstr  string that contain javascript arrays with group evaluation
+ * @param string $labels label for the grapth
+ * @param $firstname firsname of the student at the center of the graph
+ * @param $lastname lastname of the student at the center of the graph
+ *
+ * @return a string with javascript
+ */
 function dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $firstname, $lastname) {
     if($allgroupevalstr == "") {
         $title        = get_string('dynamoradar01title2', 'mod_dynamo');
         $strokestyle  = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)']";
         $keycolors    = "['#FFA500', 'blue']";
-        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".htmlspecialchars($lastname,ENT_QUOTES)."']";
+        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".
+                            htmlspecialchars($lastname,ENT_QUOTES)."']";
         $data         = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr)."];";
     } else {
         $title        = get_string('dynamoradar01title3', 'mod_dynamo');
         $strokestyle  = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)', 'rgba(0,255,255,0.5)']";
         $keycolors    = "['#FFA500', 'blue', '#00FFFF']";
-        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".htmlspecialchars($lastname,ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
-        $data         = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr).", ".str_replace (",,,,","0,0,0,0,0",$allgroupevalstr)."];";
+        $keys         = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".
+                            htmlspecialchars($lastname,ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
+        $data         = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr).", ".
+                            str_replace (",,,,","0,0,0,0,0",$allgroupevalstr)."];";
     }
     
     $jscript = $jscript.'
@@ -1260,7 +1466,19 @@ function dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoeval
     
     return $jscript;
 }  
+/**
+ * Return javascript to create a bar chart with Rgraph library for a specific student on report
+ *
+ * @param string $jscript the javascript string to return can already contain javascript   
+ * @param string $allgroupevalstr  string that contain  javascript arrays of group evaluation
+ * @param int $usrid    id of the user that will be at the heart of the graph 
+ * @param $multievalsr  that contain javascript array of the average of the self-evaluation of other students
+ * @param string $labels label for the grapth
+ * @param object $usr with firstname and lastname of the student at the center of the graph
 
+ *
+ * @return a string with javascript
+ */
 function dynamo_get_graph_bar_report($jscript, $allgroupevalstr, $usrid, $multievalsr, $labels, $usr) {
     if( $allgroupevalstr == "") {
         $jscript = $jscript.'
@@ -1282,7 +1500,8 @@ function dynamo_get_graph_bar_report($jscript, $allgroupevalstr, $usrid, $multie
                     marginBottom: 35,
                     marginTop: 15,
                     marginRight: 5,
-                    key: [\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\',\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\'], 
+                    key: [\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\',\''.
+                              get_string('dynamogroupevaluatedby', 'mod_dynamo').'\'], 
                     keyColors: [\'blue\', \'#FFA500\'],
                 }
             }).draw();';
@@ -1306,7 +1525,9 @@ function dynamo_get_graph_bar_report($jscript, $allgroupevalstr, $usrid, $multie
                     marginBottom: 35,
                     marginTop: 15,
                     marginRight: 5,
-                    key: [\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\',\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\',\''.get_string('dynamogroupevalby', 'mod_dynamo').'\'], 
+                    key: [\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.
+                              htmlspecialchars($usr->lastname,ENT_QUOTES).'\',\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').
+                              '\',\''.get_string('dynamogroupevalby', 'mod_dynamo').'\'], 
                     keyPositionX : 700,
                     keyPositionY : 25,
                     keyColors: [\'blue\', \'#FFA500\', \'#aff\'],
@@ -1316,7 +1537,14 @@ function dynamo_get_graph_bar_report($jscript, $allgroupevalstr, $usrid, $multie
     }
     return $jscript;  
 }
-
+/**
+ * Give all the sum of the evaluations normalized done by all students of the grouping
+ *
+ * @param object $dynamo An object from the form.
+ * @param string $display6 if empty 6 criteria on this survey on not only 5
+ *
+ * @return object with firstname, lastname and the average of the evaluation
+ */
 function dynamo_get_all_eval_by_student($dynamo, $display6) {
     global $CFG, $DB;
     
@@ -1378,6 +1606,15 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
     return $ret;
 }  
 
+/**
+ * Give the quatric gap between each students of a group
+ *
+ * @param object $dynamo An object from the form.
+ * @param array of object of users $grpusrs. all the student of a group
+ * @param boolean $debug dispaly or not debug info...
+ *
+ * @return object with mathematical information and the type of group (homogenic,tap the hand,clustering, band)
+ */
 function dynamo_get_clique($dynamo, $grpusrs, $debug) {
     $grp  = []; 
     $list = [];
@@ -1392,7 +1629,7 @@ function dynamo_get_clique($dynamo, $grpusrs, $debug) {
     $grpusrs = $agrpusrs;
     /* highlight_string("<?php\n\$data =\n" . var_export($grpusrs, true) . ";\n?>"); */
     
-    // create a list with all ecart quatrique ($diff) between each student of a group
+    // create a list with all quatric gap ($diff) between each student of a group
     for ($i=0;$i<count($grpusrs); $i++ ) { // loop to all students of the group
         $usr1   = $grpusrs[$i];
         for ($j=$i+1;$j<count($grpusrs); $j++ ) { // compare to all the ohers in the group
@@ -1464,7 +1701,7 @@ function dynamo_get_clique($dynamo, $grpusrs, $debug) {
     $result->list = $list;
     $result->max  = $maxdiff;
     
-    if($maxdiff <  0.05) $result->type   = 2; // OK homogenic
+    if($maxdiff <  0.05) $result->type   = 2; // homogenic
     if($maxdiff <  0.02) $result->type   = 1; // tap the hand
     if($maxdiff >= 0.05) $result->type   = 3; // clustering
     if($maxdiff >  0.1)  $result->type   = 4; // band
@@ -1479,6 +1716,15 @@ function dynamo_get_clique($dynamo, $grpusrs, $debug) {
     return $result;
 }  
 
+/**
+ * subfunction to simplify  dynamo_get_clique
+ * the aim is just to see if a user is already on an array fi not the array is created 
+ *
+ * @param arrays $grp array of user group with similar quatric gap
+ * @param integer $usr id of the user
+ *
+ * @return the id of the array if the user is already in an array if not -1
+ */
 function dynamo_get_group_clique($grp, $usr) {
     for ($i=0;$i < count($grp);$i++) {
         for ($j=0;$j < count($grp[$i]);$j++) {
@@ -1489,10 +1735,29 @@ function dynamo_get_group_clique($grp, $usr) {
     return -1;
 }  
 
+/**
+ * subfunction to simplify  dynamo_get_clique
+ * the aim is just to sort array
+ *
+ * @param float $a first value
+ * @param float $b second value
+ *
+ * @return wich element is the biggest to sort it
+ */
 function cmp($a, $b) {
     return $a->diff > $b->diff;
 }
 
+
+/**
+ * Give the quatric gap between two students of a group
+ *
+ * @param object $dynamo An object from the form.
+ * @param int $usr1 id of the first user
+ * @param int $usr2 id of the second user
+ *
+ * @return float the quatric gap between these two students
+ */
 function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     global $DB;
     
@@ -1539,7 +1804,9 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
   $sql = " 
     SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) similitude 
       FROM (   
-            SELECT t1.userid, if(t1.crit1-t1.crit1=0,'1','0') crit1 , if(t1.crit2-t2.crit2=0,'1','0') crit2  , if(t1.crit3-t2.crit3=0,'1','0') crit3 , if(t1.crit4-t2.crit4=0,'1','0') crit4  , if(t1.crit5-t2.crit5=0,'1','0') crit5 
+            SELECT t1.userid, if(t1.crit1-t1.crit1=0,'1','0') crit1 , if(t1.crit2-t2.crit2=0,'1','0') crit2  
+                  ,if(t1.crit3-t2.crit3=0,'1','0') crit3 , if(t1.crit4-t2.crit4=0,'1','0') crit4  
+                  ,if(t1.crit5-t2.crit5=0,'1','0') crit5 
               FROM {dynamo_eval} t1
                   ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
                       FROM {dynamo_eval} t1
@@ -1563,7 +1830,11 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $sql = " 
     SELECT sum(t1.crit1/".$nbeval." + t1.crit2/".$nbeval." + t1.crit3/".$nbeval." + t1.crit4/".$nbeval." + t1.crit5/".$nbeval.") ecart 
         FROM (       
-              SELECT SQRT(POW(((t1.crit1/".$avg.") - (t2.crit1/".$avg.")),2)) crit1, SQRT(POW(((t1.crit2/".$avg.")- (t2.crit2/".$avg.")),2)) crit2, SQRT(POW(((t1.crit3/".$avg.")- (t2.crit3/".$avg.")),2)) crit3, SQRT(POW(((t1.crit4/".$avg.")- (t2.crit4/".$avg.")),2)) crit4, SQRT(POW(((t1.crit5/".$avg.")- (t2.crit5/".$avg.")),2)) crit5
+              SELECT SQRT(POW(((t1.crit1/".$avg.") - (t2.crit1/".$avg.")),2)) crit1
+                    ,SQRT(POW(((t1.crit2/".$avg.") - (t2.crit2/".$avg.")),2)) crit2
+                    ,SQRT(POW(((t1.crit3/".$avg.") - (t2.crit3/".$avg.")),2)) crit3
+                    ,SQRT(POW(((t1.crit4/".$avg.") - (t2.crit4/".$avg.")),2)) crit4
+                    ,SQRT(POW(((t1.crit5/".$avg.") - (t2.crit5/".$avg.")),2)) crit5
                 FROM {dynamo_eval} t1
                     ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
                         FROM {dynamo_eval} t1
@@ -1585,35 +1856,69 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
 }
 
 
+/**
+ * Give the html(specific icon with a specific color) that represent the type of group in the global view on groups of the teacher
+ *
+ * @param int $type the type of the group
+ * @param int $grpid id of the group
+ * @param int $max the max quadric gap inside the group
+ *
+ * @return html font awsome ico...
+ */
 function dynamo_get_group_type($type, $grpid, $max) {
     switch($type) {
         case 1:
-            return ' '.'<i class="fas fa-handshake colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'&#10;'.$max.'"></i>';
+            return ' '.'<i class="fas fa-heart colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'&#10;'.$max.'"></i>'
+                      .'<i class="fas fa-heart colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'&#10;'.$max.'"></i>'
+                      .'<i class="fas fa-heart colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'&#10;'.$max.'"></i>';
             break;
         case 2:
-            return ' '.'<i class="fas fa-thumbs-up colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetyperas', 'mod_dynamo').'&#10;'.$max.'"></i>';
+            return ' '.'<i class="fas fa-heart colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetyperas', 'mod_dynamo').'&#10;'.$max.'"></i>'
+                      .'<i class="fas fa-heart colok"     data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetyperas', 'mod_dynamo').'&#10;'.$max.'"></i>';
             break;
         case 3:
-            return ' '.'<i class="fas fa-th colok"            data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeclustering', 'mod_dynamo').'&#10;'.$max.'"></i>';
+            return ' '.'<i class="fas fa-heart-broken colok"            data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypeclustering', 'mod_dynamo').'&#10;'.$max.'"></i>';
             break;
         case 4:
-            return ' '.'<i class="fas fa-boxes colok"         data-id="'.$grpd.'"  data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').'&#10;'.$max.'"></i>';
+            return ' '.'<i class="fas fa-heart-broken colok"         data-id="'.$grpd.'"  data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').'&#10;'.$max.'"></i>'
+                      .'<i class="fas fa-heart-broken colok"         data-id="'.$grpd.'"  data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').'&#10;'.$max.'"></i>';
             break;
         case 5:
-            return ' '.'<i class="fas fa-hand-scissors colok" data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeheterogene', 'mod_dynamo').'&#10;'.$max.'"></i>';
+            return ' '.'<i class="fas fa-heart colok" data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypeheterogene', 'mod_dynamo').'&#10;'.$max.'"></i>';
             break;
         case 6:
-            return ' '.'<i class="fas fa-ghost colok"         data-id="'.$grpid.'" data-group="'.$grpid.'" title="'.get_string('dynamogroupetypeghost', 'mod_dynamo').'&#10;'.$max.'"></i>';
+            return ' '.'<i class="fas fa-exclamation-triangle colok"  data-id="'.$grpid.'" data-group="'.$grpid.'" 
+                            title="'.get_string('dynamogroupetypeghost', 'mod_dynamo').'&#10;'.$max.'"></i>';
             break;
     }  
     return '';
 }    
 
-
-function dynamo_get_group_climat($dynamo, $grpusrs, $grpid) {
+/**
+ * Give the html(specific icon with a specific color) that represent the climate inside the group
+ * it's base on a simple computing from the cohesion, implication and self confidence
+ * green = 0, orange = 1, red = 2, black = 3
+ * it's added, divided by the number of student and divide by two. It give a value from 0 to 4.5 and rounded
+ * to get the climate 0 sun - 1 cloud sun - 2  cloud sun with rain - 3 dark cloud with heavy rain - 4 bold
+ *
+ * @param object dynamo  $dynamo
+ * @param object of user $grpusrs
+ * @param int $grpid id of the group
+ * @param integer $notperfect value is use to compute the climate. It's initialize with the cohesion value
+ *
+ * @return html font awsome ico... from full sun to thunderbold (5 levels)
+ */
+function dynamo_get_group_climat($dynamo, $grpusrs, $grpid, $notperfect) {
     global $CFG, $DB, $OUTPUT;
-    
-    $notperfect         = 0;
     $nbuser             = 0;
     
     $aweight  = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
@@ -1622,15 +1927,11 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $grpid) {
     foreach ($grpusrs as $grpusr) { 
         $nbuser++;
         
-        // Participation
-        if (!$DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id))) {
-            $notperfect+=3;
-        }
         // Implication
         $niwf           = dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id);
         $color          = dynamo_get_color_niwf($niwf[0]);
         $notperfect+=  $aweight[$color];
-        // Confiance
+        // Confidence
         $conf           = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
         $color          = dynamo_get_color_conf($conf);
         if($color == 'green') $color = '#006DCC';
@@ -1640,9 +1941,10 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $grpid) {
     if($notperfect == 0 ) {
         $climat = '<i style="font-size:1.5em;color:gold;padding:3px;" class="fas '.$aicon[0].'"></i>';
     } else {
-        $grey   = 255-round(50*ceil($notperfect/$nbuser/2));
+        $idico  = round($notperfect/$nbuser/2,0,PHP_ROUND_HALF_DOWN);
+        $grey   = 255-round(50*$idico);
         $climat = '<i style="font-size:1.5em;color:rgb('.$grey.','.$grey.','.$grey.');
-                    background-color:white;padding:3px;" class="fas '.$aicon[ceil($notperfect/$nbuser/2)].'"></i>';
+                    background-color:white;padding:3px;" class="fas '.$aicon[$idico].'"></i>';
     }
     
     return $climat;

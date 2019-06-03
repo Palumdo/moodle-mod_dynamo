@@ -110,7 +110,33 @@
     display                 : none;
     text-align              : center;
 } 
-  
+
+.path-mod-dynamo .errormsgserver {
+    width                   : 100%;
+    height                  : 32px;
+    border                  : 1px solid red;
+    background-color        : #ffffd2;
+    text-align              : center;
+    vertical-align          : middle;
+    border-radius           : 15px;
+    display                 : block;
+    font-weight             : bold;
+    padding-top             : 15px;
+} 
+
+.path-mod-dynamo .successmsgserver {
+    width                   : 100%;
+    height                  : 32px;
+    border                  : 1px solid green;
+    background-color        : #ffffd2;
+    text-align              : center;
+    vertical-align          : middle;
+    border-radius           : 15px;
+    display                 : block;
+    font-weight             : bold;
+    padding-top             : 15px;
+}    
+
 .path-mod-dynamo .tdteach {  
     text-align              : center !important;
 }   
@@ -141,7 +167,7 @@
     z-index                 : 1;
 } 
   
-.path-mod-dynamo .dbackground>div {  
+.path-mod-dynamo .dbackground > div {  
     position                : relative;
     width                   : 100px;
     height                  : 50px;
@@ -189,59 +215,16 @@
     width                   : 16.66666667%;
 }
 
-.path-mod-dynamo .col-sm-3 {
-    width                   : 25%;
-}
-
 .path-mod-dynamo .col-sm-6 {
     width                   : 46%;
 }
 
-.path-mod-dynamo .col-sm-1, .path-mod-dynamo .col-sm-2, .path-mod-dynamo .col-sm-3, .path-mod-dynamo .col-sm-4
-, .path-mod-dynamo .col-sm-5, .path-mod-dynamo .col-sm-6, .path-mod-dynamo .col-sm-7, .path-mod-dynamo .col-sm-8
-, .path-mod-dynamo .col-sm-9, .path-mod-dynamo .col-sm-10, .path-mod-dynamo .col-sm-11, .path-mod-dynamo .col-sm-12 {
-  float                     : left;
-}
-.path-mod-dynamo .col-xs-1, .path-mod-dynamo .col-sm-1, .path-mod-dynamo .col-md-1, .path-mod-dynamo .col-lg-1
-, .path-mod-dynamo .col-xs-2, .path-mod-dynamo .col-sm-2, .path-mod-dynamo .col-md-2, .path-mod-dynamo .col-lg-2
-, .path-mod-dynamo .col-xs-3, .path-mod-dynamo .col-sm-3, .path-mod-dynamo .col-md-3, .path-mod-dynamo .col-lg-3
-, .path-mod-dynamo .col-xs-4, .path-mod-dynamo .col-sm-4, .path-mod-dynamo .col-md-4, .path-mod-dynamo .col-lg-4
-, .path-mod-dynamo .col-xs-5, .path-mod-dynamo .col-sm-5, .path-mod-dynamo .col-md-5, .path-mod-dynamo .col-lg-5
-, .path-mod-dynamo .col-xs-6, .path-mod-dynamo .col-sm-6, .path-mod-dynamo .col-md-6, .path-mod-dynamo .col-lg-6
-, .path-mod-dynamo .col-xs-7, .path-mod-dynamo .col-sm-7, .path-mod-dynamo .col-md-7, .path-mod-dynamo .col-lg-7
-, .path-mod-dynamo .col-xs-8, .path-mod-dynamo .col-sm-8, .path-mod-dynamo .col-md-8, .path-mod-dynamo .col-lg-8
-, .path-mod-dynamo .col-xs-9, .path-mod-dynamo .col-sm-9, .path-mod-dynamo .col-md-9, .path-mod-dynamo .col-lg-9
-, .path-mod-dynamo .col-xs-10, .path-mod-dynamo .col-sm-10, .path-mod-dynamo .col-md-10, .path-mod-dynamo .col-lg-10
-, .path-mod-dynamo .col-xs-11, .path-mod-dynamo .col-sm-11, .path-mod-dynamo .col-md-11, .path-mod-dynamo .col-lg-11
-, .path-mod-dynamo .col-xs-12, .path-mod-dynamo .col-sm-12, .path-mod-dynamo .col-md-12, .path-mod-dynamo .col-lg-12 {
+.path-mod-dynamo .col-sm-1, .path-mod-dynamo .col-sm-2, .path-mod-dynamo .col-sm-6 {
     position                : relative;
     min-height              : 1px;
     padding-right           : 15px;
     padding-left            : 15px;
-}
-
-.path-mod-dynamo clearfix::after, .path-mod-dynamo .dl-horizontal dd::after, .path-mod-dynamo .container::after, 
-.path-mod-dynamo .container-fluid::after, .path-mod-dynamo .row::after, .path-mod-dynamo .form-horizontal .form-group::after, 
-.path-mod-dynamo .btn-toolbar::after, .path-mod-dynamo .btn-group-vertical > .btn-group::after, .path-mod-dynamo .nav::after, 
-.path-mod-dynamo .navbar::after, .path-mod-dynamo .navbar-header::after, .path-mod-dynamo .navbar-collapse::after, 
-.path-mod-dynamo .pager::after, .path-mod-dynamo .panel-body::after, .path-mod-dynamo .modal-header::after, 
-.path-mod-dynamo .modal-footer::after {
-    clear                   : both;
-}
-
-.path-mod-dynamo .clearfix::before, .path-mod-dynamo .clearfix::after, .path-mod-dynamo .dl-horizontal dd::before, 
-.path-mod-dynamo .dl-horizontal dd::after, .path-mod-dynamo .container::before, .path-mod-dynamo .container::after, 
-.path-mod-dynamo .container-fluid::before, .path-mod-dynamo .container-fluid::after, .path-mod-dynamo .row::before, 
-.path-mod-dynamo .row::after, .path-mod-dynamo .form-horizontal .form-group::before, .path-mod-dynamo .form-horizontal .form-group::after
-, .path-mod-dynamo .btn-toolbar::before, .path-mod-dynamo .btn-toolbar::after
-, .path-mod-dynamo .btn-group-vertical > .btn-group::before, .path-mod-dynamo .btn-group-vertical > .btn-group::after
-, .path-mod-dynamo .nav::before, .path-mod-dynamo .nav::after, .path-mod-dynamo .navbar::before, .path-mod-dynamo .navbar::after
-, .path-mod-dynamo .navbar-header::before, .path-mod-dynamo .navbar-header::after, .path-mod-dynamo .navbar-collapse::before
-, .path-mod-dynamo .navbar-collapse::after, .path-mod-dynamo .pager::before, .path-mod-dynamo .pager::after
-, .path-mod-dynamo .panel-body::before, .path-mod-dynamo .panel-body::after, .path-mod-dynamo .modal-header::before
-, .path-mod-dynamo .modal-header::after, .path-mod-dynamo .modal-footer::before, .path-mod-dynamo .modal-footer::after {
-    display                 : table;
-    content                 : " ";
+    float                   : left;
 }
 
 .path-mod-dynamo .panel-default {
@@ -273,7 +256,6 @@
     padding-right           : 30px;
 }
 /*********************/
-
 
 /* toolpit container */
 .path-mod-dynamo .toolpit {
@@ -338,9 +320,8 @@
     border-right            : 1px solid #ddd;
 }
 
-
 .path-mod-dynamo .tablelvlx tr:hover:nth-child(even), .path-mod-dynamo .tablelvlx tr:hover:nth-child(odd) {
-    background-color        : rgb(0,110,204,0.9);
+    background-color        : rgb(156,183,212,0.8);
     color                   : white;
 }
 
@@ -607,12 +588,14 @@
     cursor                  : pointer;  
 }
 
-.path-mod-dynamo button::-moz-focus-inner, .path-mod-dynamo [type="button"]::-moz-focus-inner, .path-mod-dynamo [type="reset"]::-moz-focus-inner, .path-mod-dynamo [type="submit"]::-moz-focus-inner {
+.path-mod-dynamo button::-moz-focus-inner, .path-mod-dynamo [type="button"]::-moz-focus-inner
+, .path-mod-dynamo [type="reset"]::-moz-focus-inner, .path-mod-dynamo [type="submit"]::-moz-focus-inner {
     border-style            : none;
     padding                 : 0;
 }
 
-.path-mod-dynamo [type="button"]::-moz-focus-inner, .path-mod-dynamo [type="reset"]::-moz-focus-inner, .path-mod-dynamo [type="submit"]::-moz-focus-inner, button::-moz-focus-inner {
+.path-mod-dynamo [type="button"]::-moz-focus-inner, .path-mod-dynamo [type="reset"]::-moz-focus-inner
+, .path-mod-dynamo [type="submit"]::-moz-focus-inner, button::-moz-focus-inner {
     padding                 : 0;
     border-style            : none;
 }
@@ -860,6 +843,11 @@
     vertical-align          : middle;
 }  
 
+.path-mod-dynamo #table-comment tr:last-child td:first-child {
+    border-bottom           : 1px solid #000;
+}  
+
+
 .path-mod-dynamo #table-comment td {
     border-bottom           : 1px solid #000;
 }  
@@ -909,7 +897,7 @@
     color                   : white;
     vertical-align          : middle;
     font-family             : 'Indie Flower', cursive;
-    font-size               : 20px;
+    font-size               : 18px;
     padding-top             : 5px;
     overflow                : hidden;
 }
@@ -1083,3 +1071,7 @@
     border                  : 0px;    
     cursor                  : default;
 }
+
+.path-mod-dynamo .eval_comments_table {
+    padding-left            : 20px;
+} 

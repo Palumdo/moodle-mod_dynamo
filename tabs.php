@@ -36,9 +36,17 @@ if($usrid !=0 && $groupid ==0) {
 $active = ['','','','',''];
 $active[$tab] = 'active';
 echo '<ul class="dynnav dynnavtabs">';
-echo '        <li class="'.$active[1].'"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=1">'.get_string('dynamotab1', 'mod_dynamo').'</a></li>';
-echo '        <li class="'.$active[2].'"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2">'.get_string('dynamotab2', 'mod_dynamo').'</a></li>';
-echo '        <li class="'.$active[3].'"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=3">'.get_string('dynamotab3', 'mod_dynamo').'</a></li>';
-echo '        <li class="'.$active[4].'"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=4">&nbsp;<i class="fas fa-question-circle"></i>&nbsp;</a></li>';
+echo '    <li class="'.$active[1].'">
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=1">'.get_string('dynamotab1', 'mod_dynamo').'</a>
+          </li>';
+echo '    <li class="'.$active[2].'">
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2">'.get_string('dynamotab2', 'mod_dynamo').'</a>
+          </li>';
+echo '    <li class="'.$active[3].'">
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=3">'.get_string('dynamotab3', 'mod_dynamo').'</a>
+          </li>';
+echo '    <li class="'.$active[4].'">
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=4">&nbsp;<i class="fas fa-question-circle"></i>&nbsp;</a>
+          </li>';
 echo '</ul>' ;
 ?>

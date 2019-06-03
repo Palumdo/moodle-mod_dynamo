@@ -25,6 +25,11 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_login($course, true, $cm);
+$modulecontext = context_module::instance($cm->id);
+if (!has_capability('mod/dynamo:create', $modulecontext)) {
+  redirect(new moodle_url('/my'));
+  die;
+}    
 
 $canvas = '';
 $jscript = '<script>
@@ -40,7 +45,9 @@ echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
      </ul>' ;
 
 
-echo '<div style="width:100%;margin-top:15px;">'.get_string('dynamoliststudent', 'mod_dynamo').'&nbsp;<div class="toolpit"><i class="fas fa-info-circle" style="font-size:16px;color:#006DCC;"></i><span class="toolpittext">'.$toolpits.'</span></div> : <input type="text" id="students"></div>';
+echo '<div style="width:100%;margin-top:15px;">'.get_string('dynamoliststudent', 'mod_dynamo').'&nbsp;<div class="toolpit">
+        <i class="fas fa-info-circle" style="font-size:16px;color:#006DCC;"></i><span class="toolpittext">'.$toolpits.'</span>
+        </div> : <input type="text" id="students"></div>';
 echo '<input type="hidden" id="studentshidden">';
 echo '<script>';
 // datalist search
@@ -87,14 +94,20 @@ if($usrid != 0) {
     $avatar             = new user_picture($usr);
     $avatar->courseid   = $course->id;
     $avatar->link       = true;
+    $avatar->size       = 50;
 
     echo ('<h3>'.get_string('dynamoteacherlvl1title', 'mod_dynamo').' : '.$OUTPUT->render($avatar).' '.$usr->firstname.' '.$usr->lastname.'</h3>');
+   
     $grp = dynamo_get_group_from_user($dynamo->groupingid, $usrid);
    
-    echo('<h4 class="dynagroupingtitle" style="color:white;cursor:pointer;" title="'.get_string('dynamoresults1', 'mod_dynamo').'" onclick="location.href=\'view.php?id='.$id.'&usrid='.$usrid.'&groupid='.$grp->id.'&tab=2&results=2\'"><i class="fas fa-user-cog"></i> '.$grp->name.'</h4>');
+    echo('<h4 class="dynagroupingtitle" style="color:white;cursor:pointer;" title="'.get_string('dynamoresults1', 'mod_dynamo').'" 
+            onclick="location.href=\'view.php?id='.$id.'&usrid='.$usrid.'&groupid='.$grp->id.'&tab=2&results=2\'">
+            <i class="fas fa-user-cog"></i> '.$grp->name.'</h4>');
     echo('<div class="" id="'.$grp->id.'" style="display:;">');
 
-    $labels = '[\''.get_string('dynamoparticipation', 'mod_dynamo').'\',\''.get_string('dynamoresponsabilite', 'mod_dynamo').'\',\''.get_string('dynamoscientifique', 'mod_dynamo').'\',\''.get_string('dynamotechnique', 'mod_dynamo').'\',\''.get_string('dynamoattitude', 'mod_dynamo').'\'';
+    $labels = '[\''.get_string('dynamoparticipation', 'mod_dynamo').'\',\''.get_string('dynamoresponsabilite', 'mod_dynamo').'\',
+        \''.get_string('dynamoscientifique', 'mod_dynamo').'\',\''.get_string('dynamotechnique', 'mod_dynamo').'\',
+        \''.get_string('dynamoattitude', 'mod_dynamo').'\'';
     if($display6 != 'none') {
         $labels .= ',\''.$dynamo->critoptname.'\'';
     }
@@ -106,12 +119,23 @@ if($usrid != 0) {
                 <thead>
                    <tr>
                       <th style="background-color:'.$facColor.'">&nbsp;</th>
-                      <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"    dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="toolpit"   dyna-data-title="('.get_string('dynamocritresponsabilitedefault', 'mod_dynamo').'- '.$dynamo->crit2.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"     dyna-data-title="('.get_string('dynamocritscientifiquedefault', 'mod_dynamo').'- '.$dynamo->crit3.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamotechnique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"        dyna-data-title="('.get_string('dynamocrittechniquedefault', 'mod_dynamo').'- '.$dynamo->crit4.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoattitude', 'mod_dynamo').' <a href="#" data-toggle="toolpit"         dyna-data-title="('.get_string('dynamocritattitudedefault', 'mod_dynamo').'- '.$dynamo->crit5.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th style="display:'.$display6.'">'.$dynamo->critoptname.'<a href="#" data-toggle="toolpit"           dyna-data-title="'.$dynamo->critopt.'">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"    
+                            dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="toolpit"   
+                            dyna-data-title="('.get_string('dynamocritresponsabilitedefault', 'mod_dynamo').'- '.$dynamo->crit2.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"     
+                            dyna-data-title="('.get_string('dynamocritscientifiquedefault', 'mod_dynamo').'- '.$dynamo->crit3.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamotechnique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"        
+                            dyna-data-title="('.get_string('dynamocrittechniquedefault', 'mod_dynamo').'- '.$dynamo->crit4.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoattitude', 'mod_dynamo').' <a href="#" data-toggle="toolpit"         
+                            dyna-data-title="('.get_string('dynamocritattitudedefault', 'mod_dynamo').'- '.$dynamo->crit5.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th style="display:'.$display6.'">'.$dynamo->critoptname.'<a href="#" data-toggle="toolpit"           
+                            dyna-data-title="'.$dynamo->critopt.'">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
                       <th>'.get_string('dynamosum', 'mod_dynamo').'</th>
                       <th>'.get_string('dynamoavg', 'mod_dynamo').'</th>
                    </tr>
@@ -155,7 +179,8 @@ if($usrid != 0) {
             if($usrid ==  $grpusrsub->id) $dynamoautoeval[] = $dynamoeval;   
             $result = dynamo_compute_basis($dynamoeval, $display6);
 
-            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
+            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=2&results=3\'" 
+                       style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
             echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
@@ -191,12 +216,23 @@ if($usrid != 0) {
                 <thead>
                    <tr>
                       <th style="background-color:'.$facColor.'">&nbsp;</th>
-                      <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"    dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="toolpit"   dyna-data-title="('.get_string('dynamocritresponsabilitedefault', 'mod_dynamo').'- '.$dynamo->crit2.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"     dyna-data-title="('.get_string('dynamocritscientifiquedefault', 'mod_dynamo').'- '.$dynamo->crit3.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamotechnique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"        dyna-data-title="('.get_string('dynamocrittechniquedefault', 'mod_dynamo').'- '.$dynamo->crit4.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoattitude', 'mod_dynamo').' <a href="#" data-toggle="toolpit"         dyna-data-title="('.get_string('dynamocritattitudedefault', 'mod_dynamo').'- '.$dynamo->crit5.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th style="display:'.$display6.'">'.$dynamo->critoptname.'<a href="#" data-toggle="toolpit"           dyna-data-title="'.$dynamo->critopt.'">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"    
+                            dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="toolpit"   
+                            dyna-data-title="('.get_string('dynamocritresponsabilitedefault', 'mod_dynamo').'- '.$dynamo->crit2.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"     
+                            dyna-data-title="('.get_string('dynamocritscientifiquedefault', 'mod_dynamo').'- '.$dynamo->crit3.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamotechnique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"        
+                            dyna-data-title="('.get_string('dynamocrittechniquedefault', 'mod_dynamo').'- '.$dynamo->crit4.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th>'.get_string('dynamoattitude', 'mod_dynamo').' <a href="#" data-toggle="toolpit"         
+                            dyna-data-title="('.get_string('dynamocritattitudedefault', 'mod_dynamo').'- '.$dynamo->crit5.')">&nbsp;
+                            <i class="fas fa-info-circle ico-white"></i></a></th>
+                      <th style="display:'.$display6.'">'.$dynamo->critoptname.'<a href="#" data-toggle="toolpit"           
+                            dyna-data-title="'.$dynamo->critopt.'">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
                       <th>'.get_string('dynamosum', 'mod_dynamo').'</th>
                       <th>'.get_string('dynamoavg', 'mod_dynamo').'</th>
                    </tr>
@@ -214,7 +250,8 @@ if($usrid != 0) {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
 
-            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
+            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='.$groupid.'&tab=2&results=3\'" 
+                    style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
             echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
             echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
@@ -239,8 +276,11 @@ if($usrid != 0) {
     echo('<tr><td><b>'.get_string('dynamoautoeval', 'mod_dynamo').'</b>:</td><td>'.round($data->autosum/$data->nbcrit,2).'<td><tr>');
     $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usrid);
     $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid);
-    echo('<tr><td><b>'.get_string('dynamoniwf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_niwf($niwf[0]).'">'.number_format($niwf[0],2,',', ' ').'</span> <span><a href="#" data-toggle="toolpit"    dyna-data-title="'.$niwf[1].'">&nbsp;<i class="fas fa-info-circle ico-blue"></i></a></span></td></tr>');
-    echo('<tr><td><b>'.get_string('dynamoconf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf,2,',', ' ').'</span></td></tr>');
+    echo('<tr><td><b>'.get_string('dynamoniwf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;color:white;
+            background-color:'.dynamo_get_color_niwf($niwf[0]).'">'.number_format($niwf[0],2,',', ' ').'</span> <span><a href="#" 
+            data-toggle="toolpit"    dyna-data-title="'.$niwf[1].'">&nbsp;<i class="fas fa-info-circle ico-blue"></i></a></span></td></tr>');
+    echo('<tr><td><b>'.get_string('dynamoconf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;color:white;
+            background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf,2,',', ' ').'</span></td></tr>');
     echo('</table></div>');
     
     $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid.'" width="720" height="360">[No canvas support]</canvas></div>
@@ -251,7 +291,9 @@ if($usrid != 0) {
     if($display6 != 'none')  $autoevalstr .= ','.$dynamoautoeval[0]->crit6;
     $autoevalstr .= ']';
     
-    $pairevalstr = '['.round($data->autocritsum->total1/$data->nbeval,2).','.round($data->autocritsum->total2/$data->nbeval,2).','.round($data->autocritsum->total3/$data->nbeval,2).','.round($data->autocritsum->total4/$data->nbeval,2).','.round($data->autocritsum->total5/$data->nbeval,2);
+    $pairevalstr = '['.round($data->autocritsum->total1/$data->nbeval,2).','.round($data->autocritsum->total2/$data->nbeval,2).'
+                    ,'.round($data->autocritsum->total3/$data->nbeval,2).','.round($data->autocritsum->total4/$data->nbeval,2).'
+                    ,'.round($data->autocritsum->total5/$data->nbeval,2);
     if($display6 != 'none')  $pairevalstr .= ','.round($data->autocritsum->total6/$data->nbeval,2);
     $pairevalstr .= ']';
     
@@ -316,7 +358,8 @@ if($usrid != 0) {
                 marginBottom: 35,
                 marginTop: 15,
                 marginRight: 5,
-                key: [\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\',\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\'], 
+                key: [\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\',\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '
+                         .htmlspecialchars($usr->lastname,ENT_QUOTES).'\'], 
                 keyColors: [\'#FFA500\', \'blue\'],
                 keyInteractive: true
             }
@@ -342,7 +385,8 @@ if($usrid != 0) {
                 marginBottom: 35,
                 marginTop: 15,
                 marginRight: 5,
-                key: [\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\',\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\',\''.get_string('dynamogroupevalby', 'mod_dynamo').'\'], 
+                key: [\''.htmlspecialchars($usr->firstname,ENT_QUOTES).' '.htmlspecialchars($usr->lastname,ENT_QUOTES).'\'
+                        ,\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\',\''.get_string('dynamogroupevalby', 'mod_dynamo').'\'], 
                 keyPositionX : 700,
                 keyPositionY : 25,
                 keyColors: [\'blue\', \'#FFA500\', \'#aff\'],
