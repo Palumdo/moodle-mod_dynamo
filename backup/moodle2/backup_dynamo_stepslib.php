@@ -18,7 +18,7 @@
  * @package     mod_dynamo
  * @category    backup
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo  
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -43,7 +43,7 @@ class backup_dynamo_activity_structure_step extends backup_activity_structure_st
         $eval = new backup_nested_element('eval', array('id'), array(
             'builder', 'evalbyid', 'userid', 'crit1','crit2','crit3','crit4','crit5','crit6','critgrp','comment1','comment2','timemodified',
         ));
-        
+
         // Build the tree with these elements with $root as the root of the backup tree.
         $dynamo->add_child($evals);
         $evals->add_child($eval);
@@ -63,5 +63,4 @@ class backup_dynamo_activity_structure_step extends backup_activity_structure_st
         return $this->prepare_activity_structure($dynamo);
 
     }
-  
 }

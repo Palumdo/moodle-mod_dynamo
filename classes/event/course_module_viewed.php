@@ -19,7 +19,7 @@
  *
  * @package    mod_dynamo
  * @copyright  2019 UCLouvain
- * @author     Dominique Palumbo 
+ * @author     Dominique Palumbo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -39,9 +39,9 @@ defined('MOODLE_INTERNAL') || die();
  * @package    mod_dynamo
  * @since      Moodle 3.5
  * @copyright  2019 UCLouvain
- * @author     Dominique Palumbo 
+ * @author     Dominique Palumbo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @Modifications 
+ * @Modifications
  */
 class course_module_viewed extends \core\event\course_module_viewed {
     /**

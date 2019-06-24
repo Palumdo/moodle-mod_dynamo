@@ -79,11 +79,11 @@ echo('</select>');
  
 if($grp != 0) {
     $grpusrs    = dynamo_get_group_users($grp->id);
-    $oclique    = dynamo_get_clique($dynamo, $grpusrs, false);
+    $oconsistency    = dynamo_get_consistency($dynamo, $grpusrs, false);
    
     $val = [0,0,0,1,3,0,3];
-    $notperfect = ($val[$oclique->type] * count($grpusrs));
-    $climat = dynamo_get_group_climat($dynamo, $grpusrs, $grp->id, $notperfect);
+    $notperfect = ($val[$oconsistency->type] * count($grpusrs));
+    $climat = dynamo_get_group_climat($dynamo, $grpusrs, $grp->id, $notperfect)[0];
     echo('<h4 class="dynagroupingtitle">'.$climat.' <span class="ico-white">'.$grp->name.'</span></h4>');
     echo('<div class="" id="'.$grp->id.'" style="display:;">');
 
@@ -103,8 +103,8 @@ if($grp != 0) {
         $avatar->courseid = $course->id;
         $avatar->link = true;
         $avatar->size = 50;
-        echo('                <th style="text-align:center;">'.$OUTPUT->render($avatar).' <a class="urlanchor" title="
-                '.get_string('dynamogotodetail', 'mod_dynamo').'" href="#stud'.$grpusr->id.'">'.$grpusr->firstname.' '.$grpusr->lastname.' 
+        echo('                <th style="text-align:center;">'.$OUTPUT->render($avatar).' <a class="urlanchor" title="'
+                .get_string('dynamogotodetail', 'mod_dynamo').'" href="#stud'.$grpusr->id.'">'.$grpusr->firstname.' '.$grpusr->lastname.' 
                 <i class="far fa-arrow-alt-circle-down"></i></a></th>');
     }
     echo('               <th style="text-align:center;">'.get_string('dynamoier', 'mod_dynamo').'</th>'); // add the total column
@@ -293,11 +293,11 @@ if($grp != 0) {
 
         echo('    </tbody>');
         echo('</table>');
-        echo('<b>'.get_string('dynamoniwf', 'mod_dynamo').'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_niwf($niwf[0]).'">
+        echo('<div style="line-height:2.0em;"><b>'.get_string('dynamoniwf', 'mod_dynamo').'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_niwf($niwf[0]).'">
                 '.number_format($niwf[0],2,',', ' ').'</span> <a href="#" data-toggle="toolpit" dyna-data-title="'.$niwf[1].'">&nbsp;
-                <i class="fas fa-info-circle ico-blue"></i></a><br>');
-        echo('<b>'.get_string('dynamoconf', 'mod_dynamo').'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_conf($conf).'">
-                '.number_format($conf,2,',', ' ').'</span><br>');
+                <i class="fas fa-info-circle ico-blue"></i></a></div>');
+        echo('<div style="line-height:2.0em;"><b>'.get_string('dynamoconf', 'mod_dynamo').'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_conf($conf).'">
+                '.number_format($conf,2,',', ' ').'</span></div>');
         echo($canvas);
       
         $allgroupevalstr = "";

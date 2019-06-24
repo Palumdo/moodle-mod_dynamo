@@ -43,9 +43,9 @@ function xmldb_dynamo_upgrade($oldversion = 0) {
       if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
       }
-      
+
       // dynamo savepoint reached.
-      upgrade_plugin_savepoint(true, 2019030200, 'mod', 'dynamo');        
+      upgrade_plugin_savepoint(true, 2019030200, 'mod', 'dynamo');
     }
 
     return true;

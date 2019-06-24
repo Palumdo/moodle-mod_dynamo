@@ -18,7 +18,7 @@
  * @package     mod_dynamo
  * @category    backup
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo  
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -51,19 +51,19 @@ class backup_dynamo_activity_task extends backup_activity_task {
      * @return string.
      */
     public static function encode_content_links($content) {
-/*    
+/*
         global $CFG;
 
         $base = preg_quote($CFG->wwwroot,"/");
 
         // Link to the list of choices
-        $search   = "/(".$base."\//mod\/dynamo\/index.php\?id\=)([0-9]+)/";
-        $content  = preg_replace($search, '$@DYNAMOINDEX*$2@$', $content);
+        $search = "/(".$base."\//mod\/dynamo\/index.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@DYNAMOINDEX*$2@$', $content);
 
         // Link to choice view by moduleid
-        $search   = "/(".$base."\//mod\/dynamo\/view.php\?id\=)([0-9]+)/";
-        $content  = preg_replace($search, '$@DYNAMOVIEWBYID*$2@$', $content);
-*/      
+        $search = "/(".$base."\//mod\/dynamo\/view.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@DYNAMOVIEWBYID*$2@$', $content);
+*/
         return $content;
 
     }

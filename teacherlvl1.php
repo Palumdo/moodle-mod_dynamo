@@ -90,11 +90,11 @@ echo '
   </script>';
  
 if($usrid != 0) {
-    $usr                = $DB->get_record('user', array('id' =>$usrid )); 
-    $avatar             = new user_picture($usr);
-    $avatar->courseid   = $course->id;
-    $avatar->link       = true;
-    $avatar->size       = 50;
+    $usr = $DB->get_record('user', array('id' =>$usrid )); 
+    $avatar = new user_picture($usr);
+    $avatar->courseid = $course->id;
+    $avatar->link = true;
+    $avatar->size = 50;
 
     echo ('<h3>'.get_string('dynamoteacherlvl1title', 'mod_dynamo').' : '.$OUTPUT->render($avatar).' '.$usr->firstname.' '.$usr->lastname.'</h3>');
    
@@ -216,22 +216,22 @@ if($usrid != 0) {
                 <thead>
                    <tr>
                       <th style="background-color:'.$facColor.'">&nbsp;</th>
-                      <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"    
+                      <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;
                             <i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="toolpit"   
+                      <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocritresponsabilitedefault', 'mod_dynamo').'- '.$dynamo->crit2.')">&nbsp;
                             <i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"     
+                      <th>'.get_string('dynamoscientifique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocritscientifiquedefault', 'mod_dynamo').'- '.$dynamo->crit3.')">&nbsp;
                             <i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamotechnique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"        
+                      <th>'.get_string('dynamotechnique', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocrittechniquedefault', 'mod_dynamo').'- '.$dynamo->crit4.')">&nbsp;
                             <i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th>'.get_string('dynamoattitude', 'mod_dynamo').' <a href="#" data-toggle="toolpit"         
+                      <th>'.get_string('dynamoattitude', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocritattitudedefault', 'mod_dynamo').'- '.$dynamo->crit5.')">&nbsp;
                             <i class="fas fa-info-circle ico-white"></i></a></th>
-                      <th style="display:'.$display6.'">'.$dynamo->critoptname.'<a href="#" data-toggle="toolpit"           
+                      <th style="display:'.$display6.'">'.$dynamo->critoptname.'<a href="#" data-toggle="toolpit"
                             dyna-data-title="'.$dynamo->critopt.'">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
                       <th>'.get_string('dynamosum', 'mod_dynamo').'</th>
                       <th>'.get_string('dynamoavg', 'mod_dynamo').'</th>
@@ -287,22 +287,27 @@ if($usrid != 0) {
     <div class="graph-block"><canvas id="cvsh_'.$usrid.'" width="960" height="360">[No canvas support]</canvas></div>';
     echo($canvas);
     
-    $autoevalstr = '['.$dynamoautoeval[0]->crit1.','.$dynamoautoeval[0]->crit2.','.$dynamoautoeval[0]->crit3.','.$dynamoautoeval[0]->crit4.','.$dynamoautoeval[0]->crit5;
+    $autoevalstr = '['.$dynamoautoeval[0]->crit1.'
+                    ,'.$dynamoautoeval[0]->crit2.'
+                    ,'.$dynamoautoeval[0]->crit3.'
+                    ,'.$dynamoautoeval[0]->crit4.'
+                    ,'.$dynamoautoeval[0]->crit5;
+
     if($display6 != 'none')  $autoevalstr .= ','.$dynamoautoeval[0]->crit6;
     $autoevalstr .= ']';
-    
+
     $pairevalstr = '['.round($data->autocritsum->total1/$data->nbeval,2).','.round($data->autocritsum->total2/$data->nbeval,2).'
                     ,'.round($data->autocritsum->total3/$data->nbeval,2).','.round($data->autocritsum->total4/$data->nbeval,2).'
                     ,'.round($data->autocritsum->total5/$data->nbeval,2);
     if($display6 != 'none')  $pairevalstr .= ','.round($data->autocritsum->total6/$data->nbeval,2);
     $pairevalstr .= ']';
-    
+
     if ($dynamo->groupeval == 1) {
         $allgroupeval = dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grp->id);
     } else {
-        $allgroupeval     = "";
+        $allgroupeval = "";
     }
-    $allgroupevalstr  = "";     
+    $allgroupevalstr = "";     
     if($allgroupeval != "") {
         $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3.','.$allgroupeval->crit4.','.$allgroupeval->crit5;
         if($display6 != 'none')  $allgroupevalstr .= ','.$allgroupeval->crit6;
@@ -310,7 +315,7 @@ if($usrid != 0) {
     }
     
     if($allgroupeval == "") {
-        $multievalsr  = '[';
+        $multievalsr = '[';
         $multievalsr .= '['.$dynamoautoeval[0]->crit1.','.round($data->autocritsum->total1/$data->nbeval,2).']'; 
         $multievalsr .= ',['.$dynamoautoeval[0]->crit2.','.round($data->autocritsum->total2/$data->nbeval,2).']'; 
         $multievalsr .= ',['.$dynamoautoeval[0]->crit3.','.round($data->autocritsum->total3/$data->nbeval,2).']'; 
@@ -321,7 +326,7 @@ if($usrid != 0) {
         }
         $multievalsr .= ']';
     } else {
-        $multievalsr  = '[';
+        $multievalsr = '[';
         $multievalsr .=  '['.$dynamoautoeval[0]->crit1.','.round($data->autocritsum->total1/$data->nbeval,2).','.$allgroupeval->crit1.']'; 
         $multievalsr .= ',['.$dynamoautoeval[0]->crit2.','.round($data->autocritsum->total2/$data->nbeval,2).','.$allgroupeval->crit2.']'; 
         $multievalsr .= ',['.$dynamoautoeval[0]->crit3.','.round($data->autocritsum->total3/$data->nbeval,2).','.$allgroupeval->crit3.']'; 

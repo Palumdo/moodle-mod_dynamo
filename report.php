@@ -129,8 +129,8 @@ function rep_list_no_participant($result, $name) {
     if( $emails == '') {
         echo(get_string('dynamononoparticipant', 'mod_dynamo'));
     } else {
-        $subject  = get_string('dynamoreport01mailsubject', 'mod_dynamo').$name; 
-        $body     = get_string('dynamoreport01mailbody', 'mod_dynamo'); 
+        $subject = get_string('dynamoreport01mailsubject', 'mod_dynamo').$name; 
+        $body = get_string('dynamoreport01mailbody', 'mod_dynamo'); 
     }
     echo('</div>'); 
 }
@@ -204,7 +204,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
         $i = count($agridlib)-1;
         for($j=0;$j<count($agridlib[$i]);$j++) {
             $niwf = $agridlib[$i][$j];
-            $color  = dynamo_get_color_niwf($niwf);
+            $color = dynamo_get_color_niwf($niwf);
             echo('            <td class="change-color" style="color:'.$color.'">'.number_format($niwf,2,',', ' ').'<br>'.(number_format(($niwf/$nbstudent)*100,2,',', ' ')).'&#37;</td>');
         }  
         echo('          </tr>');
@@ -221,10 +221,10 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
         $labels .= ']';
 
         foreach ($grpusrs as $grpusr) {
-            $usrid  = $grpusr->id;
-            $data   = dynamo_compute_advanced($usrid, $dynamo);
-            $niwf   = dynamo_get_niwf($dynamo, $grpusrs, $usrid);
-            $conf   = dynamo_get_conf($dynamo, $grpusrs, $usrid);
+            $usrid = $grpusr->id;
+            $data = dynamo_compute_advanced($usrid, $dynamo);
+            $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usrid);
+            $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid);
             
             $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid.'" width="720" height="360">[No canvas support]</canvas></div>';
             echo('<h4 class="group_detail_title_rep">'.$grpusr->firstname.' '.$grpusr->lastname.'</h4>');
@@ -473,7 +473,7 @@ function display_group_detail_table($dynamo, $grp) {
       echo('        <tr>
                       <td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
       $agridlib = dynamo_get_matrix($dynamo, $grpusrs); // get the points matrix include sum and nifs
-      for ($j=0;$j<count($agridlib[$i]);$j++) {
+      for ($j=0; $j < count($agridlib[$i]); $j++) {
         if($i != $j) {
           echo('        <td>'.$agridlib[$i][$j].'</td>');
         } else {
@@ -488,22 +488,21 @@ function display_group_detail_table($dynamo, $grp) {
     echo('          <tr>');
     echo('            <td style="background-color:dimgray;color:white;">'.get_string('dynamoniwf', 'mod_dynamo').'</td>');
     
-    $i = count($agridlib)-1;
-    for($j=0;$j<count($agridlib[$i]);$j++) {
+    $i = count($agridlib) - 1;
+    for($j=0; $j < count($agridlib[$i]); $j++) {
       $niwf = $agridlib[$i][$j];
       echo('        <td class="change-color" style="color:'.dynamo_get_color_niwf($niwf).'">'.number_format($niwf,2,',', ' ').'<br>'.(number_format(($niwf/$nbstudent)*100,2,',', ' ')).'&#37;</td>');
     }  
     echo('          </tr>');
-    
+
     echo ('     </tbody>
               </table>
-    
-           </div>'); // Standard deviation = ecart type 
-    
+
+           </div>'); // Standard deviation = ecart type
+
     echo('</div>'); // End grouping
     echo('</div>'); // End group_detail_table
 } 
-    
 
 function display_eval_others_table($dynamo, $usrid, $display6) {
     global $CFG, $DB;
@@ -532,7 +531,6 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
                 <tbody>
     '); // Standard deviation = ecart type
     $dynamoautoeval = array();
-    
     // display group evaluation
     if($dynamo->groupeval == 1) {
         $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grp->id);
@@ -552,16 +550,16 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
         $dynamoeval->avg = $result->avg;
         $dynamoeval->grp = 1;
     }
-    
+
     $grpusrs = dynamo_get_group_users($grp->id);
     foreach ($grpusrs as $grpusrsub) { // loop to all evaluation of  students
         $color = "";
         if($usrid == $grpusrsub->id) $color = '#9cb7d4';
-        
+
         $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grpusrsub->id);
         if($usrid ==  $grpusrsub->id) $dynamoautoeval[] = $dynamoeval;   
         $result = dynamo_compute_basis($dynamoeval, $display6);
-    
+
         echo ('<tr>');
         echo ('    <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
         echo ('    <td class="tdteach">'.$dynamoeval->crit1.'</td>');
@@ -581,13 +579,13 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
         </table>
         </div>
     </div>');
-    
+
 }   
 
 function display_eval_comments_table($dynamo, $usrid) { 
       $comment = dynamo_get_comment($usrid, $dynamo);
       echo ('<div class="eval_comments_table" style="display:none;">');
-      
+
       echo('<b>'.get_string('dynamocommentcontr', 'mod_dynamo').'</b><br>');
       echo($comment->comment1.'<br>');
       echo('<b>'.get_string('dynamocommentfonction', 'mod_dynamo').'</b><br>');
@@ -595,12 +593,11 @@ function display_eval_comments_table($dynamo, $usrid) {
       echo ('</div>');
 }
 
-
 function display_eval_by_others_table($dynamo, $usrid, $display6) {
     global $CFG, $DB;
-    
+
     $usr = $DB->get_record('user', array('id' =>$usrid )); 
-    
+
     $grp =dynamo_get_group_from_user($dynamo->groupingid, $usrid);
     echo('<div class="eval_by_others_table" id="'.$grp->id.'" style="display:none;">');
     echo (' <div class="table-container">
@@ -620,18 +617,18 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
                     </tr>
                     </thead>
                     <tbody>
-    '); 
-        
+    ');
+
     $grpusrs = dynamo_get_group_users($grp->id);
     foreach ($grpusrs as $grpusrsub) { // loop to all evaluation of  students
         $color = "";
         if($usrid == $grpusrsub->id) $color = '#9cb7d4';
-        
+
         if($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
-        
+
             echo ('<tr>');
             echo ('    <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
             echo ('    <td class="tdteach">'.$dynamoeval->crit1.'</td>');
@@ -654,39 +651,39 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
 function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
     global $CFG, $DB;
     $dynamoautoeval = array();
-    $usr      = $DB->get_record('user', array('id' =>$usrid )); 
-    $grp      = dynamo_get_group_from_user($dynamo->groupingid, $usrid);
-    $grpusrs  = dynamo_get_group_users($grp->id);
-    
+    $usr = $DB->get_record('user', array('id' =>$usrid )); 
+    $grp= dynamo_get_group_from_user($dynamo->groupingid, $usrid);
+    $grpusrs = dynamo_get_group_users($grp->id);
+
     echo('<div class="graph_radar_table">');
-    
-    $dynamoeval       = dynamo_get_evaluation($dynamo->id, $usrid, $usrid);
-    $dynamoautoeval[] = $dynamoeval;  
-    
+
+    $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $usrid);
+    $dynamoautoeval[] = $dynamoeval;
+
     $labels = '[\''.get_string('dynamoparticipation', 'mod_dynamo').'\',\''.get_string('dynamoresponsabilite', 'mod_dynamo').'\',\''.get_string('dynamoscientifique', 'mod_dynamo').'\',\''.get_string('dynamotechnique', 'mod_dynamo').'\',\''.get_string('dynamoattitude', 'mod_dynamo').'\'';
     if($display6 != 'none') {
         $labels .= ',\''.$dynamo->critoptname.'\'';
     }
     $labels .= ']';
-    
+
     $data = dynamo_compute_advanced($usrid, $dynamo);
     $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid.'" width="720" height="360">[No canvas support]</canvas></div>';
     echo($canvas);
-    
+
     $autoevalstr = '['.$dynamoautoeval[0]->crit1.','.$dynamoautoeval[0]->crit2.','.$dynamoautoeval[0]->crit3.','.$dynamoautoeval[0]->crit4.','.$dynamoautoeval[0]->crit5;
     if($display6 != 'none')  $autoevalstr .= ','.$dynamoautoeval[0]->crit6;
     $autoevalstr .= ']';
-    
+
     $pairevalstr = '['.round($data->autocritsum->total1/$data->nbeval,2).','.round($data->autocritsum->total2/$data->nbeval,2).','.round($data->autocritsum->total3/$data->nbeval,2).','.round($data->autocritsum->total4/$data->nbeval,2).','.round($data->autocritsum->total5/$data->nbeval,2);
     if($display6 != 'none')  $pairevalstr .= ','.round($data->autocritsum->total6/$data->nbeval,2);
     $pairevalstr .= ']';
-    
+
     if ($dynamo->groupeval == 1) {
         $allgroupeval = dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grp->id);
     } else {
-        $allgroupeval     = "";
+        $allgroupeval = "";
     }
-    $allgroupevalstr  = "";     
+    $allgroupevalstr = "";     
     if($allgroupeval != "") {
         $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3.','.$allgroupeval->crit4.','.$allgroupeval->crit5;
         if($display6 != 'none')  $allgroupevalstr .= ','.$allgroupeval->crit6;
@@ -726,18 +723,18 @@ function rep_all_confidence($dynamo, $jscript, $display6, $id, $zoom) {
             $size = 1230;
             break;
     }
-    
+
     echo('<div style="margin-bottom:3px;"><button class="btn btn-default" onclick="reloadZoom('.$zoom.'-1);">-</button><button class="btn btn-default" onclick="reloadZoom('.$zoom.'+1);">+</button></div>');
     echo('<div style="height:'.$size.'px !important;" id="graph-balls">
             <canvas id="layer_gfx"      width="'.$size.'" height="'.$size.'" style="position:absolute; top:0; left:0; z-index:0;background-color:transparent;">[No canvas support]</canvas>
             <canvas id="confidence_gfx" width="'.$size.'" height="'.$size.'" style="position:absolute; top:0; left:0; z-index:0;background-color:transparent;">[No canvas support]</canvas>
         </div>');
-    
+
     $ret = dynamo_get_all_eval_by_student($dynamo, $display6);
-    
+
     $data = $ret->result;
     $tooltips = $ret->tooltips;
-    
+
     $idx=0;
     echo ('<div class="table-container" style="position:relative;margin-top:15px;">');
     echo('  <table class="table" style="text-align:center;">');
@@ -752,19 +749,19 @@ function rep_all_confidence($dynamo, $jscript, $display6, $id, $zoom) {
     echo('      </tr>');
     echo('    </thead>');
     echo('    <tbody>');
-    
+
     // generate the data for the javascript function
     $jscript = $jscript.'var data = [];';
     foreach ($data as $i => $value) {
-        $idt = Round($data[$i]->eval,2).'_'.Round($data[$i]->autoeval,2); 
+        $idt = Round($data[$i]->eval,2).'_'.Round($data[$i]->autoeval,2);
         $jscript = $jscript.'data['.$idx.'] = {"id":"'.$data[$i]->userid.'","name":"'.substr_replace($tooltips[$idt],"",-1).'", "evals":"'.Round($data[$i]->eval,2).'", "autoeval":"'.Round($data[$i]->autoeval,2).'"};';
-        echo('     <tr><td>'.$data[$i]->name.'</td><td>'.$data[$i]->firstname.'</td><td>'.$data[$i]->lastname.'</td><td>'.Round($data[$i]->autoeval,2).'</td><td>'. Round($data[$i]->eval,2).'</td><td>'.Round($data[$i]->autoeval-$data[$i]->eval,2).'</td></tr>');   
+        echo('     <tr><td>'.$data[$i]->name.'</td><td>'.$data[$i]->firstname.'</td><td>'.$data[$i]->lastname.'</td><td>'.Round($data[$i]->autoeval,2).'</td><td>'. Round($data[$i]->eval,2).'</td><td>'.Round($data[$i]->autoeval-$data[$i]->eval,2).'</td></tr>');
         $idx++;
     }
     echo('    </tbody>');
     echo('  </table>');
     echo('</div>');
-    
+
     $jscript = $jscript.'drawGraphSelfConfidence(data,"'.get_string('dynamographauto', 'mod_dynamo').'","'.get_string('dynamographpeers', 'mod_dynamo').'");';
     return  $jscript;
 }
@@ -777,19 +774,19 @@ function rep_yearbook($dynamo, $id) {
     $groups = dynamo_get_groups($dynamo->groupingid);
     foreach ($groups as $grp) { // loop to all groups of grouping  
         $grpusrs = dynamo_get_group_users($grp->id);  
-        
+
         foreach ($grpusrs as $grpusr) {
             echo('<div class="report-yearbook" title="'.$grp->name.'">'.$OUTPUT->user_picture($grpusr, array('size' => 120, 'courseid' => $course->id)).'<div class="report-yearbook-descr"><a title="'.get_string('dynamogotoparticipant', 'mod_dynamo').'" href="view.php?id='.$id.'&groupid='.$grp->id.'&usrid='.$grpusr->id.'&tab=2&results=3">'.$grpusr->lastname.'<br>'.$grpusr->firstname.'</a><div>'.round(dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id)[0],2).'</div></div></div>');
-        }  
+        }
         ob_flush();
-        flush();          
+        flush();
     }
     echo('</div>');
 }  
 
 // Report 006
 function rep_excel($cm) {
-    $url  = new moodle_url('/mod/dynamo/export/xls/export.php?id='.$cm->id.'&instance='.$cm->instance.'&course='.$cm->course);  
+    $url = new moodle_url('/mod/dynamo/export/xls/export.php?id='.$cm->id.'&instance='.$cm->instance.'&course='.$cm->course);  
     echo('<div style="text-align:center;">'.get_string('dynamoexcelready', 'mod_dynamo'));
     echo('<br><a style="font-size:24px;color:green;" alt="Export Excel" title="Export Excel" href ="'.$url.'" class="fas fa-file-excel" target="_outside"></a></div>');
 }

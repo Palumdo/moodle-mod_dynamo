@@ -84,10 +84,10 @@ class provider implements
                 WHERE e.evalbyid = :evalbyid";
 
         $params = [
-            'modname'       => 'dynamo',
-            'contextlevel'  => CONTEXT_MODULE,
-            'evalbyid'      => $userid,
-            'userid'        => $userid,
+            'modname' => 'dynamo',
+            'contextlevel' => CONTEXT_MODULE,
+            'evalbyid' => $userid,
+            'userid' => $userid,
         ];
         $contextlist = new contextlist();
         $contextlist->add_from_sql($sql, $params);
@@ -143,14 +143,14 @@ class provider implements
                 $evaldata = [];
             }
             $evaldata['evals'][] = [
-                'Participation'         => $eval->crit1,
-                'Responsability'        => $eval->crit2,
-                'Scientific Expertise'  => $eval->crit3,
-                'Technical Expertise'   => $eval->crit4,
-                'General Attitude'      => $eval->crit5,
-                'Other'                 => $eval->crit6,
-                'comment1'              => $eval->comment1,
-                'comment2'              => $eval->comment2,
+                'Participation' => $eval->crit1,
+                'Responsability' => $eval->crit2,
+                'Scientific Expertise' => $eval->crit3,
+                'Technical Expertise' => $eval->crit4,
+                'General Attitude' => $eval->crit5,
+                'Other' => $eval->crit6,
+                'comment1' => $eval->comment1,
+                'comment2' => $eval->comment2,
             ];
             $lastcmid = $eval->cmid;
         }

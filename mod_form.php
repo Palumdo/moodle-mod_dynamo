@@ -23,7 +23,7 @@
  *
  * @package    mod_dynamo
  * @copyright  2019 UCLouvain
- * @author     Dominique Palumbo 
+ * @author     Dominique Palumbo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -50,9 +50,9 @@ class mod_dynamo_mod_form extends moodleform_mod {
 
         $PAGE->requires->jquery();
         $PAGE->requires->js('/mod/dynamo/js/mod.js');
-        
+
         $mform = $this->_form;
-        
+
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
@@ -83,14 +83,14 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->addElement('static', 'label',  get_string('dynamochoice', 'mod_dynamo'));
         $agrouping = groups_get_all_groupings($COURSE->id);
 
-        // list of grouping select one for pairs evaluation    
+        // List of grouping select one for pairs evaluation
         foreach ($agrouping as $grouping) {
           if($grouping->name != '') $options[$grouping->id] = $grouping->name;
         }
         $mform->addElement('select', 'dynamo_grouping_id', get_string('dynamoheadgrouping', 'mod_dynamo'), $options);
-        
+
         // Additional information in the tooltips for the students
-        // these text is added to the defaul it doesn't replace it
+        // These text is added to the defaul it doesn't replace it
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit1', 'mod_dynamo') . ' : '.get_string('dynamoparticipation', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritparticipationdefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_participation', get_string('dynamocritparticipation', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
@@ -110,7 +110,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit5', 'mod_dynamo') . ' : '.get_string('dynamoattitude', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritattitudedefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_attitude', get_string('dynamocritattitude', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
-        
+
         // The teacher can add a sixth critria but with no pedagogic influence on the 5 others
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocritoptname', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_optional_name', get_string('dynamocrit6', 'mod_dynamo'), array('size' => '25','maxlength'=>'30'));
@@ -123,8 +123,8 @@ class mod_dynamo_mod_form extends moodleform_mod {
 
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentfonction', 'mod_dynamo') . ' (2)');
         $mform->addElement('text', 'dynamo_comment2', get_string('dynamocommentfonction', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
-        
-        // hidden tranlated text for javascript mod.js
+
+        // Hidden tranlated text for javascript mod.js
         $mform->addElement('hidden', 'dynamo_newtext', get_string('dynamoactivityview', 'mod_dynamo'));
 
         // Add standard elements.
@@ -138,24 +138,24 @@ class mod_dynamo_mod_form extends moodleform_mod {
     // Load all the values from dynamo of the current activity
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
-        
+
         $dynamo = $DB->get_record('dynamo', array('id'=>$this->current->id), '*', IGNORE_MISSING);
         if($dynamo != false) {
-            $defaultvalues['dynamo_participation']  = $dynamo->crit1;
+            $defaultvalues['dynamo_participation'] = $dynamo->crit1;
             $defaultvalues['dynamo_responsability'] = $dynamo->crit2;
-            $defaultvalues['dynamo_science']        = $dynamo->crit3;
-            $defaultvalues['dynamo_technical']      = $dynamo->crit4;
-            $defaultvalues['dynamo_attitude']       = $dynamo->crit5;
-            $defaultvalues['dynamo_optional_name']  = $dynamo->critoptname;
-            $defaultvalues['dynamo_optional']       = $dynamo->critopt;
-            $defaultvalues['dynamo_auto']           = $dynamo->autoeval;
-            $defaultvalues['dynamo_group_eval']     = $dynamo->groupeval;
-            $defaultvalues['dynamo_grouping_id']    = $dynamo->groupingid;
-            $defaultvalues['dynamo_comment1']       = $dynamo->comment1;
-            $defaultvalues['dynamo_comment2']       = $dynamo->comment2;
+            $defaultvalues['dynamo_science'] = $dynamo->crit3;
+            $defaultvalues['dynamo_technical'] = $dynamo->crit4;
+            $defaultvalues['dynamo_attitude'] = $dynamo->crit5;
+            $defaultvalues['dynamo_optional_name'] = $dynamo->critoptname;
+            $defaultvalues['dynamo_optional'] = $dynamo->critopt;
+            $defaultvalues['dynamo_auto'] = $dynamo->autoeval;
+            $defaultvalues['dynamo_group_eval'] = $dynamo->groupeval;
+            $defaultvalues['dynamo_grouping_id'] = $dynamo->groupingid;
+            $defaultvalues['dynamo_comment1'] = $dynamo->comment1;
+            $defaultvalues['dynamo_comment2'] = $dynamo->comment2;
         } else {
-            $defaultvalues['dynamo_auto']           = 1;
-            $defaultvalues['dynamo_group_eval']     = 1;
+            $defaultvalues['dynamo_auto'] = 1;
+            $defaultvalues['dynamo_group_eval'] = 1;
         }
     }
 }

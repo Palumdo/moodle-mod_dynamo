@@ -23,7 +23,7 @@
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -48,7 +48,7 @@ echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="sty
 
 // Course_module ID, or
 $id         = optional_param('id',      0, PARAM_INT);
-// ... module instance id.
+// Module instance id.
 // Default tab is the Result -> global view
 $d          = optional_param('d',       0, PARAM_INT);
 $tab        = optional_param('tab',     2, PARAM_INT); // global view
@@ -58,13 +58,13 @@ $zoom       = optional_param('zoom',    0, PARAM_INT);
 $groupid    = optional_param('groupid', 0, PARAM_INT);
 
 if ($id) {
-    $cm             = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $dynamo         = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
 } else if ($d) {
-    $dynamo         = $DB->get_record('dynamo', array('id' => $d), '*', MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
-    $cm             = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);
+    $dynamo = $DB->get_record('dynamo', array('id' => $d), '*', MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);
 } else {
     print_error(get_string('missingidandcmid', dynamo));
 }
@@ -74,32 +74,32 @@ $modulecontext = context_module::instance($cm->id);
 
 $mode = '';
 
-// UCLouvain faculty colors only usefull at UCL. Other will have a default blue color) 
-// can be easily customisable for other faculty. Faculty short name are in course category.
+// UCLouvain faculty colors only usefull at UCL. Other will have a default blue color)
+// Can be easily customisable for other faculty. Faculty short name are in course category.
 $afcolor = [];
-$afcolor['[MEDE]']    = '#88005d';
-$afcolor['[FASB]']    = '#88005d';
-$afcolor['[FSP]']     = '#88005d';
-$afcolor['[FSM]']     = '#88005d';
-$afcolor['[TECO]']    = '#b50030';
-$afcolor['[EPL]']     = '#032f5d';
-$afcolor['[LOCI]']    = '#b50030';
-$afcolor['[AGRO]']    = '#008193';
-$afcolor['[SC]']      = '#4a96cd';
-$afcolor['[DRT]']     = '#e20026';
-$afcolor['[FIAL]']    = '#f29400';
-$afcolor['[PSP]']     = '#e06c08';
-$afcolor['[ESPO]']    = '#76ad1c';
-$afcolor['[LSM]']     = '#90810d';
-$afcolor['[ILV]']     = '#032f5d';
-$afcolor['[ECOPOL]']  = '#032f5d';
+$afcolor['[MEDE]'] = '#88005d';
+$afcolor['[FASB]'] = '#88005d';
+$afcolor['[FSP]'] = '#88005d';
+$afcolor['[FSM]'] = '#88005d';
+$afcolor['[TECO]'] = '#b50030';
+$afcolor['[EPL]'] = '#032f5d';
+$afcolor['[LOCI]'] = '#b50030';
+$afcolor['[AGRO]'] = '#008193';
+$afcolor['[SC]'] = '#4a96cd';
+$afcolor['[DRT]'] = '#e20026';
+$afcolor['[FIAL]'] = '#f29400';
+$afcolor['[PSP]'] = '#e06c08';
+$afcolor['[ESPO]'] = '#76ad1c';
+$afcolor['[LSM]'] = '#90810d';
+$afcolor['[ILV]'] = '#032f5d';
+$afcolor['[ECOPOL]'] = '#032f5d';
 
 $rFaculty = $DB->get_record('course_categories', array('id' => $course->category), '*', MUST_EXIST);
 preg_match("/\[[a-zA-Z]+]/", $rFaculty->name, $matches, PREG_OFFSET_CAPTURE, 0);
 $faculty  = $matches[0][0];
 
 $facColor = $afcolor[$faculty];
-if($facColor == '') {$facColor = '#032f5d';}  
+if($facColor == '') {$facColor = '#032f5d';}
 
 
 // Base security
@@ -113,14 +113,14 @@ if (has_capability('mod/dynamo:create', $modulecontext)) {
 if($mode == '') {
     redirect(new moodle_url('/my'));
     die();
-}  
+}
 
 $group  = dynamo_get_group($dynamo->groupingid,$USER->id);
 
 if($mode == 'student' && $group == null) {
     redirect(new moodle_url('/my'));
     die();
-}  
+}
 
 $groupusers = dynamo_get_group_users($group->id);
 
@@ -144,10 +144,10 @@ if($mode == 'teacher') {
     require_once(__DIR__.'/tabs.php');
     switch($tab) {
         case 1:
-            // get the comment of the current inspected user if no user was seen
-            // comment will be empty. It's just for a preview... Dummy text can be OK !
-            // or empty...
-            // preview of what student see for the teacher (no save button !)
+            // Get the comment of the current inspected user if no user was seen
+            // Comment will be empty. It's just for a preview... Dummy text can be OK !
+            // Or empty...
+            // Preview of what student see for the teacher (no save button !)
             $comment = dynamo_get_comment($usrid, $dynamo);
             require_once(__DIR__.'/student.php');
             break;
@@ -163,7 +163,7 @@ if($mode == 'teacher') {
                 case 3:
                     require_once(__DIR__.'/teacherlvl1.php');
                     break;
-            } 
+            }
             break;
         case 3:
             require_once(__DIR__.'/report.php');

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * this page is for the teacher. It will display all groups information on summary
+ * This page is for the teacher. It will display all groups information on summary
  * the aim it's to detect groups with trouble
  *
  * @package     mod_dynamo
@@ -23,7 +23,7 @@
  * @author      Dominique Palumbo 
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 require_login($course, true, $cm);
 echo(get_string('dynamohelp', 'mod_dynamo'));
 ?>

@@ -20,7 +20,7 @@
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -20,7 +20,7 @@
  * @package     mod_dynamo
  * @category    restore
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo  
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -51,19 +51,18 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
           $eval = new restore_path_element('dynamo_eval', '/activity/dynamo/evals/eval');
           $paths[] = $eval;
         }
-        
+
         return $this->prepare_activity_structure($paths);
     }
 
-    
         protected function process_dynamo($data) {
         global $DB;
 
-        $data                 = (object)$data;
-        $oldid                = $data->id;
-        $data->course         = $this->get_courseid();
-        $data->groupid        = $this->get_mappingid('group', $data->groupid);
-        $data->groupingid     = $this->get_mappingid('grouping', $data->groupingid);
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->course = $this->get_courseid();
+        $data->groupid = $this->get_mappingid('group', $data->groupid);
+        $data->groupingid = $this->get_mappingid('grouping', $data->groupingid);
 
         // Insert the dynamo record.
         $newid = $DB->insert_record('dynamo', $data);
@@ -76,17 +75,13 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
         global $DB;
         $data = (object)$data;
         $oldid = $data->id;
-/*        
-        $data->evalbyid = $this->get_mappingid('user', $data->evalbyid);
-        $data->userid   = $this->get_mappingid('user', $data->userid);
-*/
-        $data->builder  = $this->get_new_parentid('dynamo');
+
+        $data->builder = $this->get_new_parentid('dynamo');
         $newevalid = $DB->insert_record('dynamo_eval', $data);
-        
+
         $this->set_mapping('dynamo_eval', $oldid, $newevalid);
     }
 
-    
     /**
      * Defines post-execution actions.
      */

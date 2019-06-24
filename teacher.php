@@ -37,7 +37,7 @@ if (!has_capability('mod/dynamo:create', $modulecontext)) {
   die;
 }    
  
-$stat   = dynamo_get_grouping_stat($dynamo);
+$stat = dynamo_get_grouping_stat($dynamo);
 $groups = dynamo_get_groups($dynamo->groupingid);
 
 // Sub tabulation for teacher to see student results in three levels
@@ -79,6 +79,7 @@ echo('<div id="table-overview"><table class="tablelvlx">
             <th>'.get_string('dynamoheadparticiaption', 'mod_dynamo').'</th>
             <th>'.get_string('dynamoheadimplication',   'mod_dynamo').'</th>
             <th>'.get_string('dynamoheadconfidence',    'mod_dynamo').'</th>
+            <th>'.get_string('dynamoheadconsistency',   'mod_dynamo').'</th>
             <th>'.get_string('dynamoheadcohesion',      'mod_dynamo').'</th>
             <th>'.get_string('dynamoheadconflit',       'mod_dynamo').'</th>
             <th style="border-left:3px solid grey;text-align:center;cursor:pointer;">'.get_string('dynamoheadremarque', 'mod_dynamo').' <i class="fas fa-sort"></th>
@@ -88,33 +89,34 @@ echo('<div id="table-overview"><table class="tablelvlx">
         <tbody>
      ');
 foreach ($groups as $grp) { // loop to all groups of grouping
-    $grpusrs        = dynamo_get_group_users($grp->id);
-    $coursecontext  = get_context_instance(CONTEXT_COURSE, $COURSE->id);
-    $oclique        = dynamo_get_clique($dynamo, $grpusrs, false);
-  
-    $clique = $oclique->grp;
-    $type   = $oclique->type;
-    $list   = $oclique->list;
+    $grpusrs = dynamo_get_group_users($grp->id);
+    $coursecontext = get_context_instance(CONTEXT_COURSE, $COURSE->id);
+    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs, false);
 
-    $cliqueStr  = "";
-    foreach($clique as $cusers)  {
+    $consistency = $oconsistency->grp;
+    $type = $oconsistency->type;
+    $list = $oconsistency->list;
+
+    $consistencystr = "<div>";
+    foreach($consistency as $cusers)  {
         if(count($cusers) > 0) {
             foreach($cusers as $cuser) {
-                $cliqueStr .= '<i class="fas fa-user colok" data-id="'.$cuser.'" data-group="'.$grp->id.'" title="'.$grpusrs[$cuser]->firstname.' '.$grpusrs[$cuser]->lastname.'"></i>';
+                $consistencystr .= '<i class="fas fa-user colok" data-id="'.$cuser.'" data-group="'.$grp->id.'" title="'.$grpusrs[$cuser]->firstname.' '.$grpusrs[$cuser]->lastname.'"></i>';
             }  
-            $cliqueStr .= '+';
+            $consistencystr .= '|';
         }
     }
-    $cliqueStr = rtrim($cliqueStr, '+');
-    $cliqueStr = str_replace('>+', '><b> + </b>' ,$cliqueStr);
+    $consistencystr = rtrim($consistencystr, '|');
+    $consistencystr = str_replace('>|', '><b> | </b>' ,$consistencystr);
+    $consistencystr .= "</div>";
 
     // Add icon type conflit group 
-    $cliqueStr = $cliqueStr .' = '.dynamo_get_group_type($type, $grp->id,  $oclique->max);
+    $cohesion = dynamo_get_group_type($type, $grp->id);
 
-    $val = [0,0,0,1,3,0,3];
+    $val = [0, 0, 0, 1, 3, 0 , 3];
     $notperfect = ($val[$type] * count($grpusrs));
-    
-    $groupstat  = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
+
+    $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
 
     $addClass = "";
     if(strpos($groupstat->participation, 'color:#ccc')  !==false) {
@@ -126,7 +128,8 @@ foreach ($groups as $grp) { // loop to all groups of grouping
               <td>'.$groupstat->participation.'</td>
               <td>'.$groupstat->implication.'</td>
               <td>'.$groupstat->confiance.'</td>
-              <td>'.$cliqueStr.'</td>
+              <td>'.$consistencystr.'</td>
+              <td>'.$cohesion.'</td>
               <td>'.$groupstat->conflit.'</td>
               <td class="camera-border">'.$groupstat->remark.'</td>
               <td class="td-num">⏲️</td>

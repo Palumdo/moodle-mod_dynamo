@@ -19,7 +19,7 @@
  *
  * @package    mod_dynamo
  * @copyright  2019 UCLouvain
- * @author     Dominique Palumbo  
+ * @author     Dominique Palumbo
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,7 +31,7 @@ $string['dynamoname_help']                    = 'Help with more explanation';
 $string['mod_dynamo']                         = 'Dynamo';
 $string['pluginadministration']               = 'Dynamo administration';
 $string['pluginname']                         = 'Dynamo';
-                  
+
 $string['dynamofieldset']                     = 'criterions personalisation';
 $string['dynamoauto']                         = 'Require that every student self assesses';
 $string['dynamogroupeval']                    = 'Require that each student evaluate their group globally';
@@ -96,7 +96,7 @@ $string['dynamoheademail']                    = 'Email';
 $string['dynamoheadidnumber']                 = 'NOMA';
 $string['dynamogrpingreport']                 = 'Report Grouping';
 $string['dynamoier']                          = 'Total';
-$string['dynamoniwf']                         = 'Relatif involvement ratio';
+$string['dynamoniwf']                         = 'Relatif involvement';
 $string['dynamoevaluator']                    = 'Evaluator';
 $string['dynamoevaluated']                    = 'Evaluated';
 $string['dynamoradar01title']                 = 'Radar';
@@ -109,7 +109,7 @@ $string['dynamoopenclose']                    = 'Open/close';
 $string['dynamogotogroup']                    = 'Group details';
 $string['dynamogotoparticipant']              = 'Participants detail';
 $string['dynamogroupdetailtitle']             = 'Group synthesis';
-$string['dynamoconf']                         = 'Assurance';
+$string['dynamoconf']                         = 'Relatif assurance';
 $string['dynamopreview']                      = 'Preview';
 $string['dynamotab1']                         = 'Preview';
 $string['dynamotab2']                         = 'Results';
@@ -123,6 +123,7 @@ $string['dynamoheadparticiaption']            = 'Answered';
 $string['dynamoheadimplication']              = 'Implication';
 $string['dynamoheadconfidence']               = 'Assurance';
 $string['dynamoheadcohesion']                 = 'Cohesion';
+$string['dynamoheadconsistency']              = 'Consistency';
 $string['dynamoheadconflit']                  = 'Appreciations';
 $string['dynamoheadremarque']                 = 'Climate';
 $string['dynamonocomment']                    = 'No specific comment';
@@ -152,15 +153,15 @@ $string['dynamogroupcount']                   = 'Number of group';
 $string['dynamostudentcount']                 = 'Number of student';
 $string['dynamostudentnoanswerscount']        = 'Number of student without answers';
 $string['dynamokeywords']                     = 'plagi|absent|present|damage|expertise|problem|relief|delay|conflict';
-$string['dynamogroupetypefan']                = 'L\'école des fans';
-$string['dynamogroupetyperas']                = 'Groupe homogène';
-$string['dynamogroupetypeclustering']         = 'Clustering';
-$string['dynamogroupetypeclique']             = 'Clique';
-$string['dynamogroupetypeheterogene']         = 'Heterogen';
-$string['dynamogroupetypeghost']              = 'Ghosts';
+$string['dynamogroupetypefan']                = 'Perfect cohesion';
+$string['dynamogroupetyperas']                = 'Excellent cohesion';
+$string['dynamogroupetypeclustering']         = 'Bad cohesion';
+$string['dynamogroupetypeclique']             = 'Conflict';
+$string['dynamogroupetypeheterogene']         = 'Good cohesion';
+$string['dynamogroupetypeghost']              = 'Insufficient data';
 $string['dynamopleasewait']                   = 'Please Wait...';
 $string['dynamohelp']                         = '<div class="box-niwf">
-                                                    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mi>I</mi><mi>W</mi><msub><mi>F</mi><mrow><mo>&#xA0;</mo><mi>j</mi><mo>&#x2260;</mo><mi>i</mi><mo>&#xA0;</mo></mrow></msub><mo>=</mo><munderover><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>(</mo><mfrac><mrow><msub><mi>R</mi><mrow><mi>j</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub><mo>&#xA0;</mo></mrow><mrow><munderover><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>&#xA0;</mo><msub><mi>R</mi><mrow><mi>K</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub></mrow></mfrac><mo>)</mo></math>
+                                                    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mi>I</mi><mi>W</mi><msub><mi>F</mi><mrow><mo>&#xA0;</mo><mi>j</mi><mo>&#x2260;</mo><mi>i</mi><mo>&#xA0;</mo></mrow></msub><mo>=</mo><munderover><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>(</mo><mfrac><mrow><msub><mi>R</mi><mrow><mi>j</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub><mo>&#xA0;</mo></mrow><mrow><munderover><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>&#xA0;</mo><msub><mi>R</mi><mrow><mi>K</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub></mrow></mfrac><mo>)</mo></math>/(n-1)
                                                 </div>';
 $string['dynamonotyetdesigned']               = 'This functionnality is not yet developped';
 $string['dynamotop']                          = 'Top';
@@ -179,3 +180,32 @@ $string['dynamographauto']                    = 'Auto';
 $string['dynamographpeers']                   = 'Peers';
 
 $string['dynamoactivityview']                 = 'Student must view and save this activity to complete it';
+$string['dynamoexportxlstab1']                = 'Group data';
+$string['dynamoexportxlstab2']                = 'Individual data';
+$string['dynamoexportxlstab3']                = 'Brut data';
+
+$string['dynamoaclimate0']                    = 'Very good atmosphere';
+$string['dynamoaclimate1']                    = 'Good atmosphere';
+$string['dynamoaclimate2']                    = 'Correct atmosphere';
+$string['dynamoaclimate3']                    = 'Tense atmosphere';
+$string['dynamoaclimate4']                    = 'Difficult atmosphere';
+
+$string['dynamoexportxlsTitle01']             = 'Total (peers)';
+$string['dynamoexportxlsTitle02']             = 'Total (self)';
+$string['dynamoexportxlsTitle03']             = 'Participation (peers)';
+$string['dynamoexportxlsTitle04']             = 'Participation (self)';
+$string['dynamoexportxlsTitle05']             = 'Responsibility (peers)';
+$string['dynamoexportxlsTitle06']             = 'Responsibility (self)';
+$string['dynamoexportxlsTitle07']             = 'Scientific expertise (peers)';
+$string['dynamoexportxlsTitle08']             = 'Scientific expertise (self)';
+$string['dynamoexportxlsTitle09']             = 'Technical expertise (peers)';
+$string['dynamoexportxlsTitle10']             = 'Technical expertise (self)';
+$string['dynamoexportxlsTitle11']             = 'General attitude (peers)';
+$string['dynamoexportxlsTitle12']             = 'General attitude (self)';
+$string['dynamoexportxlsTitle13']             = 'Criterion 6 (peers)';
+$string['dynamoexportxlsTitle14']             = 'Criterion 6 (self)';
+$string['dynamoexportxlsTitle15']             = 'Relative implication';
+$string['dynamoexportxlsTitle16']             = 'Relative insurance';
+$string['dynamoexportxlsTitle17']             = 'Comment on my contribution';
+$string['dynamoexportxlsTitle18']             = 'Comment on my group';
+$string['dynamoexportxlsTitle19']             = 'Groups average';
