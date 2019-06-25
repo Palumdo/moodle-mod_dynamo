@@ -341,7 +341,7 @@ function dynamo_get_groups($grouping) {
     global $CFG, $DB;
 
     $sql = "
-        SELECT t2.id, t2.name
+        SELECT t2.*
           FROM {groupings_groups} t1
               ,{groups} t2
          WHERE groupingid = :param1
@@ -1297,6 +1297,17 @@ function dynamo_get_grouping_stat($dynamo) {
     $params = array('param1' => $dynamo->groupingid, 'param2' => $dynamo->id);
     $result = $DB->get_record_sql($sql, $params);
     $stat->nb_no_answer = $result->nb_no_answer;
+
+
+    $sql = "
+        SELECT t1.*
+          FROM {groupings} t1
+         WHERE id = :param1
+        ";
+
+    $params = array('param1' => $dynamo->groupingid);
+    $result = $DB->get_record_sql($sql, $params);
+    $stat->grouping = $result;
 
     return $stat;
 }

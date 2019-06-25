@@ -48,6 +48,7 @@ echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
      </ul>' ;
      
 echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '.$cm->name.'</h3><input id="activityid" type="hidden" value="'.$id.'">');
+echo('<div>'.$stat->grouping->name.' : '.$stat->grouping->description.'</div>');
 echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
 
 // Custom checkboxes that look like switch to hide group with no problems or group where student answers are missing and switch view 
@@ -90,7 +91,7 @@ echo('<div id="table-overview"><table class="tablelvlx">
      ');
 foreach ($groups as $grp) { // loop to all groups of grouping
     $grpusrs = dynamo_get_group_users($grp->id);
-    $coursecontext = get_context_instance(CONTEXT_COURSE, $COURSE->id);
+    $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
     $oconsistency = dynamo_get_consistency($dynamo, $grpusrs, false);
 
     $consistency = $oconsistency->grp;
@@ -124,7 +125,7 @@ foreach ($groups as $grp) { // loop to all groups of grouping
     }  
   
     echo('<tr style="cursor:pointer;" onclick="location.href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'" title="'.get_string('dynamoresults2', 'mod_dynamo').'">
-              <td class="camera">'.$grp->name.'<div class="toolpit">&nbsp;<i class="fas fa-camera"></i><span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
+              <td class="camera">'.print_group_picture($grp, $course->id, false, true, false).' '.$grp->name.'<div class="toolpit">&nbsp;<i class="fas fa-camera"></i><span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
               <td>'.$groupstat->participation.'</td>
               <td>'.$groupstat->implication.'</td>
               <td>'.$groupstat->confiance.'</td>

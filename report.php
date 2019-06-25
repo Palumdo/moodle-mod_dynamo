@@ -774,9 +774,9 @@ function rep_yearbook($dynamo, $id) {
     $groups = dynamo_get_groups($dynamo->groupingid);
     foreach ($groups as $grp) { // loop to all groups of grouping  
         $grpusrs = dynamo_get_group_users($grp->id);  
-
+        // echo('<div class="report-yearbook-separator" title="'.$grp->name.'"></div>');
         foreach ($grpusrs as $grpusr) {
-            echo('<div class="report-yearbook" title="'.$grp->name.'">'.$OUTPUT->user_picture($grpusr, array('size' => 120, 'courseid' => $course->id)).'<div class="report-yearbook-descr"><a title="'.get_string('dynamogotoparticipant', 'mod_dynamo').'" href="view.php?id='.$id.'&groupid='.$grp->id.'&usrid='.$grpusr->id.'&tab=2&results=3">'.$grpusr->lastname.'<br>'.$grpusr->firstname.'</a><div>'.round(dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id)[0],2).'</div></div></div>');
+            echo('<div class="report-yearbook" title="'.$grp->name.'">'.$OUTPUT->user_picture($grpusr, array('size' => 120, 'courseid' => $course->id)).'<div class="report-yearbook-title">'.$grp->name.'</div><div class="report-yearbook-descr"><a title="'.get_string('dynamogotoparticipant', 'mod_dynamo').'" href="view.php?id='.$id.'&groupid='.$grp->id.'&usrid='.$grpusr->id.'&tab=2&results=3">'.$grpusr->lastname.'<br>'.$grpusr->firstname.'</a><div>'.round(dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id)[0],2).'</div></div></div>');
         }
         ob_flush();
         flush();

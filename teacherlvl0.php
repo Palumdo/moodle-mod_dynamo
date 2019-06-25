@@ -78,15 +78,16 @@ foreach ($groups as $sgrp) { // loop to all groups of grouping
 echo('</select>');
  
 if($grp != 0) {
-    $grpusrs    = dynamo_get_group_users($grp->id);
-    $oconsistency    = dynamo_get_consistency($dynamo, $grpusrs, false);
+    $grpusrs = dynamo_get_group_users($grp->id);
+    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs, false);
    
     $val = [0,0,0,1,3,0,3];
     $notperfect = ($val[$oconsistency->type] * count($grpusrs));
     $climat = dynamo_get_group_climat($dynamo, $grpusrs, $grp->id, $notperfect)[0];
-    echo('<h4 class="dynagroupingtitle">'.$climat.' <span class="ico-white">'.$grp->name.'</span></h4>');
+    echo('<h4 class="dynagroupingtitle">'.$climat.' '.print_group_picture($grp, $course->id, false, true, false).' <span class="ico-white">'.$grp->name.'</span></h4>');
     echo('<div class="" id="'.$grp->id.'" style="display:;">');
-
+    echo('<div style="margin-bottom:5px;">'.$grp->description.'</div>');
+    
     echo ('    <div class="table-container">
                    <table class="tablelvl0">
                        <thead>
