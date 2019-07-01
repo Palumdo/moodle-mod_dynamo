@@ -134,7 +134,7 @@ $PAGE->set_context($modulecontext);
 echo $OUTPUT->header();
 
 if($mode == 'student') {
-    $comment    = dynamo_get_comment($USER->id, $dynamo);
+    $comment = dynamo_get_comment($USER->id, $dynamo);
     require_once(__DIR__.'/student.php');
 }
 

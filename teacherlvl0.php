@@ -151,16 +151,28 @@ if($grp != 0) {
               <table id="table-comment">
                   <tbody>');
 
+    // This javascript is used to put in colors keywords in comments 
     $jsadd = "";        
 
     $aKeywords = explode('|', get_string('dynamokeywords', 'mod_dynamo'));
     foreach ($aKeywords as $keyword) {
-        $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$keyword.'", "ig"),"<span class=\'incomkey\'>'.$keyword.'</span>"));';
+        $jsadd .= 'var keyword = "'.$keyword.'";';
+        $jsadd .= '$(this).html($(this).html().replace(new RegExp("\\\b"+keyword+"", ""),"<span class=\'incomkey\'>'.$keyword.'"));';
     }
+    $jsadd .= 'var atext = $(this).html().split(" ");
+               atext.forEach(function (item, index) {
+                   if (atext[index].indexOf("incomkey") != -1) {
+                       atext[index] = atext[index] + "</span>";
+                   }    
+               });
+               $(this).html(atext.join(" "));
+             ';
+    
     
     // Find in comments specific words (define in language file at this value "dynamokeywords" or firstname and lastname of users
     foreach ($grpusrs as $grpusr) { 
         $comment = dynamo_get_comment($grpusr->id, $dynamo);
+      
         echo('<tr><td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
         echo('<td><div class="eval_comments_table">');
         echo('<b>'.get_string('dynamocommentcontr', 'mod_dynamo').'</b><br>');
@@ -168,8 +180,10 @@ if($grp != 0) {
         echo('<b>'.get_string('dynamocommentfonction', 'mod_dynamo').'</b><br>');
         echo('<span class="tdcomment">'.$comment->comment2.'</span><br><br>');
         echo('</div></td></tr>');
-        $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$grpusr->firstname.'", "ig"),"<span class=\'incomname\'>'.$grpusr->firstname.'</span>"));';
-        $jsadd .= '$(this).html($(this).html().replace(new RegExp("'.$grpusr->lastname.'", "ig"), "<span class=\'incomname\'>'.$grpusr->lastname.'</span>"));';
+        $jsadd .= 'var firstname = "'.$grpusr->firstname.'";';
+        $jsadd .= 'var lastname = "'.$grpusr->lastname.'";';
+        $jsadd .= '$(this).html($(this).html().replace(new RegExp("\\\b"+firstname+"\\\b", ""),"<span class=\'incomname\'>'.$grpusr->firstname.'</span>"));';
+        $jsadd .= '$(this).html($(this).html().replace(new RegExp("\\\b"+lastname+"\\\b", ""),"<span class=\'incomname\'>'.$grpusr->lastname.'</span>"));';
     }
     
     echo('        </tbody>

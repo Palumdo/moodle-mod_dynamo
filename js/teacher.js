@@ -44,6 +44,18 @@ window.onload = function () {
   $("#button-list-teacher").css("display","flex");
   $("#pleasewait").css("display","none");
   numTable();
+  // Manage the climat sorting
+  if(getAllUrlParams().tab == 2) {
+    var sort = localStorage.getItem("sort_climat");
+    console.log(sort);
+    if(sort != '') {
+        $("th:nth-child(8)").click();
+    }
+    
+    if(sort == "false") {
+        $("th:nth-child(8)").click();
+    }
+  } 
 };
 //**************************************************************************
 // Allow to sort on the climat between student in the group
@@ -51,6 +63,7 @@ $("th:nth-child(8)").click(function(){
     var table = $(this).parents("table").eq(0);
     var rows = table.find("tr:gt(0)").toArray().sort(comparer($(this).index()));
     this.asc = !this.asc;
+    localStorage.setItem("sort_climat", this.asc);
     if (!this.asc){rows = rows.reverse();}
     for (var i = 0; i < rows.length; i++){table.append(rows[i]);}
     numTable();

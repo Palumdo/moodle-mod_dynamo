@@ -48,7 +48,9 @@ echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
      </ul>' ;
      
 echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '.$cm->name.'</h3><input id="activityid" type="hidden" value="'.$id.'">');
-echo('<div>'.$stat->grouping->name.' : '.$stat->grouping->description.'</div>');
+if($stat->grouping->description != '') {
+    echo ('<div>'.$stat->grouping->name.' : '.$stat->grouping->description.'</div>');
+}
 echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
 
 // Custom checkboxes that look like switch to hide group with no problems or group where student answers are missing and switch view 
@@ -112,7 +114,7 @@ foreach ($groups as $grp) { // loop to all groups of grouping
     $consistencystr .= "</div>";
 
     // Add icon type conflit group 
-    $cohesion = dynamo_get_group_type($type, $grp->id);
+    $cohesion = dynamo_get_group_type($type, $grp->id, $oconsistency->max);
 
     $val = [0, 0, 0, 1, 3, 0 , 3];
     $notperfect = ($val[$type] * count($grpusrs));
@@ -125,7 +127,7 @@ foreach ($groups as $grp) { // loop to all groups of grouping
     }  
   
     echo('<tr style="cursor:pointer;" onclick="location.href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'" title="'.get_string('dynamoresults2', 'mod_dynamo').'">
-              <td class="camera">'.print_group_picture($grp, $course->id, false, true, false).' '.$grp->name.'<div class="toolpit">&nbsp;<i class="fas fa-camera"></i><span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
+              <td class="camera">'.print_group_picture($grp, $course->id, false, true, false).' <a class="groupurl" href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'>'.$grp->name.'</a><div class="toolpit">&nbsp;<i class="fas fa-camera"></i><span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
               <td>'.$groupstat->participation.'</td>
               <td>'.$groupstat->implication.'</td>
               <td>'.$groupstat->confiance.'</td>

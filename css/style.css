@@ -991,22 +991,12 @@
     border-radius : 4px;
     background-color : #ffdb99;
     padding : 3px;
-    filter : blur(0.4px);
-    -webkit-filter : blur(0.4px);
-    -moz-filter : blur(0.4px);
-    -o-filter : blur(0.4px);
-    -ms-filter : blur(0.4px); 
 }
 
 .path-mod-dynamo .incomname {
     border-radius : 4px;
     background-color : #efef95;
     padding : 3px;
-    filter : blur(0.4px);
-    -webkit-filter : blur(0.4px);
-    -moz-filter : blur(0.4px);
-    -o-filter : blur(0.4px);
-    -ms-filter : blur(0.4px); 
 }
     
 
@@ -1141,3 +1131,13 @@
     background-image : linear-gradient(to bottom, rgba(163,163,163,1) 0%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 44%, rgba(255,201,64,1) 100%);
 }    
 
+
+.path-mod-dynamo .groupurl {
+    text-decoration : none;
+    color : white;
+}    
+
+.path-mod-dynamo .groupurl:hover {
+    text-decoration : underline;
+    color : white;
+}    

@@ -1140,22 +1140,12 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
 
         // Find firstname lastname in comments about the group
         foreach ($grpusrs as $grpusrname) {
-            if(   strpos($dynamoeval->comment2.'.', $grpusrname->firstname.' ') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'.') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.',') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.';') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'!') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'?') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.')') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->firstname.'&') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.' ') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'.') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.',') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.';') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'!') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'?') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.')') !== false
-               || strpos($dynamoeval->comment2.'.', $grpusrname->lastname.'&') !== false) {
+            $text = preg_replace('/[^a-z\s]/', '', strtolower($dynamoeval->comment2));
+            $text = preg_split('/\s+/', $text, NULL, PREG_SPLIT_NO_EMPTY);
+            $text = array_flip($text);
+            $firstname = strtolower($grpusrname->firstname);
+            $lastname = strtolower($grpusrname->lastname);
+            if (isset($text[$firstname]) || isset($text[$lastname])) {
                 $conflit = '<i style="font-size:1.2em;color:#006DCC;" class="fas fa-comment"></i>';
             }
         }
@@ -1661,7 +1651,7 @@ function dynamo_get_consistency($dynamo, $grpusrs, $debug) {
     $sumdiff = 0;
     $maxdiff = 0;
     $maxsize = 0;
-    for($i=0;$i<count($list);$i++) {
+    for($i = 0; $i < count($list); $i++) {
         $diff = $list[$i]->diff;
         $usr1 = $list[$i]->user1;
         $usr2 = $list[$i]->user2;
@@ -1719,7 +1709,7 @@ function dynamo_get_consistency($dynamo, $grpusrs, $debug) {
     if($maxdiff >= 0.05) {
         $result->type = 3; // clustering
     }
-    if($maxdiff > 0.1) {
+    if($maxdiff > 0.15) { // /!\ real value should be 0.05
         $result->type = 4; // band
     }
     if($maxsize == 1 && $result->type   > 2) {
@@ -1888,45 +1878,45 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
  *
  * @return html fontawesome ico...
  */
-function dynamo_get_group_type($type, $grpid) {
+function dynamo_get_group_type($type, $grpid, $max) {
     switch($type) {
         case 1:
             return ' '.'<div style="float:left;color:#006DCC;">
                         <i class="fas fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'"></i>'
+                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i>'
                       .'<i class="fas fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'"></i>'
+                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i>'
                       .'<i class="fas fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').'"></i></div>';
+                            title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 2:
             return ' '.'<div style="float:left;color:#006DCC;">
                         <i class="fas fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetyperas', 'mod_dynamo').'"></i>'
+                            title="'.get_string('dynamogroupetyperas', 'mod_dynamo').' ('.$max.')"></i>'
                       .'<i class="fas fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetyperas', 'mod_dynamo').'"></i></div>';
+                            title="'.get_string('dynamogroupetyperas', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 3:
             return ' '.'<div style="float:left;color:red;">
                         <i class="fas fa-heart-broken" data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypeclustering', 'mod_dynamo').'"></i></div>';
+                            title="'.get_string('dynamogroupetypeclustering', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 4:
             return ' '.'<div style="float:left;color:black;">
                         <i class="fas fa-heart-broken" data-id="'.$grpd.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').'"></i>'
+                            title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').' ('.$max.')"></i>'
                       .'<i class="fas fa-heart-broken"         data-id="'.$grpd.'"  data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').'"></i></div>';
+                            title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 5:
             return ' '.'<div style="float:left;color:orange;">
                         <i class="fas fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypeheterogene', 'mod_dynamo').'"></i></div>';
+                            title="'.get_string('dynamogroupetypeheterogene', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 6:
             return ' '.'<div style="float:left;color:gold;">
                         <i class="fas fa-exclamation-triangle" data-id="'.$grpid.'" data-group="'.$grpid.'"
-                            title="'.get_string('dynamogroupetypeghost', 'mod_dynamo').'"></i></div>';
+                            title="'.get_string('dynamogroupetypeghost', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
     }
     return '';
