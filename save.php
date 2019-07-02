@@ -49,12 +49,12 @@ if ($id) {
 require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
-$group = dynamo_get_group($dynamo->groupingid,$USER->id);
+$group = dynamo_get_group($dynamo->groupingid, $USER->id);
 
-if($group == null) {
+if ($group == null) {
     redirect(new moodle_url('/my'));
     die();
-}  
+}
 
 $groupusers = dynamo_get_group_users($group->id);
 $PAGE->set_url('/mod/dynamo/save.php', array('id' => $cm->id));
@@ -63,64 +63,64 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 echo $OUTPUT->header();
 
-/****************************************
-// Server side data validation
-// Value must between 1 to 5 (all question are mandatory)
-// **************************************/
+// ****************************************
+// Server side data validation.
+// Value must between 1 to 5 (all question are mandatory).
+// **************************************
 foreach ($groupusers as $user) {
     $error = 0;
     if($dynamo->autoeval == 0 &&  $user->id == $USER->id) { // no auto evaluation check...
     } else {
-      if ($_POST[$user->id.'_1'] <1 ||  $_POST[$user->id.'_1'] > 5) {
-          $error++;
-      }
-      if ($_POST[$user->id.'_2'] <1 ||  $_POST[$user->id.'_2'] > 5) {
-          $error++;
-      }
-      if ($_POST[$user->id.'_3'] <1 ||  $_POST[$user->id.'_3'] > 5) {
-          $error++;
-      }
-      if ($_POST[$user->id.'_4'] <1 ||  $_POST[$user->id.'_4'] > 5) {
-          $error++;
-      }
-      if ($_POST[$user->id.'_5'] <1 ||  $_POST[$user->id.'_5'] > 5) {
-          $error++;
-      }
-      if ($dynamo->critoptname != '' && ($_POST[$user->id.'_6'] <1 ||  $_POST[$user->id.'_6'] > 5)) {
-          $error++;
-      }
-      if (trim($_POST['comment1']) == '') {
-          $error++;
-      }
-      if (trim($_POST['comment2']) == '') {
-          $error++;
-      }
+        if ($_POST[$user->id.'_1'] <1 || $_POST[$user->id.'_1'] > 5) {
+            $error++;
+        }
+        if ($_POST[$user->id.'_2'] <1 || $_POST[$user->id.'_2'] > 5) {
+            $error++;
+        }
+        if ($_POST[$user->id.'_3'] <1 || $_POST[$user->id.'_3'] > 5) {
+            $error++;
+        }
+        if ($_POST[$user->id.'_4'] <1 || $_POST[$user->id.'_4'] > 5) {
+            $error++;
+        }
+        if ($_POST[$user->id.'_5'] <1 || $_POST[$user->id.'_5'] > 5) {
+            $error++;
+        }
+        if ($dynamo->critoptname != '' && ($_POST[$user->id.'_6'] <1 || $_POST[$user->id.'_6'] > 5)) {
+            $error++;
+        }
+        if (trim($_POST['comment1']) == '') {
+            $error++;
+        }
+        if (trim($_POST['comment2']) == '') {
+            $error++;
+        }
 
-      if($error > 0) {
-        echo("<div class='errormsgserver'>");
-        echo(get_string('dynamosavedcorrupted', 'mod_dynamo'));
-        echo("</div>");
-        die(0);
-      }
+        if($error > 0) {
+            echo("<div class='errormsgserver'>");
+            echo(get_string('dynamosavedcorrupted', 'mod_dynamo'));
+            echo("</div>");
+            die(0);
+        }
     }
 }
 // The all group is also evaluated.
 if ($dynamo->groupeval == 1) {
     $error = 0;
 
-    if($_POST[$group->id.'_g1'] <1 || $_POST[$group->id.'_g1'] > 5) {
+    if($_POST[$group->id.'_g1'] < 1 || $_POST[$group->id.'_g1'] > 5) {
           $error++;
     }
-    if($_POST[$group->id.'_g2'] <1 || $_POST[$group->id.'_g2'] > 5) {
+    if($_POST[$group->id.'_g2'] < 1 || $_POST[$group->id.'_g2'] > 5) {
           $error++;
     }
-    if($_POST[$group->id.'_g3'] <1 || $_POST[$group->id.'_g3'] > 5) {
+    if($_POST[$group->id.'_g3'] < 1 || $_POST[$group->id.'_g3'] > 5) {
           $error++;
     }
-    if($_POST[$group->id.'_g4'] <1 || $_POST[$group->id.'_g4'] > 5) {
+    if($_POST[$group->id.'_g4'] < 1 || $_POST[$group->id.'_g4'] > 5) {
           $error++;
     }
-    if($_POST[$group->id.'_g5'] <1 || $_POST[$group->id.'_g5'] > 5) {
+    if($_POST[$group->id.'_g5'] < 1 || $_POST[$group->id.'_g5'] > 5) {
           $error++;
     }
     // Display message if they've an error.
@@ -132,11 +132,11 @@ if ($dynamo->groupeval == 1) {
     }
 }
 
-/*********************
+// *********************.
 // Save peer evaluation.
-// *********************/
+// *********************.
 foreach ($groupusers as $user) {
-    if($dynamo->autoeval == 0 &&  $user->id == $USER->id) { // No auto evaluation save.
+    if ($dynamo->autoeval == 0 && $user->id == $USER->id) { // No auto evaluation save.
     } else {
         $dynamoeval = new stdClass();
         $dynamoeval->builder = $cm->instance;
@@ -147,17 +147,18 @@ foreach ($groupusers as $user) {
         $dynamoeval->crit3 = $_POST[$user->id.'_3'];
         $dynamoeval->crit4 = $_POST[$user->id.'_4'];
         $dynamoeval->crit5 = $_POST[$user->id.'_5'];
-        if($dynamo->critoptname != '') {
+        if ($dynamo->critoptname != '') {
             $dynamoeval->crit6 = $_POST[$user->id.'_6'];
         } else {
             $dynamoeval->crit6 = 0;
         }
         $dynamoeval->critgrp = 0;
-        $dynamoeval->comment1 = $_POST['comment1']; 
-        $dynamoeval->comment2 = $_POST['comment2']; 
+        $dynamoeval->comment1 = $_POST['comment1'];
+        $dynamoeval->comment2 = $_POST['comment2'];
         $dynamoeval->timemodified = time();
 
-        if (!$id = $DB->get_record('dynamo_eval', array('builder' => $cm->instance, 'evalbyid' =>$USER->id , 'userid' =>$user->id ))) {
+        if (!$id = $DB->get_record('dynamo_eval', array('builder' => $cm->instance, 'evalbyid' => $USER->id 
+                , 'userid' => $user->id ))) {
             $id = $DB->insert_record('dynamo_eval', $dynamoeval);    
         } else {
             $dynamoeval->id = $id->id;
@@ -176,14 +177,17 @@ if($dynamo->groupeval == 1) {
     $dynamoeval->crit3 = $_POST[$group->id.'_g3'];
     $dynamoeval->crit4 = $_POST[$group->id.'_g4'];
     $dynamoeval->crit5 = $_POST[$group->id.'_g5'];
-    if($dynamo->critoptname != '') $dynamoeval->crit6 = $_POST[$group->id.'_g6'];
-    else $dynamoeval->crit6 = 0;
+    if($dynamo->critoptname != '') {
+        $dynamoeval->crit6 = $_POST[$group->id.'_g6'];
+    } else {
+        $dynamoeval->crit6 = 0;
+    }
     $dynamoeval->critgrp = 1;
     $dynamoeval->comment1 = $_POST['comment1'];
     $dynamoeval->comment2 = $_POST['comment2'];
     $dynamoeval->timemodified = time();
 
-    if (!$id = $DB->get_record('dynamo_eval', 
+    if (!$id = $DB->get_record('dynamo_eval',
             array('builder' => $cm->instance, 'evalbyid' => $USER->id , 'userid' => $group->id ))) {
         $id = $DB->insert_record('dynamo_eval', $dynamoeval);
     } else {
@@ -200,4 +204,3 @@ echo(get_string('dynamosavedsuccessfully', 'mod_dynamo'));
 echo("</div>");
 echo('<script>setInterval(function(){location.href = "/course/view.php?id='.$cm->course.'";},5000);</script>');
 echo $OUTPUT->footer();
-?>

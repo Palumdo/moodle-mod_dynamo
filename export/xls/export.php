@@ -93,7 +93,7 @@ $format = $workbook->add_format(array("bold" => 1, "text_wrap" => true));
 $worksheet[0]->set_column(0, 0, '30');
 $worksheet[0]->set_column(1, $col, '20');
 $line = 0;
-foreach($groups as $grp) {
+foreach ($groups as $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
     $totalp = 0;
     $totals = 0;
@@ -117,7 +117,7 @@ foreach($groups as $grp) {
     $worksheet[0]->write(5 + ($i * 5), $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
     $worksheet[0]->write(6 + ($i * 5), $col, get_string('dynamoheadremarque', 'mod_dynamo'));
 
-    foreach($grpusrs as $usr) {
+    foreach ($grpusrs as $usr) {
         $data = dynamo_compute_advanced($usr->id, $dynamo);
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usr->id)[0];
@@ -323,10 +323,10 @@ $worksheet[2]->write(0, $col, get_string('dynamocommentfonction', 'mod_dynamo'))
 $row = 1;
 
 $users = dynamo_get_grouping_users($dynamo->groupingid);
-foreach($users as $user) {
+foreach ($users as $user) {
     $grp = dynamo_get_group_from_user($dynamo->groupingid, $user->id);
     $groupusers = dynamo_get_group_users($grp->id);
-    foreach($groupusers as $usereva) {
+    foreach ($groupusers as $usereva) {
         $worksheet[2]->write($row, 0, $grp->name);
         $worksheet[2]->write($row, 2, $user->firstname);
         $worksheet[2]->write($row, 3, $user->lastname);
@@ -334,10 +334,10 @@ foreach($users as $user) {
         $worksheet[2]->write($row, 5, $user->email);
         $worksheet[2]->write($row, 6, $usereva->firstname);
         $worksheet[2]->write($row, 7, $usereva->lastname);
-        $dynamoeval = $DB->get_record('dynamo_eval', 
+        $dynamoeval = $DB->get_record('dynamo_eval',
             array('builder' => $dynamo->id, 'evalbyid' => $user->id , 'userid' => $usereva->id ));
         if ($dynamoeval) {
-            $worksheet[2]->write($row, 1, date('m/d/Y',$dynamoeval->timemodified));
+            $worksheet[2]->write($row, 1, date('m/d/Y', $dynamoeval->timemodified));
             $worksheet[2]->write($row, 8, $dynamoeval->crit1);
             $worksheet[2]->write($row, 9, $dynamoeval->crit2);
             $worksheet[2]->write($row, 10, $dynamoeval->crit3);

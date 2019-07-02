@@ -31,7 +31,7 @@
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_login($course, true, $cm);
@@ -48,7 +48,7 @@ $jscript = '
   <script>
     window.onload = function ()  {';
 
-$class = ['','','','','','',''];
+$class = ['', '', '', '', '', '', ''];
 $class[$report] = ' class="active"';
 echo '<ul class="dynnav dynnavtabs">
         <li'.$class[1].'><a href="#" onclick="reloadme(1);">'.get_string('dynamoreport01', 'mod_dynamo').'</a></li>
@@ -79,7 +79,7 @@ switch($report) {
         break;
     
     case 4:
-        $jscript = rep_all_confidence($dynamo,$jscript,$display6,$id, $zoom);
+        $jscript = rep_all_confidence($dynamo,$jscript,$display6, $zoom);
         break;
     
     case 5:
@@ -129,8 +129,8 @@ function rep_list_no_participant($result, $name) {
     if( $emails == '') {
         echo(get_string('dynamononoparticipant', 'mod_dynamo'));
     } else {
-        $subject = get_string('dynamoreport01mailsubject', 'mod_dynamo').$name; 
-        $body = get_string('dynamoreport01mailbody', 'mod_dynamo'); 
+        $subject = get_string('dynamoreport01mailsubject', 'mod_dynamo').$name;
+        $body = get_string('dynamoreport01mailbody', 'mod_dynamo');
     }
     echo('</div>'); 
 }
@@ -147,7 +147,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
 
     echo('<div class="dontprint">'.get_string('dynamogotogroup', 'mod_dynamo').' : <select name="dropdpown" size="1" id="select-anchor" onchange="gototag(this);">');
     foreach ($groups as $sgrp) {
-        echo('<option id="grp_'.$sgrp->id.'"'.$selected.'>'.$sgrp->name.'</option>');
+        echo('<option id="grp_'.$sgrp->id.'">'.$sgrp->name.'</option>');
     }
     echo('</select>
             <div style="margin:5px;"><button class="btn btn-default" onclick="removeColors();">'.get_string('dynamoremovecolors', 'mod_dynamo').'</button></div></div>');
@@ -505,7 +505,7 @@ function display_group_detail_table($dynamo, $grp) {
 } 
 
 function display_eval_others_table($dynamo, $usrid, $display6) {
-    global $CFG, $DB;
+    global $DB;
     
     $usr = $DB->get_record('user', array('id' =>$usrid )); 
     
@@ -597,7 +597,7 @@ function display_eval_comments_table($dynamo, $usrid) {
 }
 
 function display_eval_by_others_table($dynamo, $usrid, $display6) {
-    global $CFG, $DB;
+    global $DB;
 
     $usr = $DB->get_record('user', array('id' =>$usrid )); 
 
@@ -651,7 +651,7 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
 }  
 
 function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
-    global $CFG, $DB;
+    global $DB;
     $dynamoautoeval = array();
     $usr = $DB->get_record('user', array('id' =>$usrid )); 
     $grp= dynamo_get_group_from_user($dynamo->groupingid, $usrid);
@@ -700,7 +700,7 @@ function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
 }  
 
 // Report 004
-function rep_all_confidence($dynamo, $jscript, $display6, $id, $zoom) {
+function rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
     // Manage the zoom functionality of the graphic
     switch($zoom) {
         case -1:

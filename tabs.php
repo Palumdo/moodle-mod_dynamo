@@ -27,13 +27,13 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+defined('MOODLE_INTERNAL') || die();
 // Get the group from the user id.
 if ($usrid != 0 && $groupid == 0) {
     $groupid = dynamo_get_group_from_user($dynamo->groupingid, $usrid)->id;
 }
 
-$active = ['','','','',''];
+$active = ['', '', '', '', ''];
 $active[$tab] = 'active';
 echo '<ul class="dynnav dynnavtabs">';
 echo '    <li class="'.$active[1].'">
@@ -52,5 +52,4 @@ echo '    <li class="'.$active[4].'">
               <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='
               .$usrid.'&tab=4">&nbsp;<i class="fas fa-question-circle"></i>&nbsp;</a>
           </li>';
-echo '</ul>' ;
-?>
+echo '</ul>';

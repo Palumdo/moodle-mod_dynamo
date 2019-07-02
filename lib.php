@@ -152,7 +152,7 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
     }
 
     $context = $cm->context;
-    $course = $PAGE->course;
+
 
     // We want to add these new nodes after the Edit settings node, and before the
     // Locally assigned roles node. Of course, both of those are controlled by capabilities.
@@ -288,7 +288,7 @@ function dynamo_grade_item_delete($dynamo) {
  * @param int $userid Update grade of specific user only, 0 means all participants.
  */
 function dynamo_update_grades($dynamo, $userid = 0) {
-    global $CFG, $DB;
+    global $CFG;
     require_once($CFG->libdir.'/gradelib.php');
 
     // Populate array of grade objects indexed by userid.
@@ -305,7 +305,7 @@ function dynamo_update_grades($dynamo, $userid = 0) {
  * return a recordset
  */
 function dynamo_get_group($grouping, $userid)  {
-    global $CFG, $DB;
+    global $DB;
 
     $sql = "
         SELECT t2.id,t2.name
@@ -337,7 +337,7 @@ function dynamo_get_group($grouping, $userid)  {
  * return a recordset
  */
 function dynamo_get_groups($grouping) {
-    global $CFG, $DB;
+    global $DB;
 
     $sql = "
         SELECT t2.*
@@ -364,7 +364,7 @@ function dynamo_get_groups($grouping) {
  * return a recordset
  */
 function dynamo_get_group_users($groupid)  {
-    global $CFG, $DB;
+    global $DB;
     $sql = "
         SELECT t2.*
           FROM {groups_members} t1
@@ -388,7 +388,7 @@ function dynamo_get_group_users($groupid)  {
  * return a recordset
  */
 function dynamo_get_grouping_users($groupingid)  {
-    global $CFG, $DB;
+    global $DB;
     $sql = "
         SELECT t4.id, t4.firstname,t4.lastname,t4.email,t4.idnumber
           FROM {groupings_groups} t1
@@ -424,9 +424,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
     
     $icons = ['fa-user-clock', 'fa-medal', 'fa-lightbulb', 'fa-wrench', 'fa-smile', 'fa-star'];
     $values = [];
-    
     $bodytable = '';
-
     $display6 = '';
     if($dynamo->critoptname == '')  $display6 = 'none';
 
@@ -439,7 +437,8 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
         if($userid == $user->id && $dynamo->autoeval == 0) {
             // no auto evaluation
         } else {
-            if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' =>$userid , 'userid' =>$user->id ))) {
+            if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' =>$userid
+                , 'userid' =>$user->id ))) {
                 $dynamoeval = new stdClass();
                 $dynamoeval->crit1 = 0;
                 $dynamoeval->crit2 = 0;
@@ -448,11 +447,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                 $dynamoeval->crit5 = 0;
                 $dynamoeval->crit6 = 0;
             }
-            $values = [$dynamoeval->crit1
-                        , $dynamoeval->crit2
-                        , $dynamoeval->crit3
-                        , $dynamoeval->crit4
-                        , $dynamoeval->crit5
+            $values = [$dynamoeval->crit1, $dynamoeval->crit2, $dynamoeval->crit3, $dynamoeval->crit4, $dynamoeval->crit5
                         , $dynamoeval->crit6];
             $bodytable = $bodytable.'
                 <tr>
@@ -547,8 +542,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                     </td>
                 </tr>
                     </tbody>
-                </table>
-    ';
+                </table>';
     }
 
     return $bodytable;
@@ -563,7 +557,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
  * return the user comments
  */
 function dynamo_get_comment($evalbyid, $dynamo) {
-    global $CFG, $DB;
+    global $DB;
     if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' =>$evalbyid))) {
         $dynamoeval = new stdClass();
         $dynamoeval->comment1 = '';
@@ -608,7 +602,7 @@ function dynamo_compute_basis($dynamoeval, $crit6) {
  * return an object with the sum, autosum and number of evaluator
  */
 function dynamo_compute_advanced($userid, $dynamo) {
-    global $CFG, $DB;
+    global $DB;
     $result = new stdClass();
 
     $sql = "
@@ -677,7 +671,7 @@ function dynamo_compute_advanced($userid, $dynamo) {
  * return a dataset with all evaluations
  */
  function dynamo_get_grid($dynamo) {
-    global $CFG, $DB;
+    global $DB;
     $result = new stdClass();
 
     $sql = "
@@ -731,7 +725,7 @@ function dynamo_get_total($arrayofobjects, $id, $by ) {
  * return a recordset
  */
 function dynamo_get_group_from_user ($groupingid, $usrid) {
-    global $CFG, $DB;
+    global $DB;
 
     $sql = "
     SELECT t2.id, t2.name
@@ -971,7 +965,7 @@ function dynamo_get_color_niwf($val) {
  * return a string with HTML
  */
 function dynamo_get_body_table_teacher($dynamo) {
-    global $CFG, $DB;
+    global $DB;
 
     $sql = "
         SELECT t2.id, t2.name
@@ -1013,7 +1007,7 @@ function dynamo_get_body_table_teacher($dynamo) {
  * return an object with the avg for all criterias on the group evaluation
  */
 function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
-    global $CFG, $DB;
+    global $DB;
 
     $allgroupeval = new stdClass();
     $allgroupeval->crit1 = 0;
@@ -1063,7 +1057,7 @@ function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
  * return an object with all indicators packed in HTML (display for teacher in global view)
  */
 function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
-    global $CFG, $DB, $OUTPUT;
+    global $DB, $OUTPUT;
 
     $groupstat = new stdClass();
     $participation = "";
@@ -1154,7 +1148,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
  * @return recordset with the name and email of the non-participant.
  */
 function dynamo_get_report_001($dynamo) {
-    global $CFG, $DB;
+    global $DB;
 
     $sql = "
         SELECT t4.id, t4.firstname, t4.lastname, t4.email, t4.idnumber, t2.name
@@ -1188,7 +1182,7 @@ function dynamo_get_report_001($dynamo) {
  * @return object.
  */
 function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
-    global $CFG, $DB;
+    global $DB;
 
     if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $builder, 'evalbyid' =>$evalbyid, 'userid' =>$usrid  ))) {
         $dynamoeval = new stdClass();
@@ -1212,7 +1206,7 @@ function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
  * @return an object with basic grouping stat
  */
 function dynamo_get_grouping_stat($dynamo) {
-    global $CFG, $DB;
+    global $DB;
 
     $stat = new stdClass();
 
@@ -1521,7 +1515,7 @@ function dynamo_get_graph_bar_report($jscript, $allgroupevalstr, $usrid, $multie
  * @return object with firstname, lastname and the average of the evaluation
  */
 function dynamo_get_all_eval_by_student($dynamo, $display6) {
-    global $CFG, $DB;
+    global $DB;
 
     $ret = new stdClass();
 
@@ -1945,7 +1939,7 @@ function dynamo_get_group_type_txt($type) {
  * @return html font awsome ico... from full sun to thunderbold (5 levels)
  */
 function dynamo_get_group_climat($dynamo, $grpusrs, $grpid, $notperfect) {
-    global $CFG, $DB, $OUTPUT;
+    global $DB;
     $nbuser = 0;
 
     $aweight = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];

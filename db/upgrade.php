@@ -34,18 +34,18 @@ function xmldb_dynamo_upgrade($oldversion = 0) {
         $table = new xmldb_table('dynamo');
         $field = new xmldb_field('comment1', XMLDB_TYPE_CHAR, '1333', null, null, null, null, 'timecreated');
 
-      // Conditionally launch add field tablenbline.
-      if (!$dbman->field_exists($table, $field)) {
+        // Conditionally launch add field tablenbline.
+        if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
-      }
+        }
 
-      $field = new xmldb_field('comment2', XMLDB_TYPE_CHAR, '1333', null, null, null, null, 'timecreated');
-      if (!$dbman->field_exists($table, $field)) {
+        $field = new xmldb_field('comment2', XMLDB_TYPE_CHAR, '1333', null, null, null, null, 'timecreated');
+        if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
-      }
+        }
 
-      // dynamo savepoint reached.
-      upgrade_plugin_savepoint(true, 2019030200, 'mod', 'dynamo');
+        // Dynamo savepoint reached.
+        upgrade_plugin_savepoint(true, 2019030200, 'mod', 'dynamo');
     }
 
     return true;

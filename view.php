@@ -41,7 +41,7 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.drawing.rect.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.radar.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
-$PAGE->requires->css('/mod/dynamo/css/all.css');  // Fontawesome  5.8.2.
+$PAGE->requires->css('/mod/dynamo/css/all.min.css');  // Fontawesome  5.8.2.
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
@@ -103,7 +103,7 @@ if ($faccolor == '') {
     $faccolor = '#032f5d';
 }
 
-// Base security
+// Base security.
 if (has_capability('mod/dynamo:create', $modulecontext)) {
     $mode = 'teacher';
 } else {
@@ -111,14 +111,14 @@ if (has_capability('mod/dynamo:create', $modulecontext)) {
     $mode = 'student';
 }
 
-if($mode == '') {
+if ($mode == '') {
     redirect(new moodle_url('/my'));
     die();
 }
 
-$group  = dynamo_get_group($dynamo->groupingid,$USER->id);
+$group  = dynamo_get_group($dynamo->groupingid, $USER->id);
 
-if($mode == 'student' && $group == null) {
+if ($mode == 'student' && $group == null) {
     redirect(new moodle_url('/my'));
     die();
 }
@@ -126,7 +126,7 @@ if($mode == 'student' && $group == null) {
 $groupusers = dynamo_get_group_users($group->id);
 
 $display6   = '';
-if($dynamo->critoptname == '') {
+if ($dynamo->critoptname == '') {
     $display6 = 'none';
 }
 
@@ -136,20 +136,19 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 echo $OUTPUT->header();
 
-if($mode == 'student') {
+if ($mode == 'student') {
     $comment = dynamo_get_comment($USER->id, $dynamo);
     require_once(__DIR__.'/student.php');
 }
 
-if($mode == 'teacher') {
+if ($mode == 'teacher') {
     $usrid = optional_param('usrid', 0, PARAM_INT);
 
     require_once(__DIR__.'/tabs.php');
     switch($tab) {
         case 1:
             // Get the comment of the current inspected user if no user was seen
-            // Comment will be empty. It's just for a preview... Dummy text can be OK !
-            // Or empty...
+            // Comment will be empty. It's just for a preview... Dummy text can be OK ! or empty...
             // Preview of what student see for the teacher (no save button !)
             $comment = dynamo_get_comment($usrid, $dynamo);
             require_once(__DIR__.'/student.php');

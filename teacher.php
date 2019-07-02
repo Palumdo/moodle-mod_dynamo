@@ -23,11 +23,11 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-// **************************************************************************
+
 // Our involvement ratio has been computed with reference to the following paper that shows NIWF to be one of the best factors.
 // To measure peer assesments :.
 // https://www.tandfonline.com/eprint/ee2eHDqmr2aTEb9t4dB8/full.
-// **************************************************************************
+
 defined('MOODLE_INTERNAL') || die();
 
 require_login($course, true, $cm);
@@ -48,17 +48,17 @@ echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
             .get_string('dynamoresults2', 'mod_dynamo').'</a></li>
         <li><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=3">'
             .get_string('dynamoresults3', 'mod_dynamo').'</a></li>
-    </ul>' ;
+    </ul>';
 
 echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '
     .$cm->name.'</h3><input id="activityid" type="hidden" value="'.$id.'">');
-if($stat->grouping->description != '') {
+if ($stat->grouping->description != '') {
     echo ('<div>'.$stat->grouping->name.' : '.$stat->grouping->description.'</div>');
 }
 echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
 
-// Custom checkboxes that look like switch to hide group with no problems or group where student answers are missing and switch view
-// table to div
+// Custom chckboxes that look like switch to hide group with no problems or group where student answers are missing and switch view.
+// Table to div
 echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;">
         <div class="box-switch"><div class="box-switch-label">'.get_string('dynamoremovegroupnoprobs',  'mod_dynamo').'</div>
           <label class="switch">
@@ -107,9 +107,9 @@ foreach ($groups as $grp) { // Loop to all groups of grouping.
     $list = $oconsistency->list;
 
     $consistencystr = "<div>";
-    foreach($consistency as $cusers) {
-        if(count($cusers) > 0) {
-            foreach($cusers as $cuser) {
+    foreach ($consistency as $cusers) {
+        if (count($cusers) > 0) {
+            foreach ($cusers as $cuser) {
                 $consistencystr .= '<i class="fas fa-user colok" data-id="'.$cuser
                     .'" data-group="'.$grp->id.'" title="'.$grpusrs[$cuser]->firstname.' '.$grpusrs[$cuser]->lastname.'"></i>';
             }
@@ -120,7 +120,7 @@ foreach ($groups as $grp) { // Loop to all groups of grouping.
     $consistencystr = str_replace('>|', '><b> | </b>', $consistencystr);
     $consistencystr .= "</div>";
 
-    // Add icon type conflit group
+    // Add icon type conflit group.
     $cohesion = dynamo_get_group_type($type, $grp->id, $oconsistency->max);
 
     $val = [0, 0, 0, 1, 3, 0 , 3];
@@ -129,7 +129,7 @@ foreach ($groups as $grp) { // Loop to all groups of grouping.
     $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
 
     $addClass = "";
-    if(strpos($groupstat->participation, 'color:#ccc')  !==false) {
+    if (strpos($groupstat->participation, 'color:#ccc') !== false) {
         $addClass = " abstent";
     }
 
@@ -159,4 +159,3 @@ echo('
 </div>');
 
 echo('<script src="js/teacher.js"></script>');
-?>

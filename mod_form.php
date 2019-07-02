@@ -19,7 +19,7 @@
  * For each criteria used for the peer evaluation the teacher can add additional info on it.
  * They've default text for the tooltips and here the teacher can add more info.
  * He can also add is own sixth criteria.
- * evaluation is based on (Participation 	Responsability 	Scientific Expertise 	Technical Expertise 	General Attitude)
+ * Evaluation is based on (Participation Responsability Scientific Expertise Technical Expertise General Attitude).
  *
  * @package    mod_dynamo
  * @copyright  2019 UCLouvain
@@ -44,9 +44,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
      * Defines forms elements
      */
     public function definition() {
-        global $CFG;
-        global $COURSE;
-        global $PAGE;
+        global $CFG, $COURSE, $PAGE;
 
         $PAGE->requires->jquery();
         $PAGE->requires->js('/mod/dynamo/js/mod.js');
@@ -75,46 +73,44 @@ class mod_dynamo_mod_form extends moodleform_mod {
         } else {
             $this->add_intro_editor();
         }
-        // Adding the rest of mod_dynamo settings, spreading all them into this fieldset.
-        // ... or adding more fieldsets ('header' elements) if needed for better logic.
+        // Adding the rest of mod_dynamo settings, spreading all them into this fieldset
         $mform->addElement('hidden', 'dynamo_auto', 1);
         $mform->addElement('advcheckbox', 'dynamo_group_eval', get_string('dynamoautotitle', 'mod_dynamo'),
             get_string('dynamogroupeval', 'mod_dynamo'), array('group' => 1), array(0, 1));
         $mform->addElement('static', 'label',  get_string('dynamochoice', 'mod_dynamo'));
         $agrouping = groups_get_all_groupings($COURSE->id);
 
-        // List of grouping select one for pairs evaluation
+        // List of grouping select one for pairs evaluation.
         foreach ($agrouping as $grouping) {
-          if($grouping->name != '') $options[$grouping->id] = $grouping->name;
+            if ($grouping->name != '') {
+                $options[$grouping->id] = $grouping->name;
+            }
         }
         $mform->addElement('select', 'dynamo_grouping_id', get_string('dynamoheadgrouping', 'mod_dynamo'), $options);
 
-        // Additional information in the tooltips for the students.
-        // These text is added to the defaul it doesn't replace it.
+        // Additional information in the tooltips for the students. These text is added to the defaul it doesn't replace it.
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit1', 'mod_dynamo') . ' : '
             .get_string('dynamoparticipation', 'mod_dynamo'));
-        $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritparticipationdefault', 'mod_dynamo'));
+        $mform->addElement('static', 'label', get_string('description'),
+            get_string('dynamocritparticipationdefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_participation',
             get_string('dynamocritparticipation', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
-
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit2', 'mod_dynamo') . ' : '
             .get_string('dynamoresponsabilite', 'mod_dynamo'));
-        $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritresponsabilitedefault', 'mod_dynamo'));
+        $mform->addElement('static', 'label', get_string('description'), 
+            get_string('dynamocritresponsabilitedefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_responsability', 
             get_string('dynamocritresponsabilite', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
-
         $mform->addElement('header', 'dynamofieldset', 
             get_string('dynamocrit3', 'mod_dynamo') . ' : '.get_string('dynamoscientifique', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritscientifiquedefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_science',
             get_string('dynamocritscientifique', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
-
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit4', 'mod_dynamo') . ' : '
             .get_string('dynamotechnique', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocrittechniquedefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_technical', 
             get_string('dynamocrittechnique', 'mod_dynamo'), array('size' => '80','maxlength'=>'200'));
-
         $mform->addElement('header', 'dynamofieldset', 
             get_string('dynamocrit5', 'mod_dynamo') . ' : '.get_string('dynamoattitude', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritattitudedefault', 'mod_dynamo'));
@@ -124,36 +120,33 @@ class mod_dynamo_mod_form extends moodleform_mod {
         // The teacher can add a sixth critria but with no pedagogic influence on the 5 others.
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocritoptname', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_optional_name', get_string('dynamocrit6', 'mod_dynamo'),
-            array('size' => '25','maxlength'=>'30'));
+            array('size' => '25','maxlength' => '30'));
         $mform->setType('dynamo_optional_name', PARAM_TEXT);
         $mform->addElement('text', 'dynamo_optional', get_string('dynamocritoptnamedescr', 'mod_dynamo'),
-            array('size' => '80','maxlength'=>'200'));
+            array('size' => '80', 'maxlength' => '200'));
 
         // Tooltips for the two comments asked to the students.
-        $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentcontr', 'mod_dynamo') . ' (1)');
+        $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentcontr', 'mod_dynamo').' (1)');
         $mform->addElement('text', 'dynamo_comment1', get_string('dynamocommentcontr', 'mod_dynamo'),
-            array('size' => '80','maxlength'=>'200'));
+            array('size' => '80', 'maxlength' => '200'));
 
-        $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentfonction', 'mod_dynamo') . ' (2)');
+        $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentfonction', 'mod_dynamo').' (2)');
         $mform->addElement('text', 'dynamo_comment2', get_string('dynamocommentfonction', 'mod_dynamo'), 
-            array('size' => '80','maxlength'=>'200'));
+            array('size' => '80', 'maxlength' => '200'));
 
         // Hidden tranlated text for javascript mod.js.
         $mform->addElement('hidden', 'dynamo_newtext', get_string('dynamoactivityview', 'mod_dynamo'));
-
         // Add standard elements.
         $this->standard_grading_coursemodule_elements();
         $this->standard_coursemodule_elements();
-
         // Add standard buttons.
         $this->add_action_buttons();
     }
-
     // Load all the values from dynamo of the current activity.
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
 
-        $dynamo = $DB->get_record('dynamo', array('id'=>$this->current->id), '*', IGNORE_MISSING);
+        $dynamo = $DB->get_record('dynamo', array('id' => $this->current->id), '*', IGNORE_MISSING);
         if($dynamo != false) {
             $defaultvalues['dynamo_participation'] = $dynamo->crit1;
             $defaultvalues['dynamo_responsability'] = $dynamo->crit2;
