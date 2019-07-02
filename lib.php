@@ -422,6 +422,10 @@ function dynamo_get_grouping_users($groupingid)  {
  */
 function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
     global $CFG, $DB;
+    
+    $icons = ['fa-user-clock', 'fa-medal', 'fa-lightbulb', 'fa-wrench', 'fa-smile', 'fa-star'];
+    $values = [];
+    
     $bodytable = '';
 
     $display6 = '';
@@ -445,60 +449,33 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                 $dynamoeval->crit5 = 0;
                 $dynamoeval->crit6 = 0;
             }
-
+            $values = [$dynamoeval->crit1
+                        , $dynamoeval->crit2
+                        , $dynamoeval->crit3
+                        , $dynamoeval->crit4
+                        , $dynamoeval->crit5
+                        , $dynamoeval->crit6];
             $bodytable = $bodytable.'
                 <tr>
-                    <td style="color:'.$color.'">'.$user->firstname.' '.$user->lastname.'</td>
-                    <td>
-                        <input class="saveme hiddenval" name="'.$user->id.'_1"  id="'.$user->id.'_1"  value="'.$dynamoeval->crit1.'">
-                        <i data-id="'.$user->id.'_1" data-value="1" class="mystar fa fa-user-clock"></i>
-                        <i data-id="'.$user->id.'_1" data-value="2" class="mystar fa fa-user-clock"></i>
-                        <i data-id="'.$user->id.'_1" data-value="3" class="mystar fa fa-user-clock"></i>
-                        <i data-id="'.$user->id.'_1" data-value="4" class="mystar fa fa-user-clock"></i>
-                        <i data-id="'.$user->id.'_1" data-value="5" class="mystar fa fa-user-clock"></i>
-                    </td>
-                    <td>
-                        <input class="saveme hiddenval" name="'.$user->id.'_2"  id="'.$user->id.'_2"  value="'.$dynamoeval->crit2.'">
-                        <i data-id="'.$user->id.'_2" data-value="1" class="mystar fa fa-medal"></i>
-                        <i data-id="'.$user->id.'_2" data-value="2" class="mystar fa fa-medal"></i>
-                        <i data-id="'.$user->id.'_2" data-value="3" class="mystar fa fa-medal"></i>
-                        <i data-id="'.$user->id.'_2" data-value="4" class="mystar fa fa-medal"></i>
-                        <i data-id="'.$user->id.'_2" data-value="5" class="mystar fa fa-medal"></i>
-                    </td>
-                    <td>
-                        <input class="saveme hiddenval" name="'.$user->id.'_3"  id="'.$user->id.'_3"  value="'.$dynamoeval->crit3.'">
-                        <i data-id="'.$user->id.'_3" data-value="1" class="mystar fa fa-lightbulb"></i>
-                        <i data-id="'.$user->id.'_3" data-value="2" class="mystar fa fa-lightbulb"></i>
-                        <i data-id="'.$user->id.'_3" data-value="3" class="mystar fa fa-lightbulb"></i>
-                        <i data-id="'.$user->id.'_3" data-value="4" class="mystar fa fa-lightbulb"></i>
-                        <i data-id="'.$user->id.'_3" data-value="5" class="mystar fa fa-lightbulb"></i>
-                    </td>
-                    <td>
-                        <input class="saveme hiddenval" name="'.$user->id.'_4"  id="'.$user->id.'_4"  value="'.$dynamoeval->crit4.'">
-                        <i data-id="'.$user->id.'_4" data-value="1" class="mystar fa fa-wrench"></i>
-                        <i data-id="'.$user->id.'_4" data-value="2" class="mystar fa fa-wrench"></i>
-                        <i data-id="'.$user->id.'_4" data-value="3" class="mystar fa fa-wrench"></i>
-                        <i data-id="'.$user->id.'_4" data-value="4" class="mystar fa fa-wrench"></i>
-                        <i data-id="'.$user->id.'_4" data-value="5" class="mystar fa fa-wrench"></i>
-                    </td>
-                    <td>
-                        <input class="saveme hiddenval" name="'.$user->id.'_5"  id="'.$user->id.'_5"  value="'.$dynamoeval->crit5.'">
-                        <i data-id="'.$user->id.'_5" data-value="1" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$user->id.'_5" data-value="2" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$user->id.'_5" data-value="3" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$user->id.'_5" data-value="4" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$user->id.'_5" data-value="5" class="mystar fa fa-smile"></i>
-                    </td>
-                    <td style="display:'.$display6.'">
-                        <input class="saveme hiddenval" name="'.$user->id.'_6" id="'.$user->id.'_6"  value="'.$dynamoeval->crit6.'">
-                        <i data-id="'.$user->id.'_6" data-value="1" class="mystar fa fa-star"></i>
-                        <i data-id="'.$user->id.'_6" data-value="2" class="mystar fa fa-star"></i>
-                        <i data-id="'.$user->id.'_6" data-value="3" class="mystar fa fa-star"></i>
-                        <i data-id="'.$user->id.'_6" data-value="4" class="mystar fa fa-star"></i>
-                        <i data-id="'.$user->id.'_6" data-value="5" class="mystar fa fa-star"></i>
-                    </td>
-                </tr>
-            ';
+                    <td style="color:'.$color.'">'.$user->firstname.' '.$user->lastname.'</td>';
+            for ($i = 0; $i < count($icons); $i++) {
+                $val = $i+1;
+                $style = '';
+                if($val == 6) {             
+                    $style = 'style="display:'.$display6.'"';
+                }
+                $bodytable = $bodytable.'
+                    <td '.$style.'>
+                      <input class="saveme hiddenval" name="'.$user->id.'_'.$val.'" id="'.$user->id.'_'.$val.'" value="'.$values[$i].'">
+                        <i data-id="'.$user->id.'_'.$val.'" data-value="1" class="mystar fa '.$icons[$i].'"></i>
+                        <i data-id="'.$user->id.'_'.$val.'" data-value="2" class="mystar fa '.$icons[$i].'"></i>
+                        <i data-id="'.$user->id.'_'.$val.'" data-value="3" class="mystar fa '.$icons[$i].'"></i>
+                        <i data-id="'.$user->id.'_'.$val.'" data-value="4" class="mystar fa '.$icons[$i].'"></i>
+                        <i data-id="'.$user->id.'_'.$val.'" data-value="5" class="mystar fa '.$icons[$i].'"></i>
+                    </td>';
+            }
+            $bodytable = $bodytable.'
+                </tr>';
         }
     }
 
