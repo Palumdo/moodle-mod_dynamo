@@ -26,16 +26,16 @@
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 // Get default tooltips text for helping students and add custom help add by the teacher
-$bubble1 = get_string('dynamocritparticipationdefault',   'mod_dynamo').', '.$dynamo->crit1;
-$bubble2 = get_string('dynamocritresponsabilitedefault',  'mod_dynamo').', '.$dynamo->crit2;
-$bubble3 = get_string('dynamocritscientifiquedefault',    'mod_dynamo').', '.$dynamo->crit3;
-$bubble4 = get_string('dynamocrittechniquedefault',       'mod_dynamo').', '.$dynamo->crit4;
-$bubble5 = get_string('dynamocritattitudedefault',        'mod_dynamo').', '.$dynamo->crit5;
+$bubble1 = get_string('dynamocritparticipationdefault', 'mod_dynamo').', '.$dynamo->crit1;
+$bubble2 = get_string('dynamocritresponsabilitedefault', 'mod_dynamo').', '.$dynamo->crit2;
+$bubble3 = get_string('dynamocritscientifiquedefault', 'mod_dynamo').', '.$dynamo->crit3;
+$bubble4 = get_string('dynamocrittechniquedefault', 'mod_dynamo').', '.$dynamo->crit4;
+$bubble5 = get_string('dynamocritattitudedefault', 'mod_dynamo').', '.$dynamo->crit5;
 
 $bubbleCom1 = $dynamo->comment1;
 if($bubbleCom1 == '')  $bubbleCom1 = get_string('dynamonocomment', 'mod_dynamo');
@@ -56,36 +56,85 @@ echo '
                 <div style="margin-bottom:20px;">'.$dynamo->intro.'</div>
                 <div class="row row-student-legend">
                     <div class="col-sm-1"><div class="black-legend">'.get_string('dynamolegend', 'mod_dynamo').': </div></div>
-                    <div class="col-sm-2"><span title="'.get_string('dynamoeval1', 'mod_dynamo').'"><i class=" fas fa-circle"></i><i class="ico-student fas fa-circle"></i><i class="ico-student fas fa-circle"></i><i class="ico-student fas fa-circle"></i><i class="ico-student fas fa-circle"></i></span><div class="black-legend">'.get_string('dynamoeval1', 'mod_dynamo').'</div></div>
-                    <div class="col-sm-2" style="max-width:120px;"><span title="'.get_string('dynamoeval2', 'mod_dynamo').'"><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="ico-student fas fa-circle"></i><i class="ico-student fas fa-circle"></i><i class="ico-student fas fa-circle"></i></span><div class="black-legend">'.get_string('dynamoeval2', 'mod_dynamo').'</div></div>
-                    <div class="col-sm-2" style="min-width:175px;"><span title="'.get_string('dynamoeval3', 'mod_dynamo').'"><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i  class=" fas fa-circle"></i><i class="ico-student fas fa-circle"></i><i class="ico-student fas fa-circle"></i></span><div class="black-legend">'.get_string('dynamoeval3', 'mod_dynamo').'</div></div>
-                    <div class="col-sm-2"><span title="'.get_string('dynamoeval4', 'mod_dynamo').'"><i class=" fas fa-circle"></i><i class=" fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class="ico-student fas fa-circle"></i></span><div class="black-legend">'.get_string('dynamoeval4', 'mod_dynamo').'</div></div>
-                    <div class="col-sm-2"><span title="'.get_string('dynamoeval5', 'mod_dynamo').'"><i class=" fas fa-circle"></i><i class=" fas fa-circle"></i><i class="fas fa-circle"></i><i class="fas fa-circle"></i><i class=" fas fa-circle"></i></span><div class="black-legend">'.get_string('dynamoeval5', 'mod_dynamo').'</div></div>
+                    <div class="col-sm-2">
+                        <span title="'.get_string('dynamoeval1', 'mod_dynamo').'">
+                            <i class=" fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                        </span><div class="black-legend">'.get_string('dynamoeval1', 'mod_dynamo').'</div></div>
+                    <div class="col-sm-2" style="max-width:120px;">
+                        <span title="'.get_string('dynamoeval2', 'mod_dynamo').'">
+                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                        </span>
+                        <div class="black-legend">'.get_string('dynamoeval2', 'mod_dynamo').'</div></div>
+                    <div class="col-sm-2" style="min-width:175px;">
+                        <span title="'.get_string('dynamoeval3', 'mod_dynamo').'">
+                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i  class=" fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                        </span><div class="black-legend">'.get_string('dynamoeval3', 'mod_dynamo').'</div></div>
+                    <div class="col-sm-2">
+                        <span title="'.get_string('dynamoeval4', 'mod_dynamo').'">
+                            <i class=" fas fa-circle"></i>
+                            <i class=" fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class="ico-student fas fa-circle"></i>
+                        </span><div class="black-legend">'.get_string('dynamoeval4', 'mod_dynamo').'</div></div>
+                    <div class="col-sm-2">
+                        <span title="'.get_string('dynamoeval5', 'mod_dynamo').'">
+                            <i class=" fas fa-circle"></i>
+                            <i class=" fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class=" fas fa-circle"></i>
+                        </span><div class="black-legend">'.get_string('dynamoeval5', 'mod_dynamo').'</div></div>
                 </div>
 
                 <div id="errormsg" class="errormsg">'.get_string('dynamonotfilled', 'mod_dynamo').'</div>
-                <form action="save.php?id='.$cm->id.'" onsubmit="return validation(\''.$display6.'\','.$dynamo->groupeval.');" method="post" enctype="multipart/form-data"> 
+                <form action="save.php?id='.$cm->id.'" 
+                    onsubmit="return validation(\''.$display6.'\','.$dynamo->groupeval.');" method="post" enctype="multipart/form-data"> 
                     <table class = "table table-striped">
                         <caption>'.get_string('dynamogrid', 'mod_dynamo').'</caption>
                         <thead>
                         <tr>
                             <th style="min-width:200px;">'.$group->name.'</th>
-                            <th style="min-width:160px;">'.get_string('dynamoparticipation', 'mod_dynamo').' &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble1.'</span></div></th>
-                            <th style="min-width:160px;">'.get_string('dynamoresponsabilite', 'mod_dynamo').'&nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble2.'</span></div></th>
-                            <th style="min-width:150px;">'.get_string('dynamoscientifique', 'mod_dynamo').'  &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble3.'</span></div></th>
-                            <th style="min-width:150px;">'.get_string('dynamotechnique', 'mod_dynamo').'     &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble4.'</span></div></th>
-                            <th style="min-width:130px;">'.get_string('dynamoattitude', 'mod_dynamo').'      &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$bubble5.'</span></div></th>
-                            <th style="min-width:200px;display:'.$display6.'">'.$dynamo->critoptname.'       &nbsp;<div class="toolpit"><i class="fas fa-info-circle ico-white"></i><span class="toolpittext">'.$dynamo->critopt.'</span></th>
+                            <th style="min-width:160px;">'.get_string('dynamoparticipation', 'mod_dynamo').' &nbsp;
+                                <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
+                                    <span class="toolpittext">'.$bubble1.'</span></div></th>
+                            <th style="min-width:160px;">'.get_string('dynamoresponsabilite', 'mod_dynamo').'&nbsp;
+                                <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
+                                    <span class="toolpittext">'.$bubble2.'</span></div></th>
+                            <th style="min-width:150px;">'.get_string('dynamoscientifique', 'mod_dynamo').'  &nbsp;
+                                <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
+                                    <span class="toolpittext">'.$bubble3.'</span></div></th>
+                            <th style="min-width:150px;">'.get_string('dynamotechnique', 'mod_dynamo').'     &nbsp;
+                                <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
+                                    <span class="toolpittext">'.$bubble4.'</span></div></th>
+                            <th style="min-width:130px;">'.get_string('dynamoattitude', 'mod_dynamo').'      &nbsp;
+                                <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
+                                    <span class="toolpittext">'.$bubble5.'</span></div></th>
+                            <th style="min-width:200px;display:'.$display6.'">'.$dynamo->critoptname.'       &nbsp;
+                                <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
+                                    <span class="toolpittext">'.$dynamo->critopt.'</span></th>
                         </tr>
                         </thead>
                         <tbody>
-';        
+';
 if($mode == 'student') {
     echo dynamo_get_body_table($groupusers, $USER->id, $dynamo,$group->id);
 } else {
     echo dynamo_get_body_table_teacher($dynamo);
-}  
-echo '              
+}
+echo '
                         </tbody>
                     </table>
                     <br><br>
@@ -93,42 +142,46 @@ echo '
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">'.get_string('dynamocommentcontr', 'mod_dynamo').'&nbsp;<div class="toolpit">
+                                    <div class="panel-heading">'.get_string('dynamocommentcontr', 'mod_dynamo').'&nbsp;
+                                        <div class="toolpit">
                                         <i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubbleCom1.'</span>
                                     </div>
                                 </div>
                                 <div class="panel-body">
-                                    <textarea maxlength="1000" id="comment1" name="comment1" class="savemecom form-control" rows="8">'.$comment->comment1.'</textarea>
+                                  <textarea maxlength="1000" id="comment1" name="comment1" class="savemecom form-control" rows="8">'
+                                    .$comment->comment1.'</textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="panel panel-default">
-                                <div class="panel-heading">'.get_string('dynamocommentfonction', 'mod_dynamo').'&nbsp;<div class="toolpit">
+                                <div class="panel-heading">'.get_string('dynamocommentfonction', 'mod_dynamo')
+                                    .'&nbsp;<div class="toolpit">
                                     <i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubbleCom2.'</span>
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <textarea maxlength="1004" id="comment2" name="comment2" class="savemecom form-control" rows="8">'.$comment->comment2.'</textarea>
+                                <textarea maxlength="1004" id="comment2" name="comment2" class="savemecom form-control" rows="8">'
+                                    .$comment->comment2.'</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>';  
-if($mode == 'student') {             
-    echo '      
+            </div>';
+if($mode == 'student') {
+    echo '
             <div class="container">
               <div class="row">
                 <center><button class="btn btn-primary">'.get_string('save').'</button></center>
-              </div>  
+              </div>
             </div>
             <script>setTimeout(function(){  $("#block-region-side-post").css("display","none");}, 1000);</script>
     ';
-}     
-echo '           
-                </form>  
+}
+echo '
+                </form>
             </div>
         </div>
-    </div>   
+    </div>
 ';
 ?>

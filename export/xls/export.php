@@ -19,30 +19,30 @@
  *
  * @package    mod_dynamo
  * @copyright  UCLouvain
- * @author     Palumbo Dominique 
-**/
+ * @author     Palumbo Dominique
+ * */
+defined('MOODLE_INTERNAL') || die();
 
 global $CFG, $SESSION, $DB;
 
 require_once(__DIR__.'/../../../../config.php');
 require_once($CFG->dirroot.'/lib/excellib.class.php');
-require_once $CFG->dirroot.'/user/profile/lib.php';
+require_once($CFG->dirroot.'/user/profile/lib.php');
 
 $id = optional_param('id', 0, PARAM_INT); // The course_module ID, or...
-
 if ($id) {
     list ($course, $cm) = get_course_and_cm_from_cmid($id, 'dynamo');
     $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
 } else {
     die;
-}    
+}
 
 require_login($course, true, $cm);
 $ctxt = context_module::instance($cm->id);
 if (!has_capability('mod/dynamo:create', $ctxt)) {
-  redirect(new moodle_url('/my'));
-  die;
-}    
+    redirect(new moodle_url('/my'));
+    die;
+}
 
 $reportname = "dynamo_export";
 $workbook = new MoodleExcelWorkbook('-');
@@ -53,7 +53,7 @@ $worksheet[0] = $workbook->add_worksheet(get_string('dynamoexportxlstab1', 'mod_
 $worksheet[1] = $workbook->add_worksheet(get_string('dynamoexportxlstab2', 'mod_dynamo'));
 $worksheet[2] = $workbook->add_worksheet(get_string('dynamoexportxlstab3', 'mod_dynamo'));
 
-// Page 1
+// Page 1.
 $worksheet[0]->write(0, 0, $dynamo->name);
 $worksheet[0]->write(1, 0, date('d/m/Y', $dynamo->timecreated));
 $col = 1;
@@ -87,7 +87,7 @@ $worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle14', 'mod_dynamo')
 $col++;
 
 $groups = dynamo_get_groups($dynamo->groupingid);
-$i=0;
+$i = 0;
 $format = $workbook->add_format(array("bold" => 1, "text_wrap" => true));
 
 $worksheet[0]->set_column(0, 0, '30');
@@ -110,20 +110,20 @@ foreach($groups as $grp) {
     $crit6s = 0;
     $crit6p = 0;
 
-
     $col = 0;
+
     $worksheet[0]->write(3 + ($i * 5), $col, $grp->name, $format);
     $worksheet[0]->write(4 + ($i * 5), $col, get_string('dynamoexportxlsTitle19', 'mod_dynamo'));
     $worksheet[0]->write(5 + ($i * 5), $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
     $worksheet[0]->write(6 + ($i * 5), $col, get_string('dynamoheadremarque', 'mod_dynamo'));
-    
+
     foreach($grpusrs as $usr) {
-        $data = dynamo_compute_advanced($usr->id, $dynamo); 
+        $data = dynamo_compute_advanced($usr->id, $dynamo);
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usr->id)[0];
         $conf = dynamo_get_conf($dynamo, $grpusrs, $usr->id);
         $comments = dynamo_get_comment($usr->id, $dynamo);
-        
+
         $crit1s += $autoeval->crit1;
         $crit1p += round($data->autocritsum->total1 / $data->nbeval, 2);
         $crit2s += $autoeval->crit2;
@@ -137,16 +137,16 @@ foreach($groups as $grp) {
         $crit6s += $autoeval->crit6;
         $crit6p += round($data->autocritsum->total6 / $data->nbeval, 2);
 
-        $total = round(($data->autocritsum->total1 
-                        + $data->autocritsum->total2 
-                        + $data->autocritsum->total3 
-                        + $data->autocritsum->total4 
-                        + $data->autocritsum->total5 
+        $total = round(($data->autocritsum->total1
+                        + $data->autocritsum->total2
+                        + $data->autocritsum->total3
+                        + $data->autocritsum->total4
+                        + $data->autocritsum->total5
                         + $data->autocritsum->total6) / $data->nbeval, 2);
 
         $totalp += $total;
         $totals += $data->autosum;
-        // Page 2
+        // Page 2.
         $col = 0;
         $line++;
         $worksheet[1]->write($line, $col, $usr->lastname);
@@ -196,7 +196,7 @@ foreach($groups as $grp) {
         $worksheet[1]->write($line, $col, $autoeval->crit6);
         $col++;
     }
-    // Page 1
+    // Page 1.
     $col = 1;
     $worksheet[0]->write(4 + ($i * 5), $col, round($totalp / count($grpusrs), 2));
     $col++;
@@ -239,7 +239,7 @@ foreach($groups as $grp) {
     $i++;
 }
 
-// Page 2
+// Page 2.
 $col = 0;
 $worksheet[1]->write(0, $col, get_string('dynamoheadfirstname', 'mod_dynamo'));
 $col++;
@@ -287,7 +287,7 @@ $worksheet[1]->write(0, $col, get_string('dynamoexportxlsTitle13', 'mod_dynamo')
 $col++;
 $worksheet[1]->write(0, $col, get_string('dynamoexportxlsTitle14', 'mod_dynamo'));
 
-// Page 3
+// Page 3.
 $col = 0;
 $worksheet[2]->write(0, $col, get_string('group'));
 $col++;
@@ -334,22 +334,23 @@ foreach($users as $user) {
         $worksheet[2]->write($row, 5, $user->email);
         $worksheet[2]->write($row, 6, $usereva->firstname);
         $worksheet[2]->write($row, 7, $usereva->lastname);
-        $dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $user->id , 'userid' => $usereva->id ));
+        $dynamoeval = $DB->get_record('dynamo_eval', 
+            array('builder' => $dynamo->id, 'evalbyid' => $user->id , 'userid' => $usereva->id ));
         if ($dynamoeval) {
-            $worksheet[2]->write($row, 1,  date('m/d/Y',$dynamoeval->timemodified));
+            $worksheet[2]->write($row, 1, date('m/d/Y',$dynamoeval->timemodified));
             $worksheet[2]->write($row, 8, $dynamoeval->crit1);
             $worksheet[2]->write($row, 9, $dynamoeval->crit2);
             $worksheet[2]->write($row, 10, $dynamoeval->crit3);
             $worksheet[2]->write($row, 11, $dynamoeval->crit4);
             $worksheet[2]->write($row, 12, $dynamoeval->crit5);
             $worksheet[2]->write($row, 13, $dynamoeval->crit6);
-        }    
+        }
         $comments = dynamo_get_comment($user->id, $dynamo);
         $worksheet[2]->write($row, 14, $comments->comment1);
         $worksheet[2]->write($row, 15, $comments->comment2);
-        $worksheet[2]->write_formula($row, 16, '= SUM(I'.($row+1).':N'.($row+1).')');
+        $worksheet[2]->write_formula($row, 16, '= SUM(I'.($row + 1).':N'.($row + 1).')');
 
-        $row++;    
+        $row++;
     }
 }
 

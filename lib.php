@@ -60,6 +60,22 @@ function dynamo_add_instance($dynamo, $mform) {
 
     $dynamo->timecreated = time();
     $formdata = $mform->get_data();
+    $dynamo = dynamo_fill_data($formdata, $dynamo);
+
+    $id = $DB->insert_record('dynamo', $dynamo);
+
+    dynamo_grade_item_update($dynamo);
+
+    return $id;
+}
+/**
+ * Set the data form to a dynamo object.
+ *
+ * @param object $dynamo An object from the form.
+ * @param dynamo_mod_form $mform The form.
+ * @return dynamo object
+ */
+function dynamo_fill_data($formdata, $dynamo) {
     $dynamo->crit1 = $formdata->dynamo_participation;
     $dynamo->crit2 = $formdata->dynamo_responsability;
     $dynamo->crit3 = $formdata->dynamo_science;
@@ -72,12 +88,8 @@ function dynamo_add_instance($dynamo, $mform) {
     $dynamo->groupeval = $formdata->dynamo_group_eval;
     $dynamo->comment1 = $formdata->dynamo_comment1;
     $dynamo->comment2 = $formdata->dynamo_comment2;
-
-    $id = $DB->insert_record('dynamo', $dynamo);
-
-    dynamo_grade_item_update($dynamo);
-
-    return $id;
+    
+    return $dynamo;
 }
 
 /**
@@ -97,18 +109,7 @@ function dynamo_update_instance($dynamo, $mform) {
     $dynamo->id = $dynamo->instance;
 
     $formdata = $mform->get_data();
-    $dynamo->crit1 = $formdata->dynamo_participation;
-    $dynamo->crit2 = $formdata->dynamo_responsability;
-    $dynamo->crit3 = $formdata->dynamo_science;
-    $dynamo->crit4 = $formdata->dynamo_technical;
-    $dynamo->crit5 = $formdata->dynamo_attitude;
-    $dynamo->critopt = $formdata->dynamo_optional;
-    $dynamo->critoptname = $formdata->dynamo_optional_name;
-    $dynamo->groupingid = $formdata->dynamo_grouping_id;
-    $dynamo->autoeval = $formdata->dynamo_auto;
-    $dynamo->groupeval = $formdata->dynamo_group_eval;
-    $dynamo->comment1 = $formdata->dynamo_comment1;
-    $dynamo->comment2 = $formdata->dynamo_comment2;
+    $dynamo = dynamo_fill_data($formdata, $dynamo);
 
     dynamo_grade_item_update($dynamo);
     return $DB->update_record('dynamo', $dynamo);
@@ -143,7 +144,7 @@ function dynamo_delete_instance($id) {
  * @param navigation_node $dynamonode {@link navigation_node}
  */
 function dynamo_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
-    global $PAGE, $DB;
+    global $PAGE;
 
     $cm = $PAGE->cm;
     if (!$cm) {
@@ -152,8 +153,6 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
 
     $context = $cm->context;
     $course = $PAGE->course;
-
-    $id = $course->id;
 
     // We want to add these new nodes after the Edit settings node, and before the
     // Locally assigned roles node. Of course, both of those are controlled by capabilities.

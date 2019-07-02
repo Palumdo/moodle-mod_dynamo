@@ -118,7 +118,7 @@ if($usrid != 0) {
               <table class="tablelvl0">
                 <thead>
                    <tr>
-                      <th style="background-color:'.$facColor.'">&nbsp;</th>
+                      <th style="background-color:'.$$faccolor.'">&nbsp;</th>
                       <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"    
                             dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;
                             <i class="fas fa-info-circle ico-white"></i></a></th>
@@ -215,7 +215,7 @@ if($usrid != 0) {
               <table class="tablelvl0">
                 <thead>
                    <tr>
-                      <th style="background-color:'.$facColor.'">&nbsp;</th>
+                      <th style="background-color:'.$$faccolor.'">&nbsp;</th>
                       <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '.$dynamo->crit1.')">&nbsp;
                             <i class="fas fa-info-circle ico-white"></i></a></th>

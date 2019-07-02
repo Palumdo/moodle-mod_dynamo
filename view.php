@@ -41,21 +41,21 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.drawing.rect.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.radar.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
-$PAGE->requires->css('/mod/dynamo/css/all.css');  // fontawesome  5.8.2
+$PAGE->requires->css('/mod/dynamo/css/all.css');  // Fontawesome  5.8.2.
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
 
-// Course_module ID, or
-$id         = optional_param('id',      0, PARAM_INT);
+// Course_module ID, or.
+$id = optional_param('id', 0, PARAM_INT);
 // Module instance id.
-// Default tab is the Result -> global view
-$d          = optional_param('d',       0, PARAM_INT);
-$tab        = optional_param('tab',     2, PARAM_INT); // global view
-$report     = optional_param('report',  1, PARAM_INT); // first report
-$results    = optional_param('results', 0, PARAM_INT);
-$zoom       = optional_param('zoom',    0, PARAM_INT);
-$groupid    = optional_param('groupid', 0, PARAM_INT);
+// Default tab is the Result -> global view.
+$d = optional_param('d', 0, PARAM_INT);
+$tab = optional_param('tab', 2, PARAM_INT); // Global view.
+$report = optional_param('report', 1, PARAM_INT); // First report.
+$results = optional_param('results', 0, PARAM_INT);
+$zoom = optional_param('zoom', 0, PARAM_INT);
+$groupid = optional_param('groupid', 0, PARAM_INT);
 
 if ($id) {
     $cm = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
@@ -94,13 +94,14 @@ $afcolor['[LSM]'] = '#90810d';
 $afcolor['[ILV]'] = '#032f5d';
 $afcolor['[ECOPOL]'] = '#032f5d';
 
-$rFaculty = $DB->get_record('course_categories', array('id' => $course->category), '*', MUST_EXIST);
-preg_match("/\[[a-zA-Z]+]/", $rFaculty->name, $matches, PREG_OFFSET_CAPTURE, 0);
+$rfaculty = $DB->get_record('course_categories', array('id' => $course->category), '*', MUST_EXIST);
+preg_match("/\[[a-zA-Z]+]/", $rfaculty->name, $matches, PREG_OFFSET_CAPTURE, 0);
 $faculty  = $matches[0][0];
 
-$facColor = $afcolor[$faculty];
-if($facColor == '') {$facColor = '#032f5d';}
-
+$faccolor = $afcolor[$faculty];
+if ($faccolor == '') {
+    $faccolor = '#032f5d';
+}
 
 // Base security
 if (has_capability('mod/dynamo:create', $modulecontext)) {
@@ -125,7 +126,9 @@ if($mode == 'student' && $group == null) {
 $groupusers = dynamo_get_group_users($group->id);
 
 $display6   = '';
-if($dynamo->critoptname == '') $display6 = 'none';
+if($dynamo->critoptname == '') {
+    $display6 = 'none';
+}
 
 $PAGE->set_url('/mod/dynamo/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($dynamo->name));

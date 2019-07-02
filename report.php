@@ -554,12 +554,15 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
     $grpusrs = dynamo_get_group_users($grp->id);
     foreach ($grpusrs as $grpusrsub) { // loop to all evaluation of  students
         $color = "";
-        if($usrid == $grpusrsub->id) $color = '#9cb7d4';
+        if($usrid == $grpusrsub->id) {
+            $color = '#9cb7d4';
+        }
 
         $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grpusrsub->id);
-        if($usrid ==  $grpusrsub->id) $dynamoautoeval[] = $dynamoeval;   
+        if($usrid == $grpusrsub->id) {
+            $dynamoautoeval[] = $dynamoeval;
+        }
         $result = dynamo_compute_basis($dynamoeval, $display6);
-
         echo ('<tr>');
         echo ('    <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
         echo ('    <td class="tdteach">'.$dynamoeval->crit1.'</td>');
@@ -628,7 +631,6 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
-
             echo ('<tr>');
             echo ('    <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
             echo ('    <td class="tdteach">'.$dynamoeval->crit1.'</td>');

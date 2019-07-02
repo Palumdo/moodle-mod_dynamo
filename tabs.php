@@ -16,37 +16,41 @@
 
 /**
  * this file manage the tabulation of the teacher UI
- * it pass all the same parameter to all tabs to make navigation more 
+ * it pass all the same parameter to all tabs to make navigation more
  * confortable
  * url param are :
- * CM id, group id, user id (student) and tab number 
+ * CM id, group id, user id (student) and tab number
  *
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// get the group from the user id
-if($usrid !=0 && $groupid ==0) {
+// Get the group from the user id.
+if ($usrid != 0 && $groupid == 0) {
     $groupid = dynamo_get_group_from_user($dynamo->groupingid, $usrid)->id;
-}  
+}
 
 $active = ['','','','',''];
 $active[$tab] = 'active';
 echo '<ul class="dynnav dynnavtabs">';
 echo '    <li class="'.$active[1].'">
-              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=1">'.get_string('dynamotab1', 'mod_dynamo').'</a>
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=1">'
+              .get_string('dynamotab1', 'mod_dynamo').'</a>
           </li>';
 echo '    <li class="'.$active[2].'">
-              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2">'.get_string('dynamotab2', 'mod_dynamo').'</a>
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2">'
+              .get_string('dynamotab2', 'mod_dynamo').'</a>
           </li>';
 echo '    <li class="'.$active[3].'">
-              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=3">'.get_string('dynamotab3', 'mod_dynamo').'</a>
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=3">'
+              .get_string('dynamotab3', 'mod_dynamo').'</a>
           </li>';
 echo '    <li class="'.$active[4].'">
-              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=4">&nbsp;<i class="fas fa-question-circle"></i>&nbsp;</a>
+              <a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='
+              .$usrid.'&tab=4">&nbsp;<i class="fas fa-question-circle"></i>&nbsp;</a>
           </li>';
 echo '</ul>' ;
 ?>
