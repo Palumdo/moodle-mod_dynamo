@@ -31,6 +31,7 @@ $string['dynamoname_help']                    = 'Aide toi et Moodle t\'aidera';
 $string['mod_dynamo']                         = 'Dynamo';
 $string['pluginadministration']               = 'Dynamo administration';
 $string['pluginname']                         = 'Dynamo';
+$string['dynamo:addinstance']                 = 'Ajouter un nouveau module Dynamo';
 
 $string['dynamofieldset']                     = 'Personnalisation des critères';
 $string['dynamoauto']                         = 'Exiger que chaque étudiant s\'auto évalue';

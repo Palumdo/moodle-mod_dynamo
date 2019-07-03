@@ -21,13 +21,14 @@
  * @copyright  UCLouvain
  * @author     Palumbo Dominique
  * */
-defined('MOODLE_INTERNAL') || die();
 
 global $CFG, $SESSION, $DB;
 
 require_once(__DIR__.'/../../../../config.php');
 require_once($CFG->dirroot.'/lib/excellib.class.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
+
+defined('MOODLE_INTERNAL') || die();
 
 $id = optional_param('id', 0, PARAM_INT); // The course_module ID, or...
 if ($id) {
@@ -37,6 +38,7 @@ if ($id) {
     die;
 }
 
+// Security.
 require_login($course, true, $cm);
 $ctxt = context_module::instance($cm->id);
 if (!has_capability('mod/dynamo:create', $ctxt)) {
@@ -227,10 +229,10 @@ foreach ($groups as $grp) {
     $worksheet[0]->write(4 + ($i * 5), $col, round($crit6s / count($grpusrs), 2));
 
     $col = 1;
-    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs, false);
+    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
     $val = [0, 0, 0, 1, 3, 0, 3];
     $notperfect = ($val[$oconsistency->type] * count($grpusrs));
-    $climat = dynamo_get_group_climat($dynamo, $grpusrs, $grp->id, $notperfect)[1];
+    $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
     $climattxt = get_string('dynamoaclimate'.$climat, 'mod_dynamo');
 
     $worksheet[0]->write(5 + ($i * 5), $col, dynamo_get_group_type_txt($oconsistency->type));

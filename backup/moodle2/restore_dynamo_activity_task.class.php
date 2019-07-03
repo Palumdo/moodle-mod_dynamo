@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -26,9 +27,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
+// For more information about the backup and restore process, please visit:.
+// https://docs.moodle.org/dev/Backup_2.0_for_developers.
+// https://docs.moodle.org/dev/Restore_2.0_for_developers.
 
 require_once($CFG->dirroot.'//mod/dynamo/backup/moodle2/restore_dynamo_stepslib.php');
 
@@ -72,10 +73,6 @@ class restore_dynamo_activity_task extends restore_activity_task {
      */
     static public function define_decode_rules() {
         $rules = array();
-
-        // Define the rules.
-      //  $rules[] = new restore_decode_rule('DYNAMOVIEWBYID', '/mod/dynamo/view.php?id=$1', 'course_module');
-
         return $rules;
     }
 

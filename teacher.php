@@ -58,7 +58,7 @@ if ($stat->grouping->description != '') {
 echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
 
 // Custom chckboxes that look like switch to hide group with no problems or group where student answers are missing and switch view.
-// Table to div
+// Table to div.
 echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;">
         <div class="box-switch"><div class="box-switch-label">'.get_string('dynamoremovegroupnoprobs',  'mod_dynamo').'</div>
           <label class="switch">
@@ -100,7 +100,7 @@ echo('<div id="table-overview"><table class="tablelvlx">
 foreach ($groups as $grp) { // Loop to all groups of grouping.
     $grpusrs = dynamo_get_group_users($grp->id);
     $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
-    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs, false);
+    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
 
     $consistency = $oconsistency->grp;
     $type = $oconsistency->type;
@@ -127,11 +127,6 @@ foreach ($groups as $grp) { // Loop to all groups of grouping.
     $notperfect = ($val[$type] * count($grpusrs));
 
     $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
-
-    $addClass = "";
-    if (strpos($groupstat->participation, 'color:#ccc') !== false) {
-        $addClass = " abstent";
-    }
 
     echo('<tr style="cursor:pointer;" onclick="location.href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'" title="'
         .get_string('dynamoresults2', 'mod_dynamo').'">

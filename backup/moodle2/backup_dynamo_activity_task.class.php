@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -41,7 +42,7 @@ class backup_dynamo_activity_task extends backup_activity_task {
      * Defines particular steps for the backup process.
      */
     protected function define_my_steps() {
-      $this->add_step(new backup_dynamo_activity_structure_step('dynamo_structure', 'dynamo.xml'));
+        $this->add_step(new backup_dynamo_activity_structure_step('dynamo_structure', 'dynamo.xml'));
     }
 
     /**
@@ -51,20 +52,6 @@ class backup_dynamo_activity_task extends backup_activity_task {
      * @return string.
      */
     public static function encode_content_links($content) {
-/*
-        global $CFG;
-
-        $base = preg_quote($CFG->wwwroot,"/");
-
-        // Link to the list of choices
-        $search = "/(".$base."\//mod\/dynamo\/index.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@DYNAMOINDEX*$2@$', $content);
-
-        // Link to choice view by moduleid
-        $search = "/(".$base."\//mod\/dynamo\/view.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@DYNAMOVIEWBYID*$2@$', $content);
-*/
         return $content;
-
     }
 }

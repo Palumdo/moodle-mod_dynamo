@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -26,9 +27,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// For more information about the backup and restore process, please visit:
-// https://docs.moodle.org/dev/Backup_2.0_for_developers
-// https://docs.moodle.org/dev/Restore_2.0_for_developers
+// For more information about the backup and restore process, please visit:.
+// https://docs.moodle.org/dev/Backup_2.0_for_developers.
+// https://docs.moodle.org/dev/Restore_2.0_for_developers.
 
 /**
  * Defines the structure step to restore one mod_dynamo activity.
@@ -55,7 +56,7 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
         return $this->prepare_activity_structure($paths);
     }
 
-        protected function process_dynamo($data) {
+    protected function process_dynamo($data) {
         global $DB;
 
         $data = (object)$data;

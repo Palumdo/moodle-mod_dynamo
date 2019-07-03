@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -18,7 +19,7 @@
  * This is the survey displayed to student to evaluate other peers and self evaluation
  * they give a note from 1 to 5 for each criteria
  * ***** **** *** ** *
- * they've 5 mandatory criteria (participation, responsability, science 
+ * they've 5 mandatory criteria (participation, responsability, science
  * expertice, technical expertice and attitude
  * Teacher can add a custom one.
  * The student must also do his autoevaluation
@@ -29,24 +30,29 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
-// Get default tooltips text for helping students and add custom help add by the teacher
+// Get default tooltips text for helping students and add custom help add by the teacher.
 $bubble1 = get_string('dynamocritparticipationdefault', 'mod_dynamo').', '.$dynamo->crit1;
 $bubble2 = get_string('dynamocritresponsabilitedefault', 'mod_dynamo').', '.$dynamo->crit2;
 $bubble3 = get_string('dynamocritscientifiquedefault', 'mod_dynamo').', '.$dynamo->crit3;
 $bubble4 = get_string('dynamocrittechniquedefault', 'mod_dynamo').', '.$dynamo->crit4;
 $bubble5 = get_string('dynamocritattitudedefault', 'mod_dynamo').', '.$dynamo->crit5;
 
-$bubbleCom1 = $dynamo->comment1;
-if($bubbleCom1 == '')  $bubbleCom1 = get_string('dynamonocomment', 'mod_dynamo');
-$bubbleCom2 = $dynamo->comment2;
-if($bubbleCom2 == '')  $bubbleCom2 = get_string('dynamonocomment', 'mod_dynamo');
+$bubblecom1 = $dynamo->comment1;
+if($bubblecom1 == '') {
+    $bubblecom1 = get_string('dynamonocomment', 'mod_dynamo');
+}
+$bubblecom2 = $dynamo->comment2;
+if($bubblecom2 == '') {
+    $bubblecom2 = get_string('dynamonocomment', 'mod_dynamo');
+}
 
-$bubble1 =  rtrim($bubble1, ', ');
-$bubble2 =  rtrim($bubble2, ', ');
-$bubble3 =  rtrim($bubble3, ', ');
-$bubble4 =  rtrim($bubble4, ', ');
-$bubble5 =  rtrim($bubble5, ', ');
+$bubble1 = rtrim($bubble1, ', ');
+$bubble2 = rtrim($bubble2, ', ');
+$bubble3 = rtrim($bubble3, ', ');
+$bubble4 = rtrim($bubble4, ', ');
+$bubble5 = rtrim($bubble5, ', ');
 
 echo '
     <div id="page-content" class="row-fluid">
@@ -100,8 +106,9 @@ echo '
                 </div>
 
                 <div id="errormsg" class="errormsg">'.get_string('dynamonotfilled', 'mod_dynamo').'</div>
-                <form action="save.php?id='.$cm->id.'" 
-                    onsubmit="return validation(\''.$display6.'\','.$dynamo->groupeval.');" method="post" enctype="multipart/form-data"> 
+                <form action="save.php?id='.$cm->id.'"
+                    onsubmit="return validation(\''.$display6.'\','.$dynamo->groupeval.');" method="post"
+                        enctype="multipart/form-data">
                     <table class = "table table-striped">
                         <caption>'.get_string('dynamogrid', 'mod_dynamo').'</caption>
                         <thead>
@@ -129,7 +136,7 @@ echo '
                         </thead>
                         <tbody>
 ';
-if($mode == 'student') {
+if ($mode == 'student') {
     echo dynamo_get_body_table($groupusers, $USER->id, $dynamo,$group->id);
 } else {
     echo dynamo_get_body_table_teacher($dynamo);
@@ -144,7 +151,7 @@ echo '
                                 <div class="panel panel-default">
                                     <div class="panel-heading">'.get_string('dynamocommentcontr', 'mod_dynamo').'&nbsp;
                                         <div class="toolpit">
-                                        <i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubbleCom1.'</span>
+                                        <i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubblecom1.'</span>
                                     </div>
                                 </div>
                                 <div class="panel-body">
@@ -157,7 +164,7 @@ echo '
                             <div class="panel panel-default">
                                 <div class="panel-heading">'.get_string('dynamocommentfonction', 'mod_dynamo')
                                     .'&nbsp;<div class="toolpit">
-                                    <i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubbleCom2.'</span>
+                                    <i class="fas fa-info-circle ico-blue"></i><span class="toolpittext">'.$bubblecom2.'</span>
                                 </div>
                             </div>
                             <div class="panel-body">
@@ -168,7 +175,7 @@ echo '
                     </div>
                 </div>
             </div>';
-if($mode == 'student') {
+if ($mode == 'student') {
     echo '
             <div class="container">
               <div class="row">
@@ -184,4 +191,3 @@ echo '
         </div>
     </div>
 ';
-?>
