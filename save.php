@@ -137,7 +137,7 @@ if ($dynamo->groupeval == 1) {
  Save peer evaluation.
 *********************/
 foreach ($groupusers as $user) {
-    if ($dynamo->autoeval == 0 && $user->id == $USER->id) { 
+    if ($dynamo->autoeval == 0 && $user->id == $USER->id) {
         // No auto evaluation save.
     } else {
         $dynamoeval = new stdClass();

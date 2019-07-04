@@ -31,7 +31,7 @@ $string['dynamoname_help']                    = 'Help with more explanation';
 $string['mod_dynamo']                         = 'Dynamo';
 $string['pluginadministration']               = 'Dynamo administration';
 $string['pluginname']                         = 'Dynamo';
-$string['teamup:addinstance']                 = 'Add a new dynamo module';
+$string['dynamo:addinstance']                 = 'Add a new dynamo module';
 
 $string['dynamofieldset']                     = 'criterions personalisation';
 $string['dynamoauto']                         = 'Require that every student self assesses';

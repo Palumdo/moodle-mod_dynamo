@@ -144,7 +144,7 @@ if ($grp != 0) {
             </td>');
 
     $i = count($agridlib) - 1;
-    for ($j=0; $j < count($agridlib[$i]); $j++) {
+    for ($j = 0; $j < count($agridlib[$i]); $j++) {
         $niwf = $agridlib[$i][$j];
         echo('<td style="background-color:white;text-align:center;color:'.dynamo_get_color_niwf($niwf).'">'
             .number_format($niwf, 2, ',', ' ').'<br>'.(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
@@ -163,8 +163,8 @@ if ($grp != 0) {
     $jsadd .= '$(this).html($(this).html().split("!").join(" !"));';
     $jsadd .= '$(this).html($(this).html().split("?").join(" ?"));';
 
-    $aKeywords = explode('|', get_string('dynamokeywords', 'mod_dynamo'));
-    foreach ($aKeywords as $keyword) {
+    $akeywords = explode('|', get_string('dynamokeywords', 'mod_dynamo'));
+    foreach ($akeywords as $keyword) {
         $jsadd .= 'var keyword = "'.$keyword.'";';
         // Doesn't work when the keyword start with a non ASCII characters.
         $jsadd .= '$(this).html($(this).html().replace(
@@ -250,11 +250,10 @@ if ($grp != 0) {
                 onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusr->id.'&groupid='.$groupid.'&tab=2&results=3\'">
                 '.$OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'</h4>');
         $dynamoautoeval = dynamo_get_autoeval($userid, $dynamo);
-
         // Data for the spider/radar graph.
         $autoevalstr  = '['.$dynamoautoeval->crit1.','.$dynamoautoeval->crit2.','.$dynamoautoeval->crit3.'
             ,'.$dynamoautoeval->crit4.','.$dynamoautoeval->crit5;
-        if($display6 != 'none') { 
+        if ($display6 != 'none') {
             $autoevalstr .= ','.$dynamoautoeval->crit6;
         }
         $autoevalstr .= ']';
@@ -265,17 +264,18 @@ if ($grp != 0) {
                               .round($data->autocritsum->total3 / $data->nbeval, 2).','
                               .round($data->autocritsum->total4 / $data->nbeval, 2).','
                               .round($data->autocritsum->total5 / $data->nbeval, 2);
-            if($display6 != 'none') {
+            if ($display6 != 'none') {
                 $pairevalstr .= ','.round($data->autocritsum->total6 / $data->nbeval, 2);
             }
             $pairevalstr .= ']';
         } else {
             $pairevalstr = '[0,0,0,0,0';
-            if($display6 != 'none')  $pairevalstr .= ',0';
+            if ($display6 != 'none') {
+                $pairevalstr .= ',0';
+            }
             $pairevalstr .= ']';
         }
         // End data.
-
         echo('<table class="table" style="text-align:center;">');
         echo('    <thead>');
         echo('        <tr>');
@@ -312,9 +312,9 @@ if ($grp != 0) {
             echo('            <td>'.round($data->autocritsum->total4 / $data->nbeval, 2).'</td>');
             echo('            <td>'.round($data->autocritsum->total5 / $data->nbeval, 2).'</td>');
             if ($display6 != 'none') {
-                echo('     <td>'.round($data->autocritsum->total6/$data->nbeval,2).'</td>');
+                echo('     <td>'.round($data->autocritsum->total6 / $data->nbeval, 2).'</td>');
             }
-        }  else {
+        } else {
             echo('            <td>0</td>');
             echo('            <td>0</td>');
             echo('            <td>0</td>');
@@ -352,10 +352,10 @@ if ($grp != 0) {
         echo($canvas);
 
         $allgroupevalstr = "";
-        if($allgroupeval != "") {
+        if ($allgroupeval != "") {
             $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3.','
                                     .$allgroupeval->crit4.','.$allgroupeval->crit5;
-            if($display6 != 'none')  {
+            if ($display6 != 'none')  {
                 $allgroupevalstr .= ','.$allgroupeval->crit6;
             }
             $allgroupevalstr .= ']';
@@ -369,7 +369,7 @@ if ($grp != 0) {
         $datagrp .= str_replace (",,,,","0,0,0,0,0", $autoevalstr).',';
 
         $color = $acolors[$stdcnt++];
-        if($stdcnt>= count($acolors)) {
+        if ($stdcnt >= count($acolors)) {
             $stdcnt = 0;
         }
         $keycolors .= '\'rgb'.$color.'\',';

@@ -48,7 +48,7 @@ $groups = dynamo_get_groups($dynamo->groupingid);
 $canvas = '';
 $jscript = '
   <script>
-    window.onload = function ()  {';
+    window.onload = function () {';
 
 $class = ['', '', '', '', '', '', ''];
 $class[$report] = ' class="active"';
@@ -130,9 +130,6 @@ function rep_list_no_participant($result, $name) {
     echo ('<div style="width:100%;word-wrap:break-word;margin-bottom:20px;">'.$emails.'</div>');
     if ($emails == '') {
         echo (get_string('dynamononoparticipant', 'mod_dynamo'));
-
-
-
     }
     echo ('</div>');
 }
@@ -262,7 +259,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
                 $pairevalstr .= ']';
             } else {
                 $pairevalstr = '[0,0,0,0,0';
-                if ($display6 != 'none')  {
+                if ($display6 != 'none') {
                     $pairevalstr .= ',0';
                 }
                 $pairevalstr .= ']';
@@ -304,7 +301,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
                 echo ('     <td>'.round($data->autocritsum->total3 / $data->nbeval, 2).'</td>');
                 echo ('     <td>'.round($data->autocritsum->total4 / $data->nbeval, 2).'</td>');
                 echo ('     <td>'.round($data->autocritsum->total5 / $data->nbeval, 2).'</td>');
-                if($display6 != 'none') {
+                if ($display6 != 'none') {
                     echo ('     <td>'.round($data->autocritsum->total6 / $data->nbeval, 2).'</td>');
                 }
             }  else {
@@ -440,7 +437,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
     }
 
     $jscript = $jscript.'var checkboxes = document.getElementsByTagName("input");
-                         for (var i=0; i<checkboxes.length; i++)  {
+                         for (var i=0; i<checkboxes.length; i++) {
                            if (checkboxes[i].type == "checkbox")   {
                              checkboxes[i].checked = true;
                            }
@@ -451,7 +448,8 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
     $jscript = $jscript.'$("#pleasewait").css("display","none");';
     return $jscript;
 }
-// ***************************************************************
+/**
+ */
 function display_group_niwf_table($dynamo, $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
     echo ('<div class="group_niwf_table" style="display:;">');
@@ -480,7 +478,8 @@ function display_group_niwf_table($dynamo, $grp) {
             </div>
         </div>');
 }  
-// ***************************************************************
+/**
+ */
 function display_group_detail_table($dynamo, $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
     echo ('<div class="group_detail_table" style="display:none;">');
@@ -514,11 +513,11 @@ function display_group_detail_table($dynamo, $grp) {
                         <td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
         $agridlib = dynamo_get_matrix($dynamo, $grpusrs); // Get the points matrix include sum and niwf.
         for ($j = 0; $j < count($agridlib[$i]); $j++) {
-                if($i != $j) {
-                    echo ('        <td>'.$agridlib[$i][$j].'</td>');
-                } else {
-                    echo ('        <td style="color:#666">('.$agridlib[$i][$j].')</td>');
-                }
+            if($i != $j) {
+                echo ('        <td>'.$agridlib[$i][$j].'</td>');
+            } else {
+                echo ('        <td style="color:#666">('.$agridlib[$i][$j].')</td>');
+            }
         }
         echo ('          </tr>');
         if ($agridlib[$i][$j - 1] > 0) {
@@ -526,15 +525,15 @@ function display_group_detail_table($dynamo, $grp) {
         }
         $i++;
     }
-    // NIWFS
+    // NIWFS.   
     echo ('          <tr>');
     echo ('            <td style="background-color:dimgray;color:white;">'.get_string('dynamoniwf', 'mod_dynamo').'</td>');
 
     $i = count($agridlib) - 1;
     for ($j = 0; $j < count($agridlib[$i]); $j++) {
-      $niwf = $agridlib[$i][$j];
-      echo ('        <td class="change-color" style="color:'.dynamo_get_color_niwf($niwf).'">'.number_format($niwf, 2, ',', ' ')
-        .'<br>'.(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
+        $niwf = $agridlib[$i][$j];
+        echo ('        <td class="change-color" style="color:'.dynamo_get_color_niwf($niwf).'">'.number_format($niwf, 2, ',', ' ')
+            .'<br>'.(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
     }
     echo ('          </tr>');
 
@@ -667,11 +666,12 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
     $grpusrs = dynamo_get_group_users($grp->id);
     foreach ($grpusrs as $grpusrsub) { // Loop to all evaluation of  students.
         $color = "";
-        if($usrid == $grpusrsub->id) {
+        if ($usrid == $grpusrsub->id) {
             $color = '#9cb7d4';
         }
 
-        if($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {
+        if ($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {
+            $color = "";
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
@@ -731,7 +731,7 @@ function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
         .round($data->autocritsum->total2 / $data->nbeval, 2).','
         .round($data->autocritsum->total3 / $data->nbeval, 2).','
         .round($data->autocritsum->total4 / $data->nbeval, 2).','.round($data->autocritsum->total5 / $data->nbeval, 2);
-    if ($display6 != 'none')  {
+    if ($display6 != 'none') {
         $pairevalstr .= ','.round($data->autocritsum->total6 / $data->nbeval, 2);
     }
     $pairevalstr .= ']';
@@ -742,10 +742,10 @@ function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
         $allgroupeval = "";
     }
     $allgroupevalstr = "";
-    if($allgroupeval != "") {
+    if ($allgroupeval != "") {
         $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3
             .','.$allgroupeval->crit4.','.$allgroupeval->crit5;
-        if($display6 != 'none')  {
+        if ($display6 != 'none') {
             $allgroupevalstr .= ','.$allgroupeval->crit6;
         }
         $allgroupevalstr .= ']';

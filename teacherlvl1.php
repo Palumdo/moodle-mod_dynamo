@@ -125,7 +125,7 @@ if ($usrid != 0) {
               <table class="tablelvl0">
                 <thead>
                    <tr>
-                      <th style="background-color:'.$$faccolor.'">&nbsp;</th>
+                      <th style="background-color:'.$faccolor.'">&nbsp;</th>
                       <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo')
                             .' - '.$dynamo->crit1.')">&nbsp;
@@ -183,10 +183,10 @@ if ($usrid != 0) {
             $color = '#9cb7d4';
         }
         if ($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {
-            // Do nothing.
+            $color = "";
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grpusrsub->id);
-            if($usrid == $grpusrsub->id) {
+            if ($usrid == $grpusrsub->id) {
                 $dynamoautoeval[] = $dynamoeval;
             }
             $result = dynamo_compute_basis($dynamoeval, $display6);
@@ -228,7 +228,7 @@ if ($usrid != 0) {
               <table class="tablelvl0">
                 <thead>
                    <tr>
-                      <th style="background-color:'.$$faccolor.'">&nbsp;</th>
+                      <th style="background-color:'.$faccolor.'">&nbsp;</th>
                       <th>'.get_string('dynamoparticipation', 'mod_dynamo').' <a href="#" data-toggle="toolpit"
                             dyna-data-title="('.get_string('dynamocritparticipationdefault', 'mod_dynamo').' - '
                             .$dynamo->crit1.')">&nbsp;<i class="fas fa-info-circle ico-white"></i></a></th>
@@ -252,7 +252,6 @@ if ($usrid != 0) {
                 </thead>
                 <tbody>
     ');
-
     $grpusrs = dynamo_get_group_users($grp->id);
     foreach ($grpusrs as $grpusrsub) { // Loop to all evaluation of  students.
         $color = "";
@@ -261,6 +260,7 @@ if ($usrid != 0) {
         }
 
         if ($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {
+            $color = "";
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
@@ -283,21 +283,21 @@ if ($usrid != 0) {
           </table>
         </div>');
 
-    // **********************************************************************      
+    // Bottom.
     $data = dynamo_compute_advanced($usrid, $dynamo);
     echo ('<div class="single-box-comment"><table class="single-table-data">');
     echo ('<tr><td style="width:200px;"><b>'.get_string('dynamoavgeval', 'mod_dynamo').'</b>:</td><td>'
-        .round(($data->sum/$data->nbeval)/$data->nbcrit,2).'<td><tr>');
+        .round(($data->sum / $data->nbeval) / $data->nbcrit, 2).'<td><tr>');
     echo ('<tr><td><b>'.get_string('dynamoautoeval', 'mod_dynamo').'</b>:</td><td>'
-        .round($data->autosum/$data->nbcrit,2).'<td><tr>');
+        .round($data->autosum / $data->nbcrit, 2).'<td><tr>');
     $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usrid);
     $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid);
     echo ('<tr><td><b>'.get_string('dynamoniwf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;
-            color:white;background-color:'.dynamo_get_color_niwf($niwf[0]).'">'.number_format($niwf[0],2,',', ' ').'</span> 
+            color:white;background-color:'.dynamo_get_color_niwf($niwf[0]).'">'.number_format($niwf[0], 2, ',', ' ').'</span> 
             <span><a href="#" data-toggle="toolpit"    dyna-data-title="'.$niwf[1].'">&nbsp;
             <i class="fas fa-info-circle ico-blue"></i></a></span></td></tr>');
     echo ('<tr><td><b>'.get_string('dynamoconf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;
-            color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf,2,',', ' ').'</span></td></tr>');
+            color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf, 2, ',', ' ').'</span></td></tr>');
     echo ('</table></div>');
 
     $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid.'" width="720" height="360">[No canvas support]</canvas></div>
@@ -310,7 +310,7 @@ if ($usrid != 0) {
                     ,'.$dynamoautoeval[0]->crit4.'
                     ,'.$dynamoautoeval[0]->crit5;
 
-    if($display6 != 'none')  {
+    if ($display6 != 'none') {
         $autoevalstr .= ','.$dynamoautoeval[0]->crit6;
     }
     $autoevalstr .= ']';
@@ -319,7 +319,7 @@ if ($usrid != 0) {
                     ,'.round($data->autocritsum->total3 / $data->nbeval, 2).'
                     ,'.round($data->autocritsum->total4 / $data->nbeval, 2).'
                     ,'.round($data->autocritsum->total5 / $data->nbeval, 2);
-    if ($display6 != 'none')  {
+    if ($display6 != 'none') {
         $pairevalstr .= ','.round($data->autocritsum->total6 / $data->nbeval, 2);
     }
     $pairevalstr .= ']';
@@ -334,7 +334,7 @@ if ($usrid != 0) {
     if ($allgroupeval != "") {
         $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3.','.$allgroupeval->crit4
             .','.$allgroupeval->crit5;
-        if($display6 != 'none')  {
+        if ($display6 != 'none') {
             $allgroupevalstr .= ','.$allgroupeval->crit6;
         }
         $allgroupevalstr .= ']';
@@ -353,7 +353,7 @@ if ($usrid != 0) {
         $multievalsr .= ']';
     } else {
         $multievalsr = '[';
-        $multievalsr .=  '['.$dynamoautoeval[0]->crit1.','.round($data->autocritsum->total1 / $data->nbeval, 2).','
+        $multievalsr .= '['.$dynamoautoeval[0]->crit1.','.round($data->autocritsum->total1 / $data->nbeval, 2).','
             .$allgroupeval->crit1.']';
         $multievalsr .= ',['.$dynamoautoeval[0]->crit2.','.round($data->autocritsum->total2 / $data->nbeval, 2).','
             .$allgroupeval->crit2.']';
@@ -377,7 +377,7 @@ if ($usrid != 0) {
     echo ('</div>'); // End grouping.
 
     if ($allgroupevalstr == "") {
-      $jscript = $jscript.'
+        $jscript = $jscript.'
           var data = '.$multievalsr.';
           new RGraph.Bar({
             id: \'cvsh_'.$usrid.'\',
@@ -398,7 +398,7 @@ if ($usrid != 0) {
                 marginRight: 5,
                 key: [\''.get_string('dynamogroupevaluatedby', 'mod_dynamo').'\',\''
                     .htmlspecialchars($usr->firstname, ENT_QUOTES).' '
-                    .htmlspecialchars($usr->lastname, ENT_QUOTES).'\'], 
+                    .htmlspecialchars($usr->lastname, ENT_QUOTES).'\'],
                 keyColors: [\'#FFA500\', \'blue\'],
                 keyInteractive: true
             }
