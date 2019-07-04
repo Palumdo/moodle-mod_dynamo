@@ -1,5 +1,5 @@
 .path-mod-dynamo table {
-    font-size:14px;
+    font-size: 14px;
 }
 
 :root {
@@ -10,16 +10,17 @@
 /** @media print Only work well on firefox...                 **/
 /***************************************************************/
 @media print {
-    .path-mod-dynamo h4.nojump { 
+
+    .path-mod-dynamo h4.nojump {
         page-break-before: avoid !important;
         break-before: avoid !important;
     }
-      
-    .path-mod-dynamo h4 { 
+
+    .path-mod-dynamo h4 {
         page-break-before: always;
         break-before: always;
     }
-      
+
     .path-mod-dynamo .break-after {
         display: block;
         break-before: always;
@@ -33,15 +34,15 @@
         page-break-before: always;
         position: relative;
     }
-      
+
     .path-mod-dynamo .button_list_subreport {
         display: none;
     }
-      
+
     .path-mod-dynamo #selreporttop {
         display: none;
     }
-      
+
     .path-mod-dynamo #top {
         display: none;
     }
@@ -49,11 +50,11 @@
     .path-mod-dynamo .tab {
         display: none;
     }
-      
+
     .path-mod-dynamo .report_title {
         display: none;
     }
-      
+
     .path-mod-dynamo .dontprint {
         display: none;
     }
@@ -134,19 +135,19 @@
     padding-top: 15px;
 }
 
-.path-mod-dynamo .tdteach {  
+.path-mod-dynamo .tdteach {
     text-align: center !important;
 }
-  
-.path-mod-dynamo .dynagroupingtitle {  
+
+.path-mod-dynamo .dynagroupingtitle {
     width: 100%;
     background-color: #9cb7d4;
     color: white;
     border-radius: 10px 0;
     padding: 10px;
 }
-  
-.path-mod-dynamo .dbackground {  
+
+.path-mod-dynamo .dbackground {
     width: 100px;
     height: 50px;
     max-width: 100px;
@@ -154,8 +155,8 @@
     padding: 0;
     margin: 0;
 }
-  
-.path-mod-dynamo .dline {  
+
+.path-mod-dynamo .dline {
     width: 112px;
     height: 47px;
     border-bottom: 1px solid white;
@@ -163,16 +164,16 @@
     position: absolute;
     z-index: 1;
 }
-  
-.path-mod-dynamo .dbackground > div {  
+
+.path-mod-dynamo .dbackground > div {
     position: relative;
     width: 100px;
     height: 50px;
     top: 0;
     left: 0;
 }
-  
-.path-mod-dynamo .dbottom {  
+
+.path-mod-dynamo .dbottom {
     position: absolute;
     bottom: 2px;
     left: 1px;
@@ -182,8 +183,8 @@
     -o-transform: rotate(27deg);
     writing-mode: lr-tb;
 }
-  
-.path-mod-dynamo .dtop { 
+
+.path-mod-dynamo .dtop {
     position: absolute;
     top: 7px;
     right: 9px;
@@ -191,14 +192,14 @@
     -webkit-transform: rotate(27deg);
     -moz-transform: rotate(27deg);
     -o-transform: rotate(27deg);
-    writing-mode: lr-tb; 
+    writing-mode: lr-tb;
     padding-right: 10px;
 }
 
 /*********************/
 /* Boostrap like CSS */
 /*********************/
-.path-mod-dynamo ::before, ::after {
+.path-mod-dynamo::before, ::after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -216,7 +217,9 @@
     width: 46%;
 }
 
-.path-mod-dynamo .col-sm-1, .path-mod-dynamo .col-sm-2, .path-mod-dynamo .col-sm-6 {
+.path-mod-dynamo .col-sm-1,
+.path-mod-dynamo .col-sm-2,
+.path-mod-dynamo .col-sm-6 {
     position: relative;
     min-height: 1px;
     padding-right: 15px;
@@ -227,6 +230,7 @@
 .path-mod-dynamo .panel-default {
     border-color: #ddd !important;
 }
+
 .path-mod-dynamo .panel {
     margin-bottom: 20px;
     background-color: #fff;
@@ -241,6 +245,7 @@
     background-color: #f5f5f5;
     border-color: #ddd;
 }
+
 .path-mod-dynamo .panel-heading {
     padding: 10px 15px;
     border-bottom: 1px solid transparent;
@@ -252,8 +257,8 @@
     padding: 15px;
     padding-right: 30px;
 }
-/*********************/
 
+/*********************/
 /* toolpit container */
 .path-mod-dynamo .toolpit {
     position: relative;
@@ -293,7 +298,7 @@
     border-top: 0 !important;
 }
 
-.path-mod-dynamo th:only-child{
+.path-mod-dynamo th:only-child {
     border-radius: 9px 9px 0 0;
     border-top: 0 !important;
 }
@@ -306,18 +311,21 @@
     border-collapse: collapse;
     border-spacing: 0;
 }
+
 .path-mod-dynamo .tablelvlx tr {
     background-color: white;
 }
 
-.path-mod-dynamo .tablelvlx th, .tablelvlx td {
+.path-mod-dynamo .tablelvlx th
+, .path-mod-dynamo .tablelvlx td {
     padding-left: 8px;
     text-align: left;
     border-top: 1px solid #ddd;
     border-right: 1px solid #ddd;
 }
 
-.path-mod-dynamo .tablelvlx tr:hover:nth-child(even), .path-mod-dynamo .tablelvlx tr:hover:nth-child(odd) {
+.path-mod-dynamo .tablelvlx tr:hover:nth-child(even),
+.path-mod-dynamo .tablelvlx tr:hover:nth-child(odd) {
     background-color: rgb(156,183,212,0.8);
     color: white;
 }
@@ -326,8 +334,13 @@
     border-bottom: 1px solid #ddd;
 }
 
-.path-mod-dynamo .tablelvlx tr:nth-child(even) {background: #F8F8F8}
-.path-mod-dynamo .tablelvlx tr:nth-child(odd)  {background: #FFF}
+.path-mod-dynamo .tablelvlx tr:nth-child(even) {
+    background: #F8F8F8;
+}
+
+.path-mod-dynamo .tablelvlx tr:nth-child(odd) {
+    background: #FFF;
+}
 
 .path-mod-dynamo .tablelvl0 {
     width: 100%;
@@ -348,7 +361,8 @@
     text-align: center;
 }
 
-.path-mod-dynamo .tablelvl0 th, .tablelvl0 td {
+.path-mod-dynamo .tablelvl0 th,
+.path-mod-dynamo .tablelvl0 td {
     padding: 8px;
     line-height: 20px;
     text-align: left;
@@ -364,14 +378,19 @@
     background-color: white;
 }
 
-.path-mod-dynamo .tablelvl0 tr:hover:nth-child(even), .path-mod-dynamo .tablelvl0 tr:hover:nth-child(odd) {
+.path-mod-dynamo .tablelvl0 tr:hover:nth-child(even),
+.path-mod-dynamo .tablelvl0 tr:hover:nth-child(odd) {
     background-color: rgb(0,110,204,0.9);
     color: white;
 }
 
-.path-mod-dynamo .tablelvl0 tr:nth-child(even) {background: #F8F8F8}
-.path-mod-dynamo .tablelvl0 tr:nth-child(odd)  {background: #FFF}
+.path-mod-dynamo .tablelvl0 tr:nth-child(even) {
+    background: #f8f8f8;
+}
 
+.path-mod-dynamo .tablelvl0 tr:nth-child(odd) {
+    background: #fff;
+}
 
 .path-mod-dynamo .tablelvl0_rep {
     width: 100%;
@@ -386,7 +405,8 @@
     background-color: white;
 }
 
-.path-mod-dynamo .tablelvl0_rep th, .path-mod-dynamo .tablelvl0_rep td {
+.path-mod-dynamo .tablelvl0_rep th,
+.path-mod-dynamo .tablelvl0_rep td {
     padding: 8px;
     line-height: 20px;
     text-align: center;
@@ -407,7 +427,6 @@
     background-color: white;
 }
 
-
 .path-mod-dynamo .tablelvl0 tr:hover {
     background-color: var(--main-color) !important;
     color: white;
@@ -426,14 +445,14 @@
     background-color: white;
 }
 
-.path-mod-dynamo .tablelvl1 th,.path-mod-dynamo  .tablelvl1 td {
+.path-mod-dynamo .tablelvl1 th,
+.path-mod-dynamo .tablelvl1 td {
     padding: 8px;
     line-height: 20px;
     text-align: left;
     vertical-align: top;
     border-top: 1px solid #ddd;
 }
-
 
 .path-mod-dynamo [dyna-data-title] {
     position: relative;
@@ -506,7 +525,6 @@
     border-radius: 0px ;
 }
 
-
 .path-mod-dynamo .group_detail_title {
     cursor: pointer;
     margin-top: 10px;
@@ -529,7 +547,6 @@
     vertical-align: middle;
 }
 
-
 .path-mod-dynamo .report_title {
     margin-top: 10px;
     width: 100%;
@@ -545,17 +562,17 @@
     background-color: var(--main-color) !important;
 }
 
-
 // jqueryui css
-
 .path-mod-dynamo .ui-widget.ui-widget-content {
     border: 1px solid #c5c5c5;
 }
+
 .path-mod-dynamo .ui-widget-content {
     border: 1px solid #ddd;
     background: #fff;
     color: #333;
 }
+
 .path-mod-dynamo .ui-widget {
     font-family: Arial,Helvetica,sans-serif;
     font-size: 1em;
@@ -568,6 +585,7 @@
     display: block;
     outline: 0;
 }
+
 .path-mod-dynamo .ui-autocomplete {
     position: absolute;
     top: 0;
@@ -585,14 +603,18 @@
     cursor: pointer;  
 }
 
-.path-mod-dynamo button::-moz-focus-inner, .path-mod-dynamo [type="button"]::-moz-focus-inner
-, .path-mod-dynamo [type="reset"]::-moz-focus-inner, .path-mod-dynamo [type="submit"]::-moz-focus-inner {
+.path-mod-dynamo button::-moz-focus-inner,
+.path-mod-dynamo [type="button"]::-moz-focus-inner,
+.path-mod-dynamo [type="reset"]::-moz-focus-inner,
+.path-mod-dynamo [type="submit"]::-moz-focus-inner {
     border-style: none;
     padding: 0;
 }
 
-.path-mod-dynamo [type="button"]::-moz-focus-inner, .path-mod-dynamo [type="reset"]::-moz-focus-inner
-, .path-mod-dynamo [type="submit"]::-moz-focus-inner, button::-moz-focus-inner {
+.path-mod-dynamo [type="button"]::-moz-focus-inner,
+.path-mod-dynamo [type="reset"]::-moz-focus-inner,
+.path-mod-dynamo [type="submit"]::-moz-focus-inner,
+.path-mod-dynamo button::-moz-focus-inner {
     padding: 0;
     border-style: none;
 }
@@ -615,7 +637,7 @@
     border-color: #1e7e34;
 }
 
- /* The switch - the box around the slider */
+/* The switch - the box around the slider */
 .path-mod-dynamo .switch {
     position: relative;
     display: inline-block;
@@ -711,7 +733,6 @@
     padding-left: 20px;
 }
 
-
 .path-mod-dynamo .ico-white {
     color: white;
 }
@@ -723,7 +744,6 @@
 .path-mod-dynamo .ico-student {
     color: #ddd;
 }
-
 
 .path-mod-dynamo .ico-blue {
     color: var(--main-color);
@@ -747,7 +767,6 @@
 .path-mod-dynamo .black-legend {
     color: black;
 }
-
 
 .path-mod-dynamo .graph-block {
     margin-top: 25px;
@@ -781,12 +800,10 @@
     content: "\f1c3" !important;
 }
 
-
 .path-mod-dynamo .fa-user {
     font-size: 1.2em;
     margin-left: 2px;  
 }
-
 
 .path-mod-dynamo .camera {
     background-color: var(--main-color);
@@ -821,11 +838,10 @@
 
 .path-mod-dynamo .td-num {
     text-align: center !important;
-    padding: 0  !important;
-    margin: 0  !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
- 
 .path-mod-dynamo #table-comment {
     width: 100%;
     border: 1px solid #333;
@@ -844,7 +860,6 @@
     border-bottom: 1px solid #000;
 }
 
-
 .path-mod-dynamo #table-comment td {
     border-bottom: 1px solid #000;
 }
@@ -857,8 +872,9 @@
     color: #333;
 }
 
-
-.path-mod-dynamo .urlanchor:link,  .path-mod-dynamo .urlanchor:visited,  .path-mod-dynamo .urlanchor:active  {
+.path-mod-dynamo .urlanchor:link,
+.path-mod-dynamo .urlanchor:visited,
+.path-mod-dynamo .urlanchor:active {
     color: white;
 }
 
@@ -866,7 +882,7 @@
     text-decoration: underline;
 }
 
-.path-mod-dynamo .report-yearbook-title  {
+.path-mod-dynamo .report-yearbook-title {
     height: 40px;
     color: white;
     background-color: #9cb7d4;
@@ -951,7 +967,6 @@
     color: white;
 }
 
-
 .path-mod-dynamo .overview-climat {
     text-align: center;
     font-weight: normal;
@@ -995,7 +1010,6 @@
     background-color: #efef95;
     padding: 3px;
 }
-    
 
 .path-mod-dynamo img.userpicture {
     margin-right: 0;
@@ -1018,13 +1032,12 @@
 }
 
 /* sub tab navigation */
-
-.path-mod-dynamo .dynnavtabs::before, .path-mod-dynamo .dynnavtabs::after {
+.path-mod-dynamo .dynnavtabs::before,
+.path-mod-dynamo .dynnavtabs::after {
     display: table;
     content: "";
     line-height: 0;
 }
-
 
 .path-mod-dynamo .dynnavtabs > li {
     margin-bottom: -1px;
@@ -1047,7 +1060,6 @@
     cursor: pointer;
 }
 
-
 .path-mod-dynamo .dynnav li > a {
     padding-right: 12px;
     padding-left: 12px;
@@ -1058,7 +1070,6 @@
     line-height: 25px;
     display: block;
 }
-
 
 .path-mod-dynamo .dynnav li.active {
     border-bottom: 0 !important; 
@@ -1089,7 +1100,7 @@
     background-color: white;
     padding: 3px;
     color: transparent;
-    background-image: radial-gradient(ellipse at center, #ffbb00 0%,#fcf5b5 68%);
+    background-image: radial-gradient(ellipse at center, #fb0 0%,#fcf5b5 68%);
 }
 
 .path-mod-dynamo .ca-cloud-sun {
@@ -1122,7 +1133,7 @@
         , rgba(0,0,0,1) 44%, rgba(0,0,0,1) 44%, rgba(38,38,38,1) 100%);
 }
 
-.path-mod-dynamo .ca-bolt  {
+.path-mod-dynamo .ca-bolt {
     font-size: 1.5em;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

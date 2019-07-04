@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * validate & save a peer evaluation made by a student
+ * Validate & save a peer evaluation made by a student
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain

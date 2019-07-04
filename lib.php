@@ -1,6 +1,5 @@
 <?php
-
-// This file is part of Moodle - http://moodle.org/ (772)
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Library of interface functions and constants.
  *
@@ -190,7 +190,7 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
                 navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', '')), $beforekey);
 
         $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
-                                , 'usrid'=> $usrid, 'tab' => 2, 'results' => 1));
+                                , 'usrid' => $usrid, 'tab' => 2, 'results' => 1));
         $resultnode->add_node(navigation_node::create(get_string('dynamoresults1', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
@@ -220,8 +220,8 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport05', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid'=>$groupid
-                                , 'usrid' => $usrid,'report' => 2, 'tab' => 3));
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+                                , 'usrid' => $usrid, 'report' => 2, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport02', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
@@ -440,7 +440,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
             $color = '#9cb7d4';
         }
         if ($userid == $user->id && $dynamo->autoeval == 0) {
-            // No auto evaluation.
+            $color = '';
         } else {
             if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $userid
                 , 'userid' => $user->id ))) {
@@ -1565,7 +1565,7 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
 
     $ret = new stdClass();
     $div = 5;
-    if($display6 == '' ) {
+    if ($display6 == '') {
         $div = 6;
     }
     $sql = "
@@ -1648,7 +1648,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     // Create a list with all quatric gap ($diff) between each student of a group.
     for ($i = 0; $i < count($grpusrs); $i++) { // Loop to all students of the group.
         $usr1 = $grpusrs[$i];
-        for ($j = $i + 1; $ j < count($grpusrs); $j++) { // Compare to all the ohers in the group.
+        for ($j = $i + 1; $j < count($grpusrs); $j++) { // Compare to all the ohers in the group.
             $usr2 = $grpusrs[$j];
             $diff = dynamo_get_ecart_quadrique($dynamo, $usr1->id, $usr2->id)->ecart;
 
@@ -1710,7 +1710,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
                 }
             }
         } // Biggest sub group.
-        if($maxsize < count($grp[$idx])) {
+        if ($maxsize < count($grp[$idx])) {
             $maxsize = count($grp[$idx]);
         }
     }
@@ -1720,10 +1720,10 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     $result->list = $list;
     $result->max = $maxdiff;
 
-    if ($maxdiff <  0.05) {
+    if ($maxdiff < 0.05) {
         $result->type = 2; // Homogenic.
     }
-    if ($maxdiff <  0.02) {
+    if ($maxdiff < 0.02) {
         $result->type = 1; // Tap the hand.
     }
     if ($maxdiff >= 0.05) {
@@ -1760,8 +1760,8 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
  */
 function dynamo_get_group_consistency($grp, $usr) {
     for ($i = 0; $i < count($grp); $i++) {
-        for ($j = 0;$j < count($grp[$i]); $j++) {
-            if($grp[$i][$j] == $usr) {
+        for ($j = 0; $j < count($grp[$i]); $j++) {
+            if ($grp[$i][$j] == $usr) {
                 return $i;
             }
         }
@@ -1813,7 +1813,7 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $result = $DB->get_record_sql($sql, $params);
     $sumeval = $result->total;
 
-    if($sumeval == 0) {
+    if ($sumeval == 0) {
         $result = new stdClass();
         $result->ecart = 1000;
         $result->similitude = 1000;
@@ -1835,7 +1835,7 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $nbeval = $result->nbeval;
 
     $avg = round($sumeval / $nbeval, 3);
-/*
+    /*
     $sql = "
         SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) similitude
           FROM (SELECT t1.userid, if(t1.crit1-t1.crit1=0,'1','0') crit1 , if(t1.crit2-t2.crit2=0,'1','0') crit2
@@ -1858,7 +1858,7 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $params = array('param1' => $dynamo->id, 'param2' => $usr2,'param3' => $dynamo->id, 'param4' => $usr1);
     $result = $DB->get_record_sql($sql, $params);
     $similitude = $result->similitude/$nbeval;
-*/
+    */
 
     // Sum of the 6 criteria of student 1 minus the same criteria of student2 put at POW2 and after  to square2.
     $sql = "

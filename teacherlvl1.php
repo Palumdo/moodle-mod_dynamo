@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -25,6 +24,7 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 require_login($course, true, $cm);
@@ -293,7 +293,7 @@ if ($usrid != 0) {
     $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usrid);
     $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid);
     echo ('<tr><td><b>'.get_string('dynamoniwf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;
-            color:white;background-color:'.dynamo_get_color_niwf($niwf[0]).'">'.number_format($niwf[0], 2, ',', ' ').'</span> 
+            color:white;background-color:'.dynamo_get_color_niwf($niwf[0]).'">'.number_format($niwf[0], 2, ',', ' ').'</span>
             <span><a href="#" data-toggle="toolpit"    dyna-data-title="'.$niwf[1].'">&nbsp;
             <i class="fas fa-info-circle ico-blue"></i></a></span></td></tr>');
     echo ('<tr><td><b>'.get_string('dynamoconf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;

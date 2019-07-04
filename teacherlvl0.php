@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -28,6 +27,7 @@
 // Our involvement ratio has been computed with reference to the following paper that shows
 // NIWF to be one of the best factors to measure peer assesments :
 // Https://www.tandfonline.com/eprint/ee2eHDqmr2aTEb9t4dB8/full.
+
 defined('MOODLE_INTERNAL') || die();
 require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
@@ -355,7 +355,7 @@ if ($grp != 0) {
         if ($allgroupeval != "") {
             $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3.','
                                     .$allgroupeval->crit4.','.$allgroupeval->crit5;
-            if ($display6 != 'none')  {
+            if ($display6 != 'none') {
                 $allgroupevalstr .= ','.$allgroupeval->crit6;
             }
             $allgroupevalstr .= ']';
@@ -366,7 +366,7 @@ if ($grp != 0) {
 
         // Radart group data.
         $keys .= '"'.htmlspecialchars($grpusr->firstname, ENT_QUOTES)." ".htmlspecialchars($grpusr->lastname, ENT_QUOTES).'",';
-        $datagrp .= str_replace (",,,,","0,0,0,0,0", $autoevalstr).',';
+        $datagrp .= str_replace(",,,,", "0,0,0,0,0", $autoevalstr).',';
 
         $color = $acolors[$stdcnt++];
         if ($stdcnt >= count($acolors)) {

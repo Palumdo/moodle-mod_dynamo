@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -34,6 +33,7 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ 
 defined('MOODLE_INTERNAL') || die();
 
 require_login($course, true, $cm);
@@ -304,13 +304,13 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
                 if ($display6 != 'none') {
                     echo ('     <td>'.round($data->autocritsum->total6 / $data->nbeval, 2).'</td>');
                 }
-            }  else {
+            } else {
                 echo ('     <td>0</td>');
                 echo ('     <td>0</td>');
                 echo ('     <td>0</td>');
                 echo ('     <td>0</td>');
                 echo ('     <td>0</td>');
-                if($display6 != 'none') {
+                if ($display6 != 'none') {
                     echo ('     <td>0</td>');
                 }
             }
@@ -331,7 +331,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
             echo ('   </tr>');
             echo (' </tbody>');
             echo ('</table>');
-            echo ('<b>'.get_string('dynamoniwf', 'mod_dynamo').'</b> :<span class="change-color" 
+            echo ('<b>'.get_string('dynamoniwf', 'mod_dynamo').'</b> :<span class="change-color"
                 style="color:white;background-color:'
                 .dynamo_get_color_niwf($niwf[0]).'">'.number_format($niwf[0], 2, ',', ' ').'</span><br>');
             echo ('<b>'.get_string('dynamoconf', 'mod_dynamo')
@@ -340,10 +340,10 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
             echo ($canvas);
 
             $allgroupevalstr = "";
-            if($allgroupeval != "") {
+            if ($allgroupeval != "") {
                 $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3.','
                     .$allgroupeval->crit4.','.$allgroupeval->crit5;
-                if($display6 != 'none') {
+                if ($display6 != 'none') {
                     $allgroupevalstr .= ','.$allgroupeval->crit6;
                 }
                 $allgroupevalstr .= ']';
@@ -500,7 +500,7 @@ function display_group_detail_table($dynamo, $grp) {
                       </div>
                     </th>');
     foreach ($grpusrs as $grpusr) { // Loop to all students of  groups to put their name in title.
-      echo ('        <th>'.$grpusr->firstname.' '.$grpusr->lastname.'</th>');
+        echo ('        <th>'.$grpusr->firstname.' '.$grpusr->lastname.'</th>');
     }
     echo ('          <th>'.get_string('dynamoier', 'mod_dynamo').'</th>'); // Add the total column.
     echo ('          </tr>
@@ -513,7 +513,7 @@ function display_group_detail_table($dynamo, $grp) {
                         <td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
         $agridlib = dynamo_get_matrix($dynamo, $grpusrs); // Get the points matrix include sum and niwf.
         for ($j = 0; $j < count($agridlib[$i]); $j++) {
-            if($i != $j) {
+            if ($i != $j) {
                 echo ('        <td>'.$agridlib[$i][$j].'</td>');
             } else {
                 echo ('        <td style="color:#666">('.$agridlib[$i][$j].')</td>');
@@ -525,7 +525,7 @@ function display_group_detail_table($dynamo, $grp) {
         }
         $i++;
     }
-    // NIWFS.   
+    // NIWFS.
     echo ('          <tr>');
     echo ('            <td style="background-color:dimgray;color:white;">'.get_string('dynamoniwf', 'mod_dynamo').'</td>');
 
