@@ -33,17 +33,17 @@ defined('MOODLE_INTERNAL') || die();
  */
 function dynamo_supports($feature) {
     switch ($feature) {
-        case FEATURE_GRADE_HAS_GRADE:         
+        case FEATURE_GRADE_HAS_GRADE:
             return true;
-        case FEATURE_GRADE_OUTCOMES:          
+        case FEATURE_GRADE_OUTCOMES:
             return true;
-        case FEATURE_MOD_INTRO:               
+        case FEATURE_MOD_INTRO:
             return true;
-        case FEATURE_BACKUP_MOODLE2:          
+        case FEATURE_BACKUP_MOODLE2:
             return true;
-        case FEATURE_SHOW_DESCRIPTION:        
+        case FEATURE_SHOW_DESCRIPTION:
             return true;
-        case FEATURE_COMPLETION_TRACKS_VIEWS: 
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
             return true;
         default:
             return null;
@@ -176,62 +176,62 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
     $usrid = optional_param('usrid', 0, PARAM_INT);
 
     if (has_capability('mod/dynamo:create', $context)) {
-        // Preview student tabs ----------------------------------------------------------------------------------------------------
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
-                                ,'usrid'=>$usrid, 'tab' => 1));
+        // Preview student tabs ---------------------------------------------------------------------------------------------------
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+                                ,'usrid' => $usrid, 'tab' => 1));
         $node = navigation_node::create(get_string('dynamotab1', 'dynamo'), $url,  navigation_node::TYPE_SETTING, null, null
-                                         ,new pix_icon('i/preview', ''));
+                                         , new pix_icon('i/preview', ''));
         $navref->add_node($node, $beforekey);
 
-        // Results tabs ------------------------------------------------------------------------------------------------------------
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid'=>$groupid
+        // Results tabs -----------------------------------------------------------------------------------------------------------
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'tab' => 2));
         $resultnode = $navref->add_node(navigation_node::create(get_string('dynamomenuresults', 'dynamo'), $url,
-                navigation_node::TYPE_SETTING,null, null, new pix_icon('i/report', '')), $beforekey);
+                navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', '')), $beforekey);
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid'=>$usrid, 'tab' => 2, 'results' => 1));
         $resultnode->add_node(navigation_node::create(get_string('dynamoresults1', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid'=>$usrid, 'tab' => 2, 'results' => 2));
         $resultnode->add_node(navigation_node::create(get_string('dynamoresults2', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
-                                , 'usrid'=>$usrid, 'tab' => 2, 'results' => 3));
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+                                , 'usrid' => $usrid, 'tab' => 2, 'results' => 3));
         $resultnode->add_node(navigation_node::create(get_string('dynamoresults3', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        // Reports tab -------------------------------------------------------------------------------------------------------------
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
-                                , 'usrid'=>$usrid, 'tab'=>3));
+        // Reports tab ------------------------------------------------------------------------------------------------------------
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+                                , 'usrid' => $usrid, 'tab' => 3));
         $reportnode = $navref->add_node(navigation_node::create(get_string('dynamomenureports', 'dynamo'), $url,
-                navigation_node::TYPE_SETTING,null, null, new pix_icon('i/report', '')), $beforekey);
+                navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', '')), $beforekey);
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
-                                , 'usrid'=>$usrid,'report' => 1, 'tab' => 3));
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid'=>$groupid
+                                , 'usrid' => $usrid,'report' => 1, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport01', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
-                                , 'usrid'=>$usrid,'report' => 5, 'tab' => 3));
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid'=>$groupid
+                                , 'usrid' => $usrid,'report' => 5, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport05', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
-                                , 'usrid'=>$usrid,'report' => 2, 'tab' => 3));
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid'=>$groupid
+                                , 'usrid' => $usrid,'report' => 2, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport02', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id,'groupid'=>$groupid
-                                ,'usrid'=>$usrid,'report' => 3, 'tab' => 3));
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id,'groupid'=>$groupid
+                                , 'usrid' => $usrid, 'report' => 3, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport03', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot . '/mod/dynamo/view.php', array('id'=>$PAGE->cm->id, 'groupid'=>$groupid
-                                , 'usrid'=>$usrid,'report' => 4, 'tab' => 3));
+        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id '=> $PAGE->cm->id, 'groupid'=>$groupid
+                                , 'usrid' => $usrid, 'report' => 4, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport04', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
     }
@@ -309,7 +309,7 @@ function dynamo_update_grades($dynamo, $userid = 0) {
  *
  * return a recordset
  */
-function dynamo_get_group($grouping, $userid)  {
+function dynamo_get_group($grouping, $userid) {
     global $DB;
 
     $sql = "
@@ -355,7 +355,7 @@ function dynamo_get_groups($grouping) {
     $params = array('param1' => $grouping);
     $result = $DB->get_records_sql($sql, $params);
 
-    if( $result == false) {
+    if ($result == false) {
         return null;
     }
     return $result;
@@ -368,7 +368,7 @@ function dynamo_get_groups($grouping) {
  *
  * return a recordset
  */
-function dynamo_get_group_users($groupid)  {
+function dynamo_get_group_users($groupid) {
     global $DB;
     $sql = "
         SELECT t2.*
@@ -425,24 +425,24 @@ function dynamo_get_grouping_users($groupingid)  {
  * return a formatted HTML string with a table of users data
  */
 function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
-    global $CFG, $DB;
+    global $DB;
 
     $icons = ['fa-user-clock', 'fa-medal', 'fa-lightbulb', 'fa-wrench', 'fa-smile', 'fa-star'];
     $values = [];
     $bodytable = '';
     $display6 = '';
-    if($dynamo->critoptname == '')  $display6 = 'none';
-
+    if($dynamo->critoptname == '') {
+        $display6 = 'none';
+    }
     foreach ($groupusers as $user) {
         $color = '';
-        if ($userid ==  $user->id) {
+        if ($userid == $user->id) {
             $color = '#9cb7d4';
         }
-
         if ($userid == $user->id && $dynamo->autoeval == 0) {
             // No auto evaluation.
         } else {
-            if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' =>$userid
+            if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $userid
                 , 'userid' =>$user->id ))) {
                 $dynamoeval = new stdClass();
                 $dynamoeval->crit1 = 0;
@@ -458,9 +458,9 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                 <tr>
                     <td style="color:'.$color.'">'.$user->firstname.' '.$user->lastname.'</td>';
             for ($i = 0; $i < count($icons); $i++) {
-                $val = $i+1;
+                $val = $i + 1;
                 $style = '';
-                if($val == 6) {             
+                if ($val == 6) {
                     $style = 'style="display:'.$display6.'"';
                 }
                 $bodytable = $bodytable.'
@@ -479,8 +479,8 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
     }
 
     if($dynamo->groupeval == 1) {
-        if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' =>$userid
-            , 'userid' =>$groupid ))) {
+        if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $userid
+            , 'userid' => $groupid ))) {
             $dynamoeval = new stdClass();
             $dynamoeval->crit1 = 0;
             $dynamoeval->crit2 = 0;
@@ -570,7 +570,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
  */
 function dynamo_get_comment($evalbyid, $dynamo) {
     global $DB;
-    if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' =>$evalbyid))) {
+    if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $evalbyid))) {
         $dynamoeval = new stdClass();
         $dynamoeval->comment1 = '';
         $dynamoeval->comment2 = '';
@@ -590,7 +590,7 @@ function dynamo_get_comment($evalbyid, $dynamo) {
 function dynamo_compute_basis($dynamoeval, $crit6) {
     $result = new stdClass();
     $nbcrit = 6;
-    if($crit6 != '') {
+    if ($crit6 != '') {
         $nbcrit--;
     }
 
@@ -600,15 +600,14 @@ function dynamo_compute_basis($dynamoeval, $crit6) {
         + $dynamoeval->crit4
         + $dynamoeval->crit5
         + $dynamoeval->crit6;
-    $result->avg = round($result->sum/$nbcrit,2);
+    $result->avg = round($result->sum / $nbcrit, 2);
 
     return $result;
 }
 /**
  * Compute multiple level used for the student evaluation.
  *
- *
- * @param record $dynamo configuration of the evaluation
+  * @param record $dynamo configuration of the evaluation
  * @param int $userid the user that have to be evaluated
  *
  * return an object with the sum, autosum and number of evaluator
@@ -648,7 +647,6 @@ function dynamo_compute_advanced($userid, $dynamo) {
            AND t1.builder   = :param3
            AND t1.critgrp   = 0
     ";
-
     $params = array('param1' => $userid, 'param2' => $userid, 'param3' => $dynamo->id);
     $resultnbeval = $DB->get_record_sql($sql, $params);
 
@@ -661,7 +659,6 @@ function dynamo_compute_advanced($userid, $dynamo) {
            AND t1.builder   = :param3
            AND t1.critgrp   = 0
     ";
-
     $params = array('param1' => $userid, 'param2' => $userid, 'param3' => $dynamo->id);
     $resultautocritsum = $DB->get_record_sql($sql, $params);
 
@@ -669,8 +666,11 @@ function dynamo_compute_advanced($userid, $dynamo) {
     $result->autosum = $resultautosum->total;
     $result->nbeval = $resultnbeval->nbeval;
     $result->autocritsum = $resultautocritsum;
-    if ($dynamo->critoptname == '') $result->nbcrit = 5;
-    else $result->nbcrit = 6;
+    if ($dynamo->critoptname == '') {
+        $result->nbcrit = 5;
+    } else {
+        $result->nbcrit = 6;
+    }
 
     return $result;
 }
@@ -682,7 +682,7 @@ function dynamo_compute_advanced($userid, $dynamo) {
  *
  * return a dataset with all evaluations
  */
- function dynamo_get_grid($dynamo) {
+function dynamo_get_grid($dynamo) {
     global $DB;
     $result = new stdClass();
 
@@ -717,12 +717,12 @@ function dynamo_get_total($arrayofobjects, $id, $by ) {
         }
     }
 
-    if($ok == 0) {
+    if ($ok == 0) {
         return 0;
     }
 
     foreach ($arrayofobjects as $e) {
-        if( $e->userid == $id && $e->evalbyid == $by) {
+        if ($e->userid == $id && $e->evalbyid == $by) {
             return $e->total;
         }
     }
@@ -756,10 +756,10 @@ function dynamo_get_group_from_user ($groupingid, $usrid) {
     if ($result == false) {
         return null;
     }
-    
+
     foreach ($result as $grp) {
         return  $grp; // Return first one for sure...
-    }    
+    }
 }
 /**
  * Get the niwf of a specific user and the string whith how it's computed.
@@ -778,13 +778,13 @@ function dynamo_get_niwf($dynamo, $grpusrs, $usrid) {
     $evals = dynamo_get_grid($dynamo);
     $calcul = 'NIWF<br>';
 
-    foreach ($grpusrs as $grpusr) { // loop to all students of  groups
+    foreach ($grpusrs as $grpusr) { // Loop to all students of  groups.
         $totals = 0;
         $agrid[$i] = [];
         $j = 0;
         foreach ($grpusrs as $grpusrev) {
             if ($grpusrev->id != $grpusr->id) {
-                $total = dynamo_get_total($evals, $grpusrev->id ,$grpusr->id);
+                $total = dynamo_get_total($evals, $grpusrev->id, $grpusr->id);
                 $totals += $total;
                 $calcul .= ' + '.$total;
                 $agrid[$i][$j] = $total;
@@ -797,16 +797,16 @@ function dynamo_get_niwf($dynamo, $grpusrs, $usrid) {
 
         $calcul .= ' = '.$totals.'<br>';
 
-        if($usrid == $grpusr->id) {
+        if ($usrid == $grpusr->id) {
             $ki = $i;
         }
         $i++;
     }
 
     $niwf = 0;
-    for($j = 0; $j < count($agrid); $j++) {
+    for ($j = 0; $j < count($agrid); $j++) {
         if ($agrid[$j][count($agrid[$j]) - 1] > 0) {
-            $niwf += $agrid[$j][$ki] / $agrid[$j][count($agrid[$j])-1];
+            $niwf += $agrid[$j][$ki] / $agrid[$j][count($agrid[$j]) - 1];
             $calcul .= ' + ('.$agrid[$j][$ki].'/'.$agrid[$j][count($agrid[$j]) - 1].')';
         }
     }
@@ -838,7 +838,7 @@ function dynamo_get_matrix($dynamo, $grpusrs) {
         $j = 0;
         foreach ($grpusrs as $grpusrev) {
             $total = dynamo_get_total($evals, $grpusrev->id, $grpusr->id);
-            if($grpusrev->id != $grpusr->id) {
+            if ($grpusrev->id != $grpusr->id) {
                 $totals += $total;
                 $agrid[$i][$j] = $total;
                 $agridauto[$i][$j] = 0;
@@ -849,28 +849,28 @@ function dynamo_get_matrix($dynamo, $grpusrs) {
             $j++;
         }
         $agrid[$i][$j] = $totals; // Last column for totals.
-        if($totals > 0) {
+        if ($totals > 0) {
             $nbuserpart++;
         }
         $i++;
     }
 
-    // Add NIWF at the last line
+    // Add NIWF at the last line.
     $agrid[count($grpusrs)] = [];
-    for($i = 0; $i < count($grpusrs); $i++) {
-      $niwf = 0;
-      for($j = 0; $j < count($agrid)-1; $j++) {
-        if($agrid[$j][count($agrid[$j])-1] > 0) {
-            $niwf += $agrid[$j][$i] / $agrid[$j][count($agrid[$j]) - 1];
+    for ($i = 0; $i < count($grpusrs); $i++) {
+        $niwf = 0;
+        for ($j = 0; $j < count($agrid) - 1; $j++) {
+            if ($agrid[$j][count($agrid[$j]) - 1] > 0) {
+                $niwf += $agrid[$j][$i] / $agrid[$j][count($agrid[$j]) - 1];
+            }
+
+            if ($agrid[$j][$i] == 0) {
+                $agrid[$j][$i] = $agridauto[$i][$j]; // Put back the auto eval in the matrix.
+            }
         }
-        
-        if($agrid[$j][$i] == 0) {
-            $agrid[$j][$i] = $agridauto[$i][$j]; // Put back the auto eval in the matrix.
-        }
-      }
-      $agrid[count($grpusrs)][$i] = $niwf;
+        $agrid[count($grpusrs)][$i] = $niwf;
     }
-    
+
     return $agrid;
 }
 /**
@@ -897,7 +897,7 @@ function dynamo_get_autoeval($userid, $dynamo) {
     return $dynamoeval;
 }
 /**
-* Get the self confidence/assurance of a specific user
+ * Get the self confidence/assurance of a specific user
  * (autoeval  / SumofEvaluation) * (nbStudent-1)/NIWF
  *
  * @param object dynamo  $dynamo
@@ -920,7 +920,7 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
         $agrid[$i] = [];
         $j = 0;
         foreach ($grpusrs as $grpusrev) {
-            if($grpusrev->id != $grpusr->id) {
+            if ($grpusrev->id != $grpusr->id) {
                 $total = dynamo_get_total($evals, $grpusrev->id, $grpusr->id);
                 $totals += $total;
                 $agrid[$i][$j] = $total;
@@ -931,46 +931,66 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
             $j++;
         }
 
-      $agrid[$i][$j] = $totals;
-      if($usrid == $grpusr->id) {
-          $ki = $i;
-      }
-      $i++;
+        $agrid[$i][$j] = $totals;
+        if($usrid == $grpusr->id) {
+            $ki = $i;
+        }
+        $i++;
     }
 
     $niwf = 0;
-    $tea = 0;
     $nbstudent = 0;
+
     for($j = 0; $j < count($agrid); $j++) {
-      if($agrid[$j][count($agrid[$j]) - 1] > 0) {
-        $niwf += $agrid[$j][$ki] / $agrid[$j][count($agrid[$j]) - 1];
-        $nbstudent++; // Count only student that answers.
-      }
+        if($agrid[$j][count($agrid[$j]) - 1] > 0) {
+            $niwf += $agrid[$j][$ki] / $agrid[$j][count($agrid[$j]) - 1];
+            $nbstudent++; // Count only student that answers.
+        }
     }
-    if($autoeval == 0) {
+    if ($autoeval == 0) {
         return 10; // Student that don't answers can a high arbitrary score.
     }
     $sum = $agrid[$ki][count($agrid[$ki]) - 1];
-    $nsa = ($autoeval  / $sum) * ($nbstudent - 1);
+    $nsa = ($autoeval / $sum) * ($nbstudent - 1);
     $conf = $nsa / $niwf;
 
     return $conf;
 }
 /**
-* Get the color to display the NIWF based on his value
-* The threshold values can be calibrated
-*
-* @param float that contain the NIWF $val
-  return a string with the color...
-*/
+ * Get the color to display the NIWF based on his value
+ * The threshold values can be calibrated
+ *
+ * @param float that contain the NIWF $val
+ * return a string with the color...
+ */
 function dynamo_get_color_niwf($val) {
-    if($val < 0.65) {
+    if ($val < 0.65) {
         return 'black';
     }
-    if($val < 0.80) {
+    if ($val < 0.80) {
         return 'red';
     }
-    if($val < 0.90) {
+    if ($val < 0.90) {
+        return 'orange';
+    }
+
+    return 'green';
+}
+/**
+ * Get the color to display the self confidence based on his value
+ * The threshold values can be calibrated
+ *
+ * @param float that contain the self confidence/assurance
+ * return a string with the color...
+ */
+function dynamo_get_color_conf($val) {
+    if ($val > 1.50) {
+        return 'black';
+    }
+    if ($val > 1.25) {
+        return 'red';
+    }
+    if ($val > 1.10) {
         return 'orange';
     }
 
@@ -978,27 +998,7 @@ function dynamo_get_color_niwf($val) {
 }
 
 /**
-* Get the color to display the self confidence based on his value
-* The threshold values can be calibrated
-*
-* @param float that contain the self confidence/assurance
-  return a string with the color...
-*/function dynamo_get_color_conf($val) {
-    if($val > 1.50) {
-        return 'black';
-    }
-    if($val > 1.25) {
-        return 'red';
-    }
-    if($val > 1.10) {
-        return 'orange';
-    }
-
-    return 'green';
-}
-
-/**
-* return the preview of what student see (the survey) to teacher
+ * return the preview of what student see (the survey) to teacher
  *
  * @param object dynamo  $dynamo
  *
@@ -1017,7 +1017,7 @@ function dynamo_get_body_table_teacher($dynamo) {
 
     $params = array('param1' => $dynamo->groupingid);
     $result = $DB->get_records_sql($sql, $params);
-    $groupid =  reset($result)->id;
+    $groupid = reset($result)->id;
     $groupusers = dynamo_get_group_users($groupid);
 
     $sql = "
@@ -1037,16 +1037,15 @@ function dynamo_get_body_table_teacher($dynamo) {
 }
 
 /**
-* Return the avg evaluation of all the students on the group evaluation
-*
-* @param object dynamo  $dynamo
-* @param integer id of the user $usrid
-* @param array $grpusrs array of user
-* @param integer $grpid id of the group
-*
-* return an object with the avg for all criterias on the group evaluation
-*/
-function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
+ * Return the avg evaluation of all the students on the group evaluation
+ *
+ * @param object dynamo  $dynamo
+ * @param array $grpusrs array of user
+ * @param integer $grpid id of the group
+ *
+ * return an object with the avg for all criterias on the group evaluation
+ */
+function dynamo_get_group_eval_avg($dynamo, $grpusrs, $grpid) {
     global $DB;
 
     $allgroupeval = new stdClass();
@@ -1060,13 +1059,13 @@ function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
     foreach ($grpusrs as $grpusr) { // Loop to all students of  groups.
         if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id
             , 'userid' => $grpid ))) {
-        $i++;
-        $allgroupeval->crit1 += (int)$dynamoeval->crit1;
-        $allgroupeval->crit2 += (int)$dynamoeval->crit2;
-        $allgroupeval->crit3 += (int)$dynamoeval->crit3;
-        $allgroupeval->crit4 += (int)$dynamoeval->crit4;
-        $allgroupeval->crit5 += (int)$dynamoeval->crit5;
-        $allgroupeval->crit6 += (int)$dynamoeval->crit6;
+            $i++;
+            $allgroupeval->crit1 += (int)$dynamoeval->crit1;
+            $allgroupeval->crit2 += (int)$dynamoeval->crit2;
+            $allgroupeval->crit3 += (int)$dynamoeval->crit3;
+            $allgroupeval->crit4 += (int)$dynamoeval->crit4;
+            $allgroupeval->crit5 += (int)$dynamoeval->crit5;
+            $allgroupeval->crit6 += (int)$dynamoeval->crit6;
         }
     }
 
@@ -1083,12 +1082,13 @@ function dynamo_get_group_eval_avg($dynamo, $usrid, $grpusrs, $grpid) {
 }
 
 /**
-* return some indicators about how the group working
- * indicators are : response or not to the survey ! (Participation)
-                    Implication
-                    Self-confidence
-                    Conflict
-                    If student talk about each others (experimental)
+ * return some indicators about how the group working
+ * indicators are : response or not to the survey ! 
+ * Participation
+ * Implication
+ * Self-confidence
+ * Conflict
+ * If student talk about each others (experimental)
  *
  * @param object dynamo  $dynamo
  * @param array $grpusrs array of user
@@ -1135,7 +1135,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id);
         $color = dynamo_get_color_niwf($niwf[0]);
 
-        if($color == 'green') {
+        if ($color == 'green') {
             $color = '#006DCC';
         }
         $notperfect +=  $aweight[$color];
@@ -1145,10 +1145,10 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         // Self-insurance.
         $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
         $color = dynamo_get_color_conf($conf);
-        if($color == 'green') {
+        if ($color == 'green') {
             $color = '#006DCC';
         }
-        $notperfect +=  $aweight[$color];
+        $notperfect += $aweight[$color];
 
         $confiance = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                     class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
@@ -1156,7 +1156,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         // Find firstname lastname in comments about the group.
         foreach ($grpusrs as $grpusrname) {
             $text = preg_replace('/[^a-z\s]/', '', strtolower($dynamoeval->comment2));
-            $text = preg_split('/\s+/', $text, NULL, PREG_SPLIT_NO_EMPTY);
+            $text = preg_split('/\s+/', $text, null, PREG_SPLIT_NO_EMPTY);
             $text = array_flip($text);
             $firstname = strtolower($grpusrname->firstname);
             $lastname = strtolower($grpusrname->lastname);
@@ -1174,11 +1174,11 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $groupstat->tooltips = $tooltips;
     $groupstat->names = $names;
 
-    if($notperfect == 0 ) {
+    if ($notperfect == 0 ) {
         $groupstat->conflit = '';
     }
 
-    $idico = round($notperfect/$nbuser/2,0,PHP_ROUND_HALF_DOWN);
+    $idico = round($notperfect / $nbuser / 2, 0, PHP_ROUND_HALF_DOWN);
     $groupstat->remark = '<span class="hiddenidx">'.round($notperfect / $nbuser / 2, 2)
         .'</span><i title="'.get_string('dynamoaclimate'.$idico, 'dynamo')
         .' ('.round($notperfect / $nbuser / 2, 2).')" class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
@@ -1230,7 +1230,7 @@ function dynamo_get_report_001($dynamo) {
 function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
     global $DB;
 
-    if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $builder, 'evalbyid' =>$evalbyid, 'userid' =>$usrid  ))) {
+    if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $builder, 'evalbyid' => $evalbyid, 'userid' => $usrid))) {
         $dynamoeval = new stdClass();
         $dynamoeval->crit1 = 0;
         $dynamoeval->crit2 = 0;
@@ -1332,21 +1332,21 @@ function dynamo_get_grouping_stat($dynamo) {
  * @return a string with javascript
  */
 function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $firstname, $lastname) {
-    if($allgroupevalstr == "") {
+    if ($allgroupevalstr == "") {
         $title = get_string('dynamoradar01title2', 'mod_dynamo');
         $strokestyle = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)']";
         $keycolors = "['#FFA500', 'blue']";
-        $keys = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".
-                            htmlspecialchars($lastname,ENT_QUOTES)."']";
-        $data = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr)."];";
+        $keys = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname, ENT_QUOTES)." ".
+                            htmlspecialchars($lastname, ENT_QUOTES)."']";
+        $data = "[".str_replace ("NAN", "0", $pairevalstr).", ".str_replace (",,,,","0,0,0,0,0", $autoevalstr)."];";
     } else {
         $title = get_string('dynamoradar01title3', 'mod_dynamo');
         $strokestyle = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)', 'rgba(0,255,255,0.5)']";
         $keycolors = "['#FFA500', 'blue', '#00FFFF']";
-        $keys = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname,ENT_QUOTES)." ".
-                            htmlspecialchars($lastname,ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
-        $data = "[".str_replace ("NAN","0",$pairevalstr).", ".str_replace (",,,,","0,0,0,0,0",$autoevalstr).", ".
-                            str_replace (",,,,","0,0,0,0,0",$allgroupevalstr)."];";
+        $keys = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname, ENT_QUOTES)." ".
+                            htmlspecialchars($lastname, ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
+        $data = "[".str_replace ("NAN", "0", $pairevalstr).", ".str_replace (",,,,", "0,0,0,0,0", $autoevalstr).", ".
+                            str_replace (",,,,", "0,0,0,0,0", $allgroupevalstr)."];";
     }
 
     $jscript = $jscript.'
@@ -1379,7 +1379,6 @@ function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $a
 
     return $jscript;
 }
-
 /**
  * Return javascript to create a radar graphic with Rgraph library for all students of a group
  *
@@ -1390,11 +1389,11 @@ function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $a
  * @param string $labels label for the grapth
  * @param string $strokestyle a string that is a javascript array with the colors of the lines one by student
  * @param string $keys a string that is a javascript array with the name of all students of the groups
- * @param string $keyColors a string that is a javascript array of the colors of the key
+ * @param string $keycolors a string that is a javascript array of the colors of the key
  *
  * @return a string with javascript
  */
-function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels, $strokestyle, $keys, $keyColors) {
+function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels, $strokestyle, $keys, $keycolors) {
     $jscript = $jscript.'
         var data'.$grpid.' = '.$datagrp.'
         var radar'.$grpid.' = new RGraph.Radar({
@@ -1416,7 +1415,7 @@ function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels
                 strokestyle: '.$strokestyle.',
                 linewidth: 3,
                 key: '.$keys.' ,
-                keyColors: '.$keyColors.' ,
+                keyColors: '.$keycolors.' ,
                 keyInteractive: true,
                 backgroundCirclesPoly: true
             }
@@ -1438,7 +1437,8 @@ function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels
  *
  * @return a string with javascript
  */
-function dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $firstname, $lastname) {
+function dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $firstname
+    , $lastname) {
     if($allgroupevalstr == "") {
         $title = get_string('dynamoradar01title2', 'mod_dynamo');
         $strokestyle = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)']";
@@ -1565,7 +1565,6 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
     global $DB;
 
     $ret = new stdClass();
-
     $div = 5;
     if($display6 == '' ) $div = 6;
 
@@ -1573,7 +1572,8 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
         SELECT userid, firstname, lastname, sum(total)/count(userid)/".$div." eval,  groupid, name
           FROM (
                 SELECT t1.* FROM (
-                    SELECT t4.id groupid , t4.name ,t1.userid, t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total, t3.*
+                    SELECT t4.id groupid, t4.name, t1.userid, t1.evalbyid
+                          , sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total, t3.*
                       FROM {dynamo_eval}      t1
                           ,{user}             t3
                           ,{groups}           t4
@@ -1612,7 +1612,7 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
 
     foreach ($result as $i => $value) {
         $result[$i]->autoeval = $result2[$i]->autoeval;
-        $idx = Round($result[$i]->eval,2).'_'.Round($result[$i]->autoeval, 2);
+        $idx = round($result[$i]->eval, 2).'_'.round($result[$i]->autoeval, 2);
         $tooltips[$idx] = $tooltips[$idx]
             .htmlspecialchars($result[$i]->firstname, ENT_QUOTES).' '
             .htmlspecialchars($result[$i]->lastname, ENT_QUOTES).',';
@@ -1636,17 +1636,17 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     $grp = [];
     $list = [];
     $cnt = 0;
-
-    // Array to array...
+    // Get the list of students that have answer. The other are not take in computing and evaluation.
     $agrpusrs = [];
     foreach ($grpusrs as $usr) {
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
-        if($autoeval->crit1 > 0) $agrpusrs[] = $usr;
+        if($autoeval->crit1 > 0) {
+            $agrpusrs[] = $usr;
+        }
     }
     $grpusrs = $agrpusrs;
-
     // Create a list with all quatric gap ($diff) between each student of a group.
-    for ($i=0;$i<count($grpusrs); $i++ ) { // Loop to all students of the group.
+    for ($i = 0; $i < count($grpusrs); $i++ ) { // Loop to all students of the group.
         $usr1 = $grpusrs[$i];
         for ($j=$i+1;$j<count($grpusrs); $j++ ) { // Compare to all the ohers in the group.
             $usr2 = $grpusrs[$j];
@@ -1676,7 +1676,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         if($maxdiff < $diff) {
             $maxdiff = $diff;
         }
-        
+
         $grpid1 = dynamo_get_group_consistency($grp, $usr1);
         $grpid2 = dynamo_get_group_consistency($grp, $usr2);
         if ($grpid1 > -1) { // Stud1 has group.
@@ -1692,7 +1692,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
             }
         } else { // Stud1 has no group.
             if ($grpid2 > -1) { // Stud2 has group.
-                if( $diff <= 0.04) { // Add to  group stud2.
+                if ($diff <= 0.04) { // Add to  group stud2.
                     $grp[$grpid2][count($grp[$grpid2])] = $usr1;
                 } else { // Add to a new group.
                     $idx = count($grp);
@@ -1710,9 +1710,10 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
                 }
             }
         } // Biggest sub group.
-        if($maxsize < count($grp[$idx])) $maxsize = count($grp[$idx]);
+        if($maxsize < count($grp[$idx])) {
+            $maxsize = count($grp[$idx]);
+        }
     }
-
     $result = new stdClass();
     $result->grp = $grp;
     $result->type = 0;
@@ -1728,13 +1729,13 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     if ($maxdiff >= 0.05) {
         $result->type = 3; // Clustering.
     }
-    if ($maxdiff > 0.15) { //  Real value should be 0.05 /!\.
+    if ($maxdiff > 0.15) { // Real value should be 0.05 /!\.
         $result->type = 4; // Band.
     }
     if ($maxsize == 1 && $result->type > 2) {
         $result->type = 5;
     }
-    if(count($grp) == 1 && $result->type == 3) {
+    if (count($grp) == 1 && $result->type == 3) {
         $result->type = 2;
     }
 
@@ -1748,7 +1749,6 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
 
     return $result;
 }
-
 /**
  * Subfunction to simplify  dynamo_get_consistency
  * the aim is just to see if a user is already on an array fi not the array is created
@@ -1760,7 +1760,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
  */
 function dynamo_get_group_consistency($grp, $usr) {
     for ($i = 0; $i < count($grp); $i++) {
-        for ($j=0;$j < count($grp[$i]); $j++) {
+        for ($j = 0;$j < count($grp[$i]); $j++) {
             if($grp[$i][$j] == $usr) {
                 return $i;
             }
@@ -1800,7 +1800,7 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $sumeval = 0;
     $similitude = 0;
 
-    // Sum of evaluation
+    // Sum of evaluation.
     $sql = "
         SELECT t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) total
           FROM {dynamo_eval} t1
@@ -1817,11 +1817,11 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
         $result = new stdClass();
         $result->ecart = 1000;
         $result->similitude = 1000;
-    
+
         return $result;
     }
 
-    // Number of evaluation
+    // Number of evaluation.
     $sql = "
         SELECT (count(t1.crit1) + count(t1.crit2) + count(t1.crit3) + count(t1.crit4) + count(t1.crit5)) nbeval
           FROM {dynamo_eval} t1
@@ -1836,29 +1836,28 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
 
     $avg = round($sumeval / $nbeval, 3);
 /*
-  $sql = "
-    SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) similitude
-      FROM (
-            SELECT t1.userid, if(t1.crit1-t1.crit1=0,'1','0') crit1 , if(t1.crit2-t2.crit2=0,'1','0') crit2
-                  ,if(t1.crit3-t2.crit3=0,'1','0') crit3 , if(t1.crit4-t2.crit4=0,'1','0') crit4
-                  ,if(t1.crit5-t2.crit5=0,'1','0') crit5
-              FROM {dynamo_eval} t1
-                  ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
-                      FROM {dynamo_eval} t1
-                     WHERE t1.builder   = :param1
-                       AND t1.critgrp   = 0
-                       AND t1.evalbyid  = :param2
-                    ) t2
-             WHERE t1.builder   = :param3
-               AND t1.critgrp   = 0
-               AND t1.evalbyid  = :param4
-               AND t1.userid    = t2.userid
-    ) t1
-  ";
+    $sql = "
+        SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) similitude
+          FROM (SELECT t1.userid, if(t1.crit1-t1.crit1=0,'1','0') crit1 , if(t1.crit2-t2.crit2=0,'1','0') crit2
+                    ,if(t1.crit3-t2.crit3=0,'1','0') crit3 , if(t1.crit4-t2.crit4=0,'1','0') crit4
+                    ,if(t1.crit5-t2.crit5=0,'1','0') crit5
+                FROM {dynamo_eval} t1
+                    ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
+                        FROM {dynamo_eval} t1
+                        WHERE t1.builder   = :param1
+                          AND t1.critgrp   = 0
+                          AND t1.evalbyid  = :param2
+                     ) t2
+               WHERE t1.builder   = :param3
+                 AND t1.critgrp   = 0
+                 AND t1.evalbyid  = :param4
+                 AND t1.userid    = t2.userid
+              ) t1
+    ";
 
-  $params = array('param1' => $dynamo->id, 'param2' => $usr2,'param3' => $dynamo->id, 'param4' => $usr1);
-  $result = $DB->get_record_sql($sql, $params);
-  $similitude = $result->similitude/$nbeval;
+    $params = array('param1' => $dynamo->id, 'param2' => $usr2,'param3' => $dynamo->id, 'param4' => $usr1);
+    $result = $DB->get_record_sql($sql, $params);
+    $similitude = $result->similitude/$nbeval;
 */
 
     // Sum of the 6 criteria of student 1 minus the same criteria of student2 put at POW2 and after  to square2
@@ -2005,8 +2004,10 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
         // Confidence.
         $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
         $color = dynamo_get_color_conf($conf);
-        if($color == 'green') $color = '#006DCC';
-        $notperfect+= $aweight[$color];
+        if($color == 'green') {
+            $color = '#006DCC';
+        }
+        $notperfect += $aweight[$color];
     }
 
     $idico = round($notperfect / $nbuser / 2, 0, PHP_ROUND_HALF_DOWN);

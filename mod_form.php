@@ -101,7 +101,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
             get_string('dynamocritresponsabilitedefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_responsability',
             get_string('dynamocritresponsabilite', 'mod_dynamo'), array('size' => '80', 'maxlength' => '200'));
-        $mform->addElement('header', 'dynamofieldset', 
+        $mform->addElement('header', 'dynamofieldset',
             get_string('dynamocrit3', 'mod_dynamo').' : '.get_string('dynamoscientifique', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritscientifiquedefault', 'mod_dynamo'));
         $mform->addElement('text', 'dynamo_science',
@@ -109,12 +109,12 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit4', 'mod_dynamo').' : '
             .get_string('dynamotechnique', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocrittechniquedefault', 'mod_dynamo'));
-        $mform->addElement('text', 'dynamo_technical', 
+        $mform->addElement('text', 'dynamo_technical',
             get_string('dynamocrittechnique', 'mod_dynamo'), array('size' => '80', 'maxlength' => '200'));
-        $mform->addElement('header', 'dynamofieldset', 
+        $mform->addElement('header', 'dynamofieldset',
             get_string('dynamocrit5', 'mod_dynamo').' : '.get_string('dynamoattitude', 'mod_dynamo'));
         $mform->addElement('static', 'label', get_string('description'), get_string('dynamocritattitudedefault', 'mod_dynamo'));
-        $mform->addElement('text', 'dynamo_attitude', 
+        $mform->addElement('text', 'dynamo_attitude',
             get_string('dynamocritattitude', 'mod_dynamo'), array('size' => '80', 'maxlength' => '200'));
         // The teacher can add a sixth critria but with no pedagogic influence on the 5 others.
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocritoptname', 'mod_dynamo'));
@@ -128,7 +128,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->addElement('text', 'dynamo_comment1', get_string('dynamocommentcontr', 'mod_dynamo'),
             array('size' => '80', 'maxlength' => '200'));
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentfonction', 'mod_dynamo').' (2)');
-        $mform->addElement('text', 'dynamo_comment2', get_string('dynamocommentfonction', 'mod_dynamo'), 
+        $mform->addElement('text', 'dynamo_comment2', get_string('dynamocommentfonction', 'mod_dynamo'),
             array('size' => '80', 'maxlength' => '200'));
         // Hidden tranlated text for javascript mod.js.
         $mform->addElement('hidden', 'dynamo_newtext', get_string('dynamoactivityview', 'mod_dynamo'));

@@ -69,7 +69,8 @@ echo $OUTPUT->header();
  **************************************/
 foreach ($groupusers as $user) {
     $error = 0;
-    if($dynamo->autoeval == 0 && $user->id == $USER->id) { // No auto evaluation check...
+    if ($dynamo->autoeval == 0 && $user->id == $USER->id) { // No auto evaluation check...
+        $error = 0;
     } else {
         if ($_POST[$user->id.'_1'] < 1 || $_POST[$user->id.'_1'] > 5) {
             $error++;
@@ -86,7 +87,7 @@ foreach ($groupusers as $user) {
         if ($_POST[$user->id.'_5'] < 1 || $_POST[$user->id.'_5'] > 5) {
             $error++;
         }
-        if ($dynamo->critoptname != '' && ($_POST[$user->id.'_6'] <1 || $_POST[$user->id.'_6'] > 5)) {
+        if ($dynamo->critoptname != '' && ($_POST[$user->id.'_6'] < 1 || $_POST[$user->id.'_6'] > 5)) {
             $error++;
         }
         if (trim($_POST['comment1']) == '') {
@@ -136,7 +137,8 @@ if ($dynamo->groupeval == 1) {
  Save peer evaluation.
 *********************/
 foreach ($groupusers as $user) {
-    if ($dynamo->autoeval == 0 && $user->id == $USER->id) { // No auto evaluation save.
+    if ($dynamo->autoeval == 0 && $user->id == $USER->id) { 
+        // No auto evaluation save.
     } else {
         $dynamoeval = new stdClass();
         $dynamoeval->builder = $cm->instance;

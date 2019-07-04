@@ -40,11 +40,11 @@ $bubble4 = get_string('dynamocrittechniquedefault', 'mod_dynamo').', '.$dynamo->
 $bubble5 = get_string('dynamocritattitudedefault', 'mod_dynamo').', '.$dynamo->crit5;
 
 $bubblecom1 = $dynamo->comment1;
-if($bubblecom1 == '') {
+if ($bubblecom1 == '') {
     $bubblecom1 = get_string('dynamonocomment', 'mod_dynamo');
 }
 $bubblecom2 = $dynamo->comment2;
-if($bubblecom2 == '') {
+if ($bubblecom2 == '') {
     $bubblecom2 = get_string('dynamonocomment', 'mod_dynamo');
 }
 
@@ -137,7 +137,7 @@ echo '
                         <tbody>
 ';
 if ($mode == 'student') {
-    echo dynamo_get_body_table($groupusers, $USER->id, $dynamo,$group->id);
+    echo dynamo_get_body_table($groupusers, $USER->id, $dynamo, $group->id);
 } else {
     echo dynamo_get_body_table_teacher($dynamo);
 }

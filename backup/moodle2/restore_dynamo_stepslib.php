@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -49,8 +48,8 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
         $paths[] = $dynamo;
 
         if ($userinfo) {
-          $eval = new restore_path_element('dynamo_eval', '/activity/dynamo/evals/eval');
-          $paths[] = $eval;
+            $eval = new restore_path_element('dynamo_eval', '/activity/dynamo/evals/eval');
+            $paths[] = $eval;
         }
 
         return $this->prepare_activity_structure($paths);

@@ -22,9 +22,9 @@
  * @author     Palumbo Dominique
  * */
 
-global $CFG, $SESSION, $DB;
-
 require_once(__DIR__.'/../../../../config.php');
+
+global $CFG, $SESSION, $DB;
 require_once($CFG->dirroot.'/lib/excellib.class.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
 
