@@ -33,7 +33,7 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 defined('MOODLE_INTERNAL') || die();
 
 require_login($course, true, $cm);
@@ -420,7 +420,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
             $avatar->courseid = $course->id;
             $avatar->link = true;
             $avatar->size = 50;
-            
+
             echo ('<div class="report-student"><h4 class="group_detail_title_rep '.$nojumpclass.'">'
                 .$OUTPUT->render($avatar).$grp->name.' : '.$grpusr->firstname.' '.$grpusr->lastname.'</h4>');
             $nojumpclass = "";
@@ -477,7 +477,7 @@ function display_group_niwf_table($dynamo, $grp) {
             </table>
             </div>
         </div>');
-}  
+}
 /**
  */
 function display_group_detail_table($dynamo, $grp) {

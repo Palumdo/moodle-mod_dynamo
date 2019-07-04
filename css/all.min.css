@@ -80,7 +80,8 @@
     margin-left: 2.5em;
     padding-left: 0;
 }
- .fa-ul > li {
+
+.fa-ul > li {
     position: relative;
 }
 
@@ -133,25 +134,27 @@
 }
 
 @-webkit-keyframes fa-spin {
- 0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-}
- 100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-}
+
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes fa-spin {
- 0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-}
- 100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-}
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 .fa-rotate-90 {
@@ -184,7 +187,8 @@
     transform: scale(1, -1);
 }
 
-.fa-flip-both, .fa-flip-horizontal.fa-flip-vertical {
+.fa-flip-both,
+.fa-flip-horizontal.fa-flip-vertical {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
     -webkit-transform: scale(-1, -1);
     transform: scale(-1, -1);
@@ -229,10 +233,10 @@
     color: #fff;
 }
 
-/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
-readers do not read off random characters that represent icons */
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen readers do not read off random characters that represent 
+icons */
 .fa-500px:before {
-       content: "\f26e";
+    content: "\f26e";
 }
 
 .fa-accessible-icon:before {
@@ -5702,11 +5706,12 @@ readers do not read off random characters that represent icons */
     width: 1px;
 }
 
-.sr-only-focusable:active, .sr-only-focusable:focus {
- clip: auto;
- height: auto;
- margin: 0;
- overflow: visible;
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
     position: static;
     width: auto;
 }
@@ -5716,26 +5721,28 @@ readers do not read off random characters that represent icons */
     font-weight: normal;
     font-display: auto;
     src: url("../webfonts/fa-brands-400.eot");
-    src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), 
-        url("../webfonts/fa-brands-400.woff2") format("woff2"), 
-        url("../webfonts/fa-brands-400.woff") format("woff"), 
-        url("../webfonts/fa-brands-400.ttf") format("truetype"), 
-        url("../webfonts/fa-brands-400.svg#fontawesome") format("svg");
+    src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"),
+         url("../webfonts/fa-brands-400.woff2") format("woff2"),
+         url("../webfonts/fa-brands-400.woff") format("woff"),
+         url("../webfonts/fa-brands-400.ttf") format("truetype"),
+         url("../webfonts/fa-brands-400.svg#fontawesome") format("svg");
 }
 
 .fab {
     font-family: 'Font Awesome 5 Brands';
 }
+
 @font-face {
     font-family: 'Font Awesome 5 Free';
     font-style: normal;
     font-weight: 400;
     font-display: auto;
     src: url("../webfonts/fa-regular-400.eot");
-    src: url("../webfonts/fa-regular-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-regular-400.woff2")
-    format("woff2"), url("../webfonts/fa-regular-400.woff") format("woff"),
-        url("../webfonts/fa-regular-400.ttf") format("truetype"),
-        url("../webfonts/fa-regular-400.svg#fontawesome") format("svg");
+    src: url("../webfonts/fa-regular-400.eot?#iefix") format("embedded-opentype"),
+         url("../webfonts/fa-regular-400.woff2") format("woff2"),
+         url("../webfonts/fa-regular-400.woff") format("woff"),
+         url("../webfonts/fa-regular-400.ttf") format("truetype"),
+         url("../webfonts/fa-regular-400.svg#fontawesome") format("svg");
 }
 
 .far {
@@ -5750,8 +5757,10 @@ readers do not read off random characters that represent icons */
     font-display: auto;
     src: url("../webfonts/fa-solid-900.eot");
     src: url("../webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"),
-        url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.woff") format("woff"),
-        url("../webfonts/fa-solid-900.ttf") format("truetype"), url("../webfonts/fa-solid-900.svg#fontawesome") format("svg");
+         url("../webfonts/fa-solid-900.woff2") format("woff2"),
+         url("../webfonts/fa-solid-900.woff") format("woff"),
+         url("../webfonts/fa-solid-900.ttf") format("truetype"),
+         url("../webfonts/fa-solid-900.svg#fontawesome") format("svg");
 }
 
 .fa,

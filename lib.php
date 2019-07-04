@@ -1681,7 +1681,8 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         $grpid2 = dynamo_get_group_consistency($grp, $usr2);
         if ($grpid1 > -1) { // Stud1 has group.
             if ($grpid2 > -1) { // Stud2 has group.
-                // Nothing to do.
+                // Nothing to do next line for test.
+                $grpid2 = dynamo_get_group_consistency($grp, $usr2);
             } else { // Stud2 has no group.
                 if ($diff <= 0.04) { // Add to group stud1.
                     $grp[$grpid1][count($grp[$grpid1])] = $usr2;

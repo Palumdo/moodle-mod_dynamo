@@ -139,6 +139,7 @@ if ($dynamo->groupeval == 1) {
 foreach ($groupusers as $user) {
     if ($dynamo->autoeval == 0 && $user->id == $USER->id) {
         // No auto evaluation save.
+        $error = 0;
     } else {
         $dynamoeval = new stdClass();
         $dynamoeval->builder = $cm->instance;

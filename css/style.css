@@ -101,7 +101,7 @@
 .path-mod-dynamo .errormsg {
     border: 1px solid red;
     border-radius: 10px;
-    color: red; 
+    color: red;
     width: 100%;
     padding: 3px;
     margin-top: 5px;
@@ -199,7 +199,8 @@
 /*********************/
 /* Boostrap like CSS */
 /*********************/
-.path-mod-dynamo::before, ::after {
+.path-mod-dynamo::before,
+ .path-mod-dynamo::after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -258,7 +259,6 @@
     padding-right: 30px;
 }
 
-/*********************/
 /* toolpit container */
 .path-mod-dynamo .toolpit {
     position: relative;
@@ -316,8 +316,8 @@
     background-color: white;
 }
 
-.path-mod-dynamo .tablelvlx th
-, .path-mod-dynamo .tablelvlx td {
+.path-mod-dynamo .tablelvlx th,
+.path-mod-dynamo .tablelvlx td {
     padding-left: 8px;
     text-align: left;
     border-top: 1px solid #ddd;
@@ -326,7 +326,7 @@
 
 .path-mod-dynamo .tablelvlx tr:hover:nth-child(even),
 .path-mod-dynamo .tablelvlx tr:hover:nth-child(odd) {
-    background-color: rgb(156,183,212,0.8);
+    background-color: rgb(156, 183, 212, 0.8);
     color: white;
 }
 
@@ -335,11 +335,11 @@
 }
 
 .path-mod-dynamo .tablelvlx tr:nth-child(even) {
-    background: #F8F8F8;
+    background: #f8f8f8;
 }
 
 .path-mod-dynamo .tablelvlx tr:nth-child(odd) {
-    background: #FFF;
+    background: #fff;
 }
 
 .path-mod-dynamo .tablelvl0 {
@@ -380,7 +380,7 @@
 
 .path-mod-dynamo .tablelvl0 tr:hover:nth-child(even),
 .path-mod-dynamo .tablelvl0 tr:hover:nth-child(odd) {
-    background-color: rgb(0,110,204,0.9);
+    background-color: rgb(0, 110, 204, 0.9);
     color: white;
 }
 
@@ -473,9 +473,9 @@
     font-family: sans-serif;
     max-width: 480px;
     min-width: 320px;
-    white-space: pre-wrap; 
+    white-space: pre-wrap;
     z-index: 999999;
-    border: 2px solid #ccc;	
+    border: 2px solid #ccc;
 }
 
 /* Style the tab */
@@ -502,12 +502,12 @@
 
 /* Change background color of buttons on hover */
 .path-mod-dynamo .tab div:hover {
-    background-color: #ddd  !important;
+    background-color: #ddd !important;
 }
 
 /* Create an active/current tablink class */
 .path-mod-dynamo .tab div.active {
-    background-color: #ccc  !important;
+    background-color: #ccc !important;
     font-weight: bold;
 }
 
@@ -520,9 +520,9 @@
 }
 
 .path-mod-dynamo .tablinks {
-    background-color: transparent; 
+    background-color: transparent;
     border: 0;
-    border-radius: 0px ;
+    border-radius: 0;
 }
 
 .path-mod-dynamo .group_detail_title {
@@ -562,7 +562,7 @@
     background-color: var(--main-color) !important;
 }
 
-// jqueryui css
+/* jqueryui css */
 .path-mod-dynamo .ui-widget.ui-widget-content {
     border: 1px solid #c5c5c5;
 }
@@ -574,7 +574,7 @@
 }
 
 .path-mod-dynamo .ui-widget {
-    font-family: Arial,Helvetica,sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
 }
 
@@ -600,7 +600,7 @@
 .path-mod-dynamo .ui-menu-item:hover {
     background-color: var(--main-color);
     color: white;
-    cursor: pointer;  
+    cursor: pointer;
 }
 
 .path-mod-dynamo button::-moz-focus-inner,
@@ -684,7 +684,7 @@
 }
 
 .path-mod-dynamo input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #2196f3;
 }
 
 .path-mod-dynamo input:checked + .slider:before {
@@ -706,7 +706,7 @@
     font-weight: bold;
     font-size: 12px;
     background-color: #032f5d;
-    color: white;  
+    color: white;
 }
 
 .path-mod-dynamo .box-switch-label {
@@ -776,7 +776,7 @@
 .path-mod-dynamo .myballs {
     position: absolute;
     border-radius: 100px;
-    padding: 0px;        
+    padding: 0;
     z-index: 100;
     background: transparent;
     text-align: center;
@@ -802,14 +802,14 @@
 
 .path-mod-dynamo .fa-user {
     font-size: 1.2em;
-    margin-left: 2px;  
+    margin-left: 2px;
 }
 
 .path-mod-dynamo .camera {
     background-color: var(--main-color);
     color: white;
     text-align: right !important;
-    padding-right: 5px; 
+    padding-right: 5px;
 }
 
 .path-mod-dynamo .camera-border {
@@ -823,12 +823,12 @@
     left: 80px !important;
 }
 
-.path-mod-dynamo .colok {           
+.path-mod-dynamo .colok {
     color: var(--main-color);
 }
 
 .path-mod-dynamo .hiddenval {
-    display: none; 
+    display: none;
 }
 
 .path-mod-dynamo .button_list_subreport {
@@ -847,7 +847,7 @@
     border: 1px solid #333;
     margin-bottom: 35px;
 }
-  
+
 .path-mod-dynamo #table-comment td:first-child {
     border-bottom: 1px solid #fff;
     background-color: var(--main-color);
@@ -963,7 +963,7 @@
     font-weight: bold;
     width: 100%;
     height: 60px;
-    overflow: hidden;  
+    overflow: hidden;
     color: white;
 }
 
@@ -1028,7 +1028,7 @@
     font-weight: bold;
     font-size: 12px;
     background-color: #072444;
-    color: white;  
+    color: white;
 }
 
 /* sub tab navigation */
@@ -1052,7 +1052,7 @@
     margin: 0 0 10px 25px;
     margin-bottom: 20px;
     list-style: none;
-    border-bottom: 1px solid #ddd;        
+    border-bottom: 1px solid #ddd;
 }
 
 .path-mod-dynamo .dynnav li {
@@ -1072,11 +1072,10 @@
 }
 
 .path-mod-dynamo .dynnav li.active {
-    border-bottom: 0 !important; 
+    border-bottom: 0 !important;
     border-bottom-color: transparent !important;
     border: 1px solid #ddd;
     border-radius: 5px 5px 0 0;
-    border-bottom-color: transparent;
     cursor: default;
     background-color: white;
 }
@@ -1085,7 +1084,7 @@
     color: #333;
     border-radius: 5px 5px 0 0;
     background-color: #fff;
-    border: 0px;    
+    border: 0;    
     cursor: default;
 }
 
@@ -1093,14 +1092,14 @@
     padding-left: 20px;
 }
 
-.path-mod-dynamo .ca-sun { 
+.path-mod-dynamo .ca-sun {
     font-size: 1.5em;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-color: white;
     padding: 3px;
     color: transparent;
-    background-image: radial-gradient(ellipse at center, #fb0 0%,#fcf5b5 68%);
+    background-image: radial-gradient(ellipse at center, #fb0 0%, #fcf5b5 68%);
 }
 
 .path-mod-dynamo .ca-cloud-sun {
@@ -1109,8 +1108,8 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(135deg, rgba(252,234,187,1) 0%
-        , rgba(252,205,77,1) 44%, rgba(189,156,79,1) 52%, rgba(38,38,38,1) 100%);
+    background-image: linear-gradient(135deg, rgba(252, 234, 187, 1) 0%
+        , rgba(252, 205, 77, 1) 44%, rgba(189, 156, 79, 1) 52%, rgba(38, 38, 38, 1) 100%);
 }
 
 .path-mod-dynamo .ca-cloud-sun-rain {
@@ -1119,8 +1118,8 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(135deg, rgba(252,234,187,1) 0%
-        , rgba(217,186,108,1) 24%, rgba(74,68,53,1) 55%, rgba(0,0,0,1) 100%);
+    background-image: linear-gradient(135deg, rgba(252, 234, 187, 1) 0%
+        , rgba(217, 186, 108, 1) 24%, rgba(74, 68, 53, 1) 55%, rgba(0, 0, 0, 1) 100%);
 }
 
 .path-mod-dynamo .ca-cloud-showers-heavy {
@@ -1129,8 +1128,8 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(to bottom, rgba(163,163,163,1) 0%
-        , rgba(0,0,0,1) 44%, rgba(0,0,0,1) 44%, rgba(38,38,38,1) 100%);
+    background-image: linear-gradient(to bottom, rgba(163, 163, 163, 1) 0%
+        , rgba(0, 0, 0, 1) 44%, rgba(0, 0, 0, 1) 44%, rgba(38, 38, 38, 1) 100%);
 }
 
 .path-mod-dynamo .ca-bolt {
@@ -1139,8 +1138,8 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(to bottom, rgba(163,163,163,1) 0%
-        , rgba(0,0,0,1) 0%, rgba(0,0,0,1) 44%, rgba(255,201,64,1) 100%);
+    background-image: linear-gradient(to bottom, rgba(163, 163, 163, 1) 0%
+        , rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 44%, rgba(255, 201, 64, 1) 100%);
 }
 
 .path-mod-dynamo .groupurl {
