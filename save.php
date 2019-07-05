@@ -31,7 +31,7 @@ global $USER;
 
 // Module instance id.
 $d = optional_param('d', 0, PARAM_INT);
-// Course_module ID
+// Course_module ID.
 $id = optional_param('id', 0, PARAM_INT);
 if ($id) {
     $cm = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);

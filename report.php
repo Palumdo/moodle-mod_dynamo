@@ -248,11 +248,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
             $autoevalstr .= ']';
 
             if ($data->nbeval != 0) {
-                $pairevalstr = '['.round($data->autocritsum->total1 / $data->nbeval, 2).','
-                    .round($data->autocritsum->total2 / $data->nbeval, 2).','
-                    .round($data->autocritsum->total3 / $data->nbeval, 2).','
-                    .round($data->autocritsum->total4 / $data->nbeval, 2).','
-                    .round($data->autocritsum->total5 / $data->nbeval, 2);
+                $pairevalstr = get_peer_eval_str($data);
                 if ($display6 != 'none') {
                     $pairevalstr .= ','.round($data->autocritsum->total6 / $data->nbeval, 2);
                 }
@@ -705,10 +701,7 @@ function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
     }
     $autoevalstr .= ']';
 
-    $pairevalstr = '['.round($data->autocritsum->total1 / $data->nbeval, 2).','
-        .round($data->autocritsum->total2 / $data->nbeval, 2).','
-        .round($data->autocritsum->total3 / $data->nbeval, 2).','
-        .round($data->autocritsum->total4 / $data->nbeval, 2).','.round($data->autocritsum->total5 / $data->nbeval, 2);
+    $pairevalstr = get_peer_eval_str($data);
     if ($display6 != 'none') {
         $pairevalstr .= ','.round($data->autocritsum->total6 / $data->nbeval, 2);
     }
@@ -845,7 +838,7 @@ function rep_excel($cm) {
         .$url.'" class="fas fa-file-excel" target="_outside"></a></div>');
 }
 
-// function print_compute_basis.
+// Function print_compute_basis.
 function print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) {
     $result = dynamo_compute_basis($dynamoeval, $display6);
     echo ('<tr>');
@@ -859,4 +852,12 @@ function print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) {
     echo ('    <td class="tdteach">'.$result->sum.'</td>');
     echo ('    <td class="tdteach">'.$result->avg.'</td>');
     echo ('</tr>');
+}
+// Function return a string that contain a javascript array with peer eval.
+function get_peer_eval_str($data) {
+    return '['.round($data->autocritsum->total1 / $data->nbeval, 2).','
+        .round($data->autocritsum->total2 / $data->nbeval, 2).','
+        .round($data->autocritsum->total3 / $data->nbeval, 2).','
+        .round($data->autocritsum->total4 / $data->nbeval, 2).','
+        .round($data->autocritsum->total5 / $data->nbeval, 2);
 }

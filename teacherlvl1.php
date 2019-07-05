@@ -190,7 +190,6 @@ if ($usrid != 0) {
                 $dynamoautoeval[] = $dynamoeval;
             }
             $result = dynamo_compute_basis($dynamoeval, $display6);
-
             echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='
                     .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'
                     .get_string('dynamoresults2', 'mod_dynamo').'">');

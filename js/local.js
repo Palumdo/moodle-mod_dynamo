@@ -496,15 +496,6 @@ if(getAllUrlParams().tab != 2) {
     localStorage.setItem("sort_climat", '');
 }
 
-// Order in alpha the list of students in the yearbook
-/*
-var OrderDIV = function(asc) {
-    $("div#main-yearbook").children().detach().sort(function(a,b) {
-        return (a.textContent) > (b.textContent);
-    }).appendTo("#main-yearbook");
-}
-OrderDIV(0);
-*/
 $(".report-yearbook img").css("transform","scale(1.0)");
 $(".report-yearbook-descr").css("transform","scale(1.0)");
 

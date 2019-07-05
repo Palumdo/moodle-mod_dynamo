@@ -1810,30 +1810,6 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $nbeval = $result->nbeval;
 
     $avg = round($sumeval / $nbeval, 3);
-    /*
-    $sql = "
-        SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) similitude
-          FROM (SELECT t1.userid, if(t1.crit1-t1.crit1=0,'1','0') crit1 , if(t1.crit2-t2.crit2=0,'1','0') crit2
-                    ,if(t1.crit3-t2.crit3=0,'1','0') crit3 , if(t1.crit4-t2.crit4=0,'1','0') crit4
-                    ,if(t1.crit5-t2.crit5=0,'1','0') crit5
-                FROM {dynamo_eval} t1
-                    ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
-                        FROM {dynamo_eval} t1
-                        WHERE t1.builder   = :param1
-                          AND t1.critgrp   = 0
-                          AND t1.evalbyid  = :param2
-                     ) t2
-               WHERE t1.builder   = :param3
-                 AND t1.critgrp   = 0
-                 AND t1.evalbyid  = :param4
-                 AND t1.userid    = t2.userid
-              ) t1
-    ";
-
-    $params = array('param1' => $dynamo->id, 'param2' => $usr2,'param3' => $dynamo->id, 'param4' => $usr1);
-    $result = $DB->get_record_sql($sql, $params);
-    $similitude = $result->similitude/$nbeval;
-    */
 
     // Sum of the 6 criteria of student 1 minus the same criteria of student2 put at POW2 and after  to square2.
     $sql = "
