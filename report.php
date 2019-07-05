@@ -438,9 +438,9 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
 
     $jscript = $jscript.'var checkboxes = document.getElementsByTagName("input");
                          for (var i=0; i<checkboxes.length; i++) {
-                           if (checkboxes[i].type == "checkbox")   {
-                             checkboxes[i].checked = true;
-                           }
+                             if (checkboxes[i].type == "checkbox") {
+                                 checkboxes[i].checked = true;
+                             }
                          }';
     $jscript = $jscript.'$("#chk_graph_radar_table").prop("checked", false);';
     $jscript = $jscript.'$("#chk_niwf_table").prop("checked", false);';
@@ -604,18 +604,7 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
         if ($usrid == $grpusrsub->id) {
             $dynamoautoeval[] = $dynamoeval;
         }
-        $result = dynamo_compute_basis($dynamoeval, $display6);
-        echo ('<tr>');
-        echo ('    <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
-        echo ('    <td class="tdteach">'.$dynamoeval->crit1.'</td>');
-        echo ('    <td class="tdteach">'.$dynamoeval->crit2.'</td>');
-        echo ('    <td class="tdteach">'.$dynamoeval->crit3.'</td>');
-        echo ('    <td class="tdteach">'.$dynamoeval->crit4.'</td>');
-        echo ('    <td class="tdteach">'.$dynamoeval->crit5.'</td>');
-        echo ('    <td class="tdteach" style="display:'.$display6.'">'.$dynamoeval->crit6.'</td>');
-        echo ('    <td class="tdteach">'.$result->sum.'</td>');
-        echo ('    <td class="tdteach">'.$result->avg.'</td>');
-        echo ('</tr>');
+        $result = print_compute_basis($dynamoeval, $display6, $color, $grpusrsub);
         $dynamoeval->sum = $result->sum;
         $dynamoeval->avg = $result->avg;
         $dynamoeval->grp = 0;
@@ -674,18 +663,7 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
             $color = "";
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
-            $result = dynamo_compute_basis($dynamoeval, $display6);
-            echo ('<tr>');
-            echo ('    <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
-            echo ('    <td class="tdteach">'.$dynamoeval->crit1.'</td>');
-            echo ('    <td class="tdteach">'.$dynamoeval->crit2.'</td>');
-            echo ('    <td class="tdteach">'.$dynamoeval->crit3.'</td>');
-            echo ('    <td class="tdteach">'.$dynamoeval->crit4.'</td>');
-            echo ('    <td class="tdteach">'.$dynamoeval->crit5.'</td>');
-            echo ('    <td class="tdteach" style="display:'.$display6.'">'.$dynamoeval->crit6.'</td>');
-            echo ('    <td class="tdteach">'.$result->sum.'</td>');
-            echo ('    <td class="tdteach">'.$result->avg.'</td>');
-            echo ('</tr>');
+            $result = print_compute_basis($dynamoeval, $display6, $color, $grpusrsub);
         }
     }
     echo (' </tbody>
@@ -865,4 +843,20 @@ function rep_excel($cm) {
     echo ('<div style="text-align:center;">'.get_string('dynamoexcelready', 'mod_dynamo'));
     echo ('<br><a style="font-size:24px;color:green;" alt="Export Excel" title="Export Excel" href ="'
         .$url.'" class="fas fa-file-excel" target="_outside"></a></div>');
+}
+
+// function print_compute_basis.
+function print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) {
+    $result = dynamo_compute_basis($dynamoeval, $display6);
+    echo ('<tr>');
+    echo ('    <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
+    echo ('    <td class="tdteach">'.$dynamoeval->crit1.'</td>');
+    echo ('    <td class="tdteach">'.$dynamoeval->crit2.'</td>');
+    echo ('    <td class="tdteach">'.$dynamoeval->crit3.'</td>');
+    echo ('    <td class="tdteach">'.$dynamoeval->crit4.'</td>');
+    echo ('    <td class="tdteach">'.$dynamoeval->crit5.'</td>');
+    echo ('    <td class="tdteach" style="display:'.$display6.'">'.$dynamoeval->crit6.'</td>');
+    echo ('    <td class="tdteach">'.$result->sum.'</td>');
+    echo ('    <td class="tdteach">'.$result->avg.'</td>');
+    echo ('</tr>');
 }

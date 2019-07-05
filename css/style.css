@@ -200,7 +200,7 @@
 /* Boostrap like CSS */
 /*********************/
 .path-mod-dynamo::before,
- .path-mod-dynamo::after {
+.path-mod-dynamo::after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -1072,9 +1072,11 @@
 }
 
 .path-mod-dynamo .dynnav li.active {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     border-bottom: 0 !important;
     border-bottom-color: transparent !important;
-    border: 1px solid #ddd;
     border-radius: 5px 5px 0 0;
     cursor: default;
     background-color: white;
@@ -1084,7 +1086,7 @@
     color: #333;
     border-radius: 5px 5px 0 0;
     background-color: #fff;
-    border: 0;    
+    border: 0;
     cursor: default;
 }
 
@@ -1108,8 +1110,10 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(135deg, rgba(252, 234, 187, 1) 0%
-        , rgba(252, 205, 77, 1) 44%, rgba(189, 156, 79, 1) 52%, rgba(38, 38, 38, 1) 100%);
+    background-image: linear-gradient(135deg, rgba(252, 234, 187, 1) 0%, 
+        rgba(252, 205, 77, 1) 44%,
+        rgba(189, 156, 79, 1) 52%, 
+        rgba(38, 38, 38, 1) 100%);
 }
 
 .path-mod-dynamo .ca-cloud-sun-rain {
@@ -1118,8 +1122,11 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(135deg, rgba(252, 234, 187, 1) 0%
-        , rgba(217, 186, 108, 1) 24%, rgba(74, 68, 53, 1) 55%, rgba(0, 0, 0, 1) 100%);
+    background-image: linear-gradient(135deg,
+        rgba(252, 234, 187, 1) 0%,
+        rgba(217, 186, 108, 1) 24%,
+        rgba(74, 68, 53, 1) 55%,
+        rgba(0, 0, 0, 1) 100%);
 }
 
 .path-mod-dynamo .ca-cloud-showers-heavy {
@@ -1128,8 +1135,11 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(to bottom, rgba(163, 163, 163, 1) 0%
-        , rgba(0, 0, 0, 1) 44%, rgba(0, 0, 0, 1) 44%, rgba(38, 38, 38, 1) 100%);
+    background-image: linear-gradient(to bottom,
+        rgba(163, 163, 163, 1) 0%,
+        rgba(0, 0, 0, 1) 44%,
+        rgba(0, 0, 0, 1) 44%,
+        rgba(38, 38, 38, 1) 100%);
 }
 
 .path-mod-dynamo .ca-bolt {
@@ -1138,8 +1148,11 @@
     -webkit-text-fill-color: transparent;
     padding: 3px;
     color: transparent;
-    background-image: linear-gradient(to bottom, rgba(163, 163, 163, 1) 0%
-        , rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 44%, rgba(255, 201, 64, 1) 100%);
+    background-image: linear-gradient(to bottom,
+        rgba(163, 163, 163, 1) 0%,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 44%,
+        rgba(255, 201, 64, 1) 100%);
 }
 
 .path-mod-dynamo .groupurl {

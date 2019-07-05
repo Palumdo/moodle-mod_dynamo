@@ -29,16 +29,16 @@ $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 global $USER;
 
-// Course_module ID, or.
-$id = optional_param('id', 0, PARAM_INT);
-// ... module instance id.
+// Module instance id.
 $d = optional_param('d', 0, PARAM_INT);
-
+// Course_module ID
+$id = optional_param('id', 0, PARAM_INT);
 if ($id) {
     $cm = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
     $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
 } else if ($d) {
+    // Get dynamo data first.
     $dynamo = $DB->get_record('dynamo', array('id' => $d), '*', MUST_EXIST);
     $course = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);

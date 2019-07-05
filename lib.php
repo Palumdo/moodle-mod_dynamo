@@ -444,13 +444,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
         } else {
             if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $userid
                 , 'userid' => $user->id ))) {
-                $dynamoeval = new stdClass();
-                $dynamoeval->crit1 = 0;
-                $dynamoeval->crit2 = 0;
-                $dynamoeval->crit3 = 0;
-                $dynamoeval->crit4 = 0;
-                $dynamoeval->crit5 = 0;
-                $dynamoeval->crit6 = 0;
+                $dynamoeval = dynamo_to_zero();
             }
             $values = [$dynamoeval->crit1, $dynamoeval->crit2, $dynamoeval->crit3, $dynamoeval->crit4, $dynamoeval->crit5
                         , $dynamoeval->crit6];
@@ -481,20 +475,12 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
     if ($dynamo->groupeval == 1) {
         if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $userid
             , 'userid' => $groupid ))) {
-            $dynamoeval = new stdClass();
-            $dynamoeval->crit1 = 0;
-            $dynamoeval->crit2 = 0;
-            $dynamoeval->crit3 = 0;
-            $dynamoeval->crit4 = 0;
-            $dynamoeval->crit5 = 0;
-            $dynamoeval->crit6 = 0;
+            $dynamoeval = dynamo_to_zero();
         }
 
         $bodytable = $bodytable.'
                 <table class="table" style="border:1px solid #000;">
-                    <thead>
-                    <th colspan="6" style="padding:0;"></th>
-                    </thead>
+                    <thead><th colspan="6" style="padding:0;"></th></thead>
                     <tbody>
                 <tr>
                     <td style="min-width:200px;font-weight:bold;">Groupe</td>
@@ -886,13 +872,7 @@ function dynamo_get_autoeval($userid, $dynamo) {
 
     if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $userid
         , 'userid' => $userid ))) {
-        $dynamoeval = new stdClass();
-        $dynamoeval->crit1 = 0;
-        $dynamoeval->crit2 = 0;
-        $dynamoeval->crit3 = 0;
-        $dynamoeval->crit4 = 0;
-        $dynamoeval->crit5 = 0;
-        $dynamoeval->crit6 = 0;
+        $dynamoeval = dynamo_to_zero();
     }
     return $dynamoeval;
 }
@@ -1231,13 +1211,7 @@ function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
     global $DB;
 
     if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $builder, 'evalbyid' => $evalbyid, 'userid' => $usrid))) {
-        $dynamoeval = new stdClass();
-        $dynamoeval->crit1 = 0;
-        $dynamoeval->crit2 = 0;
-        $dynamoeval->crit3 = 0;
-        $dynamoeval->crit4 = 0;
-        $dynamoeval->crit5 = 0;
-        $dynamoeval->crit6 = 0;
+        $dynamoeval = dynamo_to_zero();
     }
 
     return $dynamoeval;
@@ -2015,4 +1989,21 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
     $climat = '<i class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
 
     return [$climat, $idico];
+}
+
+/**
+ * return an initialized to zero Dynamo object
+ *
+ * @return an initialized to zero Dynamo object
+ */
+function dynamo_to_zero() {
+    $dynamoeval = new stdClass();
+    $dynamoeval->crit1 = 0;
+    $dynamoeval->crit2 = 0;
+    $dynamoeval->crit3 = 0;
+    $dynamoeval->crit4 = 0;
+    $dynamoeval->crit5 = 0;
+    $dynamoeval->crit6 = 0;
+
+    return $dynamoeval;
 }

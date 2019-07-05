@@ -503,10 +503,8 @@ var OrderDIV = function(asc) {
         return (a.textContent) > (b.textContent);
     }).appendTo("#main-yearbook");
 }
-*/
-
-
 OrderDIV(0);
+*/
 $(".report-yearbook img").css("transform","scale(1.0)");
 $(".report-yearbook-descr").css("transform","scale(1.0)");
 
