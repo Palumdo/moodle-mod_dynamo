@@ -414,7 +414,7 @@ function dynamo_get_grouping_users($groupingid) {
 }
 
 /**
- * Get a formatted HTML string with a table of users data.
+ * Get a formatted HTML string with a table of student survey answers.
  *
  *
  * @param array $groupusers array of users
@@ -591,7 +591,7 @@ function dynamo_compute_basis($dynamoeval, $crit6) {
     return $result;
 }
 /**
- * Compute multiple level used for the student evaluation.
+ * Compute multiple values used for the student evaluation.
  *
  * @param record $dynamo configuration of the evaluation
  * @param int $userid the user that have to be evaluated
@@ -860,7 +860,7 @@ function dynamo_get_matrix($dynamo, $grpusrs) {
     return $agrid;
 }
 /**
- * Get the niwf of a specific user and the string whith how it's computed.
+ * Get the niwf of a specific user and the string with how it's computed.
  *
  * @param int $userid id of the user.
  * @param object dynamo  $dynamo
@@ -1003,10 +1003,10 @@ function dynamo_get_body_table_teacher($dynamo) {
     $sql = "
         SELECT t2.id,t2.firstname,t2.lastname
           FROM {groups_members} t1
-              ,{user}          t2
+              ,{user} t2
          WHERE t1.groupid = :param1
-           AND t2.id  = t1.userid
-         ORDER BY t2.firstname,t2.lastname
+           AND t2.id = t1.userid
+         ORDER BY t2.firstname, t2.lastname
     ";
 
     $params = array('param1' => $groupid);
@@ -1294,7 +1294,7 @@ function dynamo_get_grouping_stat($dynamo) {
  * Return javascript to create a radar graphic with Rgraph library for a specific student
  *
  * @param string $jscript the javascript string to return can already contain javascript
- * @param int $usrid    id of the user that will be at the heart of the graph
+ * @param int $usrid id of the user that will be at the heart of the graph
  * @param string  $pairevalstr string that contain  javascript arrays of pair evaluation
  * @param string  $autoevalstr string that contain javascript array of self-evaluation
  * @param string $allgroupevalstr  string that contain javascript arrays with group evaluation
@@ -1306,20 +1306,20 @@ function dynamo_get_grouping_stat($dynamo) {
  */
 function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels, $firstname, $lastname) {
     if ($allgroupevalstr == "") {
-        $title = get_string('dynamoradar01title2', 'mod_dynamo');
         $strokestyle = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)']";
+        $title = get_string('dynamoradar01title2', 'mod_dynamo');
         $keycolors = "['#FFA500', 'blue']";
+        $data = "[".str_replace ("NAN", "0", $pairevalstr).", ".str_replace (",,,,", "0,0,0,0,0", $autoevalstr)."];";
         $keys = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname, ENT_QUOTES)." ".
                             htmlspecialchars($lastname, ENT_QUOTES)."']";
-        $data = "[".str_replace ("NAN", "0", $pairevalstr).", ".str_replace (",,,,", "0,0,0,0,0", $autoevalstr)."];";
     } else {
-        $title = get_string('dynamoradar01title3', 'mod_dynamo');
         $strokestyle = "['rgba(230,159,0,0.8)', 'rgba(0,0,255,0.5)', 'rgba(0,255,255,0.5)']";
+        $title = get_string('dynamoradar01title3', 'mod_dynamo');
         $keycolors = "['#FFA500', 'blue', '#00FFFF']";
-        $keys = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname, ENT_QUOTES)." ".
-                            htmlspecialchars($lastname, ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
         $data = "[".str_replace ("NAN", "0", $pairevalstr).", ".str_replace (",,,,", "0,0,0,0,0", $autoevalstr).", ".
                             str_replace (",,,,", "0,0,0,0,0", $allgroupevalstr)."];";
+        $keys = "['".get_string('dynamogroupevaluatedby', 'mod_dynamo')."','".htmlspecialchars($firstname, ENT_QUOTES)." ".
+                            htmlspecialchars($lastname, ENT_QUOTES)."','".get_string('dynamogroupevalby', 'mod_dynamo')."']";
     }
 
     $jscript = $jscript.'
@@ -1400,7 +1400,7 @@ function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels
  * Return javascript to create a radar graphic with Rgraph library for a specific student on report
  *
  * @param string $jscript the javascript string to return can already contain javascript
- * @param int    $usrid   id of the user that will be at the heart of the graph
+ * @param int    $usrid of the user that will be at the heart of the graph
  * @param string $pairevalstr string that contain  javascript arrays of pair evaluation
  * @param string $autoevalstr string that contain javascript array of self-evaluation
  * @param string $allgroupevalstr  string that contain javascript arrays with group evaluation
@@ -1458,7 +1458,7 @@ function dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoeval
  *
  * @param string $jscript the javascript string to return can already contain javascript
  * @param string $allgroupevalstr  string that contain  javascript arrays of group evaluation
- * @param int $usrid    id of the user that will be at the heart of the graph
+ * @param int $usrid of the user that will be at the heart of the graph
  * @param $multievalsr  that contain javascript array of the average of the self-evaluation of other students
  * @param string $labels label for the grapth
  * @param object $usr with firstname and lastname of the student at the center of the graph
@@ -1553,14 +1553,14 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
                           ,{groups}           t4
                           ,{groups_members}   t5
                           ,{groupings_groups} t6
-                     WHERE t1.builder   = :param1
-                       AND t1.critgrp   = 0
-                       AND t1.userid   != t1.evalbyid
-                       AND t1.userid    = t3.id
-                       AND t5.userid    = t1.userid
-                       AND t5.groupid   = t4.id
-                       AND t6.groupingid  = :param2
-                       AND t6.groupid   = t5.groupid
+                     WHERE t1.builder = :param1
+                       AND t1.critgrp = 0
+                       AND t1.userid != t1.evalbyid
+                       AND t1.userid = t3.id
+                       AND t5.userid = t1.userid
+                       AND t5.groupid = t4.id
+                       AND t6.groupingid = :param2
+                       AND t6.groupid = t5.groupid
                      GROUP BY t1.userid, t1.evalbyid) t1
                ) t2
          GROUP BY userid";
@@ -1574,9 +1574,9 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
                 SELECT t1.* FROM (
                     SELECT t1.userid, t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
                       FROM {dynamo_eval} t1
-                     WHERE t1.builder   = :param1
-                       AND t1.critgrp   = 0
-                      AND t1.userid    = t1.evalbyid
+                     WHERE t1.builder = :param1
+                       AND t1.critgrp = 0
+                      AND t1.userid = t1.evalbyid
                     GROUP BY t1.userid, t1.evalbyid) t1
                ) t2
          GROUP BY userid";
