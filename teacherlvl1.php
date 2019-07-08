@@ -190,19 +190,8 @@ if ($usrid != 0) {
                 $dynamoautoeval[] = $dynamoeval;
             }
             $result = dynamo_compute_basis($dynamoeval, $display6);
-            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='
-                    .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'
-                    .get_string('dynamoresults2', 'mod_dynamo').'">');
-            echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit3.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit4.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit5.'</td>');
-            echo (' <td class="tdteach" style="display:'.$display6.'">'.$dynamoeval->crit6.'</td>');
-            echo (' <td class="tdteach">'.$result->sum.'</td>');
-            echo (' <td class="tdteach">'.$result->avg.'</td>');
-            echo ('</tr>');
+            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6);
+
             $dynamoeval->sum = $result->sum;
             $dynamoeval->avg = $result->avg;
             $dynamoeval->grp = 0;
@@ -263,19 +252,7 @@ if ($usrid != 0) {
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
-
-            echo ('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusrsub->id.'&groupid='
-                .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
-            echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit3.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit4.'</td>');
-            echo (' <td class="tdteach">'.$dynamoeval->crit5.'</td>');
-            echo (' <td class="tdteach" style="display:'.$display6.'">'.$dynamoeval->crit6.'</td>');
-            echo (' <td class="tdteach">'.$result->sum.'</td>');
-            echo (' <td class="tdteach">'.$result->avg.'</td>');
-            echo ('</tr>');
+            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6);
         }
     }
     echo (' </tbody>
@@ -440,4 +417,20 @@ if ($usrid != 0) {
       };
     </script>';
     echo ($jscript);
+}
+
+function display_table_line($result, $cmid, $grpusrsub, $color, $dynamoeval, $display6) {
+    echo ('<tr onclick="document.location=\'view.php?id='.$cmid.'&usrid='.$grpusrsub->id.'&groupid='
+            .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'
+            .get_string('dynamoresults2', 'mod_dynamo').'">');
+    echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
+    echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
+    echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
+    echo (' <td class="tdteach">'.$dynamoeval->crit3.'</td>');
+    echo (' <td class="tdteach">'.$dynamoeval->crit4.'</td>');
+    echo (' <td class="tdteach">'.$dynamoeval->crit5.'</td>');
+    echo (' <td class="tdteach" style="display:'.$display6.'">'.$dynamoeval->crit6.'</td>');
+    echo (' <td class="tdteach">'.$result->sum.'</td>');
+    echo (' <td class="tdteach">'.$result->avg.'</td>');
+    echo ('</tr>');
 }
