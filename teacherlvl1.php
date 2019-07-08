@@ -190,7 +190,7 @@ if ($usrid != 0) {
                 $dynamoautoeval[] = $dynamoeval;
             }
             $result = dynamo_compute_basis($dynamoeval, $display6);
-            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6);
+            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6, $groupid);
 
             $dynamoeval->sum = $result->sum;
             $dynamoeval->avg = $result->avg;
@@ -252,7 +252,7 @@ if ($usrid != 0) {
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
-            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6);
+            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6, $groupid);
         }
     }
     echo (' </tbody>
@@ -300,13 +300,12 @@ if ($usrid != 0) {
     }
     $pairevalstr .= ']';
 
+    $allgroupeval = "";
     if ($dynamo->groupeval == 1) {
         $allgroupeval = dynamo_get_group_eval_avg($dynamo, $grpusrs, $grp->id);
-    } else {
-        $allgroupeval = "";
     }
-    $allgroupevalstr = "";
 
+    $allgroupevalstr = "";
     if ($allgroupeval != "") {
         $allgroupevalstr = '['.$allgroupeval->crit1.','.$allgroupeval->crit2.','.$allgroupeval->crit3.','.$allgroupeval->crit4
             .','.$allgroupeval->crit5;
@@ -419,10 +418,9 @@ if ($usrid != 0) {
     echo ($jscript);
 }
 
-function display_table_line($result, $cmid, $grpusrsub, $color, $dynamoeval, $display6) {
+function display_table_line($result, $cmid, $grpusrsub, $color, $dynamoeval, $display6, $groupid) {
     echo ('<tr onclick="document.location=\'view.php?id='.$cmid.'&usrid='.$grpusrsub->id.'&groupid='
-            .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'
-            .get_string('dynamoresults2', 'mod_dynamo').'">');
+            .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
     echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
     echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
     echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
