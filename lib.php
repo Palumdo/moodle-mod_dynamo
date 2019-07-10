@@ -182,60 +182,60 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
 
     if (has_capability('mod/dynamo:create', $context)) {
         // Preview student tabs.
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'tab' => 1));
         $node = navigation_node::create(get_string('dynamotab1', 'dynamo'), $url,  navigation_node::TYPE_SETTING, null, null
                                          , new pix_icon('i/preview', ''));
         $navref->add_node($node, $beforekey);
 
         // Results tabs.
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'tab' => 2));
         $resultnode = $navref->add_node(navigation_node::create(get_string('dynamomenuresults', 'dynamo'), $url,
                 navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', '')), $beforekey);
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'tab' => 2, 'results' => 1));
         $resultnode->add_node(navigation_node::create(get_string('dynamoresults1', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'tab' => 2, 'results' => 2));
         $resultnode->add_node(navigation_node::create(get_string('dynamoresults2', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'tab' => 2, 'results' => 3));
         $resultnode->add_node(navigation_node::create(get_string('dynamoresults3', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
         // Reports tab.
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'tab' => 3));
         $reportnode = $navref->add_node(navigation_node::create(get_string('dynamomenureports', 'dynamo'), $url,
                 navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', '')), $beforekey);
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'report' => 1, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport01', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'report' => 5, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport05', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'report' => 2, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport02', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'report' => 3, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport03', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
 
-        $url = new moodle_url($CFG->wwwroot.'/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
+        $url = new moodle_url('/mod/dynamo/view.php', array('id' => $PAGE->cm->id, 'groupid' => $groupid
                                 , 'usrid' => $usrid, 'report' => 4, 'tab' => 3));
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport04', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
