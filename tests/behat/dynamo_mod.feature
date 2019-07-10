@@ -27,3 +27,11 @@ Feature: Test that teachers can add the dynamo activity and students can view th
     And I click on "Edit settings" "link" in the "Test name" activity
     And I expand all fieldsets
     And the field "Name" matches value "Test name"
+
+@javascript
+  Scenario: student can see the dynamo activity
+    Given I log in as "student1"
+    And I am on "Course 1" course homepage
+    When I follow "Test name"
+    # The first activity won't have the previous activity link.
+    Then "#prev-activity-link" "css_element" should not exist
