@@ -1,5 +1,5 @@
 @mod @mod_dynamo @javascript
-Feature: Test that teachers can add the dynamo activity and students can view the survey.
+Feature: Test that teachers can see the dynamo activity and students can view the survey.
   Background:
     Given the following "courses" exist:
       | fullname | shortname |
@@ -19,5 +19,4 @@ Feature: Test that teachers can add the dynamo activity and students can view th
   Scenario: Teachers can add the dynamo activity
     When I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
-    And I add the "dynamo" to section "1"
     Then I should see "dynamoTest1"
