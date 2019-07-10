@@ -269,7 +269,9 @@ function dynamo_grade_item_update($dynamo, $reset=false) {
         $item['reset'] = true;
     }
 
-    grade_update('/mod/dynamo', $dynamo->course, 'mod', 'dynamo', $dynamo->id, 0, null, $item);
+    if (isset($dynamo->id)) {
+        grade_update('/mod/dynamo', $dynamo->course, 'mod', 'dynamo', $dynamo->id, 0, null, $item);
+    }
 }
 
 /**
