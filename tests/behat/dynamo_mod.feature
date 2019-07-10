@@ -1,4 +1,4 @@
-@mod @mod_dynamo @javascript
+@mod @mod_dynamo
 Feature: Test that teachers can add the dynamo activity and students can view the survey.
   Background:
     Given the following "courses" exist:
@@ -10,9 +10,12 @@ Feature: Test that teachers can add the dynamo activity and students can view th
       | student1 | Student | 1 | student1@example.com |
     And the following "course enrolments" exist:
       | course | user | role |
-      | C1     | teacher1 | editingteacher |
-      | C1     | student1 | student |
+      | C1 | teacher1 | editingteacher |
+      | C1 | student1 | student |
+    And I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode on
 
+@javascript
   Scenario: Teachers can add the dynamo activity
     When I add a "Dynamo" to section "1" and I fill the form with:
       | Name | Test name |
