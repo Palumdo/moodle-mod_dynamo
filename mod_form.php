@@ -88,6 +88,11 @@ class mod_dynamo_mod_form extends moodleform_mod {
                 $options[$grouping->id] = $grouping->name;
             }
         }
+
+        if (count($options) < 1) {
+            $options[0] = '';
+        }
+
         $mform->addElement('select', 'dynamo_grouping_id', get_string('dynamoheadgrouping', 'mod_dynamo'), $options);
 
         // Additional information in the tooltips for the students. These text is added to the defaul it doesn't replace it.
