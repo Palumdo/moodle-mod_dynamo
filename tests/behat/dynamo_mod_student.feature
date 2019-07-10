@@ -12,18 +12,13 @@ Feature: Test that teachers can add the dynamo activity and students can view th
       | course | user     | role           |
       | C1     | teacher1 | editingteacher |
       | C1     | student1 | student        |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
-
+    And the following "activities" exist:
+      | activity   | name         | intro                       | course | idnumber  | section |
+      | dynamo     | Dynamo 1     | Test dynamo description     | C1     | dynamo1   | 0       |      
 @javascript
-  Scenario: Teachers can add the dynamo activity
-    When I add a "Dynamo" to section "1" and I fill the form with:
-      | Name | Test name |
-      | Description | Test dynamo description |
-    And I turn editing mode off
-    Then I should not see "Adding a new"
-    And I turn editing mode on
-    And I open "Test name" actions menu
-    And I click on "Edit settings" "link" in the "Test name" activity
-    And I expand all fieldsets
-    And the field "Name" matches value "Test name"
+  Scenario: Student can see the dynamo activity
+    Given I log in as "student1"
+    And I am on "Course 1" course homepage
+    When I follow "Dynamo 1"
+    # The first activity won't have the previous activity link.
+    Then "#prev-activity-link" "css_element" should not exist

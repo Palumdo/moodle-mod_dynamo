@@ -162,7 +162,7 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
 
     if (!$course) {
         return;
-    }    
+    }
 
     // We want to add these new nodes after the Edit settings node, and before the.
     // Locally assigned roles node. Of course, both of those are controlled by capabilities.
