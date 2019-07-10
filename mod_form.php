@@ -80,6 +80,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->addElement('static', 'label',  get_string('dynamochoice', 'mod_dynamo'));
         $agrouping = groups_get_all_groupings($COURSE->id);
 
+        $options = array();
         // List of grouping select one for pairs evaluation.
         foreach ($agrouping as $grouping) {
             if ($grouping->name != '') {
