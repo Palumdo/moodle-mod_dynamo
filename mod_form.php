@@ -130,6 +130,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $mform->setType('dynamo_optional_name', PARAM_TEXT);
         $mform->addElement('text', 'dynamo_optional', get_string('dynamocritoptnamedescr', 'mod_dynamo'),
             array('size' => '80', 'maxlength' => '200'));
+        $mform->setType('dynamo_optional', PARAM_TEXT);
         // Tooltips for the two comments asked to the students.
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocommentcontr', 'mod_dynamo').' (1)');
         $mform->addElement('text', 'dynamo_comment1', get_string('dynamocommentcontr', 'mod_dynamo'),
