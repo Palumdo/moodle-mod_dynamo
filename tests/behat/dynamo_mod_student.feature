@@ -12,13 +12,17 @@ Feature: Test that teachers can add the dynamo activity and students can view th
       | course | user     | role           |
       | C1     | teacher1 | editingteacher |
       | C1     | student1 | student        |
-    And the following "activities" exist:
-      | activity   | name         | intro                       | course | idnumber  | section |
-      | dynamo     | Dynamo 1     | Test dynamo description     | C1     | dynamo1   | 0       |      
 @javascript
   Scenario: Student can see the dynamo activity
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode on
+    When I add a "Dynamo" to section "0" and I fill the form with:
+      | Name | Test name |
+      | Description | Test dynamo description |
+    And I turn editing mode off  
+    And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    When I follow "Dynamo 1"
+    When I follow "Test name"
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
