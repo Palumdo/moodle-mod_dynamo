@@ -24,7 +24,6 @@ Feature: Test that students can view the survey.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     When I follow "Test name"
-    # The first activity won't have the previous activity link.
-    Then "#prev-activity-link" "css_element" should not exist
-    And I am on "Test name"
-    And I should see "Grid of criteria"
+    Then I should see "Grid of criteria"
+    # Then "#prev-activity-link" "css_element" should not exist
+    
