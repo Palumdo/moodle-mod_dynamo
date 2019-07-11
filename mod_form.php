@@ -48,25 +48,19 @@ class mod_dynamo_mod_form extends moodleform_mod {
 
         $PAGE->requires->jquery();
         $PAGE->requires->js('/mod/dynamo/js/mod.js');
-
         $mform = $this->_form;
-
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
-
         // Adding the standard "name" field.
         $mform->addElement('text', 'name', get_string('dynamoname', 'mod_dynamo'), array('size' => '64'));
-
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
             $mform->setType('name', PARAM_CLEANHTML);
         }
-
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('name', 'dynamoname', 'mod_dynamo');
-
         // Adding the standard "intro" and "introformat" fields.
         if ($CFG->branch >= 29) {
             $this->standard_intro_elements();
@@ -80,7 +74,6 @@ class mod_dynamo_mod_form extends moodleform_mod {
             get_string('dynamogroupeval', 'mod_dynamo'), array('group' => 1), array(0, 1));
         $mform->addElement('static', 'label',  get_string('dynamochoice', 'mod_dynamo'));
         $agrouping = groups_get_all_groupings($COURSE->id);
-
         $options = array();
         // List of grouping select one for pairs evaluation.
         foreach ($agrouping as $grouping) {
@@ -88,13 +81,10 @@ class mod_dynamo_mod_form extends moodleform_mod {
                 $options[$grouping->id] = $grouping->name;
             }
         }
-
         if (count($options) < 1) {
             $options[0] = '';
         }
-
         $mform->addElement('select', 'dynamo_grouping_id', get_string('dynamoheadgrouping', 'mod_dynamo'), $options);
-
         // Additional information in the tooltips for the students. These text is added to the defaul it doesn't replace it.
         $mform->addElement('header', 'dynamofieldset', get_string('dynamocrit1', 'mod_dynamo').' : '
             .get_string('dynamoparticipation', 'mod_dynamo'));
@@ -148,10 +138,9 @@ class mod_dynamo_mod_form extends moodleform_mod {
         // Hidden translated text for javascript mod.js.
         $mform->addElement('hidden', 'dynamo_newtext', get_string('dynamoactivityview', 'mod_dynamo'));
         $mform->setType('dynamo_newtext', PARAM_TEXT);
-        // Add standard elements.
+        // Add standard elements and buttons.
         $this->standard_grading_coursemodule_elements();
         $this->standard_coursemodule_elements();
-        // Add standard buttons.
         $this->add_action_buttons();
     }
     // Load all the values from dynamo of the current activity.
