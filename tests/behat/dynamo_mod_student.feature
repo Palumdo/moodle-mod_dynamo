@@ -12,6 +12,9 @@ Feature: Test that students can view the survey.
       | course | user     | role           |
       | C1     | teacher1 | editingteacher |
       | C1     | student1 | student        |
+  And the following "activities" exist:
+      | activity   | name         | intro                       | course | idnumber  | section |
+      | assign     | Assignment 1 | Test assignment description | C1     | assign1   | 0       |      
 @javascript
   Scenario: Student can see the dynamo activity
     Given I log in as "teacher1"
@@ -25,5 +28,5 @@ Feature: Test that students can view the survey.
     And I am on "Course 1" course homepage
     And I follow "Test name"
     # Then I click on "Save" "button"
-    Then I should see "Save" in the "#dynamosave" "css_element"
-    # Then "#prev-activity-link" "css_element" should not exist
+    # Then I should see "Save" in the "#dynamosave" "css_element"
+    Then "#prev-activity-link" "css_element" should not exist
