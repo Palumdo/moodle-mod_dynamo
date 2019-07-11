@@ -178,7 +178,7 @@ if ($mode == 'student') {
     echo '
             <div class="container">
               <div class="row">
-                <button class="btn btn-primary" style="margin-left:48%;">'.get_string('save').'</button>
+                <button id="dynamosave" class="btn btn-primary dynamosave" style="margin-left:48%;">'.get_string('save').'</button>
               </div>
             </div>
             <script>setTimeout(function(){  $("#block-region-side-post").css("display","none");}, 1000);</script>
