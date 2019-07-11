@@ -24,5 +24,5 @@ Feature: Test that students can view the survey.
     Given I log in as "student1"
     And I am on "Course 1" course homepage
     And I follow "Test name"
-    Then I press "Save"
+    Then I click on "Save" "button"
     # Then "#prev-activity-link" "css_element" should not exist
