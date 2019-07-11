@@ -23,7 +23,7 @@ Feature: Test that students can view the survey.
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage
-    When I follow "Test name"
-    Then I should see "Grid of criteria"
+    And I follow "Test name"
+    And I press "Save"
     # Then "#prev-activity-link" "css_element" should not exist
     
