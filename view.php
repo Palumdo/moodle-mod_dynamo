@@ -95,8 +95,11 @@ $afcolor['[ILV]'] = '#032f5d';
 $afcolor['[ECOPOL]'] = '#032f5d';
 
 $rfaculty = $DB->get_record('course_categories', array('id' => $course->category), '*', MUST_EXIST);
-preg_match("/\[[a-zA-Z]+]/", $rfaculty->name, $matches, PREG_OFFSET_CAPTURE, 0);
-$faculty  = $matches[0][0];
+if (preg_match("/\[[a-zA-Z]+]/", $rfaculty->name, $matches, PREG_OFFSET_CAPTURE, 0)) {
+    $faculty  = $matches[0][0];
+} else {
+    $faculty  = '[ILV]';
+}
 
 $faccolor = $afcolor[$faculty];
 if ($faccolor == '') {

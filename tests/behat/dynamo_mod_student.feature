@@ -1,5 +1,5 @@
 @mod @mod_dynamo
-Feature: Test that teachers can add the dynamo activity and students can view the survey.
+Feature: Test that students can view the survey.
   Background:
     Given the following "courses" exist:
       | fullname | shortname |
@@ -19,7 +19,7 @@ Feature: Test that teachers can add the dynamo activity and students can view th
     When I add a "Dynamo" to section "0" and I fill the form with:
       | Name | Test name |
       | Description | Test dynamo description |
-    And I turn editing mode off  
+    And I turn editing mode off
     And I log out
     Given I log in as "student1"
     And I am on "Course 1" course homepage

@@ -1,5 +1,5 @@
 @mod @mod_dynamo
-Feature: Test that teachers can add the dynamo activity and students can view the survey.
+Feature: Test that teachers can add the dynamo activity
   Background:
     Given the following "courses" exist:
       | fullname | shortname |
