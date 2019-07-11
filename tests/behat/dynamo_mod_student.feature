@@ -26,4 +26,5 @@ Feature: Test that students can view the survey.
     When I follow "Test name"
     # The first activity won't have the previous activity link.
     Then "#prev-activity-link" "css_element" should not exist
+    And I am on "Test name"
     And I should see "Grid of criteria"

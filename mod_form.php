@@ -49,9 +49,8 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $PAGE->requires->jquery();
         $PAGE->requires->js('/mod/dynamo/js/mod.js');
         $mform = $this->_form;
-        // Adding the "general" fieldset, where all the common settings are showed.
+        // Adding the "general" fieldset, where all the common settings are showed and the standard "name" field.
         $mform->addElement('header', 'general', get_string('general', 'form'));
-        // Adding the standard "name" field.
         $mform->addElement('text', 'name', get_string('dynamoname', 'mod_dynamo'), array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
