@@ -29,4 +29,5 @@ Feature: Test that teachers can add the dynamo activity
     And the field "Name" matches value "Test name"
     And I should see "Description"
     And I should see "Auto-evaluation"
-    And I click on "Cancel" "button" in the "Test name" activity
+    And I should see "Cancel"
+    And I click on "Cancel" "button"
