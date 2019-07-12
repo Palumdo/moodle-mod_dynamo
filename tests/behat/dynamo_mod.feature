@@ -27,3 +27,4 @@ Feature: Test that teachers can add the dynamo activity
     And I click on "Edit settings" "link" in the "Test name" activity
     And I expand all fieldsets
     And the field "Name" matches value "Test name"
+    And I should see "Description"
