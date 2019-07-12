@@ -29,5 +29,5 @@ Feature: Test that students can view the survey.
     And I follow "Test name"
     # Then I click on "Save" "button"
     # Then I should see "Save" in the "#dynamosave" "css_element"
-    #Then "#prev-activity-link" "css_element" should not exist
-    And I should see "Assignment 1" in the "#prev-activity-link" "css_element"
+    Then "#prev-activity-link" "css_element" should not exist
+    #And I should see "Assignment 1" in the "#prev-activity-link" "css_element"
