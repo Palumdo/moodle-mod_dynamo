@@ -30,4 +30,4 @@ Feature: Test that teachers can add the dynamo activity
     And I should see "Description"
     And I should see "Auto-evaluation"
     # And I should see "Cancel"
-    And I press "Cancel" "button"
+    # And I press "Cancel" "button"
