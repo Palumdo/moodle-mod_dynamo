@@ -260,8 +260,21 @@ function gototag(obj) {
 // Remove color on values (orange, red green,...)
 // To not warn the student if the data are printed
 function removeColors() {
-    $(".change-color").css("color","#000");
-    $(".change-color").css("background-color","white");
+    $(".change-color").css("color", "#000");
+    $(".change-color").css("background-color", "white");
+
+    $(".region-main").css("width", "100%");
+    $(".region-main").css("max-width", "100%");
+    $("nav").css("display", "none");
+    $("footer").css("display", "none");
+    $(".columnright").css("display", "none");
+    $(".columnleft").css("display", "none");
+
+    $("#region-main-box").removeAttr("class");
+    $("#page").removeAttr("id");
+    $("#page-wrapper").removeAttr("id");
+    $("#page-content").removeAttr("id");
+    $(".row").removeClass("row");
 }
 
 // Draw the graph of self insurance/confidence

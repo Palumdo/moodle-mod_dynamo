@@ -43,7 +43,6 @@ if (!has_capability('mod/dynamo:create', $modulecontext)) {
     redirect(new moodle_url('/my'));
     die;
 }
-
 $groups = dynamo_get_groups($dynamo->groupingid);
 $canvas = '';
 $jscript = '
@@ -94,7 +93,7 @@ switch($report) {
 }
 
 $jscript = $jscript.'
-    }; // end of onload...
+    }; // End of onload...
   </script>';
 
 echo ($jscript);
@@ -155,9 +154,9 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
 
     foreach ($groups as $grp) { // Loop to all groups of grouping.
         $grpusrs = dynamo_get_group_users($grp->id);
-        echo ('<h4 class="grp_'.$grp->id.' dynagroupingtitle '.$nojumpclass.'" title="'
-            .get_string('dynamogotoparticipant', 'mod_dynamo').'"><span class="ico-white"><i class="fas fa-user-cog"></i> '
-            .$grp->name.'</span><a style="float:right;color:white;" href="#top"><i class="fas fa-arrow-up"></i></a></h4>');
+        echo ('<h4 class="grp_'.$grp->id.' dynagroupingtitlerep '.$nojumpclass.'" title="'
+            .get_string('dynamogotoparticipant', 'mod_dynamo').'"><span class="ico-black"><i class="fas fa-user-cog"></i> '
+            .$grp->name.'</span><a style="float:right;color:black;" href="#top"><i class="fas fa-arrow-up"></i></a></h4>');
         $nojumpclass = "";
         echo ('<div class="" id="'.$grp->id.'">');
 
@@ -265,14 +264,14 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
             echo ('<table class="table" style="text-align:center;">');
             echo (' <thead>');
             echo ('   <tr>');
-            echo ('     <th></th>');
-            echo ('     <th>'.get_string('dynamoparticipation', 'mod_dynamo').'</th>');
-            echo ('     <th>'.get_string('dynamoresponsabilite', 'mod_dynamo').'</th>');
-            echo ('     <th>'.get_string('dynamoscientifique', 'mod_dynamo').'</th>');
-            echo ('     <th>'.get_string('dynamotechnique', 'mod_dynamo').'</th>');
-            echo ('     <th>'.get_string('dynamoattitude', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;"></th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoparticipation', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoresponsabilite', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoscientifique', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamotechnique', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoattitude', 'mod_dynamo').'</th>');
             if ($display6 != 'none') {
-                echo ('     <th>'.$dynamo->critoptname.'</th>');
+                echo ('     <th style="color:black;background-color:#9cb7d4;">'.$dynamo->critoptname.'</th>');
             }
 
             echo ('   </tr>');
@@ -402,9 +401,9 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
                 <span class="slider"></span>
             </label>
             </div>
-            <div class="box-switch" style="max-width:350px">
-            <button class="btn btn-default" style="margin:10px;" onclick="removeColors();">'
-                .get_string('dynamoremovecolors', 'mod_dynamo').'</button>
+            <div class="box-switch" style="max-width:350px;text-align:center;">
+            <button class="btn btn-default" style="margin:10px;" onclick="removeColors();$(this).css(\'display\',\'none\');$(\'#dynamorefresh\').css(\'display\',\'\')">'
+                .get_string('dynamoremovecolors', 'mod_dynamo').'</button><br><a id="dynamorefresh" onclick="location.reload();" title="'.get_string('dynamorefresh', 'mod_dynamo').'" style="background:transparent;cursor:pointer;display:none;"><i class="fas fa-redo-alt"></i></a>
             </div>
         </div>');
     $groups = dynamo_get_groups($dynamo->groupingid);
@@ -449,7 +448,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
 function display_group_niwf_table($dynamo, $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
     echo ('<div class="group_niwf_table" style="display:;">');
-    echo ('<h5 class="dynagroupingtitle">'.get_string('dynamoniwf', 'mod_dynamo').'</h5>');
+    echo ('<h5 class="dynagroupingtitlerep">'.get_string('dynamoniwf', 'mod_dynamo').'</h5>');
     echo (' <div class="table-container">
             <table class="tablelvl0_rep">
                 <thead>
@@ -479,9 +478,9 @@ function display_group_niwf_table($dynamo, $grp) {
 function display_group_detail_table($dynamo, $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
     echo ('<div class="group_detail_table" style="display:none;">');
-    echo ('<h5 class="grp_'.$grp->id.' dynagroupingtitle" title="'
-        .get_string('dynamogotoparticipant', 'mod_dynamo').'"><span class="ico-white"><i class="fas fa-user-cog"></i> '
-        .$grp->name.'</span><a style="float:right;color:white;" href="#top"><i class="fas fa-arrow-up"></i></a></h5>');
+    echo ('<h5 class="grp_'.$grp->id.' dynagroupingtitlerep" title="'
+        .get_string('dynamogotoparticipant', 'mod_dynamo').'"><span class="ico-black"><i class="fas fa-user-cog"></i> '
+        .$grp->name.'</span><a style="float:right;color:black;" href="#top"><i class="fas fa-arrow-up"></i></a></h5>');
     echo ('<div id="'.$grp->id.'" >');
 
     echo (' <div class="table-container">
@@ -523,7 +522,7 @@ function display_group_detail_table($dynamo, $grp) {
     }
     // NIWFS.
     echo ('          <tr>');
-    echo ('            <td style="background-color:dimgray;color:white;">'.get_string('dynamoniwf', 'mod_dynamo').'</td>');
+    echo ('            <td style="background-color:#999;color:black;">'.get_string('dynamoniwf', 'mod_dynamo').'</td>');
 
     $i = count($agridlib) - 1;
     for ($j = 0; $j < count($agridlib[$i]); $j++) {
@@ -593,7 +592,7 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
     foreach ($grpusrs as $grpusrsub) { // Loop to all evaluation of  students.
         $color = "";
         if ($usrid == $grpusrsub->id) {
-            $color = '#9cb7d4';
+            $color = '#555';
         }
 
         $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grpusrsub->id);
@@ -652,7 +651,7 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
     foreach ($grpusrs as $grpusrsub) { // Loop to all evaluation of  students.
         $color = "";
         if ($usrid == $grpusrsub->id) {
-            $color = '#9cb7d4';
+            $color = '#555';
         }
 
         if ($grpusrsub->id == $usrid && $dynamo->autoeval == 0) {

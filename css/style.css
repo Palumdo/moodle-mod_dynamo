@@ -10,31 +10,6 @@
 /** @media print Only work well on firefox...                 **/
 /***************************************************************/
 @media print {
-
-    .path-mod-dynamo h4.nojump {
-        page-break-before: avoid !important;
-        break-before: avoid !important;
-    }
-
-    .path-mod-dynamo h4 {
-        page-break-before: always;
-        break-before: always;
-    }
-
-    .path-mod-dynamo .break-after {
-        display: block;
-        break-before: always;
-        page-break-after: always;
-        position: relative;
-    }
-
-    .path-mod-dynamo .break-before {
-        display: block;
-        break-before: always;
-        page-break-before: always;
-        position: relative;
-    }
-
     .path-mod-dynamo .button_list_subreport {
         display: none;
     }
@@ -57,6 +32,77 @@
 
     .path-mod-dynamo .dontprint {
         display: none;
+    }
+    
+    .path-mod-dynamo .block {
+        display: none;
+    }
+    
+    .path-mod-dynamo .dynnav {
+        display: none;
+    }
+
+    .path-mod-dynamo .columnleft {
+        display: none;
+    }
+
+    .path-mod-dynamo .columnright {
+        display: none;
+    }
+
+    .path-mod-dynamo .button_list_subreport {
+        display: none;
+    }
+
+    .path-mod-dynamo #region-main-box {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .path-mod-dynamo .region-main {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .path-mod-dynamo th {
+        color: black;
+    }
+
+    .path-mod-dynamo td {
+        color: black;
+    }
+
+    .path-mod-dynamo td:first-child {
+        color: black;
+    }
+
+    .path-mod-dynamo h5 {
+        color: black;
+    }
+    
+    .path-mod-dynamo h4.nojump {
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+    }
+
+    .path-mod-dynamo h4 {
+        page-break-before: always;
+        break-before: always;
+    }
+
+    .path-mod-dynamo .break-after {
+        display: block;
+        break-before: always;
+        page-break-after: always;
+        position: relative;
+    }
+
+    .path-mod-dynamo .break-before {
+        display: block;
+        break-before: always;
+        page-break-before: always;
+        position: relative;
     }
 }
 /***************************************************************/
@@ -143,6 +189,14 @@
     width: 100%;
     background-color: #9cb7d4;
     color: white;
+    border-radius: 10px 0;
+    padding: 10px;
+}
+
+.path-mod-dynamo .dynagroupingtitlerep {
+    width: 100%;
+    background-color: #9cb7d4;
+    color: black;
     border-radius: 10px 0;
     padding: 10px;
 }
@@ -412,11 +466,17 @@
     text-align: center;
     vertical-align: top;
     border-top: 1px solid #ddd;
+    color: black;
+}
+
+.path-mod-dynamo .tablelvl0_rep th {
+    background-color: #9cb7d4;
+    color: black;
 }
 
 .path-mod-dynamo .tablelvl0_rep td:first-child {
-    background-color: var(--main-color);
-    color: white;
+    background-color: #9cb7d4;
+    color: black;
 }
 
 .path-mod-dynamo .tablelvl0_rep tbody td {
