@@ -265,11 +265,16 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
             echo (' <thead>');
             echo ('   <tr>');
             echo ('     <th style="color:black;background-color:#9cb7d4;"></th>');
-            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoparticipation', 'mod_dynamo').'</th>');
-            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoresponsabilite', 'mod_dynamo').'</th>');
-            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoscientifique', 'mod_dynamo').'</th>');
-            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamotechnique', 'mod_dynamo').'</th>');
-            echo ('     <th style="color:black;background-color:#9cb7d4;">'.get_string('dynamoattitude', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'
+                .get_string('dynamoparticipation', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'
+                .get_string('dynamoresponsabilite', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'
+                .get_string('dynamoscientifique', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'
+                .get_string('dynamotechnique', 'mod_dynamo').'</th>');
+            echo ('     <th style="color:black;background-color:#9cb7d4;">'
+                .get_string('dynamoattitude', 'mod_dynamo').'</th>');
             if ($display6 != 'none') {
                 echo ('     <th style="color:black;background-color:#9cb7d4;">'.$dynamo->critoptname.'</th>');
             }
@@ -402,8 +407,12 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
             </label>
             </div>
             <div class="box-switch" style="max-width:350px;text-align:center;">
-            <button class="btn btn-default" style="margin:10px;" onclick="removeColors();$(this).css(\'display\',\'none\');$(\'#dynamorefresh\').css(\'display\',\'\')">'
-                .get_string('dynamoremovecolors', 'mod_dynamo').'</button><br><a id="dynamorefresh" onclick="location.reload();" title="'.get_string('dynamorefresh', 'mod_dynamo').'" style="background:transparent;cursor:pointer;display:none;"><i class="fas fa-redo-alt"></i></a>
+            <button class="btn btn-default" style="margin:10px;" onclick="removeColors();$(this).css(\'display\',\'none\');
+                $(\'#dynamorefresh\').css(\'display\',\'\')">'
+                .get_string('dynamoremovecolors', 'mod_dynamo')
+                .'</button><br><a id="dynamorefresh" onclick="location.reload();" title="'
+                .get_string('dynamorefresh', 'mod_dynamo')
+                .'" style="background:transparent;cursor:pointer;display:none;"><i class="fas fa-redo-alt"></i></a>
             </div>
         </div>');
     $groups = dynamo_get_groups($dynamo->groupingid);

@@ -78,7 +78,7 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
         $data->builder = $this->get_new_parentid('dynamo');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->evalbyid = $this->get_mappingid('user', $data->evalbyid);
-        
+
         $newevalid = $DB->insert_record('dynamo_eval', $data);
 
         $this->set_mapping('dynamo_eval', $oldid, $newevalid);
