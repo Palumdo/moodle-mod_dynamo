@@ -102,30 +102,30 @@ echo ($jscript);
 function rep_list_no_participant($result, $name) {
     echo ('<h3 class="report_title">'.get_string('dynamoreport01', 'mod_dynamo').'</h3>');
     echo ('<div class="table-container">');
-    echo ('  <table class="table" style="text-align:center;">');
-    echo ('    <thead>');
-    echo ('      <tr>');
-    echo ('        <th>'.get_string('dynamoheadgroup', 'mod_dynamo').'</th>');
-    echo ('        <th>'.get_string('dynamoheadfirstname', 'mod_dynamo').'</th>');
-    echo ('        <th>'.get_string('dynamoheadlastname', 'mod_dynamo').'</th>');
-    echo ('        <th>'.get_string('dynamoheademail', 'mod_dynamo').'</th>');
-    echo ('        <th>'.get_string('dynamoheadidnumber', 'mod_dynamo').'</th>');
-    echo ('      </tr>');
-    echo ('    </thead>');
-    echo ('    <tbody>');
+    echo ('    <table class="table" style="text-align:center;">');
+    echo ('        <thead>');
+    echo ('            <tr>');
+    echo ('                <th>'.get_string('dynamoheadgroup', 'mod_dynamo').'</th>');
+    echo ('                <th>'.get_string('dynamoheadfirstname', 'mod_dynamo').'</th>');
+    echo ('                <th>'.get_string('dynamoheadlastname', 'mod_dynamo').'</th>');
+    echo ('                <th>'.get_string('dynamoheademail', 'mod_dynamo').'</th>');
+    echo ('                <th>'.get_string('dynamoheadidnumber', 'mod_dynamo').'</th>');
+    echo ('            </tr>');
+    echo ('        </thead>');
+    echo ('        <tbody>');
     $emails = '';
     foreach ($result as $usr) {
-        echo ('      <tr>');
-        echo ('        <td>'.$usr->name.'</td>');
-        echo ('        <td>'.$usr->firstname.'</td>');
-        echo ('        <td>'.$usr->lastname.'</td>');
-        echo ('        <td>'.$usr->email.'</td>');
-        echo ('        <td>'.$usr->idnumber.'</td>');
-        echo ('      </tr>');
+        echo ('        <tr>');
+        echo ('            <td>'.$usr->name.'</td>');
+        echo ('            <td>'.$usr->firstname.'</td>');
+        echo ('            <td>'.$usr->lastname.'</td>');
+        echo ('            <td>'.$usr->email.'</td>');
+        echo ('            <td>'.$usr->idnumber.'</td>');
+        echo ('        </tr>');
         $emails .= $usr->email . ';';
     }
-    echo ('    </tbody>');
-    echo ('  </table>');
+    echo ('        </tbody>');
+    echo ('    </table>');
     echo ('<div style="width:100%;word-wrap:break-word;margin-bottom:20px;">'.$emails.'</div>');
     if ($emails == '') {
         echo (get_string('dynamononoparticipant', 'mod_dynamo'));
@@ -149,8 +149,13 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
         echo ('<option id="grp_'.$sgrp->id.'">'.$sgrp->name.'</option>');
     }
     echo ('</select>
-            <div style="margin:5px;"><button class="btn btn-default" onclick="removeColors();">'
-            .get_string('dynamoremovecolors', 'mod_dynamo').'</button></div></div>');
+            <div style="margin:5px;"><button class="btn btn-default" onclick="removeColors();$(this).css(\'display\',\'none\');
+                $(\'#dynamorefresh\').css(\'display\',\'\');">'
+                .get_string('dynamoremovecolors', 'mod_dynamo')
+                .'</button><br><a id="dynamorefresh" onclick="location.reload();" title="'
+                .get_string('dynamorefresh', 'mod_dynamo')
+                .'" style="padding:5px 15px 5px 15px;background:#d3d9df;cursor:pointer;display:none;border-radius:3px;">
+                <i class="fas fa-redo-alt"></i></a></div></div>');
 
     foreach ($groups as $grp) { // Loop to all groups of grouping.
         $grpusrs = dynamo_get_group_users($grp->id);
@@ -408,7 +413,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
             </div>
             <div class="box-switch" style="max-width:350px;text-align:center;">
             <button class="btn btn-default" style="margin:10px;" onclick="removeColors();$(this).css(\'display\',\'none\');
-                $(\'#dynamorefresh\').css(\'display\',\'\')">'
+                $(\'#dynamorefresh\').css(\'display\',\'\');">'
                 .get_string('dynamoremovecolors', 'mod_dynamo')
                 .'</button><br><a id="dynamorefresh" onclick="location.reload();" title="'
                 .get_string('dynamorefresh', 'mod_dynamo')

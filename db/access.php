@@ -58,15 +58,4 @@ $capabilities = array(
             'student' => CAP_ALLOW
         )
     ),
-
-    // Build teams from survey response.
-    'mod/dynamo:build' => array(
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
-            'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
 );

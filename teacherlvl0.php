@@ -66,7 +66,7 @@ echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '.$cm->name.'</h
     echo('<input id="activityid" type="hidden" value="'.$id.'">');
     echo('<input id="usrid" type="hidden" value="'.$usrid.'">');
 // List of groups.
-echo('<select onchange="reloadGroupme(this);">');
+echo('<div style="margin:5px;">'.get_string('dynamolistgroup', 'mod_dynamo').':&nbsp;<select onchange="reloadGroupme(this);">');
 echo('  <option></option>');
 
 $grp = 0;
@@ -78,7 +78,7 @@ foreach ($groups as $sgrp) { // Loop to all groups of grouping.
     }
     echo('    <option id="'.$sgrp->id.'"'.$selected.'>'.$sgrp->name.'</option>');
 }
-echo('</select>');
+echo('</select></div>');
 
 if ($grp != 0) {
     $grpusrs = dynamo_get_group_users($grp->id);

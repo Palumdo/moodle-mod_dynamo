@@ -137,6 +137,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
         // Hidden translated text for javascript mod.js.
         $mform->addElement('hidden', 'dynamo_newtext', get_string('dynamoactivityview', 'mod_dynamo'));
         $mform->setType('dynamo_newtext', PARAM_TEXT);
+
         // Add standard elements and buttons.
         $this->standard_grading_coursemodule_elements();
         $this->standard_coursemodule_elements();

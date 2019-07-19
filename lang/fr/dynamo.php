@@ -32,6 +32,8 @@ $string['mod_dynamo']                         = 'Dynamo';
 $string['pluginadministration']               = 'Dynamo administration';
 $string['pluginname']                         = 'Dynamo';
 $string['dynamo:addinstance']                 = 'Ajouter un nouveau module Dynamo';
+$string['dynamo:respond']                     = 'Répondre au Questionnaire';
+$string['dynamo:create']                      = 'Créer un questionnaire';
 
 $string['dynamofieldset']                     = 'Personnalisation des critères';
 $string['dynamoauto']                         = 'Exiger que chaque étudiant s\'auto évalue';
@@ -119,6 +121,7 @@ $string['dynamoresults1']                     = 'Vue d\'ensemble';
 $string['dynamoresults2']                     = 'Détail du groupe';
 $string['dynamoresults3']                     = 'Détail du participant';
 $string['dynamoliststudent']                  = 'Liste des étudiants';
+$string['dynamolistgroup']                    = 'Liste des groupes';
 $string['dynamotypeletters']                  = 'Tapez les premières lettres du nom ou du prénom';
 $string['dynamoheadparticiaption']            = 'Répondu';
 $string['dynamoheadimplication']              = 'Implication';
