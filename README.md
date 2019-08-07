@@ -1,5 +1,7 @@
 # Dynamo #
 
+[![Build Status](https://api.travis-ci.org/Palumdo/moodle-mod_dynamo.png)](https://api.travis-ci.org/Palumdo/moodle-mod_dynamo)
+
 Dynamo is used to follow and support the evaluation by peers in working groups
 
 Dynamo is ....
