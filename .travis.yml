@@ -24,18 +24,19 @@ env:
  - DB=pgsql MOODLE_BRANCH=MOODLE_36_STABLE
  - DB=pgsql MOODLE_BRANCH=MOODLE_37_STABLE
  - DB=pgsql MOODLE_BRANCH=master
- - DB=mysqli MOODLE_BRANCH=MOODLE_33_STABLE
+# - DB=mysqli MOODLE_BRANCH=MOODLE_33_STABLE
 # - DB=mysqli MOODLE_BRANCH=MOODLE_34_STABLE
 # - DB=mysqli MOODLE_BRANCH=MOODLE_35_STABLE
 # - DB=mysqli MOODLE_BRANCH=MOODLE_36_STABLE
 # - DB=mysqli MOODLE_BRANCH=MOODLE_37_STABLE
-# - DB=mysqli MOODLE_BRANCH=master
+ - DB=mysqli MOODLE_BRANCH=master
   
 before_install:
   - phpenv config-rm xdebug.ini
   - nvm install 8.9
   - nvm use 8.9
   - cd ../..
+  - composer selfupdate  
   - composer create-project -n --no-dev --prefer-dist moodlerooms/moodle-plugin-ci ci ^2
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
