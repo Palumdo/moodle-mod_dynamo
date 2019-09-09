@@ -34,6 +34,7 @@ $string['pluginname']                         = 'Dynamo';
 $string['dynamo:addinstance']                 = 'Add a new dynamo module';
 $string['dynamo:respond']                     = 'Respond to Questionnaire';
 $string['dynamo:create']                      = 'Create survey';
+$string['dynamo:build']                       = 'Build version of Dynamo';
 
 $string['dynamofieldset']                     = 'criterions personalisation';
 $string['dynamoauto']                         = 'Require that every student self assesses';
@@ -214,3 +215,6 @@ $string['dynamoexportxlsTitle17']             = 'Comment on my contribution';
 $string['dynamoexportxlsTitle18']             = 'Comment on my group';
 $string['dynamoexportxlsTitle19']             = 'Groups average';
 $string['dynamorefresh']                      = 'Refresh';
+
+$string['calendarstart']                      = 'Open Date';
+$string['calendarend']                        = 'Close Date';

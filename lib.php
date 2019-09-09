@@ -24,6 +24,9 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+define('DYNAMO_EVENT_TYPE_OPEN', 'open');
+define('DYNAMO_EVENT_TYPE_CLOSE', 'close');
+
 
 /**
  * Return if the plugin supports $feature.
@@ -62,7 +65,8 @@ function dynamo_supports($feature) {
  * @return int The id of the newly inserted record.
  */
 function dynamo_add_instance($dynamo, $mform) {
-    global $DB;
+    global $DB, $CFG;
+    require_once($CFG->dirroot.'/mod/dynamo/locallib.php');
 
     $dynamo->timecreated = time();
     $formdata = $mform->get_data();
@@ -71,7 +75,12 @@ function dynamo_add_instance($dynamo, $mform) {
     $id = $DB->insert_record('dynamo', $dynamo);
 
     dynamo_grade_item_update($dynamo);
-
+    // Add calendar events if necessary.
+    dynamo_set_events($dynamo);
+    if (!empty($dynamo->completionexpected)) {
+        \core_completion\api::update_completion_date_event($dynamo->coursemodule, 'dynamo', $dynamo->id,
+            $dynamo->completionexpected);
+    }
     return $id;
 }
 /**
@@ -109,7 +118,8 @@ function dynamo_fill_data($formdata, $dynamo) {
  * @return bool True if successful, false otherwise.
  */
 function dynamo_update_instance($dynamo, $mform) {
-    global $DB;
+    global $DB, $CFG;
+    require_once($CFG->dirroot.'/mod/dynamo/locallib.php');
 
     $dynamo->timemodified = time();
     $dynamo->id = $dynamo->instance;
@@ -118,6 +128,12 @@ function dynamo_update_instance($dynamo, $mform) {
     $dynamo = dynamo_fill_data($formdata, $dynamo);
 
     dynamo_grade_item_update($dynamo);
+
+    // Add calendar events if necessary.
+    dynamo_set_events($dynamo);
+    $completionexpected = (!empty($dynamo->completionexpected)) ? $dynamo->completionexpected : null;
+    \core_completion\api::update_completion_date_event($dynamo->coursemodule, 'dynamo', $dynamo->id, $completionexpected);
+    
     return $DB->update_record('dynamo', $dynamo);
 }
 
@@ -129,7 +145,7 @@ function dynamo_update_instance($dynamo, $mform) {
  */
 function dynamo_delete_instance($id) {
     global $DB;
-
+    $result = true;
     $exists = $DB->get_record('dynamo', array('id' => $id));
     if (!$exists) {
         return false;
@@ -137,8 +153,14 @@ function dynamo_delete_instance($id) {
 
     $DB->delete_records('dynamo_eval', array('builder' => $id));
     $DB->delete_records('dynamo', array('id' => $id));
+    
+    // Remove old calendar events.
+    if (!$DB->delete_records('event', array('modulename' => 'dynamo', 'instance' => $dynamo->id))) {
+        $result = false;
+    }
 
-    return true;
+
+    return $result;
 }
 /**
  * Extends the settings navigation with the dynamo settings.

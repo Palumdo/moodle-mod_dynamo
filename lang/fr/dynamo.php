@@ -214,3 +214,6 @@ $string['dynamoexportxlsTitle17']             = 'Commentaire sur ma contribution
 $string['dynamoexportxlsTitle18']             = 'Commentaire sur mon groupe';
 $string['dynamoexportxlsTitle19']             = 'Moyennes groupe';
 $string['dynamorefresh']                      = 'Retour à la normale';
+
+$string['calendarstart']                      = 'Date ouverture';
+$string['calendarend']                        = 'Date fermeture';
