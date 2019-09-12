@@ -356,9 +356,6 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
 
             $jscript = dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoevalstr, $allgroupevalstr, $labels
                 , $grpusr->firstname, $grpusr->lastname);
-            // Suppose to make page jump in PDF but only work in firefox...
-            /* echo ('<div class="break-before"></div>');
-            echo ('<div class="break-after"></div>'); */
         }
         ob_flush();
         flush();

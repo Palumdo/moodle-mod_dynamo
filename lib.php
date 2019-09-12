@@ -133,7 +133,7 @@ function dynamo_update_instance($dynamo, $mform) {
     dynamo_set_events($dynamo);
     $completionexpected = (!empty($dynamo->completionexpected)) ? $dynamo->completionexpected : null;
     \core_completion\api::update_completion_date_event($dynamo->coursemodule, 'dynamo', $dynamo->id, $completionexpected);
-    
+
     return $DB->update_record('dynamo', $dynamo);
 }
 
@@ -153,12 +153,11 @@ function dynamo_delete_instance($id) {
 
     $DB->delete_records('dynamo_eval', array('builder' => $id));
     $DB->delete_records('dynamo', array('id' => $id));
-    
+
     // Remove old calendar events.
     if (!$DB->delete_records('event', array('modulename' => 'dynamo', 'instance' => $dynamo->id))) {
         $result = false;
     }
-
 
     return $result;
 }

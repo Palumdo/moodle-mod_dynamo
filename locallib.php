@@ -42,7 +42,7 @@ function dynamo_set_events($dynamo) {
         $dynamo->coursemodule = $cm->id;
     }
 
-    // dynamo start calendar events.
+    // Dynamo start calendar events.
     $event = new stdClass();
     $event->eventtype = DYNAMO_EVENT_TYPE_OPEN;
     // The dynamo_EVENT_TYPE_OPEN event should only be an action event if no close time is specified.
@@ -82,7 +82,7 @@ function dynamo_set_events($dynamo) {
         }
     }
 
-    // dynamo end calendar events.
+    // Dynamo end calendar events.
     $event = new stdClass();
     $event->type = CALENDAR_EVENT_TYPE_ACTION;
     $event->eventtype = DYNAMO_EVENT_TYPE_CLOSE;
