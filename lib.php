@@ -66,7 +66,6 @@ function dynamo_supports($feature) {
  */
 function dynamo_add_instance($dynamo, $mform) {
     global $DB, $CFG;
-    require_once($CFG->dirroot.'/mod/dynamo/locallib.php');
 
     $dynamo->timecreated = time();
     $formdata = $mform->get_data();
@@ -76,7 +75,6 @@ function dynamo_add_instance($dynamo, $mform) {
 
     dynamo_grade_item_update($dynamo);
     // Add calendar events if necessary.
-    dynamo_set_events($dynamo);
     if (!empty($dynamo->completionexpected)) {
         \core_completion\api::update_completion_date_event($dynamo->coursemodule, 'dynamo', $dynamo->id,
             $dynamo->completionexpected);
@@ -119,7 +117,6 @@ function dynamo_fill_data($formdata, $dynamo) {
  */
 function dynamo_update_instance($dynamo, $mform) {
     global $DB, $CFG;
-    require_once($CFG->dirroot.'/mod/dynamo/locallib.php');
 
     $dynamo->timemodified = time();
     $dynamo->id = $dynamo->instance;
@@ -130,7 +127,6 @@ function dynamo_update_instance($dynamo, $mform) {
     dynamo_grade_item_update($dynamo);
 
     // Add calendar events if necessary.
-    dynamo_set_events($dynamo);
     $completionexpected = (!empty($dynamo->completionexpected)) ? $dynamo->completionexpected : null;
     \core_completion\api::update_completion_date_event($dynamo->coursemodule, 'dynamo', $dynamo->id, $completionexpected);
 
@@ -2010,4 +2006,37 @@ function dynamo_to_zero() {
     $dynamoeval->crit6 = 0;
 
     return $dynamoeval;
+}
+
+
+/**
+ * This function is used by the reset_course_userdata function in moodlelib.
+ * This function will remove all posts from the specified forum
+ * and clean up any related data.
+ *
+ * @global object
+ * @param $data the data submitted from the reset course.
+ * @return array status array
+ */
+ function dynamo_reset_userdata($data) {
+    global $DB;
+
+    if (empty($data)) {
+        return;
+    }
+
+    if (!isset($data->courseid)) {
+        return;
+    }
+
+    $sql = "SELECT id
+              FROM {dynamo} t1
+             WHERE course = :param1
+           ";
+    $params = array('param1' => $data->courseid);
+    $responses = $DB->get_records_sql($sql, $params);
+
+    foreach ($responses as &$res) {
+        $DB->delete_records('dynamo_eval', array('builder' => $res->id));
+    }
 }

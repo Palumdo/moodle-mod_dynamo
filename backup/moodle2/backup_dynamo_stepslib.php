@@ -32,7 +32,7 @@ class backup_dynamo_activity_structure_step extends backup_activity_structure_st
     protected function define_structure() {
         // Define each element separated.
         $dynamo = new backup_nested_element('dynamo', array('id'), array(
-            'course', 'name', 'intro', 'introformat', 'open', 'close', 'groupid', 'allowupdate'
+            'course', 'name', 'intro', 'introformat', 'groupid', 'allowupdate'
             , 'crit1', 'crit2', 'crit3', 'crit4', 'crit5', 'critopt', 'critoptname', 'groupingid', 'autoeval'
             , 'groupeval', 'timemodified', 'timecreated', 'comment1', 'comment2',
         ));
