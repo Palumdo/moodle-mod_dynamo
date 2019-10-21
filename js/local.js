@@ -275,6 +275,10 @@ function removeColors() {
     $("#page-wrapper").removeAttr("id");
     $("#page-content").removeAttr("id");
     $(".row").removeClass("row");
+    $(".headerbkg").css("display", "none");
+    if($("#nav-drawer").attr('aria-hidden') == 'false') {
+        $('button').first().click();
+    }
 }
 
 // Draw the graph of self insurance/confidence

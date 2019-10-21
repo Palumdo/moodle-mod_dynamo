@@ -16,7 +16,7 @@
 /**
  * This javascript is for the mod_form.php (activity parameters)
  * Dirty trick to change a little bit a label text...
- * Also expolain in the end user documentation.
+ * Also explained in the end user documentation.
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain

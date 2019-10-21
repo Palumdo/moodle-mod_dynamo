@@ -2018,7 +2018,7 @@ function dynamo_to_zero() {
  * @param $data the data submitted from the reset course.
  * @return array status array
  */
- function dynamo_reset_userdata($data) {
+function dynamo_reset_userdata($data) {
     global $DB;
 
     if (empty($data)) {
