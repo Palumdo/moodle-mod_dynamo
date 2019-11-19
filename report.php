@@ -236,7 +236,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
             $usrid = $grpusr->id;
             $data = dynamo_compute_advanced($usrid, $dynamo);
             $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usrid);
-            $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid);
+            $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid)[0];
 
             $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid
                 .'" width="720" height="360">[No canvas support]</canvas></div>';
@@ -408,6 +408,12 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
                 <span class="slider"></span>
             </label>
             </div>
+            <div class="box-switch"><div class="box-switch-label">'.get_string('dynamorepbtrelatifassurance', 'mod_dynamo').'</div>
+            <label class="switch">
+                <input id="chk_relatif_assurance" type="checkbox" onclick="$(\'.relatif_assurance\').toggle();">
+                <span class="slider"></span>
+            </label>
+            </div>            
             <div class="box-switch" style="max-width:350px;text-align:center;">
             <button class="btn btn-default" style="margin:10px;" onclick="removeColors();$(this).css(\'display\',\'none\');
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'
@@ -435,6 +441,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
             display_eval_others_table($dynamo, $grpusr->id, $display6);
             display_eval_comments_table($dynamo, $grpusr->id);
             display_eval_by_others_table($dynamo, $grpusr->id, $display6);
+            display_relatif_assurance($dynamo, $grpusrs, $grpusr->id);
             $jscript = display_graph_radar_table($dynamo, $grpusr->id, $display6, $jscript);
             echo ('</div>');
         }
@@ -738,6 +745,15 @@ function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
     echo ('</div>'); // End grouping.
 
     return  $jscript;
+}
+
+function display_relatif_assurance($dynamo, $grpusrs, $usrid) {
+    $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid)[0];
+    echo ('<div class="relatif_assurance" style="display:none;">');
+    echo ('<b>'.get_string('dynamoconf', 'mod_dynamo')
+               .'</b> :<span class="change-color" style="color:white;background-color:'
+               .dynamo_get_color_conf($conf).'">'.number_format($conf, 2, ',', ' ').'</span><br>');
+    echo ('</div>'); // End relative assurance.
 }
 
 // Report 004.

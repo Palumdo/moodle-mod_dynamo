@@ -123,7 +123,7 @@ foreach ($groups as $grp) {
         $data = dynamo_compute_advanced($usr->id, $dynamo);
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usr->id)[0];
-        $conf = dynamo_get_conf($dynamo, $grpusrs, $usr->id);
+        $conf = dynamo_get_conf($dynamo, $grpusrs, $usr->id)[0];
         $comments = dynamo_get_comment($usr->id, $dynamo);
 
         $crit1s += $autoeval->crit1;

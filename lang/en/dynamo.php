@@ -153,6 +153,7 @@ $string['dynamorepbtevalbyothers']            = 'Hide evaluation by pairs';
 $string['dynamorepbtgraphradar']              = 'Hide radars';
 $string['dynamorepbtgraphhisto']              = 'Hide histograms';
 $string['dynamorepbtcomment']                 = 'Hide comments';
+$string['dynamorepbtrelatifassurance']        = 'Hide relative assurance';
 $string['dynamoremovecolors']                 = 'Printer friendly';
 $string['dynamogroupcount']                   = 'Number of group';
 $string['dynamostudentcount']                 = 'Number of student';

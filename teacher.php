@@ -74,10 +74,22 @@ echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;
         </div>
 
         <div class="box-switch" style="text-align:left;max-width:300px;width:300px;"><div style="padding:15px;">
-         '.get_string('dynamogroupcount',               'mod_dynamo').' : '.$stat->nb_group.'<br>
-         '.get_string('dynamostudentcount',             'mod_dynamo').' : '.$stat->nb_participant.'<br>
-         '.get_string('dynamostudentnoanswerscount',    'mod_dynamo').' : <a href="/mod/dynamo/view.php?id=
+         '.get_string('dynamogroupcount', 'mod_dynamo').' : '.$stat->nb_group.'<br>
+         '.get_string('dynamostudentcount', 'mod_dynamo').' : '.$stat->nb_participant.'<br>
+         '.get_string('dynamostudentnoanswerscount', 'mod_dynamo').' : <a href="/mod/dynamo/view.php?id=
          '.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&report=1&tab=3&results=1">'.$stat->nb_no_answer.'</a></div>
+        </div>
+        
+        <div style="float: left; margin: 3px;">
+            <button class="btn btn-default" onclick="removeColors();$(this).css(\'display\',\'none\');
+                $(\'#dynamorefresh\').css(\'display\',\'\');">'.get_string('dynamoremovecolors', 'mod_dynamo').'
+            </button>
+            <br>
+            <a id="dynamorefresh"
+                onclick="location.reload();" title="Retour à la normale"
+                style="padding:5px 15px 5px 15px;background:#d3d9df;cursor:pointer;display:none;border-radius:3px;">
+                <i class="fas fa-redo-alt"></i>
+            </a>
         </div>
       </div>');
 echo('<div id="table-overview"><table class="tablelvlx">

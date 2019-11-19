@@ -952,12 +952,13 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
         }
     }
     if ($autoeval == 0) {
-        return 10; // Student that don't answers can a high arbitrary score.
+        return [10,'']; // Student that don't answers get a high arbitrary score.
     }
     $sum = $agrid[$ki][count($agrid[$ki]) - 1];
     $nsa = ($autoeval / $sum) * ($nbstudent - 1);
-    $conf = $nsa / $niwf;
-
+    $conf = [];
+    $conf[0] = $nsa / $niwf;
+    $conf[1] = '(('.$autoeval.' / '.$sum.')'.' * ('.$nbstudent.' - 1)) / '.$niwf;
     return $conf;
 }
 /**
@@ -1147,7 +1148,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $implication = $implication . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                         class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         // Self-insurance.
-        $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
+        $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id)[0];
         $color = dynamo_get_color_conf($conf);
         if ($color == 'green') {
             $color = '#006DCC';
@@ -1977,7 +1978,7 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
         $color = dynamo_get_color_niwf($niwf[0]);
         $notperfect += $aweight[$color];
         // Confidence.
-        $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id);
+        $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id)[0];
         $color = dynamo_get_color_conf($conf);
         if ($color == 'green') {
             $color = '#006DCC';

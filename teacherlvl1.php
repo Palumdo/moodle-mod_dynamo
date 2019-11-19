@@ -50,15 +50,23 @@ echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
         <li class="active"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=3">'
             .get_string('dynamoresults3', 'mod_dynamo').'</a></li>
      </ul>';
-
 echo '<div style="width:100%;margin-top:15px;">'.get_string('dynamoliststudent', 'mod_dynamo').'&nbsp;<div class="toolpit">
         <i class="fas fa-info-circle" style="font-size:16px;color:#006DCC;"></i><span class="toolpittext">'.$toolpits.'</span>
         </div> : <input type="text" id="students"></div>';
-
 echo '<input type="hidden" id="studentshidden">';
-
+echo('<div style="width:100%;margin:3px;">
+            <button class="btn btn-default" onclick="removeColors();$(this).css(\'display\',\'none\');
+                $(\'#dynamorefresh\').css(\'display\',\'\');">'.get_string('dynamoremovecolors', 'mod_dynamo').'
+            </button>
+            <br>
+            <a id="dynamorefresh"
+                onclick="location.reload();" title="Retour à la normale"
+                style="padding:5px 15px 5px 15px;background:#d3d9df;cursor:pointer;display:none;border-radius:3px;">
+                <i class="fas fa-redo-alt"></i>
+            </a>
+        </div>
+');
 echo '<script>';
-
 // Datalist search.
 echo 'var local_source = [';
 $students = dynamo_get_grouping_users($dynamo->groupingid);
@@ -273,11 +281,13 @@ if ($usrid != 0) {
             <span><a href="#" data-toggle="toolpit"    dyna-data-title="'.$niwf[1].'">&nbsp;
             <i class="fas fa-info-circle ico-blue"></i></a></span></td></tr>');
     echo ('<tr><td><b>'.get_string('dynamoconf', 'mod_dynamo').'</b>:</td><td><span style="padding:3px;border-radius:3px;
-            color:white;background-color:'.dynamo_get_color_conf($conf).'">'.number_format($conf, 2, ',', ' ').'</span></td></tr>');
+            color:white;background-color:'.dynamo_get_color_conf($conf[0]).'">'.number_format($conf[0], 2, ',', ' ').'
+                </span><a href="#" data-toggle="toolpit" dyna-data-title="'.$conf[1].'">&nbsp;
+                <i class="fas fa-info-circle ico-blue"></i></a></td></tr>');
     echo ('</table></div>');
 
     $canvas = '<div class="graph-block"><canvas id="cvs_'.$usrid.'" width="720" height="360">[No canvas support]</canvas></div>
-    <div class="graph-block"><canvas id="cvsh_'.$usrid.'" width="960" height="360">[No canvas support]</canvas></div>';
+        <div class="graph-block"><canvas id="cvsh_'.$usrid.'" width="960" height="360">[No canvas support]</canvas></div>';
     echo ($canvas);
 
     $autoevalstr = '['.$dynamoautoeval[0]->crit1.'

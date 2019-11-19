@@ -152,6 +152,7 @@ $string['dynamorepbtevalbyothers']            = 'Masquer évaluation par les pai
 $string['dynamorepbtgraphradar']              = 'Masquer radars';
 $string['dynamorepbtgraphhisto']              = 'Masquer histogrammes';
 $string['dynamorepbtcomment']                 = 'Masquer commentaires';
+$string['dynamorepbtrelatifassurance']        = 'Masquer assurance relative';
 $string['dynamoremovecolors']                 = 'Version imprimable';
 $string['dynamogroupcount']                   = 'Nombre de groupes';
 $string['dynamostudentcount']                 = 'Nombre d\'étudiants';

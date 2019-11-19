@@ -79,7 +79,18 @@ foreach ($groups as $sgrp) { // Loop to all groups of grouping.
     echo('    <option id="'.$sgrp->id.'"'.$selected.'>'.$sgrp->name.'</option>');
 }
 echo('</select></div>');
-
+echo('<div style="width:100%;margin:3px;">
+            <button class="btn btn-default" onclick="removeColors();$(this).css(\'display\',\'none\');
+                $(\'#dynamorefresh\').css(\'display\',\'\');">'.get_string('dynamoremovecolors', 'mod_dynamo').'
+            </button>
+            <br>
+            <a id="dynamorefresh"
+                onclick="location.reload();" title="Retour à la normale"
+                style="padding:5px 15px 5px 15px;background:#d3d9df;cursor:pointer;display:none;border-radius:3px;">
+                <i class="fas fa-redo-alt"></i>
+            </a>
+        </div>
+');
 if ($grp != 0) {
     $grpusrs = dynamo_get_group_users($grp->id);
     $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
@@ -347,8 +358,9 @@ if ($grp != 0) {
             .number_format($niwf[0], 2, ',', ' ').'</span> <a href="#" data-toggle="toolpit" dyna-data-title="'.$niwf[1].'">&nbsp;
                 <i class="fas fa-info-circle ico-blue"></i></a></div>');
         echo('<div style="line-height:2.0em;"><b>'.get_string('dynamoconf', 'mod_dynamo')
-            .'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_conf($conf).'">'
-            .number_format($conf, 2, ',', ' ').'</span></div>');
+            .'</b> :<span style="padding:3px;border-radius:3px;color:white;background-color:'.dynamo_get_color_conf($conf[0]).'">'
+            .number_format($conf[0], 2, ',', ' ').'</span><a href="#" data-toggle="toolpit" dyna-data-title="'.$conf[1].'">&nbsp;
+                <i class="fas fa-info-circle ico-blue"></i></a></div>');
         echo($canvas);
 
         $allgroupevalstr = "";
