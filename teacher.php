@@ -79,7 +79,6 @@ echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;
          '.get_string('dynamostudentnoanswerscount', 'mod_dynamo').' : <a href="/mod/dynamo/view.php?id=
          '.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&report=1&tab=3&results=1">'.$stat->nb_no_answer.'</a></div>
         </div>
-        
         <div style="float: left; margin: 3px;">
             <button class="btn btn-default" onclick="removeColors();$(this).css(\'display\',\'none\');
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'.get_string('dynamoremovecolors', 'mod_dynamo').'

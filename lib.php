@@ -952,7 +952,7 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
         }
     }
     if ($autoeval == 0) {
-        return [10,'']; // Student that don't answers get a high arbitrary score.
+        return [10, '']; // Student that don't answers get a high arbitrary score.
     }
     $sum = $agrid[$ki][count($agrid[$ki]) - 1];
     $nsa = ($autoeval / $sum) * ($nbstudent - 1);

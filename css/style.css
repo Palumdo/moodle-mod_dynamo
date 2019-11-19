@@ -33,11 +33,11 @@
     .path-mod-dynamo .dontprint {
         display: none;
     }
-    
+
     .path-mod-dynamo .block {
         display: none;
     }
-    
+
     .path-mod-dynamo .dynnav {
         display: none;
     }
@@ -80,7 +80,7 @@
     .path-mod-dynamo h5 {
         color: black;
     }
-    
+
     .path-mod-dynamo h4.nojump {
         page-break-before: avoid !important;
         break-before: avoid !important;

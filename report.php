@@ -413,7 +413,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
                 <input id="chk_relatif_assurance" type="checkbox" onclick="$(\'.relatif_assurance\').toggle();">
                 <span class="slider"></span>
             </label>
-            </div>            
+            </div>
             <div class="box-switch" style="max-width:350px;text-align:center;">
             <button class="btn btn-default" style="margin:10px;" onclick="removeColors();$(this).css(\'display\',\'none\');
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'
