@@ -54,3 +54,24 @@ script:
   - moodle-plugin-ci grunt || true
   - moodle-plugin-ci phpunit
   - moodle-plugin-ci behat
+  
+after_success:
+    - bin/php-coveralls -v --exclude-no-stmt
+    
+before_deploy:
+    - if [ "${BOX}" = "yes" ]; then curl -LSs http://box-project.github.io/box2/installer.php | php; fi;
+    - if [ "${BOX}" = "yes" ]; then composer config platform.php 2> /dev/null || composer config platform.php 5.5.0; fi;
+    - if [ "${BOX}" = "yes" ]; then composer update --no-dev --no-interaction ${COMPOSER_FLAGS}; fi;
+    - if [ "${BOX}" = "yes" ]; then php -d phar.readonly=false box.phar build; fi;
+
+deploy:
+    provider: releases
+    token:
+        secure: RvyoncgjY7qxxQj6gDl+socPypw4pGVSi3cPIjl7me6D0qm9/peibmWaTmW3bbnugYTEHF1mEpR8jUKeyHnEyxWG+gWD71KD42ofT22QUxBoKpVxyRMr44gJNCuTlbzvcQwsURRvP9Fkic4oVukpvjnOCifBdlmay+NE31Wjof0=
+    file: build/artifacts/php-coveralls.phar
+    skip_cleanup: true
+    on:
+        repo: php-coveralls/php-coveralls
+        tags: true
+        all_branches: true
+        condition: $BOX = yes
