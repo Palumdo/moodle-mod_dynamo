@@ -1,6 +1,7 @@
 # Dynamo #
 
 [![Build Status](https://api.travis-ci.org/Palumdo/moodle-mod_dynamo.png)](https://api.travis-ci.org/Palumdo/moodle-mod_dynamo)
+[![Coverage Status](https://coveralls.io/repos/github/Palumdo/moodle-mod_dynamo/badge.svg?branch=master)](https://coveralls.io/github/Palumdo/moodle-mod_dynamo?branch=master)
 
 Dynamo is used to follow and support the evaluation by peers in working groups
 
