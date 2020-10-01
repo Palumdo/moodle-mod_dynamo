@@ -27,7 +27,6 @@ defined('MOODLE_INTERNAL') || die();
 define('DYNAMO_EVENT_TYPE_OPEN', 'open');
 define('DYNAMO_EVENT_TYPE_CLOSE', 'close');
 
-
 /**
  * Return if the plugin supports $feature.
  *
@@ -52,7 +51,6 @@ function dynamo_supports($feature) {
             return null;
     }
 }
-
 /**
  * Saves a new instance of the dynamo into the database.
  *
@@ -104,7 +102,6 @@ function dynamo_fill_data($formdata, $dynamo) {
 
     return $dynamo;
 }
-
 /**
  * Updates an instance of the dynamo in the database.
  *
@@ -132,7 +129,6 @@ function dynamo_update_instance($dynamo, $mform) {
 
     return $DB->update_record('dynamo', $dynamo);
 }
-
 /**
  * Removes an instance of the dynamo from the database.
  *
@@ -295,7 +291,6 @@ function dynamo_grade_item_update($dynamo, $reset=false) {
         grade_update('/mod/dynamo', $dynamo->course, 'mod', 'dynamo', $dynamo->id, 0, null, $item);
     }
 }
-
 /**
  * Delete grade item for given dynamo instance.
  *
@@ -436,7 +431,6 @@ function dynamo_get_grouping_users($groupingid) {
 
     return $result;
 }
-
 /**
  * Get a formatted HTML string with a table of student survey answers.
  *
@@ -580,12 +574,22 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
  */
 function dynamo_get_comment($evalbyid, $dynamo) {
     global $DB;
-    if (!$dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $evalbyid))) {
+
+    if ($dynamoeval = $DB->get_records_sql('SELECT * FROM {dynamo_eval} WHERE builder = ? AND evalbyid = ?'
+            , [$dynamo->id, $evalbyid])) {
+        foreach ($dynamoeval as $rec) {
+            $comment1 = $rec->comment1;
+            $comment2 = $rec->comment2;
+            $dynamoeval = new stdClass();
+            $dynamoeval->comment1 = $comment1;
+            $dynamoeval->comment2 = $comment2;
+            break;
+        }
+    } else {
         $dynamoeval = new stdClass();
         $dynamoeval->comment1 = '';
         $dynamoeval->comment2 = '';
     }
-
     return $dynamoeval;
 }
 /**
@@ -719,6 +723,7 @@ function dynamo_get_grid($dynamo) {
  * return the total
  */
 function dynamo_get_total($arrayofobjects, $id, $by ) {
+    // Comment from here.
     $ok = 0;
     // Validate if the student do the evaluation of the other.
     foreach ($arrayofobjects as $e) {
@@ -726,11 +731,10 @@ function dynamo_get_total($arrayofobjects, $id, $by ) {
             $ok = 1;
         }
     }
-
     if ($ok == 0) {
         return 0;
     }
-
+    // To here if you want to compute with student that doesn't answer.
     foreach ($arrayofobjects as $e) {
         if ($e->userid == $id && $e->evalbyid == $by) {
             return $e->total;
@@ -958,7 +962,7 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
     $nsa = ($autoeval / $sum) * ($nbstudent - 1);
     $conf = [];
     $conf[0] = $nsa / $niwf;
-    $conf[1] = '(('.$autoeval.' / '.$sum.')'.' * ('.$nbstudent.' - 1)) / '.$niwf;
+    $conf[1] = '(('.$autoeval.' / '.$sum.')'.' * ('.$nbstudent.' - 1)) / '.number_format($niwf, 2, ',', ' ');
     return $conf;
 }
 /**
@@ -1087,7 +1091,7 @@ function dynamo_get_group_eval_avg($dynamo, $grpusrs, $grpid) {
 }
 
 /**
- * return some indicators about how the group working
+ * Return some indicators about how the group working
  * indicators are : response or not to the survey !
  * Participation
  * Implication
@@ -1103,7 +1107,7 @@ function dynamo_get_group_eval_avg($dynamo, $grpusrs, $grpid) {
  * return an object with all indicators packed in HTML (display for teacher in global view)
  */
 function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
-    global $DB, $OUTPUT;
+    global $DB, $OUTPUT, $USER;
 
     $groupstat = new stdClass();
     $participation = "";
@@ -1113,6 +1117,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $conflit = "";
     $nbuser = 0;
     $names = "";
+    $comment = "";
 
     $aweight = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
     // Fontawsome icons use for showing the average climat inside the group from thunder to full sun.
@@ -1128,10 +1133,21 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $tooltips .= $OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'&#xa;<br>';
 
         // Participation/ as answered.
-        if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id))) {
+        /*
+        if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id)
+                , $strictness=IGNORE_MULTIPLE)) {
+        */
+
+        if ($dynamoeval = $DB->get_records_sql('SELECT distinct(comment2) FROM {dynamo_eval} WHERE builder = ? AND evalbyid = ?'
+            , [$dynamo->id, $grpusr->id])) {
+            foreach ($dynamoeval as $rec) {
+                $comment = $rec->comment2;
+                break;
+            }
             $participation = $participation.'<i style="color:#006DCC;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                                 class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         } else {
+            $comment = "";
             $participation = $participation.'<i style="color:#ccc;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                                 class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         }
@@ -1160,13 +1176,16 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
 
         // Find firstname lastname in comments about the group.
         foreach ($grpusrs as $grpusrname) {
-            $text = preg_replace('/[^a-z\s]/', '', strtolower($dynamoeval->comment2));
+            $text = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($comment);
+            $text = preg_replace('/[^a-z\s]/', '', strtolower($text));
             $text = preg_split('/\s+/', $text, null, PREG_SPLIT_NO_EMPTY);
             $text = array_flip($text);
-            $firstname = strtolower($grpusrname->firstname);
-            $lastname = strtolower($grpusrname->lastname);
+            $firstname = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->firstname));
+            $lastname = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->lastname));
+            
             if (isset($text[$firstname]) || isset($text[$lastname])) {
                 $conflit = '<i style="font-size:1.2em;color:#006DCC;" class="fas fa-comment"></i>';
+                break;
             }
         }
     }
@@ -1179,9 +1198,11 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $groupstat->tooltips = $tooltips;
     $groupstat->names = $names;
 
+/*
     if ($notperfect == 0 ) {
         $groupstat->conflit = '';
     }
+*/
 
     $idico = round($notperfect / $nbuser / 2, 0, PHP_ROUND_HALF_DOWN);
     $groupstat->remark = '<span class="hiddenidx">'.round($notperfect / $nbuser / 2, 2)
@@ -1190,7 +1211,6 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
 
     return $groupstat;
 }
-
 /**
  * Return the list of participants that do not participate (not answer at the survey)
  *
@@ -1241,7 +1261,6 @@ function dynamo_get_evaluation($builder, $evalbyid, $usrid) {
 
     return $dynamoeval;
 }
-
 /**
  * Return an object with some info about the grouping like number of groups, number of participants, number of participants
  * that not answsers
@@ -1608,13 +1627,21 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
 
     $params = array('param1' => $dynamo->id);
     $result2 = $DB->get_records_sql($sql, $params);
-
+    $tooltips = array();
     foreach ($result as $i => $value) {
-        $result[$i]->autoeval = $result2[$i]->autoeval;
-        $idx = round($result[$i]->eval, 2).'_'.round($result[$i]->autoeval, 2);
-        $tooltips[$idx] = $tooltips[$idx]
-            .htmlspecialchars($result[$i]->firstname, ENT_QUOTES).' '
-            .htmlspecialchars($result[$i]->lastname, ENT_QUOTES).',';
+        if (array_key_exists($i, $result2)) { // Add to solve the case when student doesnt auto-evaluate.
+            $result[$i]->autoeval = $result2[$i]->autoeval;
+            $idx = round($result[$i]->eval, 2).'_'.round($result[$i]->autoeval, 2);
+            
+            if (array_key_exists($idx, $tooltips)) {
+                $tooltips[$idx] = $tooltips[$idx]
+                    .htmlspecialchars($result[$i]->firstname, ENT_QUOTES).' '
+                    .htmlspecialchars($result[$i]->lastname, ENT_QUOTES).',';
+            } else {
+                $tooltips[$idx] = htmlspecialchars($result[$i]->firstname, ENT_QUOTES).' '
+                                 .htmlspecialchars($result[$i]->lastname, ENT_QUOTES).',';
+            }
+        }
     }
 
     $ret->tooltips = $tooltips;
@@ -1680,7 +1707,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         $grpid2 = dynamo_get_group_consistency($grp, $usr2);
         if ($grpid1 > -1) { // Stud1 has group.
             if ($grpid2 > -1) { // Stud2 has group.
-                // Nothing to do next line for test.
+                // Nothing to do next line.
                 $grpid2 = dynamo_get_group_consistency($grp, $usr2);
             } else { // Stud2 has no group.
                 if ($diff <= 0.04) { // Add to group stud1.
@@ -1769,7 +1796,6 @@ function dynamo_get_group_consistency($grp, $usr) {
 
     return -1;
 }
-
 /**
  * subfunction to simplify  dynamo_get_consistency
  * the aim is just to sort array
@@ -1782,7 +1808,6 @@ function dynamo_get_group_consistency($grp, $usr) {
 function cmp($a, $b) {
     return $a->diff > $b->diff;
 }
-
 /**
  * Give the quatric gap between two students of a group
  *
@@ -1802,11 +1827,11 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
 
     // Sum of evaluation.
     $sql = "
-        SELECT t1.evalbyid,  sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) total
+        SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) total
           FROM {dynamo_eval} t1
           WHERE t1.builder   = :param1
             AND t1.critgrp   = 0
-            AND evalbyid     = :param2
+            AND t1.evalbyid     = :param2
     ";
 
     $params = array('param1' => $dynamo->id, 'param2' => $usr1);
@@ -1841,11 +1866,11 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     SELECT sum(t1.crit1/".$nbeval." + t1.crit2/".$nbeval." + t1.crit3/".$nbeval." + t1.crit4/".$nbeval." + t1.crit5/"
         .$nbeval.") ecart
         FROM (
-              SELECT SQRT(POW(((t1.crit1/".$avg.") - (t2.crit1/".$avg.")),2)) crit1
-                    ,SQRT(POW(((t1.crit2/".$avg.") - (t2.crit2/".$avg.")),2)) crit2
-                    ,SQRT(POW(((t1.crit3/".$avg.") - (t2.crit3/".$avg.")),2)) crit3
-                    ,SQRT(POW(((t1.crit4/".$avg.") - (t2.crit4/".$avg.")),2)) crit4
-                    ,SQRT(POW(((t1.crit5/".$avg.") - (t2.crit5/".$avg.")),2)) crit5
+              SELECT SQRT(POWER(((t1.crit1/".$avg.") - (t2.crit1/".$avg.")),2)) crit1
+                    ,SQRT(POWER(((t1.crit2/".$avg.") - (t2.crit2/".$avg.")),2)) crit2
+                    ,SQRT(POWER(((t1.crit3/".$avg.") - (t2.crit3/".$avg.")),2)) crit3
+                    ,SQRT(POWER(((t1.crit4/".$avg.") - (t2.crit4/".$avg.")),2)) crit4
+                    ,SQRT(POWER(((t1.crit5/".$avg.") - (t2.crit5/".$avg.")),2)) crit5
                 FROM {dynamo_eval} t1
                     ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
                         FROM {dynamo_eval} t1
@@ -1865,7 +1890,6 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $result->similitude = $similitude;
     return $result;
 }
-
 /**
  * Give the html(specific icon with a specific color) that represent the type of group in the global view on groups of the teacher
  *
@@ -1899,9 +1923,9 @@ function dynamo_get_group_type($type, $grpid, $max) {
             break;
         case 4:
             return ' '.'<div style="float:left;color:black;">
-                        <i class="fas fa-heart-broken" data-id="'.$grpd.'" data-group="'.$grpid.'"
+                        <i class="fas fa-heart-broken" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').' ('.$max.')"></i>'
-                      .'<i class="fas fa-heart-broken"         data-id="'.$grpd.'"  data-group="'.$grpid.'"
+                      .'<i class="fas fa-heart-broken"         data-id="'.$grpid.'"  data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 5:
@@ -1917,7 +1941,6 @@ function dynamo_get_group_type($type, $grpid, $max) {
     }
     return '';
 }
-
 /**
  * Give the group cohesion type
  *
@@ -1949,7 +1972,6 @@ function dynamo_get_group_type_txt($type) {
     }
     return '';
 }
-
 /**
  * Give the html(specific icon with a specific color) that represent the climate inside the group
  * it's base on a simple computing from the cohesion, implication and self confidence
@@ -1966,7 +1988,7 @@ function dynamo_get_group_type_txt($type) {
 function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
     $nbuser = 0;
 
-    $aweight = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
+    $aweight = ['green' => 0, '#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
     $aicon = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
     $aicolor = ['ca-sun', 'ca-cloud-sun', 'ca-cloud-sun-rain ', 'ca-cloud-showers-heavy' , 'ca-bolt'];
 
@@ -1991,7 +2013,6 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
 
     return [$climat, $idico];
 }
-
 /**
  * return an initialized to zero Dynamo object
  *
@@ -2008,8 +2029,6 @@ function dynamo_to_zero() {
 
     return $dynamoeval;
 }
-
-
 /**
  * This function is used by the reset_course_userdata function in moodlelib.
  * This function will remove all posts from the specified forum

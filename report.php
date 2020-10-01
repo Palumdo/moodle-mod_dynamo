@@ -37,7 +37,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_login($course, true, $cm);
-
+$courseid = $course->id; 
 $modulecontext = context_module::instance($cm->id);
 if (!has_capability('mod/dynamo:create', $modulecontext)) {
     redirect(new moodle_url('/my'));
@@ -72,11 +72,11 @@ switch($report) {
         break;
 
     case 2:
-        $jscript = rep_list_all_group($dynamo, $jscript, $display6);
+        $jscript = rep_list_all_group($dynamo, $jscript, $display6, $courseid);
         break;
 
     case 3:
-        $jscript = rep_list_all_participant($dynamo, $jscript, $display6);
+        $jscript = rep_list_all_participant($dynamo, $jscript, $display6, $courseid);
         break;
 
     case 4:
@@ -134,7 +134,7 @@ function rep_list_no_participant($result, $name) {
 }
 
 // Report 002.
-function rep_list_all_group($dynamo, $jscript, $display6) {
+function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
     global $OUTPUT;
 
     // No goto icon for the first group at top !
@@ -178,7 +178,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
                            </th>');
         foreach ($grpusrs as $grpusr) { // Loop to all students of  groups to put their name in title.
             $avatar = new user_picture($grpusr);
-            $avatar->courseid = $course->id;
+            $avatar->courseid = $courseid; // $course->id;
             $avatar->link = true;
             echo ('            <th>'.$OUTPUT->render($avatar).$grpusr->firstname.' '.$grpusr->lastname.'</th>');
         }
@@ -365,7 +365,7 @@ function rep_list_all_group($dynamo, $jscript, $display6) {
 }
 
 // Report 003.
-function rep_list_all_participant($dynamo, $jscript, $display6) {
+function rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
     global $OUTPUT;
     $nojumpclass = "nojump";
 
@@ -429,7 +429,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6) {
 
         foreach ($grpusrs as $grpusr) {
             $avatar = new user_picture($grpusr);
-            $avatar->courseid = $course->id;
+            $avatar->courseid = $courseid; // $course->id;
             $avatar->link = true;
             $avatar->size = 50;
 
@@ -815,14 +815,18 @@ function rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
     // Generate the data for the javascript function.
     $jscript = $jscript.'var data = [];';
     foreach ($data as $i => $value) {
-        $idt = round($data[$i]->eval, 2).'_'.round($data[$i]->autoeval, 2);
-        $jscript = $jscript.'data['.$idx.'] = {"id":"'.$data[$i]->userid.'","name":"'
-            .substr_replace($tooltips[$idt], "", -1).'", "evals":"'
-            .round($data[$i]->eval, 2).'", "autoeval":"'.round($data[$i]->autoeval, 2).'"};';
-        echo ('     <tr><td>'.$data[$i]->name.'</td><td>'.$data[$i]->firstname.'</td><td>'.$data[$i]->lastname.'</td><td>'
-        .round($data[$i]->autoeval, 2).'</td><td>'. round($data[$i]->eval, 2).'</td><td>'
-        .round($data[$i]->autoeval - $data[$i]->eval, 2).'</td></tr>');
-        $idx++;
+        if (array_key_exists($i, $data)) { // Add to solve the case when student doesnt auto-evaluate.
+            if (property_exists($data[$i], 'autoeval') ) { // Add to solve the case when student doesnt auto-evaluate.
+                $idt = round($data[$i]->eval, 2).'_'.round($data[$i]->autoeval, 2);
+                $jscript = $jscript.'data['.$idx.'] = {"id":"'.$data[$i]->userid.'","name":"'
+                    .substr_replace($tooltips[$idt], "", -1).'", "evals":"'
+                    .round($data[$i]->eval, 2).'", "autoeval":"'.round($data[$i]->autoeval, 2).'"};';
+                echo ('     <tr><td>'.$data[$i]->name.'</td><td>'.$data[$i]->firstname.'</td><td>'.$data[$i]->lastname.'</td><td>'
+                .round($data[$i]->autoeval, 2).'</td><td>'. round($data[$i]->eval, 2).'</td><td>'
+                .round($data[$i]->autoeval - $data[$i]->eval, 2).'</td></tr>');
+                $idx++;
+            }
+        }
     }
     echo ('    </tbody>');
     echo ('  </table>');
@@ -843,7 +847,7 @@ function rep_yearbook($dynamo, $id) {
         $grpusrs = dynamo_get_group_users($grp->id);
         foreach ($grpusrs as $grpusr) {
             echo ('<div class="report-yearbook" title="'.$grp->name.'">'
-                .$OUTPUT->user_picture($grpusr, array('size' => 120, 'courseid' => $course->id))
+                .$OUTPUT->user_picture($grpusr, array('size' => 120))
                 .'<div class="report-yearbook-title">'.$grp->name
                 .'</div><div class="report-yearbook-descr"><a title="'
                 .get_string('dynamogotoparticipant', 'mod_dynamo').'" href="view.php?id='.$id.'&groupid='

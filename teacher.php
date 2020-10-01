@@ -110,7 +110,7 @@ echo('<div id="table-overview"><table class="tablelvlx">
      ');
 foreach ($groups as $grp) { // Loop to all groups of grouping.
     $grpusrs = dynamo_get_group_users($grp->id);
-    $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
+    //$coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
     $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
 
     $consistency = $oconsistency->grp;

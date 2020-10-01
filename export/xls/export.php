@@ -46,7 +46,7 @@ if (!has_capability('mod/dynamo:create', $ctxt)) {
     die;
 }
 
-$reportname = "dynamo_export";
+$reportname = $course->shortname.'_'.$cm->instance;
 $workbook = new MoodleExcelWorkbook('-');
 
 $workbook->send($reportname);
@@ -59,34 +59,39 @@ $worksheet[2] = $workbook->add_worksheet(get_string('dynamoexportxlstab3', 'mod_
 $worksheet[0]->write(0, 0, $dynamo->name);
 $worksheet[0]->write(1, 0, date('d/m/Y', $dynamo->timecreated));
 $col = 1;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle01', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoheadconsistency', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle02', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle03', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoheadremarque', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle04', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle01', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle05', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle02', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle06', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle03', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle07', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle04', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle08', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle05', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle09', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle06', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle10', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle07', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle11', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle08', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle12', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle09', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle13', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle10', 'mod_dynamo'));
 $col++;
-$worksheet[0]->write(3, $col, get_string('dynamoexportxlsTitle14', 'mod_dynamo'));
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle11', 'mod_dynamo'));
 $col++;
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle12', 'mod_dynamo'));
+$col++;
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle13', 'mod_dynamo'));
+$col++;
+$worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle14', 'mod_dynamo'));
 
 $groups = dynamo_get_groups($dynamo->groupingid);
 $i = 0;
@@ -113,12 +118,12 @@ foreach ($groups as $grp) {
     $crit6p = 0;
 
     $col = 0;
-
-    $worksheet[0]->write(3 + ($i * 5), $col, $grp->name, $format);
-    $worksheet[0]->write(4 + ($i * 5), $col, get_string('dynamoexportxlsTitle19', 'mod_dynamo'));
-    $worksheet[0]->write(5 + ($i * 5), $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
-    $worksheet[0]->write(6 + ($i * 5), $col, get_string('dynamoheadremarque', 'mod_dynamo'));
-
+    $nbline = 1;
+    
+    $worksheet[0]->write(3 + ($i * $nbline), $col, $grp->name, $format);
+//    $worksheet[0]->write(4 + ($i * 5), $col, get_string('dynamoexportxlsTitle19', 'mod_dynamo'));
+//    $worksheet[0]->write(5 + ($i * 5), $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
+//    $worksheet[0]->write(6 + ($i * 5), $col, get_string('dynamoheadremarque', 'mod_dynamo'));
     foreach ($grpusrs as $usr) {
         $data = dynamo_compute_advanced($usr->id, $dynamo);
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
@@ -199,44 +204,54 @@ foreach ($groups as $grp) {
         $col++;
     }
     // Page 1.
-    $col = 1;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($totalp / count($grpusrs), 2));
+    $col = 4;
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($totalp / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($totals / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($totals / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit1p / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1p / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit1s / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1s / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit2p / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2p / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit2s / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2s / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit3p / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3p / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit3s / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3s / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit4p / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4p / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit4s / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4s / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit5p / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5p / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit5s / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5s / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit6p / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6p / count($grpusrs), 2));
     $col++;
-    $worksheet[0]->write(4 + ($i * 5), $col, round($crit6s / count($grpusrs), 2));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6s / count($grpusrs), 2));
 
-    $col = 1;
+    $col = 1; 
     $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
+    $consistencynb = 0;
+    //$col++; 
+    $consistency = $oconsistency->grp;
+    foreach ($consistency as $cusers) {
+        if (count($cusers) > 0) {
+            $consistencynb++;
+        }
+    }    
+    $worksheet[0]->write(3 + ($i * $nbline), $col, $consistencynb);
+    $col++; 
     $val = [0, 0, 0, 1, 3, 0, 3];
     $notperfect = ($val[$oconsistency->type] * count($grpusrs));
+    $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($oconsistency->type));
+    $col++; 
     $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
     $climattxt = get_string('dynamoaclimate'.$climat, 'mod_dynamo');
-
-    $worksheet[0]->write(5 + ($i * 5), $col, dynamo_get_group_type_txt($oconsistency->type));
-    $worksheet[0]->write(6 + ($i * 5), $col, $climattxt);
+    $worksheet[0]->write(3 + ($i * $nbline), $col, $climattxt);
 
     $i++;
 }

@@ -69,7 +69,8 @@ echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '.$cm->name.'</h
 echo('<div style="margin:5px;">'.get_string('dynamolistgroup', 'mod_dynamo').':&nbsp;<select onchange="reloadGroupme(this);">');
 echo('  <option></option>');
 
-$grp = 0;
+$grp = new stdClass;
+$grp->id = -1234;
 foreach ($groups as $sgrp) { // Loop to all groups of grouping.
     $selected = "";
     if ($groupid == $sgrp->id) {
@@ -91,7 +92,7 @@ echo('<div style="width:100%;margin:3px;">
             </a>
         </div>
 ');
-if ($grp != 0) {
+if ($grp->id != -1234) {
     $grpusrs = dynamo_get_group_users($grp->id);
     $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
 

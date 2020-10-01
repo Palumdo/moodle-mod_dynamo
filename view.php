@@ -126,7 +126,9 @@ if ($mode == 'student' && $group == null) {
     die();
 }
 
-$groupusers = dynamo_get_group_users($group->id);
+if( $group != null) {
+    $groupusers = dynamo_get_group_users($group->id);
+}
 
 $display6   = '';
 if ($dynamo->critoptname == '') {

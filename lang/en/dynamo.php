@@ -128,7 +128,7 @@ $string['dynamoheadparticiaption']            = 'Answered';
 $string['dynamoheadimplication']              = 'Implication';
 $string['dynamoheadconfidence']               = 'Assurance';
 $string['dynamoheadcohesion']                 = 'Cohesion';
-$string['dynamoheadconsistency']              = 'Consistency';
+$string['dynamoheadconsistency']              = 'Consistency (nb clusters)';
 $string['dynamoheadconflit']                  = 'Appreciations';
 $string['dynamoheadremarque']                 = 'Climate';
 $string['dynamonocomment']                    = 'No specific comment';
@@ -190,11 +190,11 @@ $string['dynamoexportxlstab1']                = 'Group data';
 $string['dynamoexportxlstab2']                = 'Individual data';
 $string['dynamoexportxlstab3']                = 'Brut data';
 
-$string['dynamoaclimate0']                    = 'Very good atmosphere';
-$string['dynamoaclimate1']                    = 'Good atmosphere';
-$string['dynamoaclimate2']                    = 'Correct atmosphere';
-$string['dynamoaclimate3']                    = 'Tense atmosphere';
-$string['dynamoaclimate4']                    = 'Difficult atmosphere';
+$string['dynamoaclimate0']                    = 'Sun';
+$string['dynamoaclimate1']                    = 'Cloud';
+$string['dynamoaclimate2']                    = 'Shower';
+$string['dynamoaclimate3']                    = 'Rain';
+$string['dynamoaclimate4']                    = 'Thunderstorm';
 
 $string['dynamoexportxlsTitle01']             = 'Total (peers)';
 $string['dynamoexportxlsTitle02']             = 'Total (self)';
