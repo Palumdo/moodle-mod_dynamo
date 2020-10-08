@@ -147,7 +147,7 @@ function dynamo_delete_instance($id) {
     $DB->delete_records('dynamo', array('id' => $id));
 
     // Remove old calendar events.
-    if (!$DB->delete_records('event', array('modulename' => 'dynamo', 'instance' => $dynamo->id))) {
+    if (!$DB->delete_records('event', array('modulename' => 'dynamo', 'instance' => $id))) {
         $result = false;
     }
 
