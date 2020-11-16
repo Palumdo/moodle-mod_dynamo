@@ -281,6 +281,12 @@ function removeColors() {
     }
 }
 
+function hideBeforePrint() {
+    $('.button_list_subreport').find('div:not(:last)').hide();
+    //$("div").filter(function() { return $(this).css("display") == "none" }).addClass('dontprint');
+    $("div").filter(function() { return $(this).css("display") == "none" }).remove();
+}
+
 // Draw the graph of self insurance/confidence
 function drawGraphSelfConfidence(data, txtauto, txtpeer) {
     var canvas = document.getElementById("confidence_gfx");

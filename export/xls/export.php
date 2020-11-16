@@ -46,7 +46,12 @@ if (!has_capability('mod/dynamo:create', $ctxt)) {
     die;
 }
 
-$reportname = $course->shortname.'_'.$cm->instance;
+$coursecontext = context_course::instance($course->id);
+$GLOBALS['dynamo_contextid'] = $coursecontext->id;
+$GLOBALS['dynamo_courseid'] = $course->id;
+
+
+$reportname = $course->shortname.'_'.$cm->id;
 $workbook = new MoodleExcelWorkbook('-');
 
 $workbook->send($reportname);

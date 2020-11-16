@@ -389,18 +389,19 @@ function dynamo_get_groups($grouping) {
  */
 function dynamo_get_group_users($groupid) {
     global $DB;
+
     $sql = "
-        SELECT t2.*
-          FROM {groups_members} t1
-              ,{user}          t2
-         WHERE t1.groupid = :param1
-           AND t2.id = t1.userid
-         ORDER BY t2.firstname,t2.lastname
+   SELECT t2.*
+     FROM {groups_members} t1
+         ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t2
+    WHERE t1.groupid = :param1
+      AND t2.id = t1.userid
+    ORDER BY t2.firstname,t2.lastname
     ";
-
-    $params = array('param1' => $groupid);
+   
+    $params = array('param1' => $groupid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
-
+    
     return $result;
 }
 /**
@@ -418,7 +419,7 @@ function dynamo_get_grouping_users($groupingid) {
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
-              ,{user}             t4
+              ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
          WHERE groupingid = :param1
            AND t1.groupid = t2.id
            AND t2.id      = t3.groupid
@@ -426,7 +427,7 @@ function dynamo_get_grouping_users($groupingid) {
          ORDER BY t4.firstname,t4.lastname
     ";
 
-    $params = array('param1' => $groupingid);
+    $params = array('param1' => $groupingid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     return $result;
@@ -1226,19 +1227,19 @@ function dynamo_get_report_001($dynamo) {
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
-              ,{user}             t4
+              ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
          WHERE groupingid = :param1
            AND t1.groupid = t2.id
            AND t3.groupid = t1.groupid
            AND t3.userid  = t4.id
            AND t4.id   not in (SELECT distinct(t5.evalbyid)
                                  FROM {dynamo_eval} t5
-                                WHERE t5.builder = :param2
+                                WHERE t5.builder = :param11
                             )
          ORDER BY t2.name, t4.firstname, t4.lastname
         ";
 
-    $params = array('param1' => $dynamo->groupingid, 'param2' => $dynamo->id);
+    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     return $result;
@@ -1291,14 +1292,14 @@ function dynamo_get_grouping_stat($dynamo) {
          FROM {groupings_groups} t1
              ,{groups}           t2
              ,{groups_members}   t3
-             ,{user}             t4
+             ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
         WHERE groupingid = :param1
           AND t1.groupid = t2.id
           AND t3.groupid = t1.groupid
           AND t3.userid  = t4.id
         ";
 
-    $params = array('param1' => $dynamo->groupingid, 'param2' => $dynamo->id);
+    $params = array('param1' => $dynamo->groupingid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_record_sql($sql, $params);
     $stat->nb_participant = $result->nb_participant;
 
@@ -1307,18 +1308,18 @@ function dynamo_get_grouping_stat($dynamo) {
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
-              ,{user}             t4
+              ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
          WHERE groupingid = :param1
            AND t1.groupid = t2.id
            AND t3.groupid = t1.groupid
            AND t3.userid  = t4.id
            AND t4.id NOT IN (SELECT distinct(t5.evalbyid)
                                FROM {dynamo_eval} t5
-                              WHERE t5.builder = :param2
+                              WHERE t5.builder = :param11
                             )
         ";
 
-    $params = array('param1' => $dynamo->groupingid, 'param2' => $dynamo->id);
+    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_record_sql($sql, $params);
     $stat->nb_no_answer = $result->nb_no_answer;
 
@@ -1593,7 +1594,7 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
                     SELECT t4.id groupid, t4.name, t1.userid, t1.evalbyid
                           , sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total, t3.*
                       FROM {dynamo_eval}      t1
-                          ,{user}             t3
+                          ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t3
                           ,{groups}           t4
                           ,{groups_members}   t5
                           ,{groupings_groups} t6
@@ -1603,13 +1604,13 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
                        AND t1.userid = t3.id
                        AND t5.userid = t1.userid
                        AND t5.groupid = t4.id
-                       AND t6.groupingid = :param2
+                       AND t6.groupingid = :param11
                        AND t6.groupid = t5.groupid
                      GROUP BY t1.userid, t1.evalbyid) t1
                ) t2
          GROUP BY userid";
 
-    $params = array('param1' => $dynamo->id, 'param2' => $dynamo->groupingid);
+    $params = array('param1' => $dynamo->id, 'param11' => $dynamo->groupingid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     $sql = "

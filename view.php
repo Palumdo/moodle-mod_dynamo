@@ -72,6 +72,10 @@ if ($id) {
 require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
+$coursecontext = context_course::instance($course->id);
+$GLOBALS['dynamo_contextid'] = $coursecontext->id;
+$GLOBALS['dynamo_courseid'] = $course->id;
+
 $mode = '';
 
 // UCLouvain faculty colors only usefull at UCL. Other will have a default blue color)

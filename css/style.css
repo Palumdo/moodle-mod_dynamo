@@ -12,46 +12,57 @@
 @media print {
     .path-mod-dynamo .button_list_subreport {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo #selreporttop {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo #top {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .tab {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .report_title {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .dontprint {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .block {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .dynnav {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .columnleft {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .columnright {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo .button_list_subreport {
         display: none;
+        visibility: collapse;
     }
 
     .path-mod-dynamo #region-main-box {
@@ -822,6 +833,7 @@
     border: 1px solid #999;
     min-width: 1240px;
     margin-left: 5px;
+    width: 90%;
 }
 
 .path-mod-dynamo .black-legend {

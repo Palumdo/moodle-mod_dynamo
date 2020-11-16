@@ -194,6 +194,7 @@ if ($usrid != 0) {
             $color = "";
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $usrid, $grpusrsub->id);
+          
             if ($usrid == $grpusrsub->id) {
                 $dynamoautoeval[] = $dynamoeval;
             }
