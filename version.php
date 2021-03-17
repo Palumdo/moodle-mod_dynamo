@@ -19,7 +19,7 @@
  * This project followed the Team Up Module to create the groups
  *
  * @package     mod_dynamo
- * @copyright   2019 UCLouvain
+ * @copyright   2021 UCLouvain
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
