@@ -1587,32 +1587,34 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
     if ($display6 == '') {
         $div = 6;
     }
+    // Average evaluation by pairs
     $sql = "
-        SELECT userid, firstname, lastname, sum(total)/count(userid)/".$div." eval,  groupid, name
-          FROM (
-                SELECT t1.* FROM (
-                    SELECT t4.id groupid, t4.name, t1.userid, t1.evalbyid
-                          , sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total, t3.*
-                      FROM {dynamo_eval}      t1
-                          ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t3
-                          ,{groups}           t4
-                          ,{groups_members}   t5
-                          ,{groupings_groups} t6
-                     WHERE t1.builder = :param1
-                       AND t1.critgrp = 0
-                       AND t1.userid != t1.evalbyid
-                       AND t1.userid = t3.id
-                       AND t5.userid = t1.userid
-                       AND t5.groupid = t4.id
-                       AND t6.groupingid = :param11
-                       AND t6.groupid = t5.groupid
-                     GROUP BY t1.userid, t1.evalbyid) t1
-               ) t2
-         GROUP BY userid";
+SELECT t1.userid, t2.firstname, t2.lastname, eval, t4.groupid, t3.name 
+  FROM (SELECT userid, sum(total)/count(userid)/5 eval 
+          FROM (SELECT t1.userid, t1.evalbyid, sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
+                  FROM {dynamo_eval} t1
+                 ,(SELECT id, firstname, lastname FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3))) t2
+         WHERE t1.builder = :param1
+           AND t1.critgrp = 0
+           AND t1.userid != t1.evalbyid
+           AND t1.userid = t2.id
+         GROUP BY t1.userid, t1.evalbyid) t1
+         GROUP BY userid
+       ) t1
+      ,{user} t2
+      ,{groups} t3
+      ,{groups_members} t4
+      ,{groupings_groups} t5
+WHERE t1.userid = t2.id
+  AND t4.userid = t1.userid
+  AND t4.groupid = t3.id
+  AND t5.groupingid = :param11   
+  AND t5.groupid = t4.groupid
+";
 
     $params = array('param1' => $dynamo->id, 'param11' => $dynamo->groupingid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
-
+    // Auto-evaluation
     $sql = "
         SELECT userid, sum(total)/".$div." autoeval
           FROM (
