@@ -90,5 +90,10 @@ foreach ($dynamos as $dynamo) {
 
 echo $OUTPUT->heading($strdynamos, 2);
 echo html_writer::table($table);
-
+echo('<script>$(".fa-shield").addClass("fa-shield-alt").removeClass("fa-shield");
+$(".fa-check-square-o").addClass("fa-check-square-alt").removeClass("fa-check-square-o");
+$(".fa-folder-o").addClass("fa-folder").removeClass("fa-folder-o");
+$(".fa-tachometer").addClass("fa-tachometer-alt").removeClass("fa-tachometer");
+$(".fa-file-o").addClass("fa-file-alt").removeClass("fa-file-o");
+</script>');
 echo $OUTPUT->footer();

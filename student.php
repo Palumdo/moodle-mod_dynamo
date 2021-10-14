@@ -82,25 +82,25 @@ echo '
                         <span title="'.get_string('dynamoeval3', 'mod_dynamo').'">
                             <i class="fas fa-circle"></i>
                             <i class="fas fa-circle"></i>
-                            <i  class=" fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
                             <i class="ico-student fas fa-circle"></i>
                             <i class="ico-student fas fa-circle"></i>
                         </span><div class="black-legend">'.get_string('dynamoeval3', 'mod_dynamo').'</div></div>
                     <div class="col-sm-2">
                         <span title="'.get_string('dynamoeval4', 'mod_dynamo').'">
-                            <i class=" fas fa-circle"></i>
-                            <i class=" fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
                             <i class="fas fa-circle"></i>
                             <i class="fas fa-circle"></i>
                             <i class="ico-student fas fa-circle"></i>
                         </span><div class="black-legend">'.get_string('dynamoeval4', 'mod_dynamo').'</div></div>
                     <div class="col-sm-2">
                         <span title="'.get_string('dynamoeval5', 'mod_dynamo').'">
-                            <i class=" fas fa-circle"></i>
-                            <i class=" fas fa-circle"></i>
                             <i class="fas fa-circle"></i>
                             <i class="fas fa-circle"></i>
-                            <i class=" fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-circle"></i>
                         </span><div class="black-legend">'.get_string('dynamoeval5', 'mod_dynamo').'</div></div>
                 </div>
 
@@ -125,7 +125,7 @@ echo '
                             <th style="min-width:150px;">'.get_string('dynamotechnique', 'mod_dynamo').'     &nbsp;
                                 <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
                                     <span class="toolpittext">'.$bubble4.'</span></div></th>
-                            <th style="min-width:130px;">'.get_string('dynamoattitude', 'mod_dynamo').'      &nbsp;
+                            <th style="min-width:160px;">'.get_string('dynamoattitude', 'mod_dynamo').'      &nbsp;
                                 <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
                                     <span class="toolpittext">'.$bubble5.'</span></div></th>
                             <th style="min-width:200px;display:'.$display6.'">'.$dynamo->critoptname.'       &nbsp;

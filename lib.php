@@ -446,7 +446,7 @@ function dynamo_get_grouping_users($groupingid) {
 function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
     global $DB;
 
-    $icons = ['fa-user-clock', 'fa-medal', 'fa-lightbulb', 'fa-wrench', 'fa-smile', 'fa-star'];
+    $icons = ['fa-user-clock', 'fa-medal', 'fa-lightbulb', 'fa-wrench', 'fa-handshake', 'fa-star'];
     $values = [];
     $bodytable = '';
     $display6 = '';
@@ -498,10 +498,11 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
         }
 
         $bodytable = $bodytable.'
-                <table class="table" style="border:1px solid #000;">
+               <!-- <table class="table" style="border:1px solid #000;">
                     <thead><th colspan="6" style="padding:0;"></th></thead>
-                    <tbody>
-                <tr>
+                    <tbody>-->
+                <tr><td colspan="6" style="border-bottom:1px solid black;"></td></tr>
+                <tr style="border:1px solid black;margin-top:2px;">
                     <td style="min-width:200px;font-weight:bold;">Groupe</td>
                     <td style="min-width:160px;">
                         <input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'
@@ -539,14 +540,14 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                         <i data-id="'.$groupid.'_4" data-criteria="2" data-value="4" class="mystar fa fa-wrench"></i>
                         <i data-id="'.$groupid.'_4" data-criteria="2" data-value="5" class="mystar fa fa-wrench"></i>
                     </td>
-                    <td style="min-width:130px;">
+                    <td style="min-width:160px;">
                         <input class="savemegrp hiddenval" name="'.$groupid.'_g5"  id="'.$groupid.'_5" value="'
                         .$dynamoeval->crit5.'">
-                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="1" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="2" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="3" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="4" class="mystar fa fa-smile"></i>
-                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="5" class="mystar fa fa-smile"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="1" class="mystar fa fa-handshake"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="2" class="mystar fa fa-handshake"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="3" class="mystar fa fa-handshake"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="4" class="mystar fa fa-handshake"></i>
+                        <i data-id="'.$groupid.'_5" data-criteria="2" data-value="5" class="mystar fa fa-handshake"></i>
                     </td>
                     <td style="min-width:200px;display:'.$display6.'">
                         <input class="savemegrp hiddenval" name="'.$groupid.'_g6" id="'.$groupid.'_6" value="'
@@ -558,8 +559,8 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                         <i data-id="'.$groupid.'_6" data-criteria="2" data-value="5" class="mystar fa fa-star"></i>
                     </td>
                 </tr>
-                    </tbody>
-                </table>';
+                    <!--</tbody>
+                </table>-->' ; 
     }
 
     return $bodytable;

@@ -41,7 +41,7 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.drawing.rect.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.radar.js');
 $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
-$PAGE->requires->css('/mod/dynamo/css/all.min.css');  // Fontawesome  5.8.2.
+$PAGE->requires->css('/mod/dynamo/css/all.min.css');  // Fontawesome  5.15.4.
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
@@ -185,5 +185,10 @@ if ($mode == 'teacher') {
             break;
     }
 }
-
+echo('<script>$(".fa-shield").addClass("fa-shield-alt").removeClass("fa-shield");
+$(".fa-check-square-o").addClass("fa-check-square").removeClass("fa-check-square-o");
+$(".fa-folder-o").addClass("fa-folder").removeClass("fa-folder-o");
+$(".fa-tachometer").addClass("fa-tachometer-alt").removeClass("fa-tachometer");
+$(".fa-file-o").addClass("fa-file-alt").removeClass("fa-file-o");
+</script>');
 echo $OUTPUT->footer();
