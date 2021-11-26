@@ -73,7 +73,7 @@ require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
 $coursecontext = context_course::instance($course->id);
-$GLOBALS['dynamo_contextid'] = $coursecontext->id;
+$GLOBALS['dynamo_contextid'] = $modulecontext->id;//$coursecontext->id; To add coach to a group the local permission for the module must be changed
 $GLOBALS['dynamo_courseid'] = $course->id;
 
 $mode = '';
@@ -185,10 +185,11 @@ if ($mode == 'teacher') {
             break;
     }
 }
-echo('<script>$(".fa-shield").addClass("fa-shield-alt").removeClass("fa-shield");
+echo('<script>$(document).ready(function() {
+$(".fa-shield").addClass("fa-shield-alt").removeClass("fa-shield");
 $(".fa-check-square-o").addClass("fa-check-square").removeClass("fa-check-square-o");
 $(".fa-folder-o").addClass("fa-folder").removeClass("fa-folder-o");
 $(".fa-tachometer").addClass("fa-tachometer-alt").removeClass("fa-tachometer");
-$(".fa-file-o").addClass("fa-file-alt").removeClass("fa-file-o");
+$(".fa-file-o").addClass("fa-file-alt").removeClass("fa-file-o");});
 </script>');
 echo $OUTPUT->footer();

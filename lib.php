@@ -1681,7 +1681,6 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         for ($j = $i + 1; $j < count($grpusrs); $j++) { // Compare to all the ohers in the group.
             $usr2 = $grpusrs[$j];
             $diff = dynamo_get_ecart_quadrique($dynamo, $usr1->id, $usr2->id)->ecart;
-
             if ($diff != 1000 && $diff != '') {
                 $list[$cnt] = new stdClass();
                 $list[$cnt]->diff = round($diff, 2);
@@ -1750,7 +1749,6 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     $result->type = 0;
     $result->list = $list;
     $result->max = $maxdiff;
-
     if ($maxdiff < 0.05) {
         $result->type = 2; // Homogenic.
     }
