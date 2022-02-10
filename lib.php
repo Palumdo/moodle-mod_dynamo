@@ -415,7 +415,7 @@ function dynamo_get_group_users($groupid) {
 function dynamo_get_grouping_users($groupingid) {
     global $DB;
     $sql = "
-        SELECT t4.id, t4.firstname,t4.lastname,t4.email,t4.idnumber
+        SELECT distinct t4.id, t4.firstname,t4.lastname,t4.email,t4.idnumber
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
@@ -961,9 +961,17 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
         return [10, '']; // Student that don't answers get a high arbitrary score.
     }
     $sum = $agrid[$ki][count($agrid[$ki]) - 1];
-    $nsa = ($autoeval / $sum) * ($nbstudent - 1);
+    if($sum != 0) {
+      $nsa = ($autoeval / $sum) * ($nbstudent - 1);
+    } else {
+      $nsa = 0;
+    }
     $conf = [];
-    $conf[0] = $nsa / $niwf;
+    if($niwf != 0) {
+        $conf[0] = $nsa / $niwf;
+    } else {
+        $conf[0] = 0;
+    }
     $conf[1] = '(('.$autoeval.' / '.$sum.')'.' * ('.$nbstudent.' - 1)) / '.number_format($niwf, 2, ',', ' ');
     return $conf;
 }
@@ -1590,7 +1598,7 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
     }
     // Average evaluation by pairs
     $sql = "
-SELECT t1.userid, t2.firstname, t2.lastname, eval, t4.groupid, t3.name 
+SELECT distinct t1.userid, t2.firstname, t2.lastname, eval, t4.groupid, t3.name 
   FROM (SELECT userid, sum(total)/count(userid)/5 eval 
           FROM (SELECT t1.userid, t1.evalbyid, sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
                   FROM {dynamo_eval} t1

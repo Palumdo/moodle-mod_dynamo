@@ -392,7 +392,7 @@ if ($grp->id != -1234) {
     }
 }
 // This radar graphic display all auto evaluation of students.
-if ($datagrp != '') {
+if (isset($datagrp) && $datagrp != '') {
     // Remove last character (,).
     $datagrp = substr($datagrp, 0, -1);
     $keys = substr($keys, 0, -1);
