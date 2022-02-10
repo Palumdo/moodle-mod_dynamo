@@ -381,8 +381,8 @@ function dynamo_get_groups($grouping) {
 }
 /**
  * Get all the users of a specific group.
- *
- *
+ * user can be omit of the group base of his role in the COURSE and permission in the ACTIVITY
+ *  ->mod/dynamo:respond must be  forbidden
  * @param int $groupid id of the group.
  *
  * return a recordset
