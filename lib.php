@@ -1145,10 +1145,10 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $names = "";
     $comment = "";
     $consistency = dynamo_get_consistency($dynamo, $grpusrs);
-    $listc=$consistency->list;
-    $moyc=$consistency-> varmean;
-    $typec=$consistency-> type;
-    $notperfect=0;
+    $listc = $consistency->list;
+    $moyc = $consistency->varmean;
+    $typec = $consistency->type;
+    $notperfect = 0;
     
     $aweight = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
     // Fontawsome icons use for showing the average climat inside the group from thunder to full sun.
@@ -1206,10 +1206,10 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
                                     class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
 
         // Constistency
-       $var=$listc[$nbuser-1]->var;
-       $var=floatval($var);
+       $var = $listc[$nbuser-1]->var;
+       $var = floatval($var);
        $color = dynamo_get_color_consistency($var);
-       $var=round($var,2);
+       $var = round($var,2);
        if ($color == 'green') {
             $color = '#006DCC';
         }
@@ -1237,23 +1237,22 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $groupstat->participation = $participation;
     $groupstat->implication = $implication;
     $groupstat->confiance = $confiance;
-    $groupstat->type=$typec;
-    $groupstat->cohesion=round($moyc,2);
+    $groupstat->type = $typec;
+    $groupstat->cohesion = round($moyc,2);
     $groupstat->consistency=$consistencyst;
     $groupstat->conflit = $conflit;
     $groupstat->remark = "";
     $groupstat->tooltips = $tooltips;
     $groupstat->names = $names;
 
-
     if ($notperfect == 0 ) {
         $groupstat->conflit = '';
     }
 
-   $notperfect=2.5*$notperfect/$nbuser;
+   $notperfect = 2.5*$notperfect / $nbuser;
    if ($notperfect>4) $notperfect=4;
     $idico = round($notperfect, 0, PHP_ROUND_HALF_DOWN);
-    $groupstat->notperfect=$notperfect;
+    $groupstat->notperfec t= $notperfect;
     $groupstat->remark = '<span class="hiddenidx">'.round($notperfect, 2)
         .'</span><i title="'.get_string('dynamoaclimate'.$idico, 'dynamo')
         .' ('.round($notperfect, 2).')" class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
@@ -1759,26 +1758,26 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
    // compute variance value for each student and compute global variance mean (needed for cohesion indicator))
    $varmean=0;
     for ($i = 0; $i < count($grpusrs); $i++) {
-        $vari=0;
-        $datai=$list[$i]->data;
-        $datavgi=$list[$i]->datavg;
+        $vari = 0;
+        $datai = $list[$i]->data;
+        $datavgi = $list[$i]->datavg;
         for ($k=0;$k<sizeof($datai);$k++) {
-                  $ind=$k%5;
-                  $vari+=($datai[$k]-$datavgi[$ind])*($datai[$k]-$datavgi[$ind]);
+                  $ind = $k%5;
+                  $vari += ($datai[$k]-$datavgi[$ind])*($datai[$k]-$datavgi[$ind]);
         }
-        $vari=12*$vari/sizeof($datai);
-        $list[$i]->var=$vari;
-        $varmean+=$vari;
+        $vari = 12 * $vari / sizeof($datai);
+        $list[$i]->var = $vari;
+        $varmean += $vari;
     }
     $varmean=$varmean/count($grpusrs);
     
     $result = new stdClass();
     $result->type = 0;
     $result->list = $list;
-    $result-> varmean=$varmean;
+    $result->varmean = $varmean;
    
     // compute cohesion type
-    if ($varmean<0.02) {
+    if ($varmean<0.02) {
         $result->type = 1;
     } elseif ($varmean<0.1) {
         $result->type = 2;
@@ -1786,11 +1785,11 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         $result->type = 5;
     } elseif ($varmean<0.35) {
         $result->type = 3;
-    } else {
+    } else {
         $result->type = 4;
     }
-    
-    // special type when not enough students completed evaluation
+
+    // Special type when not enough students completed evaluation
     if(count($grpusrs)<3) $result->type=6;
 
     return $result;
@@ -1971,8 +1970,8 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
         
         $consistency = dynamo_get_consistency($dynamo, $grpusrs);
         $listc=$consistency->list;
-        $maxc=$consistency-> varmean;
-        $typec=$consistency-> type;
+        $maxc=$consistency->varmean;
+        $typec=$consistency->type;
         $var=$listc[$nbuser-1]->var;
         $var=floatval($var);
         $color = dynamo_get_color_consistency($var);
