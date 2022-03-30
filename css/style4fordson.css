@@ -1,0 +1,17 @@
+/* fordson bug display of topbar icons */
+.path-mod-dynamo a.btn.btn-secondary.fhs-tooltip,
+.path-mod-dynamo .btn.nav-link.float-sm-left 
+{
+padding-top:0.65rem;
+padding-bottom:0.55rem;
+font-size:12px;
+}
+.path-mod-dynamo .nav-link .icon.fa.fa-bell.fa-fw, 
+.path-mod-dynamo .nav-item .nav-link .icon.fa.fa-comment.fa-fw {
+padding-top:0.1rem;
+}
+
+div#learningcontent{
+margin-top:15px;
+}
+

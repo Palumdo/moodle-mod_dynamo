@@ -41,6 +41,7 @@ $stat = dynamo_get_grouping_stat($dynamo);
 $groups = dynamo_get_groups($dynamo->groupingid);
 
 // Sub tabulation for teacher to see student results in three levels.
+echo'<div class="dynamocontent">';
 echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
         <li class="active"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=1">'
             .get_string('dynamoresults1', 'mod_dynamo').'</a></li>
@@ -108,36 +109,18 @@ echo('<div id="table-overview"><table class="tablelvlx">
         </thead>
         <tbody>
      ');
+     $notperfect=0;
 foreach ($groups as $grp) { // Loop to all groups of grouping.
     $grpusrs = dynamo_get_group_users($grp->id);
     //$coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
-    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
-
-    $consistency = $oconsistency->grp;
-    $type = $oconsistency->type;
-    $list = $oconsistency->list;
-
-    $consistencystr = "<div>";
-    foreach ($consistency as $cusers) {
-        if (count($cusers) > 0) {
-            foreach ($cusers as $cuser) {
-                $consistencystr .= '<i class="fas fa-user colok" data-id="'.$cuser
-                    .'" data-group="'.$grp->id.'" title="'.$grpusrs[$cuser]->firstname.' '.$grpusrs[$cuser]->lastname.'"></i>';
-            }
-            $consistencystr .= '|';
-        }
-    }
-    $consistencystr = rtrim($consistencystr, '|');
-    $consistencystr = str_replace('>|', '><b> | </b>', $consistencystr);
-    $consistencystr .= "</div>";
-
-    // Add icon type conflit group.
-    $cohesion = dynamo_get_group_type($type, $grp->id, $oconsistency->max);
+    
 
     $val = [0, 0, 0, 1, 3, 0 , 3];
-    $notperfect = ($val[$type] * count($grpusrs));
 
     $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
+        // Add icon type conflit group.
+    $cohesion = dynamo_get_cohesion_group_type($groupstat->type, $grp->id, $groupstat->cohesion);
+    $notperfect += ($val[$groupstat->type] * count($grpusrs));
 
     echo('<tr style="cursor:pointer;" onclick="location.href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'" title="'
         .get_string('dynamoresults2', 'mod_dynamo').'">
@@ -148,12 +131,13 @@ foreach ($groups as $grp) { // Loop to all groups of grouping.
               <td>'.$groupstat->participation.'</td>
               <td>'.$groupstat->implication.'</td>
               <td>'.$groupstat->confiance.'</td>
-              <td>'.$consistencystr.'</td>
+              <td>'.$groupstat->consistency.'</td>
               <td>'.$cohesion.'</td>
               <td>'.$groupstat->conflit.'</td>
               <td class="camera-border">'.$groupstat->remark.'</td>
               <td class="td-num">⏲️</td>
          </tr>');
+         echo'</div>';
     // Usefull for more than 50 groups or hundreds of students !.
     ob_flush();
     flush();

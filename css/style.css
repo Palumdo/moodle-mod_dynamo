@@ -65,6 +65,7 @@
         visibility: collapse;
     }
 
+
     .path-mod-dynamo #region-main-box {
         width: 100%;
         max-width: 100%;
@@ -375,6 +376,7 @@
     background-color: transparent;
     border-collapse: collapse;
     border-spacing: 0;
+    overflow:hidden;
 }
 
 .path-mod-dynamo .tablelvlx tr {

@@ -64,8 +64,6 @@ $worksheet[2] = $workbook->add_worksheet(get_string('dynamoexportxlstab3', 'mod_
 $worksheet[0]->write(0, 0, $dynamo->name);
 $worksheet[0]->write(1, 0, date('d/m/Y', $dynamo->timecreated));
 $col = 1;
-$worksheet[0]->write(2, $col, get_string('dynamoheadconsistency', 'mod_dynamo'));
-$col++;
 $worksheet[0]->write(2, $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
 $col++;
 $worksheet[0]->write(2, $col, get_string('dynamoheadremarque', 'mod_dynamo'));
@@ -105,8 +103,13 @@ $format = $workbook->add_format(array("bold" => 1, "text_wrap" => true));
 $worksheet[0]->set_column(0, 0, '30');
 $worksheet[0]->set_column(1, $col, '20');
 $line = 0;
+
+    
 foreach ($groups as $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
+    $consistency = dynamo_get_consistency($dynamo, $grpusrs);
+    $maxc=$consistency-> varmean;
+    $typec=$consistency-> type;
     $totalp = 0;
     $totals = 0;
     $crit1s = 0;
@@ -123,8 +126,10 @@ foreach ($groups as $grp) {
     $crit6p = 0;
 
     $col = 0;
+    $notperfect=0;
     $nbline = 1;
-    
+
+
     $worksheet[0]->write(3 + ($i * $nbline), $col, $grp->name, $format);
 //    $worksheet[0]->write(4 + ($i * 5), $col, get_string('dynamoexportxlsTitle19', 'mod_dynamo'));
 //    $worksheet[0]->write(5 + ($i * 5), $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
@@ -209,7 +214,7 @@ foreach ($groups as $grp) {
         $col++;
     }
     // Page 1.
-    $col = 4;
+    $col = 3;
     $worksheet[0]->write(3 + ($i * $nbline), $col, round($totalp / count($grpusrs), 2));
     $col++;
     $worksheet[0]->write(3 + ($i * $nbline), $col, round($totals / count($grpusrs), 2));
@@ -239,25 +244,12 @@ foreach ($groups as $grp) {
     $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6s / count($grpusrs), 2));
 
     $col = 1; 
-    $oconsistency = dynamo_get_consistency($dynamo, $grpusrs);
-    $consistencynb = 0;
-    //$col++; 
-    $consistency = $oconsistency->grp;
-    foreach ($consistency as $cusers) {
-        if (count($cusers) > 0) {
-            $consistencynb++;
-        }
-    }    
-    $worksheet[0]->write(3 + ($i * $nbline), $col, $consistencynb);
+    $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($typec));
     $col++; 
-    $val = [0, 0, 0, 1, 3, 0, 3];
-    $notperfect = ($val[$oconsistency->type] * count($grpusrs));
-    $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($oconsistency->type));
-    $col++; 
+    $notperfect=0;
     $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
     $climattxt = get_string('dynamoaclimate'.$climat, 'mod_dynamo');
     $worksheet[0]->write(3 + ($i * $nbline), $col, $climattxt);
-
     $i++;
 }
 

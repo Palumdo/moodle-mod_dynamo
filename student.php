@@ -53,10 +53,14 @@ $bubble3 = rtrim($bubble3, ', ');
 $bubble4 = rtrim($bubble4, ', ');
 $bubble5 = rtrim($bubble5, ', ');
 
+if (isset($group->name))
+$groupname=$group->name;
+else $groupname ="";
+
 echo '
     <div id="page-content" class="row-fluid">
         <div id="region-main-box" class="span9">
-            <div class="row-fluid" style="padding-left:15px;">
+            <div class="row-fluid" style="padding-left:25px; padding-right:25px;">
                 <h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '.$cm->name.'</h3>
                 <div style="margin-bottom:20px;">'.$dynamo->intro.'</div>
                 <div class="row row-student-legend">
@@ -112,7 +116,7 @@ echo '
                         <caption>'.get_string('dynamogrid', 'mod_dynamo').'</caption>
                         <thead>
                         <tr>
-                            <th style="min-width:200px;">'.$group->name.'</th>
+                            <th style="min-width:200px;">'.$groupname.'</th>
                             <th style="min-width:160px;">'.get_string('dynamoparticipation', 'mod_dynamo').' &nbsp;
                                 <div class="toolpit"><i class="fas fa-info-circle ico-white"></i>
                                     <span class="toolpittext">'.$bubble1.'</span></div></th>

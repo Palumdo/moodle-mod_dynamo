@@ -507,7 +507,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                     <td style="min-width:160px;">
                         <input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'
                         .$dynamoeval->crit1.'"><i data-id="'.$groupid
-                        .'_1" data-criteria="1" data-value="1" class="mystar fa fa-user-clock"></i>
+                        .'_1" data-criteria="1" data-value="1" class="mystar fa faF-user-clock"></i>
                         <i data-id="'.$groupid.'_1" data-criteria="1" data-value="2" class="mystar fa fa-user-clock"></i>
                         <i data-id="'.$groupid.'_1" data-criteria="1" data-value="3" class="mystar fa fa-user-clock"></i>
                         <i data-id="'.$groupid.'_1" data-criteria="1" data-value="4" class="mystar fa fa-user-clock"></i>
@@ -962,9 +962,9 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
     }
     $sum = $agrid[$ki][count($agrid[$ki]) - 1];
     if($sum != 0) {
-      $nsa = ($autoeval / $sum) * ($nbstudent - 1);
+       $nsa = ($autoeval / $sum) * ($nbstudent - 1);
     } else {
-      $nsa = 0;
+       $nsa = 0;
     }
     $conf = [];
     if($niwf != 0) {
@@ -1015,6 +1015,21 @@ function dynamo_get_color_conf($val) {
 
     return 'green';
 }
+
+function dynamo_get_color_consistency($val) {
+    if ($val > 0.6) {
+        return 'black';
+    }
+    if ($val > 0.25) {
+        return 'red';
+    }
+    if ($val > 0.15) {
+        return 'orange';
+    }
+
+    return 'green';
+}
+
 
 /**
  * return the preview of what student see (the survey) to teacher
@@ -1123,12 +1138,18 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $participation = "";
     $implication = "";
     $confiance = "";
+    $consistencyst = "";
     $tooltips = "";
     $conflit = "";
     $nbuser = 0;
     $names = "";
     $comment = "";
-
+    $consistency = dynamo_get_consistency($dynamo, $grpusrs);
+    $listc=$consistency->list;
+    $moyc=$consistency-> varmean;
+    $typec=$consistency-> type;
+    $notperfect=0;
+    
     $aweight = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
     // Fontawsome icons use for showing the average climat inside the group from thunder to full sun.
     $aicon = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
@@ -1184,6 +1205,19 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $confiance = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                     class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
 
+        // Constistency
+       $var=$listc[$nbuser-1]->var;
+       $var=floatval($var);
+       $color = dynamo_get_color_consistency($var);
+       $var=round($var,2);
+       if ($color == 'green') {
+            $color = '#006DCC';
+        }
+        $notperfect += 0.5*$aweight[$color];
+        $consistencyst = $consistencyst . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
+                                    class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.' ('.$var.')"></i>';
+                                    
+       
         // Find firstname lastname in comments about the group.
         foreach ($grpusrs as $grpusrname) {
             $text = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($comment);
@@ -1203,21 +1237,26 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $groupstat->participation = $participation;
     $groupstat->implication = $implication;
     $groupstat->confiance = $confiance;
+    $groupstat->type=$typec;
+    $groupstat->cohesion=round($moyc,2);
+    $groupstat->consistency=$consistencyst;
     $groupstat->conflit = $conflit;
     $groupstat->remark = "";
     $groupstat->tooltips = $tooltips;
     $groupstat->names = $names;
 
-/*
+
     if ($notperfect == 0 ) {
         $groupstat->conflit = '';
     }
-*/
 
-    $idico = round($notperfect / $nbuser / 2, 0, PHP_ROUND_HALF_DOWN);
-    $groupstat->remark = '<span class="hiddenidx">'.round($notperfect / $nbuser / 2, 2)
+   $notperfect=2.5*$notperfect/$nbuser;
+   if ($notperfect>4) $notperfect=4;
+    $idico = round($notperfect, 0, PHP_ROUND_HALF_DOWN);
+    $groupstat->notperfect=$notperfect;
+    $groupstat->remark = '<span class="hiddenidx">'.round($notperfect, 2)
         .'</span><i title="'.get_string('dynamoaclimate'.$idico, 'dynamo')
-        .' ('.round($notperfect / $nbuser / 2, 2).')" class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
+        .' ('.round($notperfect, 2).')" class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
 
     return $groupstat;
 }
@@ -1671,11 +1710,10 @@ WHERE t1.userid = t2.id
  * @return object with mathematical information and the type of group (homogenic,tap the hand,clustering, band)
  */
 function dynamo_get_consistency($dynamo, $grpusrs) {
-    $grp = [];
     $list = [];
-    $cnt = 0;
     // Get the list of students that have answer. The other are not take in computing and evaluation.
     $agrpusrs = [];
+    $varavg=0;
     foreach ($grpusrs as $usr) {
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
         if ($autoeval->crit1 > 0) {
@@ -1683,158 +1721,93 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         }
     }
     $grpusrs = $agrpusrs;
-    // Create a list with all quatric gap ($diff) between each student of a group.
+ 
     for ($i = 0; $i < count($grpusrs); $i++) { // Loop to all students of the group.
         $usr1 = $grpusrs[$i];
-        for ($j = $i + 1; $j < count($grpusrs); $j++) { // Compare to all the ohers in the group.
+        $datai=[];
+        $datavgi=[0,0,0,0,0];
+        for ($j = 0; $j < count($grpusrs); $j++) { // Compare to all the ohers in the group.
             $usr2 = $grpusrs[$j];
-            $diff = dynamo_get_ecart_quadrique($dynamo, $usr1->id, $usr2->id)->ecart;
-            if ($diff != 1000 && $diff != '') {
-                $list[$cnt] = new stdClass();
-                $list[$cnt]->diff = round($diff, 2);
-                $list[$cnt]->user1 = $usr1->id;
-                $list[$cnt]->user2 = $usr2->id;
-                $cnt++;
+            // auto-evaluations are excluded
+            if ($usr1->id!=$usr2->id) {
+                // Get the usr1 evaluations from usr2
+                $dataij = dynamo_get_data($dynamo, $usr2->id, $usr1->id);
+                // For each evaluation dimension, compute the mean value
+                $datavgi[0]=$datavgi[0]+$dataij[0];
+                $datavgi[1]=$datavgi[1]+$dataij[1];
+                $datavgi[2]=$datavgi[2]+$dataij[2];
+                $datavgi[3]=$datavgi[3]+$dataij[3];
+                $datavgi[4]=$datavgi[4]+$dataij[4];
+                // compose a big array with all evaluations of usr1
+                $datai=array_merge($datai,$dataij);
             }
+        }   
+        
+        $list[$i] = new stdClass();
+        $list[$i]->user = $usr1->id;
+        $list[$i]->data =$datai;
+        //Number of data is n-1 because auto-evaluations are excluded
+        $den=count($grpusrs)-1;
+        $datavgi[0]=$datavgi[0]/$den;
+        $datavgi[1]=$datavgi[1]/$den;
+        $datavgi[2]=$datavgi[2]/$den;
+        $datavgi[3]=$datavgi[3]/$den;
+        $datavgi[4]=$datavgi[4]/$den;
+        $list[$i]->datavg=$datavgi;
+    }  
+
+   // compute variance value for each student and compute global variance mean (needed for cohesion indicator))
+   $varmean=0;
+    for ($i = 0; $i < count($grpusrs); $i++) {
+        $vari=0;
+        $datai=$list[$i]->data;
+        $datavgi=$list[$i]->datavg;
+        for ($k=0;$k<sizeof($datai);$k++) {
+                  $ind=$k%5;
+                  $vari+=($datai[$k]-$datavgi[$ind])*($datai[$k]-$datavgi[$ind]);
         }
+        $vari=12*$vari/sizeof($datai);
+        $list[$i]->var=$vari;
+        $varmean+=$vari;
     }
-    // Sort the list of student by the smallest difference (ecart quadrique) first.
-    usort($list, "cmp");
-
-    $sumdiff = 0;
-    $maxdiff = 0;
-    $maxsize = 0;
-    for ($i = 0; $i < count($list); $i++) {
-        $diff = $list[$i]->diff;
-        $usr1 = $list[$i]->user1;
-        $usr2 = $list[$i]->user2;
-        $sumdiff += $diff;
-
-        if ($maxdiff < $diff) {
-            $maxdiff = $diff;
-        }
-
-        $grpid1 = dynamo_get_group_consistency($grp, $usr1);
-        $grpid2 = dynamo_get_group_consistency($grp, $usr2);
-        if ($grpid1 > -1) { // Stud1 has group.
-            if ($grpid2 > -1) { // Stud2 has group.
-                // Nothing to do next line.
-                $grpid2 = dynamo_get_group_consistency($grp, $usr2);
-            } else { // Stud2 has no group.
-                if ($diff <= 0.04) { // Add to group stud1.
-                    $grp[$grpid1][count($grp[$grpid1])] = $usr2;
-                } else { // Add to a new group.
-                    $idx = count($grp);
-                    $grp[$idx] = array($usr2);
-                }
-            }
-        } else { // Stud1 has no group.
-            if ($grpid2 > -1) { // Stud2 has group.
-                if ($diff <= 0.04) { // Add to  group stud2.
-                    $grp[$grpid2][count($grp[$grpid2])] = $usr1;
-                } else { // Add to a new group.
-                    $idx = count($grp);
-                    $grp[$idx] = array($usr1);
-                }
-            } else { // Stud1/2 has no group.
-                if ($diff <= 0.04) { // Add both to new grp.
-                    $idx = count($grp);
-                    $grp[$idx] = array($usr1, $usr2);
-                } else {
-                    $idx = count($grp); // Add stud1 new grp.
-                    $grp[$idx] = array($usr1);
-                    $idx = count($grp); // Add stud2 new grp.
-                    $grp[$idx] = array($usr2);
-                }
-            }
-        } // Biggest sub group.
-        if ($maxsize < count($grp[$idx])) {
-            $maxsize = count($grp[$idx]);
-        }
-    }
+    $varmean=$varmean/count($grpusrs);
+    
     $result = new stdClass();
-    $result->grp = $grp;
     $result->type = 0;
     $result->list = $list;
-    $result->max = $maxdiff;
-    if ($maxdiff < 0.05) {
-        $result->type = 2; // Homogenic.
-    }
-    if ($maxdiff < 0.02) {
-        $result->type = 1; // Tap the hand.
-    }
-    if ($maxdiff >= 0.05) {
-        $result->type = 3; // Clustering.
-    }
-    if ($maxdiff > 0.15) { // Real value should be 0.05 /!\.
-        $result->type = 4; // Band.
-    }
-    if ($maxsize == 1 && $result->type > 2) {
-        $result->type = 5;
-    }
-    if (count($grp) == 1 && $result->type == 3) {
+    $result-> varmean=$varmean;
+   
+    // compute cohesion type
+    if ($varmean<0.02) {
+        $result->type = 1;
+    } elseif ($varmean<0.1) {
         $result->type = 2;
+    } elseif ($varmean<0.2) {
+        $result->type = 5;
+    } elseif ($varmean<0.35) {
+        $result->type = 3;
+    } else {
+        $result->type = 4;
     }
-
-    // Ghosts too much absent or less than 3 students.
-    if (count($grp) == 0 || (count($grp) == 1 && count($grp[0]) < 3 ) ) {
-        $result->type = 6;
-    }
-    if (count($grp) == 2 && count($grp[0]) == 1 && count($grp[1]) == 1) {
-        $result->type = 6;
-    }
+    
+    // special type when not enough students completed evaluation
+    if(count($grpusrs)<3) $result->type=6;
 
     return $result;
 }
-/**
- * Subfunction to simplify  dynamo_get_consistency
- * the aim is just to see if a user is already on an array fi not the array is created
- *
- * @param arrays $grp array of user group with similar quatric gap
- * @param integer $usr id of the user
- *
- * @return the id of the array if the user is already in an array if not -1
- */
-function dynamo_get_group_consistency($grp, $usr) {
-    for ($i = 0; $i < count($grp); $i++) {
-        for ($j = 0; $j < count($grp[$i]); $j++) {
-            if ($grp[$i][$j] == $usr) {
-                return $i;
-            }
-        }
-    }
 
-    return -1;
-}
 /**
- * subfunction to simplify  dynamo_get_consistency
- * the aim is just to sort array
+ * For one given student, this function gives an array with normalized notes on one other given student
  *
- * @param float $a first value
- * @param float $b second value
- *
- * @return wich element is the biggest to sort it
- */
-function cmp($a, $b) {
-    return $a->diff > $b->diff;
-}
-/**
- * Give the quatric gap between two students of a group
- *
- * @param object $dynamo An object from the form.
- * @param int $usr1 id of the first user
- * @param int $usr2 id of the second user
+ * @param object $dynamo An object from the form
+ * @param int $usr1 id of the evaluating user
+ * @param int $usr2 id of the evaluated user
  *
  * @return float the quatric gap between these two students
  */
-function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
+
+function dynamo_get_data($dynamo, $usr1,$usr2) {
     global $DB;
-
-    $avg = 0;
-    $nbeval = 0;
-    $sumeval = 0;
-    $similitude = 0;
-
     // Sum of evaluation.
     $sql = "
         SELECT sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5) total
@@ -1847,7 +1820,6 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $params = array('param1' => $dynamo->id, 'param2' => $usr1);
     $result = $DB->get_record_sql($sql, $params);
     $sumeval = $result->total;
-
     if ($sumeval == 0) {
         $result = new stdClass();
         $result->ecart = 1000;
@@ -1855,8 +1827,7 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
 
         return $result;
     }
-
-    // Number of evaluation.
+// Number of evaluation.
     $sql = "
         SELECT (count(t1.crit1) + count(t1.crit2) + count(t1.crit3) + count(t1.crit4) + count(t1.crit5)) nbeval
           FROM {dynamo_eval} t1
@@ -1869,46 +1840,32 @@ function dynamo_get_ecart_quadrique($dynamo, $usr1, $usr2) {
     $result = $DB->get_record_sql($sql, $params);
     $nbeval = $result->nbeval;
 
-    $avg = round($sumeval / $nbeval, 3);
+    $avg = round($sumeval/$nbeval, 8);
 
-    // Sum of the 6 criteria of student 1 minus the same criteria of student2 put at POW2 and after  to square2.
     $sql = "
-    SELECT sum(t1.crit1/".$nbeval." + t1.crit2/".$nbeval." + t1.crit3/".$nbeval." + t1.crit4/".$nbeval." + t1.crit5/"
-        .$nbeval.") ecart
-        FROM (
-              SELECT SQRT(POWER(((t1.crit1/".$avg.") - (t2.crit1/".$avg.")),2)) crit1
-                    ,SQRT(POWER(((t1.crit2/".$avg.") - (t2.crit2/".$avg.")),2)) crit2
-                    ,SQRT(POWER(((t1.crit3/".$avg.") - (t2.crit3/".$avg.")),2)) crit3
-                    ,SQRT(POWER(((t1.crit4/".$avg.") - (t2.crit4/".$avg.")),2)) crit4
-                    ,SQRT(POWER(((t1.crit5/".$avg.") - (t2.crit5/".$avg.")),2)) crit5
-                FROM {dynamo_eval} t1
-                    ,(SELECT t1.userid, t1.crit1 , t1.crit2 , t1.crit3 , t1.crit4 , t1.crit5
-                        FROM {dynamo_eval} t1
-                       WHERE t1.builder   = :param1
-                         AND t1.critgrp   = 0
-                         AND t1.evalbyid  = :param2
-                     ) t2
-               WHERE t1.builder   = :param3
-                 AND t1.critgrp   = 0
-                 AND evalbyid     = :param4
-                 AND t1.userid    = t2.userid
-            ) t1
+        SELECT t1.crit1/".$avg." crit1n, t1.crit2/".$avg." crit2n, t1.crit3/".$avg." crit3n, t1.crit4/".$avg." crit4n, t1.crit5/".$avg." crit5n
+          FROM {dynamo_eval} t1
+         WHERE t1.builder   = :param1
+           AND t1.critgrp   = 0
+           AND evalbyid     = :param2
+           AND userid = :param3
     ";
-
-    $params = array('param1' => $dynamo->id, 'param2' => $usr2, 'param3' => $dynamo->id, 'param4' => $usr1);
-    $result = $DB->get_record_sql($sql, $params);
-    $result->similitude = $similitude;
-    return $result;
+    $params = array('param1' => $dynamo->id, 'param2' => $usr1, 'param3' => $usr2);
+    $result = $DB->get_record_sql($sql,$params);
+    $resultf=array($result->crit1n,$result->crit2n,$result->crit3n,$result->crit4n,$result->crit5n);
+    return $resultf;
 }
+
+
 /**
- * Give the html(specific icon with a specific color) that represent the type of group in the global view on groups of the teacher
+ * Give the html(specific icon with a specific color) that represent the cohesion type of group in the global view on groups of the teacher
  *
  * @param int $type the type of the group
  * @param int $grpid id of the group
  *
  * @return html fontawesome ico...
  */
-function dynamo_get_group_type($type, $grpid, $max) {
+function dynamo_get_cohesion_group_type($type, $grpid, $max) {
     switch($type) {
         case 1:
             return ' '.'<div style="float:left;color:#006DCC;">
@@ -1951,14 +1908,6 @@ function dynamo_get_group_type($type, $grpid, $max) {
     }
     return '';
 }
-/**
- * Give the group cohesion type
- *
- * @param int $type the type of the group
- * @param int $grpid id of the group
- *
- * @return string...
- */
 function dynamo_get_group_type_txt($type) {
     switch($type) {
         case 1:
@@ -1982,6 +1931,9 @@ function dynamo_get_group_type_txt($type) {
     }
     return '';
 }
+
+
+
 /**
  * Give the html(specific icon with a specific color) that represent the climate inside the group
  * it's base on a simple computing from the cohesion, implication and self confidence
@@ -2016,9 +1968,25 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
             $color = '#006DCC';
         }
         $notperfect += $aweight[$color];
-    }
+        
+        $consistency = dynamo_get_consistency($dynamo, $grpusrs);
+        $listc=$consistency->list;
+        $maxc=$consistency-> varmean;
+        $typec=$consistency-> type;
+        $var=$listc[$nbuser-1]->var;
+        $var=floatval($var);
+        $color = dynamo_get_color_consistency($var);
+        $var=round($var,2);
+        if ($color == 'green') {
+            $color = '#006DCC';
+         }
+        $notperfect += 0.5*$aweight[$color];
 
-    $idico = round($notperfect / $nbuser / 2, 0, PHP_ROUND_HALF_DOWN);
+  
+    }
+    $notperfect=2.5*$notperfect/$nbuser;
+    if ($notperfect>4) $notperfect=4;
+    $idico = round($notperfect, 0, PHP_ROUND_HALF_DOWN);
     $climat = '<i class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
 
     return [$climat, $idico];

@@ -43,6 +43,8 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
 $PAGE->requires->css('/mod/dynamo/css/all.min.css');  // Fontawesome  5.15.4.
 $PAGE->requires->css('/mod/dynamo/css/style.css');
+$theme=$CFG->theme;
+if ($theme=='fordson') $PAGE->requires->css('/mod/dynamo/css/style4fordson.css');
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
 
