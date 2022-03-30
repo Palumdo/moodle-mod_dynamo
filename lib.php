@@ -1252,7 +1252,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
    $notperfect = 2.5*$notperfect / $nbuser;
    if ($notperfect>4) $notperfect=4;
     $idico = round($notperfect, 0, PHP_ROUND_HALF_DOWN);
-    $groupstat->notperfec t= $notperfect;
+    $groupstat->notperfect = $notperfect;
     $groupstat->remark = '<span class="hiddenidx">'.round($notperfect, 2)
         .'</span><i title="'.get_string('dynamoaclimate'.$idico, 'dynamo')
         .' ('.round($notperfect, 2).')" class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
