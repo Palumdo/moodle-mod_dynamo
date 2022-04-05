@@ -23,6 +23,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Manage the upgrade of the DB.
+ *
+ * @package    mod_dynamo
+ * @since      Moodle 3.5
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 function xmldb_dynamo_upgrade($oldversion = 0) {
     global $DB;
 

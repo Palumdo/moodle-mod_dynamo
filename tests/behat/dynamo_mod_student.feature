@@ -16,7 +16,7 @@ Feature: Test that students can view the survey.
       | activity   | name         | intro                       | course | idnumber  | section |
       | assign     | Assignment 1 | Test assignment description | C1     | assign1   | 0       |
 @javascript
-      Scenario: Student can see the dynamo activity
+  Scenario: Student can see the dynamo activity
     Given I log in as "teacher1"
     # And I am on "Course 1" course homepage with editing mode on
     # When I add a "Dynamo" to section "1" and I fill the form with:

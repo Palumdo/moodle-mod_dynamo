@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This is the manager of what will be displayed based on your rights
- * student will see the survey
+ * This is the manager of what will be displayed based on your rights.
+ *
+ * Student will see the survey
  * teacher the results and reports
  * (still inspired by teambuilder mod)
- * RGraph library is used because radar graphics is not in moodle (for now)
+ * RGraph library is used because radar graphics is not in moodle (for now).
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
