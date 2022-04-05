@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * The task that provides a complete backup of mod_dynamo is defined here.
+ *
  * @package     mod_dynamo
  * @category    backup
  * @copyright   2019 UCLouvain

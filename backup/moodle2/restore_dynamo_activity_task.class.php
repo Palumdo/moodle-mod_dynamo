@@ -76,9 +76,9 @@ class restore_dynamo_activity_task extends restore_activity_task {
     }
 
     /**
-     * Defines the restore log rules that will be applied by the
-     * {@link restore_logs_processor} when restoring mod_dynamo logs. It
-     * must return one array of {@link restore_log_rule} objects.
+     * Defines the restore log rules that will be applied by the when restoring mod_dynamo logs.
+     *
+     * Must return one array of objects.
      *
      * @return array.
      */
@@ -93,14 +93,16 @@ class restore_dynamo_activity_task extends restore_activity_task {
         return $rules;
     }
     /**
-     * Define the restore log rules that will be applied
-     * by the {@link restore_logs_processor} when restoring
-     * course logs. It must return one array
-     * of {@link restore_log_rule} objects
+     * Define the restore log rules that will be applied when restoring
+     *
+     * Course logs. It must return one array
+     * of objects
      *
      * Note this rules are applied when restoring course logs
      * by the restore final task, but are defined here at
      * activity level. All them are rules not linked to any module instance (cmid = 0)
+     *
+     * @return array.
      */
     public static function define_restore_log_rules_for_course() {
         $rules = array();

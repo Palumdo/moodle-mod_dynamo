@@ -144,12 +144,12 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();
     }
-    
+
     /**
      * Load all the values from dynamo of the current activity.
      *
      * @param reference array &$defaultvalues the default values.
-     */    
+     */
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
         if ($this->current->id == "") {

@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This is the survey displayed to student to evaluate other peers and self evaluation
- * they give a note from 1 to 5 for each criteria
+ * This is the survey displayed to student to evaluate other peers and self evaluation.
+ *
+ * They give a note from 1 to 5 for each criteria
  * ***** **** *** ** *
  * they've 5 mandatory criteria (participation, responsability, science
  * expertice, technical expertice and attitude

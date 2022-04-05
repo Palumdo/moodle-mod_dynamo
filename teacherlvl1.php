@@ -428,7 +428,17 @@ if ($usrid != 0) {
     </script>';
     echo ($jscript);
 }
-
+/**
+ * Display the table line
+ *
+ * @param object $result sum and average.
+ * @param int $cmid context id.
+ * @param object $grpusrsub firstname and lastname.
+ * @param string $color color.
+ * @param object $dynamoeval criteria values.
+ * @param string $display6 6th criteria display or no.
+ * @param int $groupid id of the group.
+ */
 function display_table_line($result, $cmid, $grpusrsub, $color, $dynamoeval, $display6, $groupid) {
     echo ('<tr onclick="document.location=\'view.php?id='.$cmid.'&usrid='.$grpusrsub->id.'&groupid='
             .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
