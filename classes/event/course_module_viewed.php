@@ -25,8 +25,6 @@
 
 namespace mod_dynamo\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * The mod_dynamo viewed event class.
  *

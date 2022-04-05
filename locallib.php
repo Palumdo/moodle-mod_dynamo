@@ -23,7 +23,6 @@
  * @copyright 2019 Palumbo Dominique
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * This creates new calendar events given close by $dynamo.

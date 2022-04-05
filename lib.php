@@ -23,7 +23,6 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
 define('DYNAMO_EVENT_TYPE_OPEN', 'open');
 define('DYNAMO_EVENT_TYPE_CLOSE', 'close');
 
@@ -393,15 +392,26 @@ function dynamo_get_group_users($groupid) {
     $sql = "
    SELECT t2.*
      FROM {groups_members} t1
-         ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t2
+         ,(SELECT * FROM {user} 
+           WHERE deleted=0 
+             AND id IN (SELECT distinct(userid) 
+                          FROM {role_assignments} t3, {context} t4 
+                         WHERE t3.contextid = t4.id 
+                           AND t4.instanceid = :param2 
+                           AND t3.roleid NOT IN (SELECT roleid 
+                                                   FROM {role_capabilities} t1 
+                                                  WHERE t1.capability = :param4 
+                                                    AND t1.permission != 1 
+                                                    AND contextid = :param3 ))) t2
     WHERE t1.groupid = :param1
       AND t2.id = t1.userid
     ORDER BY t2.firstname,t2.lastname
     ";
-   
-    $params = array('param1' => $groupid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+
+    $params = array('param1' => $groupid, 'param2' => $globals['dynamo_courseid']
+                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
-    
+
     return $result;
 }
 /**
@@ -419,7 +429,18 @@ function dynamo_get_grouping_users($groupingid) {
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
-              ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
+              ,(SELECT * 
+                  FROM {user} 
+                 WHERE deleted=0 
+                   AND id IN (SELECT distinct(userid) 
+                                FROM {role_assignments} t3, {context} t4 
+                               WHERE t3.contextid = t4.id 
+                                 AND t4.instanceid = :param2 
+                                 AND t3.roleid NOT IN (SELECT roleid 
+                                                         FROM {role_capabilities} t1 
+                                                        WHERE t1.capability = :param4 
+                                                          AND t1.permission != 1 
+                                                          AND contextid = :param3 ))) t4
          WHERE groupingid = :param1
            AND t1.groupid = t2.id
            AND t2.id      = t3.groupid
@@ -427,7 +448,8 @@ function dynamo_get_grouping_users($groupingid) {
          ORDER BY t4.firstname,t4.lastname
     ";
 
-    $params = array('param1' => $groupingid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $groupingid, 'param2' => $globals['dynamo_courseid']
+                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     return $result;
@@ -560,7 +582,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                     </td>
                 </tr>
                     <!--</tbody>
-                </table>-->' ; 
+                </table>-->';
     }
 
     return $bodytable;
@@ -961,10 +983,10 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
         return [10, '']; // Student that don't answers get a high arbitrary score.
     }
     $sum = $agrid[$ki][count($agrid[$ki]) - 1];
-    if($sum != 0) {
-       $nsa = ($autoeval / $sum) * ($nbstudent - 1);
+    if ($sum != 0) {
+        $nsa = ($autoeval / $sum) * ($nbstudent - 1);
     } else {
-       $nsa = 0;
+        $nsa = 0;
     }
     $conf = [];
     if($niwf != 0) {
@@ -1145,11 +1167,11 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $names = "";
     $comment = "";
     $consistency = dynamo_get_consistency($dynamo, $grpusrs);
-    $listc=$consistency->list;
-    $moyc=$consistency-> varmean;
-    $typec=$consistency-> type;
-    $notperfect=0;
-    
+    $listc = $consistency->list;
+    $moyc = $consistency->varmean;
+    $typec = $consistency->type;
+    $notperfect = 0;
+
     $aweight = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
     // Fontawsome icons use for showing the average climat inside the group from thunder to full sun.
     $aicon = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
@@ -1164,11 +1186,6 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $tooltips .= $OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'&#xa;<br>';
 
         // Participation/ as answered.
-        /*
-        if ($dynamoeval = $DB->get_record('dynamo_eval', array('builder' => $dynamo->id, 'evalbyid' => $grpusr->id)
-                , $strictness=IGNORE_MULTIPLE)) {
-        */
-
         if ($dynamoeval = $DB->get_records_sql('SELECT distinct(comment2) FROM {dynamo_eval} WHERE builder = ? AND evalbyid = ?'
             , [$dynamo->id, $grpusr->id])) {
             foreach ($dynamoeval as $rec) {
@@ -1721,63 +1738,63 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         }
     }
     $grpusrs = $agrpusrs;
- 
+
     for ($i = 0; $i < count($grpusrs); $i++) { // Loop to all students of the group.
         $usr1 = $grpusrs[$i];
-        $datai=[];
-        $datavgi=[0,0,0,0,0];
+        $datai = [];
+        $datavgi = [0,0,0,0,0];
         for ($j = 0; $j < count($grpusrs); $j++) { // Compare to all the ohers in the group.
             $usr2 = $grpusrs[$j];
-            // auto-evaluations are excluded
-            if ($usr1->id!=$usr2->id) {
-                // Get the usr1 evaluations from usr2
+            // Auto-evaluations are excluded.
+            if ($usr1->id != $usr2->id) {
+                // Get the usr1 evaluations from usr2.
                 $dataij = dynamo_get_data($dynamo, $usr2->id, $usr1->id);
-                // For each evaluation dimension, compute the mean value
-                $datavgi[0]=$datavgi[0]+$dataij[0];
-                $datavgi[1]=$datavgi[1]+$dataij[1];
-                $datavgi[2]=$datavgi[2]+$dataij[2];
-                $datavgi[3]=$datavgi[3]+$dataij[3];
-                $datavgi[4]=$datavgi[4]+$dataij[4];
-                // compose a big array with all evaluations of usr1
+                // For each evaluation dimension, compute the mean value.
+                $datavgi[0] = $datavgi[0] + $dataij[0];
+                $datavgi[1] = $datavgi[1] + $dataij[1];
+                $datavgi[2] = $datavgi[2] + $dataij[2];
+                $datavgi[3] = $datavgi[3] + $dataij[3];
+                $datavgi[4] = $datavgi[4] + $dataij[4];
+                // Compose a big array with all evaluations of usr1
                 $datai=array_merge($datai,$dataij);
             }
-        }   
-        
+        }
+
         $list[$i] = new stdClass();
         $list[$i]->user = $usr1->id;
-        $list[$i]->data =$datai;
-        //Number of data is n-1 because auto-evaluations are excluded
-        $den=count($grpusrs)-1;
-        $datavgi[0]=$datavgi[0]/$den;
-        $datavgi[1]=$datavgi[1]/$den;
-        $datavgi[2]=$datavgi[2]/$den;
-        $datavgi[3]=$datavgi[3]/$den;
-        $datavgi[4]=$datavgi[4]/$den;
-        $list[$i]->datavg=$datavgi;
-    }  
-
-   // compute variance value for each student and compute global variance mean (needed for cohesion indicator))
-   $varmean=0;
-    for ($i = 0; $i < count($grpusrs); $i++) {
-        $vari=0;
-        $datai=$list[$i]->data;
-        $datavgi=$list[$i]->datavg;
-        for ($k=0;$k<sizeof($datai);$k++) {
-                  $ind=$k%5;
-                  $vari+=($datai[$k]-$datavgi[$ind])*($datai[$k]-$datavgi[$ind]);
-        }
-        $vari=12*$vari/sizeof($datai);
-        $list[$i]->var=$vari;
-        $varmean+=$vari;
+        $list[$i]->data = $datai;
+        // Number of data is n-1 because auto-evaluations are excluded.
+        $den = count($grpusrs)-1;
+        $datavgi[0] = $datavgi[0] / $den;
+        $datavgi[1] = $datavgi[1] / $den;
+        $datavgi[2] = $datavgi[2] / $den;
+        $datavgi[3] = $datavgi[3] / $den;
+        $datavgi[4] = $datavgi[4] / $den;
+        $list[$i]->datavg = $datavgi;
     }
-    $varmean=$varmean/count($grpusrs);
-    
+
+    // Compute variance value for each student and compute global variance mean (needed for cohesion indicator)).
+    $varmean = 0;
+    for ($i = 0; $i < count($grpusrs); $i++) {
+        $vari = 0;
+        $datai = $list[$i]->data;
+        $datavgi = $list[$i]->datavg;
+        for ($k = 0;$k < sizeof($datai);$k++) {
+                  $ind = $k%5;
+                  $vari += ($datai[$k] - $datavgi[$ind]) * ($datai[$k] - $datavgi[$ind]);
+        }
+        $vari = 12 * $vari / sizeof($datai);
+        $list[$i]->var = $vari;
+        $varmean += $vari;
+    }
+    $varmean = $varmean/count($grpusrs);
+
     $result = new stdClass();
     $result->type = 0;
     $result->list = $list;
-    $result-> varmean=$varmean;
-   
-    // compute cohesion type
+    $result->varmean = $varmean;
+
+    // Compute cohesion type.
     if ($varmean<0.02) {
         $result->type = 1;
     } elseif ($varmean<0.1) {
@@ -1789,13 +1806,14 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     } else {
         $result->type = 4;
     }
-    
-    // special type when not enough students completed evaluation
-    if(count($grpusrs)<3) $result->type=6;
+
+    // Special type when not enough students completed evaluation.
+    if (count($grpusrs)<3) {
+      $result->type=6;
+    }
 
     return $result;
 }
-
 /**
  * For one given student, this function gives an array with normalized notes on one other given student
  *
@@ -1805,7 +1823,6 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
  *
  * @return float the quatric gap between these two students
  */
-
 function dynamo_get_data($dynamo, $usr1,$usr2) {
     global $DB;
     // Sum of evaluation.
@@ -1852,11 +1869,9 @@ function dynamo_get_data($dynamo, $usr1,$usr2) {
     ";
     $params = array('param1' => $dynamo->id, 'param2' => $usr1, 'param3' => $usr2);
     $result = $DB->get_record_sql($sql,$params);
-    $resultf=array($result->crit1n,$result->crit2n,$result->crit3n,$result->crit4n,$result->crit5n);
+    $resultf = array($result->crit1n, $result->crit2n, $result->crit3n, $result->crit4n, $result->crit5n);
     return $resultf;
 }
-
-
 /**
  * Give the html(specific icon with a specific color) that represent the cohesion type of group in the global view on groups of the teacher
  *
@@ -1932,8 +1947,6 @@ function dynamo_get_group_type_txt($type) {
     return '';
 }
 
-
-
 /**
  * Give the html(specific icon with a specific color) that represent the climate inside the group
  * it's base on a simple computing from the cohesion, implication and self confidence
@@ -1970,25 +1983,24 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
         $notperfect += $aweight[$color];
         
         $consistency = dynamo_get_consistency($dynamo, $grpusrs);
-        $listc=$consistency->list;
-        $maxc=$consistency-> varmean;
-        $typec=$consistency-> type;
-        $var=$listc[$nbuser-1]->var;
-        $var=floatval($var);
+        $listc = $consistency->list;
+        $maxc = $consistency->varmean;
+        $typec = $consistency->type;
+        $var = $listc[$nbuser-1]->var;
+        $var = floatval($var);
         $color = dynamo_get_color_consistency($var);
-        $var=round($var,2);
+        $var = round($var,2);
         if ($color == 'green') {
             $color = '#006DCC';
-         }
+        }
         $notperfect += 0.5*$aweight[$color];
-
-  
     }
-    $notperfect=2.5*$notperfect/$nbuser;
-    if ($notperfect>4) $notperfect=4;
+    $notperfect = 2.5 * $notperfect / $nbuser;
+    if ($notperfect > 4) {
+        $notperfect = 4;
+    }
     $idico = round($notperfect, 0, PHP_ROUND_HALF_DOWN);
     $climat = '<i class="fas '.$aicon[$idico].' '.$aicolor[$idico].'"></i>';
-
     return [$climat, $idico];
 }
 /**

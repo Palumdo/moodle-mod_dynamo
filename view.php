@@ -43,8 +43,10 @@ $PAGE->requires->js('/mod/dynamo/js/RGraph/libraries/RGraph.bar.js');
 $PAGE->requires->js('/mod/dynamo/js/local.js');
 $PAGE->requires->css('/mod/dynamo/css/all.min.css');  // Fontawesome  5.15.4.
 $PAGE->requires->css('/mod/dynamo/css/style.css');
-$theme=$CFG->theme;
-if ($theme=='fordson') $PAGE->requires->css('/mod/dynamo/css/style4fordson.css');
+$theme = $CFG->theme;
+if ($theme == 'fordson') {
+  $PAGE->requires->css('/mod/dynamo/css/style4fordson.css');
+}
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
 
@@ -75,8 +77,8 @@ require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
 $coursecontext = context_course::instance($course->id);
-$GLOBALS['dynamo_contextid'] = $modulecontext->id;//$coursecontext->id; To add coach to a group the local permission for the module must be changed
-$GLOBALS['dynamo_courseid'] = $course->id;
+$globals['dynamo_contextid'] = $modulecontext->id;// To add coach to a group the local permission for the module must be changed
+$globals['dynamo_courseid'] = $course->id;
 
 $mode = '';
 
@@ -132,11 +134,11 @@ if ($mode == 'student' && $group == null) {
     die();
 }
 
-if( $group != null) {
+if ($group != null) {
     $groupusers = dynamo_get_group_users($group->id);
 }
 
-$display6   = '';
+$display6 = '';
 if ($dynamo->critoptname == '') {
     $display6 = 'none';
 }
@@ -158,9 +160,9 @@ if ($mode == 'teacher') {
     require_once(__DIR__.'/tabs.php');
     switch($tab) {
         case 1:
-            // Get the comment of the current inspected user if no user was seen
+            // Get the comment of the current inspected user if no user was seen.
             // Comment will be empty. It's just for a preview... Dummy text can be OK ! or empty...
-            // Preview of what student see for the teacher (no save button !)
+            // Preview of what student see for the teacher (no save button !).
             $comment = dynamo_get_comment($usrid, $dynamo);
             require_once(__DIR__.'/student.php');
             break;

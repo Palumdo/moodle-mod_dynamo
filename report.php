@@ -37,7 +37,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_login($course, true, $cm);
-$courseid = $course->id; 
+$courseid = $course->id;
 $modulecontext = context_module::instance($cm->id);
 if (!has_capability('mod/dynamo:create', $modulecontext)) {
     redirect(new moodle_url('/my'));
@@ -149,7 +149,8 @@ function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
         echo ('<option id="grp_'.$sgrp->id.'">'.$sgrp->name.'</option>');
     }
     echo ('</select>
-            <div style="margin:5px;"><button class="btn btn-default" onclick="removeColors();$(this).css(\'display\',\'none\');hideBeforePrint();
+            <div style="margin:5px;"><button class="btn btn-default" 
+              onclick="removeColors();$(this).css(\'display\',\'none\');hideBeforePrint();
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'
                 .get_string('dynamoremovecolors', 'mod_dynamo')
                 .'</button><br><a id="dynamorefresh" onclick="location.reload();" title="'
@@ -178,7 +179,7 @@ function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
                            </th>');
         foreach ($grpusrs as $grpusr) { // Loop to all students of  groups to put their name in title.
             $avatar = new user_picture($grpusr);
-            $avatar->courseid = $courseid; // $course->id;
+            $avatar->courseid = $courseid;
             $avatar->link = true;
             echo ('            <th>'.$OUTPUT->render($avatar).$grpusr->firstname.' '.$grpusr->lastname.'</th>');
         }
@@ -415,7 +416,8 @@ function rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
             </label>
             </div>
             <div class="box-switch" style="max-width:350px;text-align:center;">
-            <button class="btn btn-default" style="margin:10px;" onclick="removeColors();$(this).css(\'display\',\'none\');hideBeforePrint();
+            <button class="btn btn-default" style="margin:10px;" 
+                onclick="removeColors();$(this).css(\'display\',\'none\');hideBeforePrint();
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'
                 .get_string('dynamoremovecolors', 'mod_dynamo')
                 .'</button><br><a id="dynamorefresh" onclick="location.reload();" title="'

@@ -47,8 +47,8 @@ if (!has_capability('mod/dynamo:create', $ctxt)) {
 }
 
 $coursecontext = context_course::instance($course->id);
-$GLOBALS['dynamo_contextid'] = $coursecontext->id;
-$GLOBALS['dynamo_courseid'] = $course->id;
+$globals['dynamo_contextid'] = $coursecontext->id;
+$globals['dynamo_courseid'] = $course->id;
 
 
 $reportname = $course->shortname.'_'.$cm->id;
@@ -104,12 +104,11 @@ $worksheet[0]->set_column(0, 0, '30');
 $worksheet[0]->set_column(1, $col, '20');
 $line = 0;
 
-    
 foreach ($groups as $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
     $consistency = dynamo_get_consistency($dynamo, $grpusrs);
-    $maxc=$consistency-> varmean;
-    $typec=$consistency-> type;
+    $maxc = $consistency->varmean;
+    $typec = $consistency->type;
     $totalp = 0;
     $totals = 0;
     $crit1s = 0;
@@ -126,14 +125,10 @@ foreach ($groups as $grp) {
     $crit6p = 0;
 
     $col = 0;
-    $notperfect=0;
+    $notperfect = 0;
     $nbline = 1;
 
-
     $worksheet[0]->write(3 + ($i * $nbline), $col, $grp->name, $format);
-//    $worksheet[0]->write(4 + ($i * 5), $col, get_string('dynamoexportxlsTitle19', 'mod_dynamo'));
-//    $worksheet[0]->write(5 + ($i * 5), $col, get_string('dynamoheadcohesion', 'mod_dynamo'));
-//    $worksheet[0]->write(6 + ($i * 5), $col, get_string('dynamoheadremarque', 'mod_dynamo'));
     foreach ($grpusrs as $usr) {
         $data = dynamo_compute_advanced($usr->id, $dynamo);
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
@@ -243,10 +238,10 @@ foreach ($groups as $grp) {
     $col++;
     $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6s / count($grpusrs), 2));
 
-    $col = 1; 
+    $col = 1;
     $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($typec));
-    $col++; 
-    $notperfect=0;
+    $col++;
+    $notperfect = 0;
     $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
     $climattxt = get_string('dynamoaclimate'.$climat, 'mod_dynamo');
     $worksheet[0]->write(3 + ($i * $nbline), $col, $climattxt);

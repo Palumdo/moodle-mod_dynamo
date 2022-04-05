@@ -109,16 +109,12 @@ echo('<div id="table-overview"><table class="tablelvlx">
         </thead>
         <tbody>
      ');
-     $notperfect=0;
+     $notperfect = 0;
 foreach ($groups as $grp) { // Loop to all groups of grouping.
     $grpusrs = dynamo_get_group_users($grp->id);
-    //$coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
-    
-
     $val = [0, 0, 0, 1, 3, 0 , 3];
-
     $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
-        // Add icon type conflit group.
+    // Add icon type conflit group.
     $cohesion = dynamo_get_cohesion_group_type($groupstat->type, $grp->id, $groupstat->cohesion);
     $notperfect += ($val[$groupstat->type] * count($grpusrs));
 

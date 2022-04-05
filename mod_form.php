@@ -146,12 +146,12 @@ class mod_dynamo_mod_form extends moodleform_mod {
     // Load all the values from dynamo of the current activity.
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
-        if($this->current->id == "") {
+        if ($this->current->id == "") {
             $defaultvalues['dynamo_auto'] = 1;
             $defaultvalues['dynamo_group_eval'] = 1;
             return;
         }
-        
+
         $dynamo = $DB->get_record('dynamo', array('id' => $this->current->id), '*', IGNORE_MISSING);
         if ($dynamo != false) {
             $defaultvalues['dynamo_participation'] = $dynamo->crit1;

@@ -57,7 +57,7 @@ class restore_dynamo_activity_task extends restore_activity_task {
      *
      * @return array.
      */
-    static public function define_decode_contents() {
+    public static function define_decode_contents() {
         $contents = array();
 
         // Define the contents.
@@ -70,7 +70,7 @@ class restore_dynamo_activity_task extends restore_activity_task {
      *
      * @return array.
      */
-    static public function define_decode_rules() {
+    public static function define_decode_rules() {
         $rules = array();
         return $rules;
     }
@@ -82,7 +82,7 @@ class restore_dynamo_activity_task extends restore_activity_task {
      *
      * @return array.
      */
-    static public function define_restore_log_rules() {
+    public static function define_restore_log_rules() {
         $rules = array();
 
         // Define the rules.

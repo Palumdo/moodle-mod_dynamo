@@ -53,9 +53,11 @@ $bubble3 = rtrim($bubble3, ', ');
 $bubble4 = rtrim($bubble4, ', ');
 $bubble5 = rtrim($bubble5, ', ');
 
-if (isset($group->name))
-$groupname=$group->name;
-else $groupname ="";
+if (isset($group->name)) {
+    $groupname = $group->name;
+} else {
+    $groupname = "";
+}
 
 echo '
     <div id="page-content" class="row-fluid">
