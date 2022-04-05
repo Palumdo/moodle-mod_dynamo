@@ -16,6 +16,7 @@
 
 /**
  * The main mod_dynamo configuration form.
+ *
  * For each criteria used for the peer evaluation the teacher can add additional info on it.
  * They've default text for the tooltips and here the teacher can add more info.
  * He can also add is own sixth criteria.
@@ -143,7 +144,12 @@ class mod_dynamo_mod_form extends moodleform_mod {
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();
     }
-    // Load all the values from dynamo of the current activity.
+    
+    /**
+     * Load all the values from dynamo of the current activity.
+     *
+     * @param reference array &$defaultvalues the default values.
+     */    
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
         if ($this->current->id == "") {

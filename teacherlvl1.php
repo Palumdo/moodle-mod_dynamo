@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This page is for the teacher
- * it will display all the information about a specific student
+ * This page is for the teacher.
+ *
+ * It will display all the information about a specific student
  * basically table with value and graphics (radar) too !
  *
  * @package     mod_dynamo

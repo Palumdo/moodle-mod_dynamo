@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * this file manage the tabulation of the teacher UI
- * it pass all the same parameter to all tabs to make navigation more
+ * This file manage the tabulation of the teacher UI.
+ *
+ * It pass all the same parameter to all tabs to make navigation more
  * confortable
  * url param are :
  * CM id, group id, user id (student) and tab number

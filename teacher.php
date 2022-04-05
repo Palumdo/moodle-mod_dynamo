@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * This page is for the teacher. It will display all groups information on summary
+ * This page is for the teacher. It will display all groups information on summary.
+ *
  * The aim it's to detect quickly groups with trouble
- * It's the global view tab
+ * It's the global view tab.
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain

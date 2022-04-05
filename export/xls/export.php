@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Controller for creating excel export
- * the Excel export have all student of the course and their groups
+ * Controller for creating excel export.
+ *
+ * The Excel export have all student of the course and their groups.
  *
  * @package    mod_dynamo
  * @copyright  UCLouvain

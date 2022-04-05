@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This page is for the teacher. It will display all groups information on summary
- * the aim it's to detect groups with trouble
+ * This page is for the teacher. It will display all groups information on summary.
+ *
+ * The aim it's to detect groups with trouble.
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain

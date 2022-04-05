@@ -1683,7 +1683,7 @@ function dynamo_get_all_eval_by_student($dynamo, $display6) {
     if ($display6 == '') {
         $div = 6;
     }
-    // Average evaluation by pairs
+    // Average evaluation by pairs.
     $sql = "
 SELECT distinct t1.userid, t2.firstname, t2.lastname, eval, t4.groupid, t3.name
   FROM (SELECT userid, sum(total)/count(userid)/5 eval
@@ -1913,7 +1913,7 @@ function dynamo_get_data($dynamo, $usr1, $usr2) {
            AND userid = :param3
     ";
     $params = array('param1' => $dynamo->id, 'param2' => $usr1, 'param3' => $usr2);
-    $result = $DB->get_record_sql($sql,$params);
+    $result = $DB->get_record_sql($sql, $params);
     $resultf = array($result->crit1n, $result->crit2n, $result->crit3n, $result->crit4n, $result->crit5n);
     return $resultf;
 }

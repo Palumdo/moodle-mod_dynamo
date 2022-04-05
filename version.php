@@ -15,8 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Dynamo is a peer by peer review module for Moodle
- * This project followed the Team Up Module to create the groups
+ * Dynamo is a peer by peer review module for Moodle.
+ *
+ * This project followed the Team Up Module to create the groups.
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain

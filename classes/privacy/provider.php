@@ -18,7 +18,7 @@
  * Privacy Subsystem implementation for mod_dynamo
  *
  * @package    mod_dynamo
- * @copyright   2019 UCLouvain 
+ * @copyright   2019 UCLouvain
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @author     Dominique Palumbo (UCLouvain)
  */
