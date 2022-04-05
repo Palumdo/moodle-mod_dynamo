@@ -45,7 +45,7 @@ $PAGE->requires->css('/mod/dynamo/css/all.min.css');  // Fontawesome  5.15.4.
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 $theme = $CFG->theme;
 if ($theme == 'fordson') {
-  $PAGE->requires->css('/mod/dynamo/css/style4fordson.css');
+    $PAGE->requires->css('/mod/dynamo/css/style4fordson.css');
 }
 
 echo('<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> ');
@@ -77,7 +77,7 @@ require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
 $coursecontext = context_course::instance($course->id);
-$globals['dynamo_contextid'] = $modulecontext->id;// To add coach to a group the local permission for the module must be changed
+$globals['dynamo_contextid'] = $modulecontext->id;// To add coach to a group the local permission for the module must be changed.
 $globals['dynamo_courseid'] = $course->id;
 
 $mode = '';

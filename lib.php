@@ -392,16 +392,16 @@ function dynamo_get_group_users($groupid) {
     $sql = "
    SELECT t2.*
      FROM {groups_members} t1
-         ,(SELECT * FROM {user} 
-           WHERE deleted=0 
-             AND id IN (SELECT distinct(userid) 
-                          FROM {role_assignments} t3, {context} t4 
-                         WHERE t3.contextid = t4.id 
-                           AND t4.instanceid = :param2 
-                           AND t3.roleid NOT IN (SELECT roleid 
-                                                   FROM {role_capabilities} t1 
-                                                  WHERE t1.capability = :param4 
-                                                    AND t1.permission != 1 
+         ,(SELECT * FROM {user}
+           WHERE deleted=0
+             AND id IN (SELECT distinct(userid)
+                          FROM {role_assignments} t3, {context} t4
+                         WHERE t3.contextid = t4.id
+                           AND t4.instanceid = :param2
+                           AND t3.roleid NOT IN (SELECT roleid
+                                                   FROM {role_capabilities} t1
+                                                  WHERE t1.capability = :param4
+                                                    AND t1.permission != 1
                                                     AND contextid = :param3 ))) t2
     WHERE t1.groupid = :param1
       AND t2.id = t1.userid
@@ -429,17 +429,17 @@ function dynamo_get_grouping_users($groupingid) {
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
-              ,(SELECT * 
-                  FROM {user} 
-                 WHERE deleted=0 
-                   AND id IN (SELECT distinct(userid) 
-                                FROM {role_assignments} t3, {context} t4 
-                               WHERE t3.contextid = t4.id 
-                                 AND t4.instanceid = :param2 
-                                 AND t3.roleid NOT IN (SELECT roleid 
-                                                         FROM {role_capabilities} t1 
-                                                        WHERE t1.capability = :param4 
-                                                          AND t1.permission != 1 
+              ,(SELECT *
+                  FROM {user}
+                 WHERE deleted=0
+                   AND id IN (SELECT distinct(userid)
+                                FROM {role_assignments} t3, {context} t4
+                               WHERE t3.contextid = t4.id
+                                 AND t4.instanceid = :param2
+                                 AND t3.roleid NOT IN (SELECT roleid
+                                                         FROM {role_capabilities} t1
+                                                        WHERE t1.capability = :param4
+                                                          AND t1.permission != 1
                                                           AND contextid = :param3 ))) t4
          WHERE groupingid = :param1
            AND t1.groupid = t2.id
@@ -989,7 +989,7 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
         $nsa = 0;
     }
     $conf = [];
-    if($niwf != 0) {
+    if ($niwf != 0) {
         $conf[0] = $nsa / $niwf;
     } else {
         $conf[0] = 0;
@@ -1222,19 +1222,19 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $confiance = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                     class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
 
-        // Constistency
-       $var=$listc[$nbuser-1]->var;
-       $var=floatval($var);
-       $color = dynamo_get_color_consistency($var);
-       $var=round($var,2);
-       if ($color == 'green') {
+        // Constistency.
+        $var = $listc[$nbuser - 1]->var;
+        $var = floatval($var);
+        $color = dynamo_get_color_consistency($var);
+        $var = round($var, 2);
+        if ($color == 'green') {
             $color = '#006DCC';
         }
-        $notperfect += 0.5*$aweight[$color];
+        $notperfect += 0.5 * $aweight[$color];
         $consistencyst = $consistencyst . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                     class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.' ('.$var.')"></i>';
-                                    
-       
+
+
         // Find firstname lastname in comments about the group.
         foreach ($grpusrs as $grpusrname) {
             $text = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($comment);
@@ -1243,7 +1243,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
             $text = array_flip($text);
             $firstname = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->firstname));
             $lastname = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->lastname));
-            
+
             if (isset($text[$firstname]) || isset($text[$lastname])) {
                 $conflit = '<i style="font-size:1.2em;color:#006DCC;" class="fas fa-comment"></i>';
                 break;
@@ -1254,21 +1254,22 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $groupstat->participation = $participation;
     $groupstat->implication = $implication;
     $groupstat->confiance = $confiance;
-    $groupstat->type=$typec;
-    $groupstat->cohesion=round($moyc,2);
-    $groupstat->consistency=$consistencyst;
+    $groupstat->type = $typec;
+    $groupstat->cohesion = round($moyc, 2);
+    $groupstat->consistency = $consistencyst;
     $groupstat->conflit = $conflit;
     $groupstat->remark = "";
     $groupstat->tooltips = $tooltips;
     $groupstat->names = $names;
 
-
-    if ($notperfect == 0 ) {
+    if ($notperfect == 0) {
         $groupstat->conflit = '';
     }
 
-   $notperfect=2.5*$notperfect/$nbuser;
-   if ($notperfect>4) $notperfect=4;
+    $notperfect = 2.5 * $notperfect / $nbuser;
+    if ($notperfect > 4) {
+        $notperfect = 4;
+    }
     $idico = round($notperfect, 0, PHP_ROUND_HALF_DOWN);
     $groupstat->notperfect=$notperfect;
     $groupstat->remark = '<span class="hiddenidx">'.round($notperfect, 2)
@@ -1292,7 +1293,17 @@ function dynamo_get_report_001($dynamo) {
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
-              ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
+              ,(SELECT * FROM {user} 
+                        WHERE deleted=0 
+                          AND id IN (SELECT distinct(userid) 
+                                       FROM {role_assignments} t3, {context} t4 
+                                      WHERE t3.contextid = t4.id 
+                                        AND t4.instanceid = :param2 
+                                        AND t3.roleid NOT IN (SELECT roleid 
+                                                                FROM {role_capabilities} t1 
+                                                               WHERE t1.capability = :param4 
+                                                                 AND t1.permission != 1 
+                                                                 AND contextid = :param3 ))) t4
          WHERE groupingid = :param1
            AND t1.groupid = t2.id
            AND t3.groupid = t1.groupid
@@ -1304,7 +1315,8 @@ function dynamo_get_report_001($dynamo) {
          ORDER BY t2.name, t4.firstname, t4.lastname
         ";
 
-    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $globals['dynamo_courseid']
+                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     return $result;
@@ -1357,14 +1369,24 @@ function dynamo_get_grouping_stat($dynamo) {
          FROM {groupings_groups} t1
              ,{groups}           t2
              ,{groups_members}   t3
-             ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
+             ,(SELECT * FROM {user} 
+                       WHERE deleted=0 
+                         AND id IN (SELECT distinct(userid) 
+                                      FROM {role_assignments} t3, {context} t4 
+                                     WHERE t3.contextid = t4.id 
+                                       AND t4.instanceid = :param2 
+                                       AND t3.roleid NOT IN (SELECT roleid 
+                                                               FROM {role_capabilities} t1 
+                                                              WHERE t1.capability = :param4 
+                                                                AND t1.permission != 1 
+                                                                AND contextid = :param3 ))) t4
         WHERE groupingid = :param1
           AND t1.groupid = t2.id
           AND t3.groupid = t1.groupid
           AND t3.userid  = t4.id
         ";
-
-    $params = array('param1' => $dynamo->groupingid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->groupingid, 'param2' => $globals['dynamo_courseid']
+                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_record_sql($sql, $params);
     $stat->nb_participant = $result->nb_participant;
 
@@ -1373,7 +1395,17 @@ function dynamo_get_grouping_stat($dynamo) {
           FROM {groupings_groups} t1
               ,{groups}           t2
               ,{groups_members}   t3
-              ,(SELECT * FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3 ))) t4
+              ,(SELECT * FROM {user} 
+                         WHERE deleted=0 
+                           AND id IN (SELECT distinct(userid) 
+                                        FROM {role_assignments} t3, {context} t4 
+                                       WHERE t3.contextid = t4.id 
+                                         AND t4.instanceid = :param2 
+                                         AND t3.roleid NOT IN (SELECT roleid 
+                                                                 FROM {role_capabilities} t1 
+                                                                WHERE t1.capability = :param4 
+                                                                  AND t1.permission != 1 
+                                                                  AND contextid = :param3 ))) t4
          WHERE groupingid = :param1
            AND t1.groupid = t2.id
            AND t3.groupid = t1.groupid
@@ -1383,8 +1415,8 @@ function dynamo_get_grouping_stat($dynamo) {
                               WHERE t5.builder = :param11
                             )
         ";
-
-    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $globals['dynamo_courseid']
+                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_record_sql($sql, $params);
     $stat->nb_no_answer = $result->nb_no_answer;
 
@@ -1658,7 +1690,18 @@ SELECT distinct t1.userid, t2.firstname, t2.lastname, eval, t4.groupid, t3.name
   FROM (SELECT userid, sum(total)/count(userid)/5 eval 
           FROM (SELECT t1.userid, t1.evalbyid, sum(t1.crit1 + t1.crit2 + t1.crit3 + t1.crit4 + t1.crit5 + t1.crit6) total
                   FROM {dynamo_eval} t1
-                 ,(SELECT id, firstname, lastname FROM {user} WHERE deleted=0 AND id in (SELECT distinct(userid) from {role_assignments} t3, {context} t4 WHERE t3.contextid = t4.id AND t4.instanceid = :param2 AND t3.roleid NOT IN (SELECT roleid FROM {role_capabilities} t1 WHERE t1.capability = :param4 AND t1.permission != 1 AND contextid = :param3))) t2
+                 ,(SELECT id, firstname, lastname 
+                     FROM {user} 
+                    WHERE deleted=0 
+                      AND id IN (SELECT distinct(userid) 
+                                   FROM {role_assignments} t3, {context} t4 
+                                  WHERE t3.contextid = t4.id 
+                                    AND t4.instanceid = :param2 
+                                    AND t3.roleid NOT IN (SELECT roleid 
+                                                            FROM {role_capabilities} t1 
+                                                           WHERE t1.capability = :param4 
+                                                             AND t1.permission != 1 
+                                                             AND contextid = :param3))) t2
          WHERE t1.builder = :param1
            AND t1.critgrp = 0
            AND t1.userid != t1.evalbyid
@@ -1676,10 +1719,10 @@ WHERE t1.userid = t2.id
   AND t5.groupingid = :param11   
   AND t5.groupid = t4.groupid
 ";
-
-    $params = array('param1' => $dynamo->id, 'param11' => $dynamo->groupingid, 'param2' => $GLOBALS['dynamo_courseid'], 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->id, 'param11' => $dynamo->groupingid, 'param2' => $globals['dynamo_courseid']
+                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
-    // Auto-evaluation
+    // Auto-evaluation.
     $sql = "
         SELECT userid, sum(total)/".$div." autoeval
           FROM (
@@ -1730,7 +1773,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     $list = [];
     // Get the list of students that have answer. The other are not take in computing and evaluation.
     $agrpusrs = [];
-    $varavg=0;
+    $varavg = 0;
     foreach ($grpusrs as $usr) {
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
         if ($autoeval->crit1 > 0) {
@@ -1755,8 +1798,8 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
                 $datavgi[2] = $datavgi[2] + $dataij[2];
                 $datavgi[3] = $datavgi[3] + $dataij[3];
                 $datavgi[4] = $datavgi[4] + $dataij[4];
-                // Compose a big array with all evaluations of usr1
-                $datai=array_merge($datai,$dataij);
+                // Compose a big array with all evaluations of usr1.
+                $datai = array_merge($datai, $dataij);
             }
         }
 
@@ -1764,7 +1807,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         $list[$i]->user = $usr1->id;
         $list[$i]->data = $datai;
         // Number of data is n-1 because auto-evaluations are excluded.
-        $den = count($grpusrs)-1;
+        $den = count($grpusrs) - 1;
         $datavgi[0] = $datavgi[0] / $den;
         $datavgi[1] = $datavgi[1] / $den;
         $datavgi[2] = $datavgi[2] / $den;
@@ -1779,9 +1822,9 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         $vari = 0;
         $datai = $list[$i]->data;
         $datavgi = $list[$i]->datavg;
-        for ($k = 0;$k < sizeof($datai);$k++) {
-                  $ind = $k%5;
-                  $vari += ($datai[$k] - $datavgi[$ind]) * ($datai[$k] - $datavgi[$ind]);
+        for ($k = 0;$k < sizeof($datai); $k++) {
+            $ind = $k%5;
+            $vari += ($datai[$k] - $datavgi[$ind]) * ($datai[$k] - $datavgi[$ind]);
         }
         $vari = 12 * $vari / sizeof($datai);
         $list[$i]->var = $vari;
@@ -1809,7 +1852,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
 
     // Special type when not enough students completed evaluation.
     if (count($grpusrs)<3) {
-      $result->type=6;
+      $result->type = 6;
     }
 
     return $result;
@@ -1831,7 +1874,7 @@ function dynamo_get_data($dynamo, $usr1,$usr2) {
           FROM {dynamo_eval} t1
           WHERE t1.builder   = :param1
             AND t1.critgrp   = 0
-            AND t1.evalbyid     = :param2
+            AND t1.evalbyid  = :param2
     ";
 
     $params = array('param1' => $dynamo->id, 'param2' => $usr1);
@@ -1844,7 +1887,7 @@ function dynamo_get_data($dynamo, $usr1,$usr2) {
 
         return $result;
     }
-// Number of evaluation.
+    // Number of evaluation.
     $sql = "
         SELECT (count(t1.crit1) + count(t1.crit2) + count(t1.crit3) + count(t1.crit4) + count(t1.crit5)) nbeval
           FROM {dynamo_eval} t1
@@ -1857,7 +1900,7 @@ function dynamo_get_data($dynamo, $usr1,$usr2) {
     $result = $DB->get_record_sql($sql, $params);
     $nbeval = $result->nbeval;
 
-    $avg = round($sumeval/$nbeval, 8);
+    $avg = round($sumeval / $nbeval, 8);
 
     $sql = "
         SELECT t1.crit1/".$avg." crit1n, t1.crit2/".$avg." crit2n, t1.crit3/".$avg." crit3n, t1.crit4/".$avg." crit4n, t1.crit5/".$avg." crit5n
@@ -1946,7 +1989,6 @@ function dynamo_get_group_type_txt($type) {
     }
     return '';
 }
-
 /**
  * Give the html(specific icon with a specific color) that represent the climate inside the group
  * it's base on a simple computing from the cohesion, implication and self confidence

@@ -31,8 +31,6 @@ use core_privacy\local\request\deletion_criteria;
 use core_privacy\local\request\helper;
 use core_privacy\local\request\writer;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Implementation of the privacy subsystem plugin provider for the dynamo activity module.
  *

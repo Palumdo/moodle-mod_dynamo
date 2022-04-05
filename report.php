@@ -149,7 +149,7 @@ function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
         echo ('<option id="grp_'.$sgrp->id.'">'.$sgrp->name.'</option>');
     }
     echo ('</select>
-            <div style="margin:5px;"><button class="btn btn-default" 
+            <div style="margin:5px;"><button class="btn btn-default"
               onclick="removeColors();$(this).css(\'display\',\'none\');hideBeforePrint();
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'
                 .get_string('dynamoremovecolors', 'mod_dynamo')
@@ -416,7 +416,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
             </label>
             </div>
             <div class="box-switch" style="max-width:350px;text-align:center;">
-            <button class="btn btn-default" style="margin:10px;" 
+            <button class="btn btn-default" style="margin:10px;"
                 onclick="removeColors();$(this).css(\'display\',\'none\');hideBeforePrint();
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'
                 .get_string('dynamoremovecolors', 'mod_dynamo')
@@ -431,7 +431,7 @@ function rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
 
         foreach ($grpusrs as $grpusr) {
             $avatar = new user_picture($grpusr);
-            $avatar->courseid = $courseid; // $course->id;
+            $avatar->courseid = $courseid;
             $avatar->link = true;
             $avatar->size = 50;
 
