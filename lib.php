@@ -81,8 +81,9 @@ function dynamo_add_instance($dynamo, $mform) {
 /**
  * Set the data form to a dynamo object.
  *
- * @param object $dynamo An object from the form.
- * @param dynamo_mod_form $mform The form.
+ * @param object The form.
+ * @param object An object from the form.
+ *
  * @return dynamo object
  */
 function dynamo_fill_data($formdata, $dynamo) {
@@ -158,8 +159,8 @@ function dynamo_delete_instance($id) {
  * This function is called when the context for the page is a dynamo module.
  * This is not called by AJAX so it is safe to rely on the $PAGE.
  *
- * @param settings_navigation $settingsnav 
- * @param navigation_node $dynamonode 
+ * @param settings_navigation $settingsnav
+ * @param navigation_node $dynamonode
  */
 function dynamo_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
     global $PAGE;
@@ -258,7 +259,6 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
 /**
  * Creates or updates grade item for the given dynamo instance.
  *
- * Needed by {@link grade_update_mod_grades()}.
  *
  * @param stdClass $dynamo Instance object with extra cmidnumber and modname property.
  * @param bool $reset Reset grades in the gradebook.
@@ -305,7 +305,6 @@ function dynamo_grade_item_delete($dynamo) {
 /**
  * Update dynamo grades in the gradebook.
  *
- * Needed by {@link grade_update_mod_grades()}.
  *
  * @param stdClass $dynamo Instance object with extra cmidnumber and modname property.
  * @param int $userid Update grade of specific user only, 0 means all participants.
@@ -591,7 +590,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
  * Get the comments of a specific  user.
  *
  *
- * @param int evalbyid id of the user that made the evaluation
+ * @param int $evalbyid id of the user that made the evaluation
  * @param record $dynamo configuration of the activity
  *
  * return the user comments
@@ -645,8 +644,8 @@ function dynamo_compute_basis($dynamoeval, $crit6) {
 /**
  * Compute multiple values used for the student evaluation.
  *
- * @param record $dynamo configuration of the evaluation
  * @param int $userid the user that have to be evaluated
+ * @param record $dynamo configuration of the evaluation
  *
  * return an object with the sum, autosum and number of evaluator
  */
@@ -743,6 +742,8 @@ function dynamo_get_grid($dynamo) {
  *
  *
  * @param array $arrayofobjects evaluations
+ * @param int $id id of the user evaluated
+ * @param int $by if of the evaluator
  *
  * return the total
  */
@@ -1038,7 +1039,13 @@ function dynamo_get_color_conf($val) {
     return 'green';
 }
 
-function dynamo_get_color_consistency($val) {
+/**
+ * Get the color to display the consistency based on his value
+ *
+ *
+ * @param float that contain the self confidence/assurance
+ * return a string with the color...
+ */function dynamo_get_color_consistency($val) {
     if ($val > 0.6) {
         return 'black';
     }
@@ -1051,7 +1058,6 @@ function dynamo_get_color_consistency($val) {
 
     return 'green';
 }
-
 
 /**
  * return the preview of what student see (the survey) to teacher
@@ -1969,6 +1975,13 @@ function dynamo_get_cohesion_group_type($type, $grpid, $max) {
     }
     return '';
 }
+/**
+ * Give the label of the type of group
+ *
+ * @param int $type the type of the group
+ *
+ * @return string with the text
+ */
 function dynamo_get_group_type_txt($type) {
     switch($type) {
         case 1:

@@ -23,6 +23,10 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+ 
+ /**
+ * Backup task for mod_dynamo.
+ */
 class backup_dynamo_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {

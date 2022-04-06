@@ -15,7 +15,7 @@ Feature: Test that teachers can add the dynamo activity
     And I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
 
-@javascript
+  @javascript
   Scenario: Teachers can add the dynamo activity
     # When I add a "Dynamo" to section "1" and I fill the form with:
     #   | Name | Test name |

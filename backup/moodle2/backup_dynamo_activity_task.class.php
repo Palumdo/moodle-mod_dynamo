@@ -32,7 +32,6 @@ require_once(dirname(__FILE__) . '/backup_dynamo_stepslib.php');
  * The class provides all the settings and steps to perform one complete backup of mod_dynamo.
  */
 class backup_dynamo_activity_task extends backup_activity_task {
-
     /**
      * Defines particular settings for the plugin.
      */
@@ -49,7 +48,7 @@ class backup_dynamo_activity_task extends backup_activity_task {
     /**
      * Codes the transformations to perform in the activity in order to get transportable (encoded) links.
      *
-     * @param string $content.
+     * @param string $content the url.
      * @return string.
      */
     public static function encode_content_links($content) {

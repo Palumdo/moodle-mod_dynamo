@@ -98,7 +98,9 @@ $jscript = $jscript.'
 
 echo ($jscript);
 
-// Report 001.
+/**
+ * Report 001.
+ */
 function rep_list_no_participant($result, $name) {
     echo ('<h3 class="report_title">'.get_string('dynamoreport01', 'mod_dynamo').'</h3>');
     echo ('<div class="table-container">');
@@ -133,7 +135,9 @@ function rep_list_no_participant($result, $name) {
     echo ('</div>');
 }
 
-// Report 002.
+/**
+ * Report 002.
+ */
 function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
     global $OUTPUT;
 
@@ -365,7 +369,9 @@ function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
     return $jscript;
 }
 
-// Report 003.
+/**
+ * Report 003.
+ */
 function rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
     global $OUTPUT;
     $nojumpclass = "nojump";
@@ -464,6 +470,10 @@ function rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
     return $jscript;
 }
 /**
+ * Display the group niwf in the table
+ *
+ * @param stdClass $dynamo dynamo object.
+ * @param stdClass $grp group info.
  */
 function display_group_niwf_table($dynamo, $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
@@ -494,6 +504,10 @@ function display_group_niwf_table($dynamo, $grp) {
         </div>');
 }
 /**
+ * Display the group detail in the table
+ *
+ * @param stdClass $dynamo dynamo object.
+ * @param stdClass $grp group info.
  */
 function display_group_detail_table($dynamo, $grp) {
     $grpusrs = dynamo_get_group_users($grp->id);
@@ -758,7 +772,9 @@ function display_relatif_assurance($dynamo, $grpusrs, $usrid) {
     echo ('</div>'); // End relative assurance.
 }
 
-// Report 004.
+/**
+ * Report 004.
+ */
 function rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
     // Manage the zoom functionality of the graphic.
     switch($zoom) {
@@ -839,7 +855,9 @@ function rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
     return  $jscript;
 }
 
-// Report 005.
+/**
+ * Report 005.
+ */
 function rep_yearbook($dynamo, $id) {
     global $OUTPUT;
 
