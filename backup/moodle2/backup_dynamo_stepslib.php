@@ -25,8 +25,8 @@
  */
 
 /**
-  * Backup task for mod_dynamo.
-  */
+ * Backup task for mod_dynamo.
+ */
 class backup_dynamo_activity_structure_step extends backup_activity_structure_step {
 
     /**

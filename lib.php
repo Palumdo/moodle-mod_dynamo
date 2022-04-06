@@ -81,10 +81,10 @@ function dynamo_add_instance($dynamo, $mform) {
 /**
  * Set the data form to a dynamo object.
  *
- * @param object The form.
- * @param object An object from the form.
+ * @param object $formdata The form.
+ * @param object $dynamo An object from the form.
  *
- * @return dynamo object
+ * @return object
  */
 function dynamo_fill_data($formdata, $dynamo) {
     $dynamo->crit1 = $formdata->dynamo_participation;
@@ -159,8 +159,8 @@ function dynamo_delete_instance($id) {
  * This function is called when the context for the page is a dynamo module.
  * This is not called by AJAX so it is safe to rely on the $PAGE.
  *
- * @param settings_navigation $settingsnav
- * @param navigation_node $dynamonode
+ * @param object $settings
+ * @param object $navref
  */
 function dynamo_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
     global $PAGE;
@@ -773,7 +773,7 @@ function dynamo_get_total($arrayofobjects, $id, $by ) {
  * @param int $groupingid id of the grouping.
  * @param int $userid id of the user.
  *
- * return a recordset
+ * return object
  */
 function dynamo_get_group_from_user ($groupingid, $usrid) {
     global $DB;
@@ -803,11 +803,11 @@ function dynamo_get_group_from_user ($groupingid, $usrid) {
 /**
  * Get the niwf of a specific user and the string whith how it's computed.
  *
- * @param object dynamo  $dynamo
- * @param object of user $grpusrs.
+ * @param object $dynamo
+ * @param object $grpusrs.
  * @param int $userid id of the user.
  *
- * return an array
+ * return array
  */
 function dynamo_get_niwf($dynamo, $grpusrs, $usrid) {
     $agrid = [];
@@ -856,10 +856,10 @@ function dynamo_get_niwf($dynamo, $grpusrs, $usrid) {
 /**
  * Get the a matrix of a specific group with all evaluation sum and niwf.
  *
- * @param object dynamo  $dynamo
- * @param object of user $grpusrs.
+ * @param object $dynamo
+ * @param object $grpusrs.
  *
- * return an array
+ * return array
  */
 function dynamo_get_matrix($dynamo, $grpusrs) {
     $agrid = [];
@@ -916,7 +916,7 @@ function dynamo_get_matrix($dynamo, $grpusrs) {
  * Get the niwf of a specific user and the string with how it's computed.
  *
  * @param int $userid id of the user.
- * @param object dynamo  $dynamo
+ * @param object $dynamo
  *
  * return an object
  */
@@ -933,11 +933,11 @@ function dynamo_get_autoeval($userid, $dynamo) {
  * Get the self confidence/assurance of a specific user
  * (autoeval  / SumofEvaluation) * (nbStudent-1)/NIWF
  *
- * @param object dynamo  $dynamo
- * @param object of user $grpusrs.
+ * @param object $dynamo
+ * @param object $grpusrs.
  * @param int $userid id of the user.
  *
- * return an integer
+ * return int
  */
 function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
     $agrid = [];
@@ -1022,8 +1022,8 @@ function dynamo_get_color_niwf($val) {
  * Get the color to display the self confidence based on his value
  * The threshold values can be calibrated
  *
- * @param float that contain the self confidence/assurance
- * return a string with the color...
+ * @param float $val that contain the self confidence/assurance
+ * return string with the color...
  */
 function dynamo_get_color_conf($val) {
     if ($val > 1.50) {
@@ -1043,8 +1043,8 @@ function dynamo_get_color_conf($val) {
  * Get the color to display the consistency based on his value
  *
  *
- * @param float that contain the self confidence/assurance
- * return a string with the color...
+ * @param float $val that contain the self confidence/assurance
+ * return string with the color...
  */function dynamo_get_color_consistency($val) {
     if ($val > 0.6) {
         return 'black';
@@ -1060,7 +1060,7 @@ function dynamo_get_color_conf($val) {
 }
 
 /**
- * return the preview of what student see (the survey) to teacher
+ * Return the preview of what student see (the survey) to teacher
  *
  * @param object dynamo  $dynamo
  *
@@ -1103,7 +1103,7 @@ function dynamo_get_body_table_teacher($dynamo) {
  *
  * @param object dynamo  $dynamo
  * @param array $grpusrs array of user
- * @param integer $grpid id of the group
+ * @param int $grpid id of the group
  *
  * return an object with the avg for all criterias on the group evaluation
  */
@@ -1154,8 +1154,8 @@ function dynamo_get_group_eval_avg($dynamo, $grpusrs, $grpid) {
  *
  * @param object dynamo  $dynamo
  * @param array $grpusrs array of user
- * @param integer $grpid id of the group
- * @param integer $notperfect value from the cohesion to compute the climat
+ * @param int $grpid id of the group
+ * @param int $notperfect value from the cohesion to compute the climat
  *
  * return an object with all indicators packed in HTML (display for teacher in global view)
  */
@@ -1444,12 +1444,12 @@ function dynamo_get_grouping_stat($dynamo) {
  *
  * @param string $jscript the javascript string to return can already contain javascript
  * @param int $usrid id of the user that will be at the heart of the graph
- * @param string  $pairevalstr string that contain  javascript arrays of pair evaluation
- * @param string  $autoevalstr string that contain javascript array of self-evaluation
+ * @param string $pairevalstr string that contain  javascript arrays of pair evaluation
+ * @param string $autoevalstr string that contain javascript array of self-evaluation
  * @param string $allgroupevalstr  string that contain javascript arrays with group evaluation
  * @param string $labels label for the grapth
- * @param $firstname firsname of the student at the center of the graph
- * @param $lastname lastname of the student at the center of the graph
+ * @param string $firstname firsname of the student at the center of the graph
+ * @param string $lastname lastname of the student at the center of the graph
  *
  * @return a string with javascript
  */
@@ -1505,7 +1505,7 @@ function dynamo_get_graph_radar($jscript, $usrid, $pairevalstr, $autoevalstr, $a
  * Return javascript to create a radar graphic with Rgraph library for all students of a group
  *
  * @param string $jscript the javascript string to return can already contain javascript
- * @param int    $grpid id of the group
+ * @param int $grpid id of the group
  * @param string $datagrp a string that is a javascript arrays with self evaluation of all sudents of the group
  * @param string $title title of the graphic
  * @param string $labels label for the grapth
@@ -1549,13 +1549,13 @@ function dynamo_get_graph_radar_all($jscript, $grpid, $datagrp, $title,  $labels
  * Return javascript to create a radar graphic with Rgraph library for a specific student on report
  *
  * @param string $jscript the javascript string to return can already contain javascript
- * @param int    $usrid of the user that will be at the heart of the graph
+ * @param int $usrid of the user that will be at the heart of the graph
  * @param string $pairevalstr string that contain  javascript arrays of pair evaluation
  * @param string $autoevalstr string that contain javascript array of self-evaluation
  * @param string $allgroupevalstr  string that contain javascript arrays with group evaluation
  * @param string $labels label for the grapth
- * @param $firstname firsname of the student at the center of the graph
- * @param $lastname lastname of the student at the center of the graph
+ * @param string $firstname firsname of the student at the center of the graph
+ * @param string $lastname lastname of the student at the center of the graph
  *
  * @return a string with javascript
  */
@@ -1611,9 +1611,8 @@ function dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoeval
  * @param $multievalsr  that contain javascript array of the average of the self-evaluation of other students
  * @param string $labels label for the grapth
  * @param object $usr with firstname and lastname of the student at the center of the graph
-
  *
- * @return a string with javascript
+ * @return string with javascript
  */
 function dynamo_get_graph_bar_report($jscript, $allgroupevalstr, $usrid, $multievalsr, $labels, $usr) {
     if ($allgroupevalstr == "") {
@@ -1770,8 +1769,7 @@ WHERE t1.userid = t2.id
  * Give the quatric gap between each students of a group
  *
  * @param object $dynamo An object from the form.
- * @param array of object of users $grpusrs. all the student of a group
- * @param boolean $debug dispaly or not debug info...
+ * @param array $grpusrs. all the student of a group
  *
  * @return object with mathematical information and the type of group (homogenic,tap the hand,clustering, band)
  */
@@ -1931,6 +1929,7 @@ function dynamo_get_data($dynamo, $usr1, $usr2) {
  *
  * @param int $type the type of the group
  * @param int $grpid id of the group
+ * @param int $max max value
  *
  * @return html fontawesome ico...
  */
@@ -2014,9 +2013,9 @@ function dynamo_get_group_type_txt($type) {
  * it's added, divided by the number of student and divide by two. It give a value from 0 to 4.5 and rounded
  * to get the climate 0 sun - 1 cloud sun - 2  cloud sun with rain - 3 dark cloud with heavy rain - 4 bold
  *
- * @param object dynamo  $dynamo
- * @param object of user $grpusrs
- * @param integer $notperfect value is use to compute the climate. It's initialize with the cohesion value
+ * @param object $dynamo
+ * @param object $grpusrs
+ * @param int $notperfect value is use to compute the climate. It's initialize with the cohesion value
  *
  * @return html font awsome ico... from full sun to thunderbold (5 levels)
  */
@@ -2084,9 +2083,7 @@ function dynamo_to_zero() {
  * This function will remove all posts from the specified forum
  * and clean up any related data.
  *
- * @global object
  * @param $data the data submitted from the reset course.
- * @return array status array
  */
 function dynamo_reset_userdata($data) {
     global $DB;
