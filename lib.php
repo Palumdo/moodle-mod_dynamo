@@ -158,8 +158,8 @@ function dynamo_delete_instance($id) {
  * This function is called when the context for the page is a dynamo module.
  * This is not called by AJAX so it is safe to rely on the $PAGE.
  *
- * @param settings_navigation $settingsnav {@link settings_navigation}
- * @param navigation_node $dynamonode {@link navigation_node}
+ * @param settings_navigation $settingsnav 
+ * @param navigation_node $dynamonode 
  */
 function dynamo_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
     global $PAGE;
@@ -529,7 +529,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                     <td style="min-width:160px;">
                         <input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'
                         .$dynamoeval->crit1.'"><i data-id="'.$groupid
-                        .'_1" data-criteria="1" data-value="1" class="mystar fa faF-user-clock"></i>
+                        .'_1" data-criteria="1" data-value="1" class="mystar fa fa-user-clock"></i>
                         <i data-id="'.$groupid.'_1" data-criteria="1" data-value="2" class="mystar fa fa-user-clock"></i>
                         <i data-id="'.$groupid.'_1" data-criteria="1" data-value="3" class="mystar fa fa-user-clock"></i>
                         <i data-id="'.$groupid.'_1" data-criteria="1" data-value="4" class="mystar fa fa-user-clock"></i>

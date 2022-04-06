@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * This page is a view for the teacher
- * it display all the information about a group
+ * This page is a view for the teacher.
+ *
+ * It display all the information about a group
  * basically table with values (niwf sum) and radar graphics !
  *
  * @package     mod_dynamo
