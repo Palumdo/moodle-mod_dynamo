@@ -1246,8 +1246,10 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
             $text = preg_replace('/[^a-z\s]/', '', strtolower($text));
             $text = preg_split('/\s+/', $text, null, PREG_SPLIT_NO_EMPTY);
             $text = array_flip($text);
-            $firstname = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->firstname));
-            $lastname = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->lastname));
+            $firstname =
+              \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->firstname));
+            $lastname =
+              \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->lastname));
 
             if (isset($text[$firstname]) || isset($text[$lastname])) {
                 $conflit = '<i style="font-size:1.2em;color:#006DCC;" class="fas fa-comment"></i>';

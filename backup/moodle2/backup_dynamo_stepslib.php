@@ -23,12 +23,16 @@
  * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
- /**
- * Backup task for mod_dynamo.
- */
+
+/**
+  * Backup task for mod_dynamo.
+  */
 class backup_dynamo_activity_structure_step extends backup_activity_structure_step {
 
+    /**
+     * Define the structure of database tables for the backup
+     *
+     */
     protected function define_structure() {
         // Define each element separated.
         $dynamo = new backup_nested_element('dynamo', array('id'), array(

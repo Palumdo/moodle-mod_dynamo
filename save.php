@@ -43,7 +43,7 @@ if ($id) {
     $course = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);
 } else {
-    print_error(get_string('missingidandcmid', dynamo));
+    throw new moodle_exception('missingidandcmid', 'dynamo');
 }
 
 require_login($course, true, $cm);

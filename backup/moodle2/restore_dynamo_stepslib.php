@@ -58,7 +58,7 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
      *
      *
      * @param object $data structure of data to restore.
-    */
+     */
     protected function process_dynamo($data) {
         global $DB;
 
@@ -79,7 +79,7 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
      *
      *
      * @param object $data structure of data to restore.
-    */
+     */
     protected function process_dynamo_eval($data) {
         global $DB;
         $data = (object)$data;
