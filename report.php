@@ -575,6 +575,13 @@ function display_group_detail_table($dynamo, $grp) {
     echo ('</div>'); // End group_detail_table.
 }
 
+/**
+ * Display the table with the evaluation of a student
+ *
+ * @param object $dynamo
+ * @param int $usrid
+ * @param bool $display6
+ */
 function display_eval_others_table($dynamo, $usrid, $display6) {
     global $DB;
 
@@ -644,6 +651,12 @@ function display_eval_others_table($dynamo, $usrid, $display6) {
     </div>');
 }
 
+/**
+ * Display the two comments of the evaluation of a student
+ *
+ * @param object $dynamo
+ * @param int $usrid
+ */
 function display_eval_comments_table($dynamo, $usrid) {
       $comment = dynamo_get_comment($usrid, $dynamo);
       echo ('<div class="eval_comments_table" style="display:none;">');
@@ -655,6 +668,13 @@ function display_eval_comments_table($dynamo, $usrid) {
       echo ('</div>');
 }
 
+/**
+ * Display the table with the evaluation of a student by the others of the group
+ *
+ * @param object $dynamo
+ * @param int $usrid
+ * @param bool $display6
+ */
 function display_eval_by_others_table($dynamo, $usrid, $display6) {
     global $DB;
 
@@ -701,6 +721,14 @@ function display_eval_by_others_table($dynamo, $usrid, $display6) {
   </div>');
 }
 
+/**
+ * Display the radar graph of a student
+ *
+ * @param object $dynamo
+ * @param int $usrid
+ * @param bool $display6
+ * @param string $jscript
+ */
 function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
     global $DB;
     $dynamoautoeval = array();
@@ -762,7 +790,13 @@ function display_graph_radar_table($dynamo, $usrid, $display6, $jscript) {
 
     return  $jscript;
 }
-
+/**
+ * Display the relatif insurrance of a user in the group
+ *
+ * @param object $dynamo
+ * @param object $grpusrs
+ * @param int $usrid
+ */
 function display_relatif_assurance($dynamo, $grpusrs, $usrid) {
     $conf = dynamo_get_conf($dynamo, $grpusrs, $usrid)[0];
     echo ('<div class="relatif_assurance" style="display:none;">');

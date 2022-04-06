@@ -253,8 +253,6 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
         $reportnode->add_node(navigation_node::create(get_string('dynamoreport04', 'dynamo'), $url, navigation_node::TYPE_SETTING,
                                 null, null, new pix_icon('i/item', '')));
     }
-
-    return;
 }
 /**
  * Creates or updates grade item for the given dynamo instance.
@@ -771,7 +769,7 @@ function dynamo_get_total($arrayofobjects, $id, $by ) {
  *
  *
  * @param int $groupingid id of the grouping.
- * @param int $userid id of the user.
+ * @param int $usrid id of the user.
  *
  * return object
  */
@@ -804,8 +802,8 @@ function dynamo_get_group_from_user ($groupingid, $usrid) {
  * Get the niwf of a specific user and the string whith how it's computed.
  *
  * @param object $dynamo
- * @param object $grpusrs.
- * @param int $userid id of the user.
+ * @param object $grpusrs
+ * @param int $usrid id of the user.
  *
  * return array
  */
@@ -856,8 +854,8 @@ function dynamo_get_niwf($dynamo, $grpusrs, $usrid) {
 /**
  * Get the a matrix of a specific group with all evaluation sum and niwf.
  *
- * @param object $dynamo
- * @param object $grpusrs.
+ * @param object $dynamo dynamo
+ * @param object $grpusrs group of users
  *
  * return array
  */
@@ -934,8 +932,8 @@ function dynamo_get_autoeval($userid, $dynamo) {
  * (autoeval  / SumofEvaluation) * (nbStudent-1)/NIWF
  *
  * @param object $dynamo
- * @param object $grpusrs.
- * @param int $userid id of the user.
+ * @param object $grpusrs
+ * @param int $usrid id of the user.
  *
  * return int
  */
@@ -1002,8 +1000,8 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
  * Get the color to display the NIWF based on his value
  * The threshold values can be calibrated
  *
- * @param float that contain the NIWF $val
- * return a string with the color...
+ * @param float $val that contain the NIWF
+ * return string with the color...
  */
 function dynamo_get_color_niwf($val) {
     if ($val < 0.65) {
@@ -1152,12 +1150,12 @@ function dynamo_get_group_eval_avg($dynamo, $grpusrs, $grpid) {
  * Conflict
  * If student talk about each others (experimental)
  *
- * @param object dynamo  $dynamo
+ * @param object $dynamo dynamo
  * @param array $grpusrs array of user
  * @param int $grpid id of the group
  * @param int $notperfect value from the cohesion to compute the climat
  *
- * return an object with all indicators packed in HTML (display for teacher in global view)
+ * return object with all indicators packed in HTML (display for teacher in global view)
  */
 function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     global $DB, $OUTPUT, $USER;
@@ -1608,7 +1606,7 @@ function dynamo_get_graph_radar_report($jscript, $usrid, $pairevalstr, $autoeval
  * @param string $jscript the javascript string to return can already contain javascript
  * @param string $allgroupevalstr  string that contain  javascript arrays of group evaluation
  * @param int $usrid of the user that will be at the heart of the graph
- * @param $multievalsr  that contain javascript array of the average of the self-evaluation of other students
+ * @param array $multievalsr  that contain javascript array of the average of the self-evaluation of other students
  * @param string $labels label for the grapth
  * @param object $usr with firstname and lastname of the student at the center of the graph
  *
@@ -1769,7 +1767,7 @@ WHERE t1.userid = t2.id
  * Give the quatric gap between each students of a group
  *
  * @param object $dynamo An object from the form.
- * @param array $grpusrs. all the student of a group
+ * @param array $grpusrs all the student of a group
  *
  * @return object with mathematical information and the type of group (homogenic,tap the hand,clustering, band)
  */
@@ -2083,7 +2081,7 @@ function dynamo_to_zero() {
  * This function will remove all posts from the specified forum
  * and clean up any related data.
  *
- * @param $data the data submitted from the reset course.
+ * @param object $data the data submitted from the reset course.
  */
 function dynamo_reset_userdata($data) {
     global $DB;
