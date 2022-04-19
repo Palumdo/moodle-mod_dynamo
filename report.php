@@ -100,6 +100,9 @@ echo ($jscript);
 
 /**
  * Report 001.
+ *
+ * @param $result
+ * @param string $name
  */
 function rep_list_no_participant($result, $name) {
     echo ('<h3 class="report_title">'.get_string('dynamoreport01', 'mod_dynamo').'</h3>');
@@ -137,6 +140,11 @@ function rep_list_no_participant($result, $name) {
 
 /**
  * Report 002.
+ *
+ * @param $dynamo
+ * @param string $jscript
+ * @param boolean $display6
+ * @param int $courseid
  */
 function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
     global $OUTPUT;
@@ -371,6 +379,11 @@ function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
 
 /**
  * Report 003.
+ *
+ * @param $dynamo
+ * @param string $jscript
+ * @param boolean $display6
+ * @param int $courseid
  */
 function rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
     global $OUTPUT;
@@ -808,6 +821,10 @@ function display_relatif_assurance($dynamo, $grpusrs, $usrid) {
 
 /**
  * Report 004.
+ * @param $dynamo
+ * @param string $jscript
+ * @param boolean $display6
+ * @param int $zoom
  */
 function rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
     // Manage the zoom functionality of the graphic.
@@ -891,6 +908,9 @@ function rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
 
 /**
  * Report 005.
+ *
+ * @param $dynamo all info
+ * @param int $id
  */
 function rep_yearbook($dynamo, $id) {
     global $OUTPUT;
