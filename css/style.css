@@ -327,7 +327,7 @@
 
 /* toolpit container */
 .path-mod-dynamo .toolpit {
-    position: relative;
+    position: absolute;
     display: inline-block;
     font-size: 1.1em;
 }
@@ -883,7 +883,7 @@
     background-color: var(--main-color);
     color: white;
     text-align: right !important;
-    padding-right: 5px;
+    padding-right: 25px;
 }
 
 .path-mod-dynamo .camera-border {

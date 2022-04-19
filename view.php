@@ -78,8 +78,8 @@ require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
 $coursecontext = context_course::instance($course->id);
-$globals['dynamo_contextid'] = $modulecontext->id;// To add coach to a group the local permission for the module must be changed.
-$globals['dynamo_courseid'] = $course->id;
+$GLOBALS['dynamo_contextid'] = $modulecontext->id;// To add coach to a group the local permission for the module must be changed.
+$GLOBALS['dynamo_courseid'] = $course->id;
 
 $mode = '';
 

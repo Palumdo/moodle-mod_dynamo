@@ -405,8 +405,8 @@ function dynamo_get_group_users($groupid) {
     ORDER BY t2.firstname,t2.lastname
     ";
 
-    $params = array('param1' => $groupid, 'param2' => $globals['dynamo_courseid']
-                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $groupid, 'param2' => $GLOBALS['dynamo_courseid']
+                  , 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     return $result;
@@ -445,8 +445,8 @@ function dynamo_get_grouping_users($groupingid) {
          ORDER BY t4.firstname,t4.lastname
     ";
 
-    $params = array('param1' => $groupingid, 'param2' => $globals['dynamo_courseid']
-                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $groupingid, 'param2' => $GLOBALS['dynamo_courseid']
+                  , 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     return $result;
@@ -1227,8 +1227,12 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
                                     class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
 
         // Constistency.
-        $var = $listc[$nbuser - 1]->var;
-        $var = floatval($var);
+        if (array_key_exists($nbuser - 1, $listc)) {
+            $var = $listc[$nbuser - 1]->var;
+            $var = floatval($var);
+        } else {
+            $var = 0;
+        }
         $color = dynamo_get_color_consistency($var);
         $var = round($var, 2);
         if ($color == 'green') {
@@ -1320,8 +1324,8 @@ function dynamo_get_report_001($dynamo) {
          ORDER BY t2.name, t4.firstname, t4.lastname
         ";
 
-    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $globals['dynamo_courseid']
-                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $GLOBALS['dynamo_courseid']
+                  , 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
 
     return $result;
@@ -1390,8 +1394,8 @@ function dynamo_get_grouping_stat($dynamo) {
           AND t3.groupid = t1.groupid
           AND t3.userid  = t4.id
         ";
-    $params = array('param1' => $dynamo->groupingid, 'param2' => $globals['dynamo_courseid']
-                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->groupingid, 'param2' => $GLOBALS['dynamo_courseid']
+                  , 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_record_sql($sql, $params);
     $stat->nb_participant = $result->nb_participant;
 
@@ -1420,8 +1424,8 @@ function dynamo_get_grouping_stat($dynamo) {
                               WHERE t5.builder = :param11
                             )
         ";
-    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $globals['dynamo_courseid']
-                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->groupingid, 'param11' => $dynamo->id, 'param2' => $GLOBALS['dynamo_courseid']
+                  , 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_record_sql($sql, $params);
     $stat->nb_no_answer = $result->nb_no_answer;
 
@@ -1723,8 +1727,8 @@ WHERE t1.userid = t2.id
   AND t5.groupingid = :param11
   AND t5.groupid = t4.groupid
 ";
-    $params = array('param1' => $dynamo->id, 'param11' => $dynamo->groupingid, 'param2' => $globals['dynamo_courseid']
-                  , 'param3' => $globals['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
+    $params = array('param1' => $dynamo->id, 'param11' => $dynamo->groupingid, 'param2' => $GLOBALS['dynamo_courseid']
+                  , 'param3' => $GLOBALS['dynamo_contextid'], 'param4' => 'mod/dynamo:respond');
     $result = $DB->get_records_sql($sql, $params);
     // Auto-evaluation.
     $sql = "
