@@ -50,8 +50,8 @@ require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
 $coursecontext = context_course::instance($course->id);
-$globals['dynamo_contextid'] = $modulecontext->id;
-$globals['dynamo_courseid'] = $course->id;
+$GLOBALS['dynamo_contextid'] = $modulecontext->id;
+$GLOBALS['dynamo_courseid'] = $course->id;
 
 $group = dynamo_get_group($dynamo->groupingid, $USER->id);
 

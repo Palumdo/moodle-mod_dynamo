@@ -1922,7 +1922,11 @@ function dynamo_get_data($dynamo, $usr1, $usr2) {
     ";
     $params = array('param1' => $dynamo->id, 'param2' => $usr1, 'param3' => $usr2);
     $result = $DB->get_record_sql($sql, $params);
-    $resultf = array($result->crit1n, $result->crit2n, $result->crit3n, $result->crit4n, $result->crit5n);
+    if($result !== false) {
+      $resultf = array($result->crit1n, $result->crit2n, $result->crit3n, $result->crit4n, $result->crit5n);
+    } else {
+      $resultf = array(0,0,0,0,0);
+    }
     return $resultf;
 }
 /**
@@ -2047,8 +2051,12 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
         $listc = $consistency->list;
         $maxc = $consistency->varmean;
         $typec = $consistency->type;
-        $var = $listc[$nbuser - 1]->var;
-        $var = floatval($var);
+        if (array_key_exists($nbuser - 1, $listc)) {
+          $var = $listc[$nbuser - 1]->var;
+          $var = floatval($var);
+        } else {
+          $var = 0;
+        }
         $color = dynamo_get_color_consistency($var);
         $var = round($var, 2);
         if ($color == 'green') {

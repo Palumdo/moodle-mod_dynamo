@@ -49,8 +49,8 @@ if (!has_capability('mod/dynamo:create', $ctxt)) {
 }
 
 $coursecontext = context_course::instance($course->id);
-$globals['dynamo_contextid'] = $coursecontext->id;
-$globals['dynamo_courseid'] = $course->id;
+$GLOBALS['dynamo_contextid'] = $coursecontext->id;
+$GLOBALS['dynamo_courseid'] = $course->id;
 
 
 $reportname = $course->shortname.'_'.$cm->id;
