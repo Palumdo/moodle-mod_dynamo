@@ -123,8 +123,8 @@ foreach ($groups as $grp) { // Loop to all groups of grouping.
         .get_string('dynamoresults2', 'mod_dynamo').'">
               <td class="camera">'.print_group_picture($grp, $course->id, false, true, false)
                 .' <a class="groupurl" href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'>'.$grp->name
-                .'</a><div class="toolpit">&nbsp;<i style="margin-top:8px;" class="fas fa-camera"></i><span class="toolpittext toolpit-corr">'
-                .$groupstat->tooltips.'</span></div></td>
+                .'</a><div class="toolpit">&nbsp;<i style="margin-top:8px;" class="fas fa-camera"></i>
+                <span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
               <td>'.$groupstat->participation.'</td>
               <td>'.$groupstat->implication.'</td>
               <td>'.$groupstat->confiance.'</td>

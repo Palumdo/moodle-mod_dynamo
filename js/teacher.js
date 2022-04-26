@@ -14,16 +14,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This manage the UI of the student to make a look a like five stars 
+ * This manage the UI of the student to make a look a like five stars
  * rating system
  *
  * @package     mod_dynamo
  * @copyright   2019 UCLouvain
- * @author      Dominique Palumbo 
+ * @author      Dominique Palumbo
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Click on user ico to go to their specific report 
+// Click on user ico to go to their specific report
 $(".fa-user").click(function() {
     var usrid = $(this).data("id");
     var groupid = $(this).data("group");
@@ -40,7 +40,7 @@ window.onload = function () {
       checkboxes[i].checked = false;
     }
   }
-  
+
   $("#button-list-teacher").css("display","flex");
   $("#pleasewait").css("display","none");
   numTable();
@@ -51,11 +51,11 @@ window.onload = function () {
     if(sort != '') {
         $("th:nth-child(8)").click();
     }
-    
+
     if(sort == "false") {
         $("th:nth-child(8)").click();
     }
-  } 
+  }
 };
 //**************************************************************************
 // Allow to sort on the climat between student in the group
@@ -75,7 +75,7 @@ function comparer(index) {
         var valB = getCellValue(b, index);
         return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
     }
-}      
+}
 //**************************************************************************
 function getCellValue(row, index){ return $(row).children("td").eq(index).text(); }
 //**************************************************************************
