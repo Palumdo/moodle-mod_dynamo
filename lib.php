@@ -270,6 +270,8 @@ function dynamo_grade_item_update($dynamo, $reset=false) {
     $item['itemname'] = clean_param($dynamo->name, PARAM_NOTAGS);
     $item['gradetype'] = GRADE_TYPE_VALUE;
 
+    if (!isset($dynamo->grade)) return;
+
     if ($dynamo->grade > 0) {
         $item['gradetype'] = GRADE_TYPE_VALUE;
         $item['grademax'] = $dynamo->grade;
@@ -2097,13 +2099,14 @@ function dynamo_to_zero() {
  */
 function dynamo_reset_userdata($data) {
     global $DB;
+    $status = array();
 
     if (empty($data)) {
-        return;
+        return $status;
     }
 
     if (!isset($data->courseid)) {
-        return;
+        return $status;
     }
 
     $sql = "SELECT id
@@ -2116,4 +2119,5 @@ function dynamo_reset_userdata($data) {
     foreach ($responses as &$res) {
         $DB->delete_records('dynamo_eval', array('builder' => $res->id));
     }
+    return $status;
 }
