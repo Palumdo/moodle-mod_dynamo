@@ -101,7 +101,7 @@ echo ($jscript);
 /**
  * Report 001.
  *
- * @param $result
+ * @param array $result
  * @param string $name
  */
 function rep_list_no_participant($result, $name) {
@@ -141,7 +141,7 @@ function rep_list_no_participant($result, $name) {
 /**
  * Report 002.
  *
- * @param $dynamo
+ * @param object $dynamo
  * @param string $jscript
  * @param boolean $display6
  * @param int $courseid
@@ -380,7 +380,7 @@ function rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
 /**
  * Report 003.
  *
- * @param $dynamo
+ * @param object $dynamo
  * @param string $jscript
  * @param boolean $display6
  * @param int $courseid
@@ -821,7 +821,7 @@ function display_relatif_assurance($dynamo, $grpusrs, $usrid) {
 
 /**
  * Report 004.
- * @param $dynamo
+ * @param object $dynamo
  * @param string $jscript
  * @param boolean $display6
  * @param int $zoom
@@ -909,7 +909,7 @@ function rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
 /**
  * Report 005.
  *
- * @param $dynamo all info
+ * @param object $dynamo all info
  * @param int $id
  */
 function rep_yearbook($dynamo, $id) {
@@ -934,7 +934,10 @@ function rep_yearbook($dynamo, $id) {
     echo ('</div>');
 }
 
-// Report 006.
+/* Report 006.
+ *
+ * @param object $cm
+ */
 function rep_excel($cm) {
     $url = new moodle_url('/mod/dynamo/export/xls/export.php?id='.$cm->id.'&instance='.$cm->instance.'&course='.$cm->course);
     echo ('<div style="text-align:center;">'.get_string('dynamoexcelready', 'mod_dynamo'));
@@ -942,7 +945,13 @@ function rep_excel($cm) {
         .$url.'" class="fas fa-file-excel" target="_outside"></a></div>');
 }
 
-// Function print_compute_basis.
+/* Function print_compute_basis.
+*
+* @param object $dynamoeval
+* @param boolean $display6
+* @param string $color  
+* @param object $grpusrsub
+*/
 function print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) {
     $result = dynamo_compute_basis($dynamoeval, $display6);
     echo ('<tr>');

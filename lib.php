@@ -159,8 +159,8 @@ function dynamo_delete_instance($id) {
  * This function is called when the context for the page is a dynamo module.
  * This is not called by AJAX so it is safe to rely on the $PAGE.
  *
- * @param $settings navigation settings
- * @param $navref nvaigation node
+ * @param object $settings 
+ * @param object $navref 
  */
 function dynamo_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
     global $PAGE;
@@ -1062,7 +1062,7 @@ function dynamo_get_color_conf($val) {
 /**
  * Return the preview of what student see (the survey) to teacher
  *
- * @param $dynamo all info about the activiy
+ * @param object $dynamo all info about the activiy
  *
  * return a string with HTML
  */
@@ -1101,7 +1101,7 @@ function dynamo_get_body_table_teacher($dynamo) {
 /**
  * Return the avg evaluation of all the students on the group evaluation
  *
- * @param $dynamo all info
+ * @param object $dynamo all info
  * @param array $grpusrs array of user
  * @param int $grpid id of the group
  *
