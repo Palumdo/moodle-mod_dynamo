@@ -949,7 +949,7 @@ function rep_excel($cm) {
 *
 * @param object $dynamoeval
 * @param boolean $display6
-* @param string $color  
+* @param string $color
 * @param object $grpusrsub
 */
 function print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) {
@@ -966,7 +966,10 @@ function print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) {
     echo ('    <td class="tdteach">'.$result->avg.'</td>');
     echo ('</tr>');
 }
-// Function return a string that contain a javascript array with peer eval.
+/*  Function return a string that contain a javascript array with peer eval.
+*
+* @param object $data
+*/
 function get_peer_eval_str($data) {
     return '['.round($data->autocritsum->total1 / $data->nbeval, 2).','
         .round($data->autocritsum->total2 / $data->nbeval, 2).','

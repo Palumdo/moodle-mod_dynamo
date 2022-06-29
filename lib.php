@@ -159,8 +159,8 @@ function dynamo_delete_instance($id) {
  * This function is called when the context for the page is a dynamo module.
  * This is not called by AJAX so it is safe to rely on the $PAGE.
  *
- * @param object $settings 
- * @param object $navref 
+ * @param object $settings
+ * @param object $navref
  */
 function dynamo_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
     global $PAGE;
@@ -270,7 +270,9 @@ function dynamo_grade_item_update($dynamo, $reset=false) {
     $item['itemname'] = clean_param($dynamo->name, PARAM_NOTAGS);
     $item['gradetype'] = GRADE_TYPE_VALUE;
 
-    if (!isset($dynamo->grade)) return;
+    if (!isset($dynamo->grade)) {
+        return;
+    }
 
     if ($dynamo->grade > 0) {
         $item['gradetype'] = GRADE_TYPE_VALUE;
