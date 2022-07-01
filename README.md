@@ -1,8 +1,5 @@
 # Dynamo #
 
-![example workflow](https://github.com/Palumdo/moodle-mod_dynamo/actions/workflows/github-actions-demo.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/Palumdo/moodle-mod_dynamo/badge.svg?branch=master)](https://coveralls.io/github/Palumdo/moodle-mod_dynamo?branch=master)
-
 Dynamo is used to follow and support the evaluation by peers in working groups
 The Dynamo tool is based on a peer evaluation of group dynamics. Each student is asked to evaluate the other members of his or her learning group on several dimensions (responsibility, expertise, attitude, etc.), and to evaluate himself or herself. These evaluations are then processed to
 - provide teachers with indicators that allow them to diagnose at a glance which groups are in difficulty and which dimensions of collaboration need to be addressed

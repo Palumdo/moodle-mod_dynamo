@@ -1009,13 +1009,13 @@ function dynamo_get_conf($dynamo, $grpusrs, $usrid) {
  */
 function dynamo_get_color_niwf($val) {
     if ($val < 0.65) {
-        return 'black';
+        return '#fa0707';
     }
     if ($val < 0.80) {
-        return 'red';
+        return '#f85f5f';
     }
     if ($val < 0.90) {
-        return 'orange';
+        return '#f6b0b0';
     }
 
     return 'green';
@@ -1029,13 +1029,13 @@ function dynamo_get_color_niwf($val) {
  */
 function dynamo_get_color_conf($val) {
     if ($val > 1.50) {
-        return 'black';
+        return '#fa0707';
     }
     if ($val > 1.25) {
-        return 'red';
+        return '#f85f5f';
     }
     if ($val > 1.10) {
-        return 'orange';
+        return '#f6b0b0';
     }
 
     return 'green';
@@ -1049,13 +1049,13 @@ function dynamo_get_color_conf($val) {
  * return string with the color...
  */function dynamo_get_color_consistency($val) {
     if ($val > 0.6) {
-        return 'black';
+        return '#fa0707';
     }
     if ($val > 0.25) {
-        return 'red';
+        return '#f85f5f';
     }
     if ($val > 0.15) {
-        return 'orange';
+        return '#f6b0b0';
     }
 
     return 'green';
@@ -1180,7 +1180,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
     $typec = $consistency->type;
     $notperfect = 0;
 
-    $aweight = ['#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
+    $aweight = ['#006DCC' => 0, '#f6b0b0' => 1, '#f85f5f' => 2, '#fa0707' => 3];
     // Fontawsome icons use for showing the average climat inside the group from thunder to full sun.
     $aicon = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
     $aicolor = ['ca-sun', 'ca-cloud-sun', 'ca-cloud-sun-rain ', 'ca-cloud-showers-heavy' , 'ca-bolt'];
@@ -1201,7 +1201,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
                 break;
             }
             $participation = $participation.'<i style="color:#006DCC;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                                class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+                                                class="far fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         } else {
             $comment = "";
             $participation = $participation.'<i style="color:#ccc;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
@@ -1211,24 +1211,27 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         // Implication.
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id);
         $color = dynamo_get_color_niwf($niwf[0]);
-
+        $userStyle = 'fas' ;
         if ($color == 'green') {
             $color = '#006DCC';
+            $userStyle = 'far' ;
         }
         $notperfect += $aweight[$color];
 
         $implication = $implication . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                        class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+                                        class="'.$userStyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         // Self-insurance.
         $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id)[0];
         $color = dynamo_get_color_conf($conf);
+        $userStyle = 'fas' ;
         if ($color == 'green') {
             $color = '#006DCC';
+            $userStyle = 'far' ;
         }
         $notperfect += $aweight[$color];
 
         $confiance = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                    class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+                                    class="'.$userStyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
 
         // Constistency.
         if (array_key_exists($nbuser - 1, $listc)) {
@@ -1239,12 +1242,14 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         }
         $color = dynamo_get_color_consistency($var);
         $var = round($var, 2);
+        $userStyle = 'fas' ;
         if ($color == 'green') {
             $color = '#006DCC';
+            $userStyle = 'far' ;
         }
         $notperfect += 0.5 * $aweight[$color];
         $consistencyst = $consistencyst . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                    class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.' ('.$var.')"></i>';
+                                    class="'.$userStyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.' ('.$var.')"></i>';
 
         // Find firstname lastname in comments about the group.
         foreach ($grpusrs as $grpusrname) {
@@ -1947,34 +1952,34 @@ function dynamo_get_cohesion_group_type($type, $grpid, $max) {
     switch($type) {
         case 1:
             return ' '.'<div style="float:left;color:#006DCC;">
-                        <i class="fas fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
+                        <i class="far fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i>'
-                      .'<i class="fas fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
+                      .'<i class="far fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i>'
-                      .'<i class="fas fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
+                      .'<i class="far fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 2:
             return ' '.'<div style="float:left;color:#006DCC;">
-                        <i class="fas fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
+                        <i class="far fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetyperas', 'mod_dynamo').' ('.$max.')"></i>'
-                      .'<i class="fas fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
+                      .'<i class="far fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetyperas', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 3:
-            return ' '.'<div style="float:left;color:red;">
+            return ' '.'<div style="float:left;color:#f85f5f;">
                         <i class="fas fa-heart-broken" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypeclustering', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 4:
-            return ' '.'<div style="float:left;color:black;">
+            return ' '.'<div style="float:left;color:#fa0707;">
                         <i class="fas fa-heart-broken" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').' ('.$max.')"></i>'
                       .'<i class="fas fa-heart-broken"         data-id="'.$grpid.'"  data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypeclique', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 5:
-            return ' '.'<div style="float:left;color:orange;">
+            return ' '.'<div style="float:left;color:#f6b0b0;">
                         <i class="fas fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypeheterogene', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
@@ -2032,7 +2037,7 @@ function dynamo_get_group_type_txt($type) {
 function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
     $nbuser = 0;
 
-    $aweight = ['green' => 0, '#006DCC' => 0, 'orange' => 1, 'red' => 2, 'black' => 3];
+    $aweight = ['green' => 0, '#006DCC' => 0, '#f6b0b0' => 1, '#f85f5f' => 2, '#fa0707' => 3];
     $aicon = ['fa-sun', 'fa-cloud-sun', 'fa-cloud-sun-rain ', 'fa-cloud-showers-heavy' , 'fa-bolt'];
     $aicolor = ['ca-sun', 'ca-cloud-sun', 'ca-cloud-sun-rain ', 'ca-cloud-showers-heavy' , 'ca-bolt'];
 

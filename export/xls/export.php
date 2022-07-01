@@ -252,9 +252,9 @@ foreach ($groups as $grp) {
 
 // Page 2.
 $col = 0;
-$worksheet[1]->write(0, $col, get_string('dynamoheadfirstname', 'mod_dynamo'));
-$col++;
 $worksheet[1]->write(0, $col, get_string('dynamoheadlastname', 'mod_dynamo'));
+$col++;
+$worksheet[1]->write(0, $col, get_string('dynamoheadfirstname', 'mod_dynamo'));
 $col++;
 $worksheet[1]->write(0, $col, get_string('dynamoheademail', 'mod_dynamo'));
 $col++;
