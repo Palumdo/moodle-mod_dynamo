@@ -1200,7 +1200,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
                 $comment = $rec->comment2;
                 break;
             }
-            $participation = $participation.'<i style="color:#006DCC;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
+            $participation = $participation.'<i style="color:#006DCC;filter: brightness(25%);" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
                                                 class="far fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         } else {
             $comment = "";
@@ -1211,27 +1211,31 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         // Implication.
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id);
         $color = dynamo_get_color_niwf($niwf[0]);
-        $userStyle = 'fas' ;
+        $userstyle = 'fas';
+        $addstyle = '';
         if ($color == 'green') {
             $color = '#006DCC';
-            $userStyle = 'far' ;
+            $userstyle = 'far';
+            $addstyle = 'filter: brightness(25%)';
         }
         $notperfect += $aweight[$color];
 
-        $implication = $implication . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                        class="'.$userStyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+        $implication = $implication . '<i style="color:'.$color.';'.$addstyle.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
+                                        class="'.$userstyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
         // Self-insurance.
         $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id)[0];
         $color = dynamo_get_color_conf($conf);
-        $userStyle = 'fas' ;
+        $userstyle = 'fas';
+        $addstyle = '';
         if ($color == 'green') {
             $color = '#006DCC';
-            $userStyle = 'far' ;
+            $userstyle = 'far';
+            $addstyle = 'filter: brightness(25%)';
         }
         $notperfect += $aweight[$color];
 
-        $confiance = $confiance . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                    class="'.$userStyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+        $confiance = $confiance . '<i style="color:'.$color.';'.$addstyle.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
+                                    class="'.$userstyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
 
         // Constistency.
         if (array_key_exists($nbuser - 1, $listc)) {
@@ -1242,14 +1246,16 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         }
         $color = dynamo_get_color_consistency($var);
         $var = round($var, 2);
-        $userStyle = 'fas' ;
+        $userstyle = 'fas';
+        $addstyle = '';
         if ($color == 'green') {
             $color = '#006DCC';
-            $userStyle = 'far' ;
+            $userstyle = 'far';
+            $addstyle = 'filter: brightness(25%)';
         }
         $notperfect += 0.5 * $aweight[$color];
-        $consistencyst = $consistencyst . '<i style="color:'.$color.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                    class="'.$userStyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.' ('.$var.')"></i>';
+        $consistencyst = $consistencyst . '<i style="color:'.$color.';'.$addstyle.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
+                                    class="'.$userstyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.' ('.$var.')"></i>';
 
         // Find firstname lastname in comments about the group.
         foreach ($grpusrs as $grpusrname) {
@@ -1951,7 +1957,7 @@ function dynamo_get_data($dynamo, $usr1, $usr2) {
 function dynamo_get_cohesion_group_type($type, $grpid, $max) {
     switch($type) {
         case 1:
-            return ' '.'<div style="float:left;color:#006DCC;">
+            return ' '.'<div style="float:left;color:#006DCC;filter:brightness(25%)">
                         <i class="far fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i>'
                       .'<i class="far fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"
@@ -1960,7 +1966,7 @@ function dynamo_get_cohesion_group_type($type, $grpid, $max) {
                             title="'.get_string('dynamogroupetypefan', 'mod_dynamo').' ('.$max.')"></i></div>';
             break;
         case 2:
-            return ' '.'<div style="float:left;color:#006DCC;">
+            return ' '.'<div style="float:left;color:#006DCC;filter:brightness(25%)">
                         <i class="far fa-heart" data-id="'.$grpid.'" data-group="'.$grpid.'"
                             title="'.get_string('dynamogroupetyperas', 'mod_dynamo').' ('.$max.')"></i>'
                       .'<i class="far fa-heart"     data-id="'.$grpid.'" data-group="'.$grpid.'"

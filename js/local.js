@@ -279,12 +279,14 @@ function removeColors() {
     if($("#nav-drawer").attr('aria-hidden') == 'false') {
         $('button').first().click();
     }
+    $(".drawer-left").hide();
 }
 
 function hideBeforePrint() {
     $('.button_list_subreport').find('div:not(:last)').hide();
     //$("div").filter(function() { return $(this).css("display") == "none" }).addClass('dontprint');
     $("div").filter(function() { return $(this).css("display") == "none" }).remove();
+    $(".drawer-left").hide();
 }
 
 // Draw the graph of self insurance/confidence

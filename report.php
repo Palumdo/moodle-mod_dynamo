@@ -966,7 +966,7 @@ function print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) {
     echo ('    <td class="tdteach">'.$result->avg.'</td>');
     echo ('</tr>');
 }
-/*  Function return a string that contain a javascript array with peer eval.
+/* Function return a string that contain a javascript array with peer eval.
 *
 * @param object $data
 */
