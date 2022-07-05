@@ -166,9 +166,10 @@ $string['dynamogroupetypeclique']             = 'Conflict';
 $string['dynamogroupetypeheterogene']         = 'Good cohesion';
 $string['dynamogroupetypeghost']              = 'Insufficient data';
 $string['dynamopleasewait']                   = 'Please Wait...';
-$string['dynamohelp']                         = '<div class="box-niwf">
+$string['dynamohelp']                         = '<h3>How the Niwf is computed ?</h3><div class="box-niwf">
                                                     <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mi>I</mi><mi>W</mi><msub><mi>F</mi><mrow><mo>&#xA0;</mo><mi>j</mi><mo>&#x2260;</mo><mi>i</mi><mo>&#xA0;</mo></mrow></msub><mo>=</mo><munderover><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>(</mo><mfrac><mrow><msub><mi>R</mi><mrow><mi>j</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub><mo>&#xA0;</mo></mrow><mrow><munderover><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo>&#xA0;</mo><msub><mi>R</mi><mrow><mi>K</mi><mo>&#x2260;</mo><mi>i</mi></mrow></msub></mrow></mfrac><mo>)</mo></math>/(n-1)
-                                                </div>';
+                                                </div>
+                                                <div><a href="https://moodle.uclouvain.be/mod/data/view.php?d=1&rid=62&filter=1" target="_doc">Documentation</a></div>';
 $string['dynamonotyetdesigned']               = 'This functionnality is not yet developped';
 $string['dynamotop']                          = 'Top';
 
