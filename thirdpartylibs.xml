@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <libraries>
     <library>
-        <location>webfonts\</location>
+        <location>webfonts/</location>
         <name>font awesome(https://fontawesome.com/)</name>
         <version>5.15.4</version>
         <license>SIL OFL license</license>
         <licenseversion>1.1</licenseversion>
     </library>
     <library>
-        <location>js\RGraph\</location>
+        <location>js/RGraph/</location>
         <name>RGraph (https://www.rgraph.net/)</name>
         <version>4.67</version>
         <license>MIT license</license>
