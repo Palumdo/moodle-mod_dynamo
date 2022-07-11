@@ -1,6 +1,6 @@
 
 RGraph=window.RGraph||{isRGraph:true};(function(win,doc,undefined)
-{var RG=RGraph,ua=navigator.userAgent,ma=Math;RG.tooltips={};RG.tooltips.style={display:'inline-block',position:'absolute',padding:'6px',fontFamily:'Arial',fontSize:'10pt',fontWeight:'normal',textAlign:'center',left:0,top:0,backgroundColor:'rgb(255,255,239)',color:'black',visibility:'visible',zIndex:3,borderRadius:'5px',boxShadow:'rgba(96,96,96,0.5) 0 0 5px',opacity:0,lineHeight:'initial'};RG.tooltip=RG.Tooltip=function(obj,text,x,y,idx,e)
+{var RG=RGraph,ua=navigator.userAgent,ma=Math;RG.tooltips={};RG.tooltips.style={display:'inline-block',position:'absolute',padding:'6px',fontFamily:'Arial',fontSize:'10pt',fontWeight:'normal',textAlign:'center',left:0,top:0,backgroundColor:'rgb(255,255,239)',color:'black',visibility:'visible',zIndex:3,borderRadius:'5px',boxShadow:'rgba(96,96,96,0.5) 0 0 5px',opacity:0};RG.tooltip=RG.Tooltip=function(obj,text,x,y,idx,e)
 {if(RG.trim(text).length===0){return;}
 RG.fireCustomEvent(obj,'onbeforetooltip');if(typeof(obj.get('chart.tooltips.override'))=='function'){return obj.get('chart.tooltips.override')(obj,text,x,y,idx);}
 var originalX=x;var originalY=y;text=RG.getTooltipTextFromDIV(text);var timers=RG.Registry.Get('chart.tooltip.timers');if(timers&&timers.length){for(i=0;i<timers.length;++i){clearTimeout(timers[i]);}}

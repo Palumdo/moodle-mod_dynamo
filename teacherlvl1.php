@@ -130,7 +130,7 @@ if ($usrid != 0) {
     $labels .= ']';
     // User eval the other peers.
     echo (' <div class="table-container">
-            <h3>'.$usr->firstname.' '.$usr->lastname.' : '.get_string('dynamoteacherlvl1evalother', 'mod_dynamo').'</h3>
+            <h3>'.fullname($usr).' : '.get_string('dynamoteacherlvl1evalother', 'mod_dynamo').'</h3>
               <table class="tablelvl0">
                 <thead>
                    <tr>
@@ -199,7 +199,7 @@ if ($usrid != 0) {
                 $dynamoautoeval[] = $dynamoeval;
             }
             $result = dynamo_compute_basis($dynamoeval, $display6);
-            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6, $groupid);
+            dynamo_display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6, $groupid);
 
             $dynamoeval->sum = $result->sum;
             $dynamoeval->avg = $result->avg;
@@ -221,7 +221,7 @@ if ($usrid != 0) {
 
     // User eval BY the others.
     echo (' <div class="table-container">
-              <h3>'.$usr->firstname.' '.$usr->lastname.' : '.get_string('dynamoteacherlvl1othereval', 'mod_dynamo').'</h3>
+              <h3>'.fullname($usr).' : '.get_string('dynamoteacherlvl1othereval', 'mod_dynamo').'</h3>
               <table class="tablelvl0">
                 <thead>
                    <tr>
@@ -261,7 +261,7 @@ if ($usrid != 0) {
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
             $result = dynamo_compute_basis($dynamoeval, $display6);
-            display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6, $groupid);
+            dynamo_display_table_line($result, $cm->id, $grpusrsub, $color, $dynamoeval, $display6, $groupid);
         }
     }
     echo (' </tbody>
@@ -427,29 +427,4 @@ if ($usrid != 0) {
       };
     </script>';
     echo ($jscript);
-}
-/**
- * Display the table line
- *
- * @param object $result sum and average.
- * @param int $cmid context id.
- * @param object $grpusrsub firstname and lastname.
- * @param string $color color.
- * @param object $dynamoeval criteria values.
- * @param string $display6 6th criteria display or no.
- * @param int $groupid id of the group.
- */
-function display_table_line($result, $cmid, $grpusrsub, $color, $dynamoeval, $display6, $groupid) {
-    echo ('<tr onclick="document.location=\'view.php?id='.$cmid.'&usrid='.$grpusrsub->id.'&groupid='
-            .$groupid.'&tab=2&results=3\'" style="cursor:pointer;" title="'.get_string('dynamoresults2', 'mod_dynamo').'">');
-    echo (' <td style="color:'.$color.'" class="tdteach">'.$grpusrsub->firstname.' '.$grpusrsub->lastname.'</td>');
-    echo (' <td class="tdteach">'.$dynamoeval->crit1.'</td>');
-    echo (' <td class="tdteach">'.$dynamoeval->crit2.'</td>');
-    echo (' <td class="tdteach">'.$dynamoeval->crit3.'</td>');
-    echo (' <td class="tdteach">'.$dynamoeval->crit4.'</td>');
-    echo (' <td class="tdteach">'.$dynamoeval->crit5.'</td>');
-    echo (' <td class="tdteach" style="display:'.$display6.'">'.$dynamoeval->crit6.'</td>');
-    echo (' <td class="tdteach">'.$result->sum.'</td>');
-    echo (' <td class="tdteach">'.$result->avg.'</td>');
-    echo ('</tr>');
 }

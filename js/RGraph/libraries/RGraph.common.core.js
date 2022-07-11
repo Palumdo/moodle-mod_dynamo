@@ -22,10 +22,7 @@ scale.max=topValue;var tmp_point=prop['chart.scale.point'];var tmp_thousand=prop
 obj.Set('chart.scale.thousand',tmp_thousand);obj.Set('chart.scale.point',tmp_point);}else if(typeof(max)=='number'&&strict){for(var i=0;i<numlabels;++i){scale.labels.push(RG.numberFormat(obj,((((i+1)/numlabels)*(max-min))+min).toFixed(decimals),units_pre,units_post));scale.values.push(((((i+1)/numlabels)*(max-min))+min).toFixed(decimals));}
 scale.max=max;}
 scale.units_pre=units_pre;scale.units_post=units_post;scale.point=point;scale.decimals=decimals;scale.thousand=thousand;scale.numlabels=numlabels;scale.round=Boolean(round);scale.min=min;for(var i=0;i<scale.values.length;++i){scale.values[i]=parseFloat(scale.values[i]);}
-return scale;};RG.parseJSONGradient=function(opt)
-{var obj=opt.object,def=opt.def,co=opt.object.context;def=eval("("+def+")");if(typeof def.r1==='number'&&typeof def.r2==='number'){var grad=co.createRadialGradient(def.x1,def.y1,def.r1,def.x2,def.y2,def.r2);}else{var grad=co.createLinearGradient(def.x1,def.y1,def.x2,def.y2);}
-var diff=1/(def.colors.length-1);grad.addColorStop(0,RG.trim(def.colors[0]));for(var j=1,len=def.colors.length;j<len;++j){grad.addColorStop(j*diff,RGraph.trim(def.colors[j]));}
-return grad;};RG.arrayInvert=function(arr)
+return scale;};RG.arrayInvert=function(arr)
 {for(var i=0,len=arr.length;i<len;++i){arr[i]=!arr[i];}
 return arr;};RG.arrayTrim=function(arr)
 {var out=[],content=false;for(var i=0;i<arr.length;i++){if(arr[i]){content=true;}
@@ -34,7 +31,7 @@ out=RG.arrayReverse(out);var out2=[],content=false;for(var i=0;i<out.length;i++)
 if(content){out2.push(out[i]);}}
 out2=RG.arrayReverse(out2);return out2;};RG.arrayClone=RG.array_clone=function(obj)
 {if(obj===null||typeof obj!=='object'){return obj;}
-var temp=RG.isArray(obj)?[]:{};for(var i in obj){if(typeof i==='string'||typeof i==='number'){if(typeof obj[i]==='number'){temp[i]=(function(arg){return Number(arg);})(obj[i]);}else if(typeof obj[i]==='string'){temp[i]=(function(arg){return String(arg);})(obj[i]);}else if(typeof obj[i]==='function'){temp[i]=obj[i];}else{temp[i]=RG.arrayClone(obj[i]);}}}
+var temp=[];for(var i=0,len=obj.length;i<len;++i){if(typeof obj[i]==='number'){temp[i]=(function(arg){return Number(arg);})(obj[i]);}else if(typeof obj[i]==='string'){temp[i]=(function(arg){return String(arg);})(obj[i]);}else if(typeof obj[i]==='function'){temp[i]=obj[i];}else{temp[i]=RG.arrayClone(obj[i]);}}
 return temp;};RG.arrayMax=RG.array_max=function(arr)
 {var max=null,ma=Math
 if(typeof arr==='number'){return arr;}
@@ -76,7 +73,7 @@ if(obj.type=='bar'&&prop['chart.variant']=='3d'){keypos='gutter';}
 co.beginPath();co.fillStyle=prop['chart.text.color']?prop['chart.text.color']:'black';if(keypos&&keypos!='gutter'){var valign='center';}else if(!keypos){var valign='center';}else{var valign='bottom';}
 if(typeof prop['chart.title.vpos']==='number'){vpos=prop['chart.title.vpos']*gutterTop;if(prop['chart.xaxispos']==='top'){vpos=prop['chart.title.vpos']*gutterBottom+gutterTop+(ca.height-gutterTop-gutterBottom);}}else{vpos=gutterTop-size-5;if(prop['chart.xaxispos']==='top'){vpos=ca.height-gutterBottom+size+5;}}
 if(typeof hpos==='number'){centerx=hpos*ca.width;}
-if(typeof x==='number')centerx=x;if(typeof y==='number')vpos=y;if(typeof x==='string')centerx+=parseFloat(x);if(typeof y==='string')vpos+=parseFloat(y);if(typeof prop['chart.title.halign']==='string'){halign=prop['chart.title.halign'];}
+if(typeof x==='number')centerx=x;if(typeof y==='number')vpos=y;if(typeof prop['chart.title.halign']==='string'){halign=prop['chart.title.halign'];}
 if(typeof prop['chart.title.valign']==='string'){valign=prop['chart.title.valign'];}
 if(typeof prop['chart.title.color']!==null){var oldColor=co.fillStyle
 var newColor=prop['chart.title.color'];co.fillStyle=newColor?newColor:'black';}
@@ -115,8 +112,7 @@ var y=((ca.height-gutterTop-gutterBottom)/2)+gutterTop;if(typeof prop['chart.tit
 if(typeof prop['chart.title.yaxis.y']==='number'){y=prop['chart.title.yaxis.y'];}
 co.fillStyle=color;RG.text2(prop['chart.text.accessible']?obj.context:co,{'font':font,'size':size,'x':yaxis_title_pos,'y':y,'valign':'center','halign':'center','angle':angle,'bold':bold,'text':prop['chart.title.yaxis'],'tag':'title yaxis',accessible:false});}
 var bgcolor=prop['chart.background.color'];if(bgcolor){co.fillStyle=bgcolor;co.fillRect(gutterLeft+0.5,gutterTop+0.5,ca.width-gutterLeft-gutterRight,ca.height-gutterTop-gutterBottom);}
-var numbars=(prop['chart.ylabels.count']||5);if(typeof prop['chart.background.barcount']==='number'){numbars=prop['chart.background.barcount'];}
-barHeight=(ca.height-gutterBottom-gutterTop)/numbars;co.beginPath();co.fillStyle=prop['chart.background.barcolor1'];co.strokeStyle=co.fillStyle;height=(ca.height-gutterBottom);for(var i=0;i<numbars;i+=2){co.rect(gutterLeft,(i*barHeight)+gutterTop,ca.width-gutterLeft-gutterRight,barHeight);}
+var numbars=(prop['chart.ylabels.count']||5);var barHeight=(ca.height-gutterBottom-gutterTop)/numbars;co.beginPath();co.fillStyle=prop['chart.background.barcolor1'];co.strokeStyle=co.fillStyle;height=(ca.height-gutterBottom);for(var i=0;i<numbars;i+=2){co.rect(gutterLeft,(i*barHeight)+gutterTop,ca.width-gutterLeft-gutterRight,barHeight);}
 co.fill();co.beginPath();co.fillStyle=prop['chart.background.barcolor2'];co.strokeStyle=co.fillStyle;for(var i=1;i<numbars;i+=2){co.rect(gutterLeft,(i*barHeight)+gutterTop,ca.width-gutterLeft-gutterRight,barHeight);}
 co.fill();co.beginPath();var func=function(obj,cacheCanvas,cacheContext)
 {if(prop['chart.background.grid']){prop['chart.background.grid.autofit.numhlines']+=0.0001;if(prop['chart.background.grid.autofit']){if(prop['chart.background.grid.autofit.align']){if(obj.type==='hbar'){obj.set('chart.background.grid.autofit.numhlines',obj.data.length);}
@@ -144,7 +140,7 @@ if(decimal.length){output=output+decimal_seperator+decimal;decimal='';RegExp.$1=
 if(output.charAt(0)=='-'){output=output.replace(/-/,'');prepend='-'+prepend;}
 return prepend+output+append;};RG.drawBars=RG.DrawBars=function(obj)
 {var prop=obj.properties;var co=obj.context;var ca=obj.canvas;var hbars=prop['chart.background.hbars'];if(hbars===null){return;}
-co.beginPath();for(var i=0,len=hbars.length;i<len;++i){var start=hbars[i][0];var length=hbars[i][1];var color=hbars[i][2];if(RG.is_null(start))start=obj.scale2.max
+co.beginPath();for(i=0,len=hbars.length;i<len;++i){var start=hbars[i][0];var length=hbars[i][1];var color=hbars[i][2];if(RG.is_null(start))start=obj.scale2.max
 if(start>obj.scale2.max)start=obj.scale2.max;if(RG.is_null(length))length=obj.scale2.max-start;if(start+length>obj.scale2.max)length=obj.scale2.max-start;if(start+length<(-1*obj.scale2.max))length=(-1*obj.scale2.max)-start;if(prop['chart.xaxispos']=='center'&&start==obj.scale2.max&&length<(obj.scale2.max* -2)){length=obj.scale2.max* -2;}
 var x=prop['chart.gutter.left'];var y=obj.getYCoord(start);var w=ca.width-prop['chart.gutter.left']-prop['chart.gutter.right'];var h=obj.getYCoord(start+length)-y;if(RG.ISOPERA!=-1&&prop['chart.xaxispos']=='center'&&h<0){h*=-1;y=y-h;}
 if(prop['chart.xaxispos']=='top'){y=ca.height-y;h*=-1;}
@@ -268,7 +264,7 @@ if(!RG.measuretext_cache['text-div']){var div=document.createElement('DIV');div.
 div.innerHTML=text.replace(/\r\n/g,'<br />');div.style.fontFamily=font;div.style.fontWeight=bold?'bold':'normal';div.style.fontSize=(size||12)+'pt';var size=[div.offsetWidth,div.offsetHeight];RG.measuretext_cache[str]=size;return size;};RG.text2=RG.Text2=function(obj,opt)
 {function domtext()
 {if(String(opt.size).toLowerCase().indexOf('italic')!==-1){opt.size=opt.size.replace(/ *italic +/,'');opt.italic=true;}
-var cacheKey=ma.abs(parseInt(opt.x))+'_'+ma.abs(parseInt(opt.y))+'_'+String(opt.text).replace(/[^a-zA-Z0-9]+/g,'_')+'_'+obj.canvas.id;if(!ca.rgraph_domtext_wrapper){var wrapper=document.createElement('div');wrapper.id=ca.id+'_rgraph_domtext_wrapper';wrapper.className='rgraph_domtext_wrapper';wrapper.style.overflow=obj.properties['chart.text.accessible.overflow']!=false&&obj.properties['chart.text.accessible.overflow']!='hidden'?'visible':'hidden';wrapper.style.width=ca.offsetWidth+'px';wrapper.style.height=ca.offsetHeight+'px';wrapper.style.cssFloat=ca.style.cssFloat;wrapper.style.display=ca.style.display||'inline-block';wrapper.style.position=ca.style.position||'relative';wrapper.style.left=ca.style.left;wrapper.style.top=ca.style.top;wrapper.style.width=ca.width+'px';wrapper.style.height=ca.height+'px';wrapper.style.lineHeight='initial';ca.style.position='absolute';ca.style.left=0;ca.style.top=0;ca.style.display='inline';ca.style.cssFloat='none';if((obj.type==='bar'||obj.type==='bipolar'||obj.type==='hbar')&&obj.properties['chart.variant']==='3d'){wrapper.style.transform='skewY(5.7deg)';}
+var cacheKey=ma.abs(parseInt(opt.x))+'_'+ma.abs(parseInt(opt.y))+'_'+String(opt.text).replace(/[^a-zA-Z0-9]+/g,'_')+'_'+obj.canvas.id;if(!ca.rgraph_domtext_wrapper){var wrapper=document.createElement('div');wrapper.id=ca.id+'_rgraph_domtext_wrapper';wrapper.className='rgraph_domtext_wrapper';wrapper.style.overflow=obj.properties['chart.text.accessible.overflow']!=false&&obj.properties['chart.text.accessible.overflow']!='hidden'?'visible':'hidden';wrapper.style.width=ca.offsetWidth+'px';wrapper.style.height=ca.offsetHeight+'px';wrapper.style.cssFloat=ca.style.cssFloat;wrapper.style.display=ca.style.display||'inline-block';wrapper.style.position=ca.style.position||'relative';wrapper.style.left=ca.style.left;wrapper.style.top=ca.style.top;wrapper.style.width=ca.width+'px';wrapper.style.height=ca.height+'px';ca.style.position='absolute';ca.style.left=0;ca.style.top=0;ca.style.display='inline';ca.style.cssFloat='none';if((obj.type==='bar'||obj.type==='bipolar'||obj.type==='hbar')&&obj.properties['chart.variant']==='3d'){wrapper.style.transform='skewY(5.7deg)';}
 ca.parentNode.insertBefore(wrapper,ca);ca.parentNode.removeChild(ca);wrapper.appendChild(ca);ca.rgraph_domtext_wrapper=wrapper;}else{wrapper=ca.rgraph_domtext_wrapper;}
 var defaults={size:12,font:'Arial',italic:'normal',bold:'normal',valign:'bottom',halign:'left',marker:true,color:co.fillStyle,bounding:{enabled:false,fill:'rgba(255,255,255,0.7)',stroke:'#666'}}
 opt.text=String(opt.text).replace(/\r?\n/g,'[[RETURN]]');if(typeof RG.text2.domNodeCache==='undefined'){RG.text2.domNodeCache=new Array();}

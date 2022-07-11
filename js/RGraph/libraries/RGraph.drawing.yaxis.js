@@ -27,8 +27,7 @@ return null;};this.highlight=this.Highlight=function(shape)
 prop['chart.colors'][0]=this.parseSingleColorForGradient(prop['chart.colors'][0]);};this.reset=function()
 {};this.parseSingleColorForGradient=function(color)
 {if(!color){return color;}
-if(typeof color==='string'&&color.match(/^gradient\((.*)\)$/i)){if(color.match(/^gradient\(({.*})\)$/i)){return RGraph.parseJSONGradient({object:this,def:RegExp.$1});}
-var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(0,prop['chart.gutter.top'],0,ca.height-this.gutterBottom);var diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
+if(typeof color==='string'&&color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(0,prop['chart.gutter.top'],0,ca.height-this.gutterBottom);var diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
 return grad?grad:color;};this.drawYAxis=this.DrawYAxis=function()
 {for(i in prop){if(typeof i=='string'){var key=i.replace(/^chart\./,'axis.');prop[key]=prop[i];}}
 var x=this.x,y=this.gutterTop,height=ca.height-this.gutterBottom-this.gutterTop,min=+prop['chart.min']?+prop['chart.min']:0,max=+prop['chart.max'],title=prop['chart.title']?prop['chart.title']:'',color=prop['chart.colors']?prop['chart.colors'][0]:'black',title_color=prop['chart.title.color']?prop['chart.title.color']:color,label_color=prop['chart.text.color']?prop['chart.text.color']:color,numticks=typeof(prop['chart.numticks'])=='number'?prop['chart.numticks']:10,labels_specific=prop['chart.labels.specific'],numlabels=prop['chart.numlabels']?prop['chart.numlabels']:5,font=prop['chart.text.font']?prop['chart.text.font']:'Arial',size=prop['chart.text.size']?prop['chart.text.size']:10

@@ -492,7 +492,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                         , $dynamoeval->crit6];
             $bodytable = $bodytable.'
                 <tr>
-                    <td style="color:'.$color.'">'.$user->firstname.' '.$user->lastname.'</td>';
+                    <td style="color:'.$color.'">'.fullname($user).'</td>';
             for ($i = 0; $i < count($icons); $i++) {
                 $val = $i + 1;
                 $style = '';
@@ -1191,7 +1191,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $avatar->courseid = $dynamo->course;
         $avatar->link = true;
 
-        $tooltips .= $OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'&#xa;<br>';
+        $tooltips .= $OUTPUT->render($avatar).' '.fullname($grpusr).'&#xa;<br>';
 
         // Participation/ as answered.
         if ($dynamoeval = $DB->get_records_sql('SELECT distinct(comment2) FROM {dynamo_eval} WHERE builder = ? AND evalbyid = ?'
@@ -1201,13 +1201,13 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
                 break;
             }
             $participation = $participation.'<i style="color:#006DCC;filter: brightness(25%);" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                                class="far fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+                                                class="far fa-user" title="'.fullname($grpusr).'"></i>';
         } else {
             $comment = "";
             $participation = $participation.'<i style="color:#ccc;" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                                class="fas fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+                                                class="fas fa-user" title="'.fullname($grpusr).'"></i>';
         }
-        $names .= $grpusr->firstname.' '.$grpusr->lastname.'&#10;';
+        $names .= fullname($grpusr).'&#10;';
         // Implication.
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $grpusr->id);
         $color = dynamo_get_color_niwf($niwf[0]);
@@ -1221,7 +1221,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $notperfect += $aweight[$color];
 
         $implication = $implication . '<i style="color:'.$color.';'.$addstyle.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                        class="'.$userstyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+                                        class="'.$userstyle.' fa-user" title="'.fullname($grpusr).'"></i>';
         // Self-insurance.
         $conf = dynamo_get_conf($dynamo, $grpusrs, $grpusr->id)[0];
         $color = dynamo_get_color_conf($conf);
@@ -1235,7 +1235,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $notperfect += $aweight[$color];
 
         $confiance = $confiance . '<i style="color:'.$color.';'.$addstyle.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                    class="'.$userstyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.'"></i>';
+                                    class="'.$userstyle.' fa-user" title="'.fullname($grpusr).'"></i>';
 
         // Constistency.
         if (array_key_exists($nbuser - 1, $listc)) {
@@ -1255,7 +1255,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         }
         $notperfect += 0.5 * $aweight[$color];
         $consistencyst = $consistencyst . '<i style="color:'.$color.';'.$addstyle.'" data-id="'.$grpusr->id.'" data-group="'.$grpid.'"
-                                    class="'.$userstyle.' fa-user" title="'.$grpusr->firstname.' '.$grpusr->lastname.' ('.$var.')"></i>';
+                                    class="'.$userstyle.' fa-user" title="'.fullname($grpusr).' ('.$var.')"></i>';
 
         // Find firstname lastname in comments about the group.
         foreach ($grpusrs as $grpusrname) {

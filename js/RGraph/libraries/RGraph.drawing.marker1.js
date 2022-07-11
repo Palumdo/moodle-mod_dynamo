@@ -30,8 +30,7 @@ this.coords[0]=[x,y,r];};this.parseColors=function()
 prop['chart.fillstyle']=this.parseSingleColorForGradient(prop['chart.fillstyle']);prop['chart.strokestyle']=this.parseSingleColorForGradient(prop['chart.strokestyle']);prop['chart.highlight.stroke']=this.parseSingleColorForGradient(prop['chart.highlight.stroke']);prop['chart.highlight.fill']=this.parseSingleColorForGradient(prop['chart.highlight.fill']);prop['chart.text.color']=this.parseSingleColorForGradient(prop['chart.text.color']);};this.reset=function()
 {};this.parseSingleColorForGradient=function(color)
 {if(!color||typeof(color)!='string'){return color;}
-if(color.match(/^gradient\((.*)\)$/i)){if(color.match(/^gradient\(({.*})\)$/i)){return RGraph.parseJSONGradient({object:this,def:RegExp.$1});}
-var parts=RegExp.$1.split(':'),grad=co.createRadialGradient(this.markerCenterx,this.markerCentery,0,this.markerCenterx,this.markerCentery,this.radius),diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
+if(color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':'),grad=co.createRadialGradient(this.markerCenterx,this.markerCentery,0,this.markerCenterx,this.markerCentery,this.radius),diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
 return grad?grad:color;};this.on=function(type,func)
 {if(type.substr(0,2)!=='on'){type='on'+type;}
 if(typeof this[type]!=='function'){this[type]=func;}else{RG.addCustomEventListener(this,type,func);}

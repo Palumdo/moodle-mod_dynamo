@@ -44,8 +44,7 @@ var keyColors=prop['chart.key.colors'];if(keyColors){for(var i=0;i<keyColors.len
 prop['chart.strokestyle']=this.parseSingleColorForVerticalGradient(prop['chart.strokestyle']);prop['chart.highlight.stroke']=this.parseSingleColorForHorizontalGradient(prop['chart.highlight.stroke']);prop['chart.highlight.fill']=this.parseSingleColorForHorizontalGradient(prop['chart.highlight.fill']);};this.reset=function()
 {};this.parseSingleColorForHorizontalGradient=function(color)
 {if(!color||typeof(color)!='string'){return color;}
-if(color.match(/^gradient\((.*)\)$/i)){if(color.match(/^gradient\(({.*})\)$/i)){return RGraph.parseJSONGradient({object:this,def:RegExp.$1});}
-var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(prop['chart.gutter.left'],0,ca.width-prop['chart.gutter.right'],0);var diff=1/(parts.length-1);grad.addColorStop(0,RGraph.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
+if(color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(prop['chart.gutter.left'],0,ca.width-prop['chart.gutter.right'],0);var diff=1/(parts.length-1);grad.addColorStop(0,RGraph.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
 return grad?grad:color;};this.parseSingleColorForVerticalGradient=function(color)
 {if(!color||typeof(color)!='string'){return color;}
 if(color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(0,prop['chart.gutter.top'],0,ca.height-prop['chart.gutter.bottom']);var diff=1/(parts.length-1);grad.addColorStop(0,RGraph.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}

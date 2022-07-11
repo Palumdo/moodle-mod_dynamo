@@ -253,8 +253,8 @@ function reloadZoom(zoom) {
 // Go to the selected group
 function gototag(obj) {
     val = $(obj).children(":selected").attr("id");
-    var verticalPositionOfElement = $("."+val).offset().top;
-    $(window).scrollTop(verticalPositionOfElement - 50);
+    aTag = $("."+val);
+    $('#page').animate({scrollTop: aTag.offset().top},'slow');
 }
 
 // Remove color on values (orange, red green,...)

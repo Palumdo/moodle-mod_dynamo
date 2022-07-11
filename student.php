@@ -192,6 +192,7 @@ if ($mode == 'student') {
     ';
 }
 echo '
+                <input type="hidden" name="sesskey" value="'.sesskey().'" />
                 </form>
             </div>
         </div>

@@ -28,8 +28,7 @@ return null;};this.highlight=this.Highlight=function(shape)
 var func=this.parseSingleColorForGradient;prop['chart.fillstyle']=func(prop['chart.fillstyle']);prop['chart.strokestyle']=func(prop['chart.strokestyle']);prop['chart.highlight.stroke']=func(prop['chart.highlight.stroke']);prop['chart.highlight.fill']=func(prop['chart.highlight.fill']);};this.reset=function()
 {};this.parseSingleColorForGradient=function(color)
 {if(!color){return color;}
-if(typeof color==='string'&&color.match(/^gradient\((.*)\)$/i)){if(color.match(/^gradient\(({.*})\)$/i)){return RGraph.parseJSONGradient({object:this,def:RegExp.$1});}
-var parts=RegExp.$1.split(':'),grad=co.createLinearGradient(0,0,ca.width,0),diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1,len=parts.length;j<len;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
+if(typeof color==='string'&&color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':'),grad=co.createLinearGradient(0,0,ca.width,0),diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1,len=parts.length;j<len;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
 return grad?grad:color;};this.on=function(type,func)
 {if(type.substr(0,2)!=='on'){type='on'+type;}
 if(typeof this[type]!=='function'){this[type]=func;}else{RG.addCustomEventListener(this,type,func);}

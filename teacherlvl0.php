@@ -134,7 +134,7 @@ if ($grp->id != -1234) {
     foreach ($grpusrs as $grpusr) { // Loop to all students of  groups.
         echo('<tr onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusr->id.'&groupid='.$grp->id
             .'&tab=2&results=3\'" style="cursor:pointer;" title="'.get_string('dynamoresults3', 'mod_dynamo').'">
-            <td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
+            <td>'.fullname($grpusr).'</td>');
         $agridlib = dynamo_get_matrix($dynamo, $grpusrs); // Get the points matrix include sum and niwf.
         for ($j = 0; $j < count($agridlib[$i]); $j++) {
             if ($i != $j) {
@@ -195,7 +195,7 @@ if ($grp->id != -1234) {
     foreach ($grpusrs as $grpusr) {
         $comment = dynamo_get_comment($grpusr->id, $dynamo);
 
-        echo('<tr><td>'.$grpusr->firstname.' '.$grpusr->lastname.'</td>');
+        echo('<tr><td>'.fullname($grpusr).'</td>');
         echo('<td><div class="eval_comments_table">');
         echo('<b>'.get_string('dynamocommentcontr', 'mod_dynamo').'</b><br>');
         echo('<span class="tdcomment">'.$comment->comment1.'</span><br>');
@@ -261,7 +261,7 @@ if ($grp->id != -1234) {
         echo ('<h4 class="group_detail_title" style="background-color:'.$faccolor.'" title="'
             .get_string('dynamogotoparticipant', 'mod_dynamo').'"
                 onclick="document.location=\'view.php?id='.$cm->id.'&usrid='.$grpusr->id.'&groupid='.$groupid.'&tab=2&results=3\'">
-                '.$OUTPUT->render($avatar).' '.$grpusr->firstname.' '.$grpusr->lastname.'</h4>');
+                '.$OUTPUT->render($avatar).' '.fullname($grpusr).'</h4>');
         $dynamoautoeval = dynamo_get_autoeval($userid, $dynamo);
         // Data for the spider/radar graph.
         $autoevalstr  = '['.$dynamoautoeval->crit1.','.$dynamoautoeval->crit2.','.$dynamoautoeval->crit3.'

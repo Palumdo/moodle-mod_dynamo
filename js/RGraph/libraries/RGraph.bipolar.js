@@ -131,8 +131,7 @@ var props=this.properties;var colors=props['chart.colors'];for(var i=0;i<colors.
 props['chart.highlight.stroke']=this.parseSingleColorForGradient(props['chart.highlight.stroke']);props['chart.highlight.fill']=this.parseSingleColorForGradient(props['chart.highlight.fill']);props['chart.axis.color']=this.parseSingleColorForGradient(props['chart.axis.color']);props['chart.strokestyle']=this.parseSingleColorForGradient(props['chart.strokestyle']);};this.reset=function()
 {};this.parseSingleColorForGradient=function(color)
 {if(!color||typeof(color)!='string'){return color;}
-if(color.match(/^gradient\((.*)\)$/i)){if(color.match(/^gradient\(({.*})\)$/i)){return RGraph.parseJSONGradient({object:this,def:RegExp.$1});}
-var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(prop['chart.gutter.left'],0,ca.width-prop['chart.gutter.right'],0);var diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
+if(color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(prop['chart.gutter.left'],0,ca.width-prop['chart.gutter.right'],0);var diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1;j<parts.length;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}}
 return grad?grad:color;};this.on=function(type,func)
 {if(type.substr(0,2)!=='on'){type='on'+type;}
 if(typeof this[type]!=='function'){this[type]=func;}else{RG.addCustomEventListener(this,type,func);}

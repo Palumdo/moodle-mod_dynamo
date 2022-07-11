@@ -30,6 +30,7 @@
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
+require_once(__DIR__.'/locallib.php');
 
 global $USER;
 
@@ -195,6 +196,8 @@ $(".fa-shield").addClass("fa-shield-alt").removeClass("fa-shield");
 $(".fa-check-square-o").addClass("fa-check-square").removeClass("fa-check-square-o");
 $(".fa-folder-o").addClass("fa-folder").removeClass("fa-folder-o");
 $(".fa-tachometer").addClass("fa-tachometer-alt").removeClass("fa-tachometer");
-$(".fa-file-o").addClass("fa-file-alt").removeClass("fa-file-o");});
+$(".fa-file-o").addClass("fa-file-alt").removeClass("fa-file-o");
+$(".fa-bell-o").addClass("far fa-bell").removeClass("fa-bell-o");
+$(".fa-comment-o").addClass("far fa-comment").removeClass("fa-comment-o");});
 </script>');
 echo $OUTPUT->footer();

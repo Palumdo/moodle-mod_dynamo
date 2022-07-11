@@ -60,8 +60,7 @@ var colors=prop['chart.colors'];for(var i=0,len=colors.length;i<len;++i){colors[
 prop['chart.tickmarks.color']=this.parseSingleColorForGradient(prop['chart.tickmarks.color']);prop['chart.strokestyle.inner']=this.parseSingleColorForGradient(prop['chart.strokestyle.inner']);prop['chart.strokestyle.outer']=this.parseSingleColorForGradient(prop['chart.strokestyle.outer']);prop['chart.highlight.fill']=this.parseSingleColorForGradient(prop['chart.highlight.fill']);prop['chart.highlight.stroke']=this.parseSingleColorForGradient(prop['chart.highlight.stroke']);prop['chart.background.color']=this.parseSingleColorForGradient(prop['chart.background.color']);};this.reset=function()
 {};this.parseSingleColorForGradient=function(color)
 {if(!color||typeof color!='string'){return color;}
-if(color.match(/^gradient\((.*)\)$/i)){if(color.match(/^gradient\(({.*})\)$/i)){return RGraph.parseJSONGradient({object:this,def:RegExp.$1});}
-var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(0,ca.height-prop['chart.gutter.bottom'],0,prop['chart.gutter.top']);var diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1,len=parts.length;j<len;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}
+if(color.match(/^gradient\((.*)\)$/i)){var parts=RegExp.$1.split(':');var grad=co.createLinearGradient(0,ca.height-prop['chart.gutter.bottom'],0,prop['chart.gutter.top']);var diff=1/(parts.length-1);grad.addColorStop(0,RG.trim(parts[0]));for(var j=1,len=parts.length;j<len;++j){grad.addColorStop(j*diff,RG.trim(parts[j]));}
 return grad?grad:color;}
 return grad?grad:color;};this.drawBevel=this.DrawBevel=function()
 {for(var i=0,height=0;i<this.coords.length;++i){height+=this.coords[i][3];}
