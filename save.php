@@ -73,7 +73,7 @@ echo $OUTPUT->header();
  Server side data validation.
  Value must between 1 to 5 (all question are mandatory).
  **************************************/
-if(confirm_sesskey() && $datarecord = data_submitted()) {
+if (confirm_sesskey() && $datarecord = data_submitted()) {
     foreach ($groupusers as $user) {
         $error = 0;
         if ($dynamo->autoeval == 0 && $user->id == $USER->id) { // No auto evaluation check...
@@ -86,8 +86,8 @@ if(confirm_sesskey() && $datarecord = data_submitted()) {
             $crit5 = required_param($user->id.'_5', PARAM_INT);
             $comment1 = required_param('comment1', PARAM_TEXT);
             $comment2 = required_param('comment2', PARAM_TEXT);
-            $crit6 = optional_param($user->id.'_6',0,PARAM_INT);
-          
+            $crit6 = optional_param($user->id.'_6', 0, PARAM_INT);
+
             if ($crit1 < 1 || $crit1 > 5) {
                 $error++;
             }
@@ -128,7 +128,7 @@ if(confirm_sesskey() && $datarecord = data_submitted()) {
         $group3 = required_param($group->id.'_g3', PARAM_INT);
         $group4 = required_param($group->id.'_g4', PARAM_INT);
         $group5 = required_param($group->id.'_g5', PARAM_INT);
-        $group6 = optional_param($group->id.'_g6',0,PARAM_INT);
+        $group6 = optional_param($group->id.'_g6', 0, PARAM_INT);
 
         if ($group1 < 1 || $group1 > 5) {
               $error++;
@@ -178,7 +178,7 @@ if(confirm_sesskey() && $datarecord = data_submitted()) {
             }
             $comment1 = required_param('comment1', PARAM_TEXT);
             $comment2 = required_param('comment2', PARAM_TEXT);
-            
+
             $dynamoeval->critgrp = 0;
             $dynamoeval->comment1 = format_string($comment1);
             $dynamoeval->comment2 = format_string($comment2);

@@ -1794,7 +1794,6 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     $list = [];
     // Get the list of students that have answer. The other are not take in computing and evaluation.
     $agrpusrs = [];
-    $varavg = 0;
     foreach ($grpusrs as $usr) {
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
         if ($autoeval->crit1 > 0) {
@@ -2064,8 +2063,6 @@ function dynamo_get_group_climat($dynamo, $grpusrs, $notperfect) {
 
         $consistency = dynamo_get_consistency($dynamo, $grpusrs);
         $listc = $consistency->list;
-        $maxc = $consistency->varmean;
-        $typec = $consistency->type;
         if (array_key_exists($nbuser - 1, $listc)) {
             $var = $listc[$nbuser - 1]->var;
             $var = floatval($var);
