@@ -54,7 +54,7 @@ echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
 
 echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '
     .$cm->name.'</h3><input id="activityid" type="hidden" value="'.$id.'">');
-if ($stat->grouping->description != '') {
+if ($stat->grouping != null && $stat->grouping->description != '') {
     echo ('<div>'.$stat->grouping->name.' : '.$stat->grouping->description.'</div>');
 }
 echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
@@ -110,36 +110,37 @@ echo('<div id="table-overview"><table class="tablelvlx">
         </thead>
         <tbody>
      ');
-     $notperfect = 0;
-foreach ($groups as $grp) { // Loop to all groups of grouping.
-    $grpusrs = dynamo_get_group_users($grp->id);
-    $val = [0, 0, 0, 1, 3, 0 , 3];
-    $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
-    // Add icon type conflit group.
-    $cohesion = dynamo_get_cohesion_group_type($groupstat->type, $grp->id, $groupstat->cohesion);
-    $notperfect += ($val[$groupstat->type] * count($grpusrs));
+$notperfect = 0;
+if ($groups != null) {
+    foreach ($groups as $grp) { // Loop to all groups of grouping.
+        $grpusrs = dynamo_get_group_users($grp->id);
+        $val = [0, 0, 0, 1, 3, 0 , 3];
+        $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
+        // Add icon type conflit group.
+        $cohesion = dynamo_get_cohesion_group_type($groupstat->type, $grp->id, $groupstat->cohesion);
+        $notperfect += ($val[$groupstat->type] * count($grpusrs));
 
-    echo('<tr style="cursor:pointer;" onclick="location.href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'" title="'
-        .get_string('dynamoresults2', 'mod_dynamo').'">
-              <td class="camera">'.print_group_picture($grp, $course->id, false, true, false)
-                .' <a class="groupurl" href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'>'.$grp->name
-                .'</a><div class="toolpit">&nbsp;<i style="margin-top:8px;" class="fas fa-camera"></i>
-                <span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
-              <td>'.$groupstat->participation.'</td>
-              <td>'.$groupstat->implication.'</td>
-              <td>'.$groupstat->confiance.'</td>
-              <td>'.$groupstat->consistency.'</td>
-              <td>'.$cohesion.'</td>
-              <td>'.$groupstat->conflit.'</td>
-              <td class="camera-border">'.$groupstat->remark.'</td>
-              <td class="td-num">⏲️</td>
-         </tr>');
-         echo'</div>';
-    // Usefull for more than 50 groups or hundreds of students !.
-    ob_flush();
-    flush();
+        echo('<tr style="cursor:pointer;" onclick="location.href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'" title="'
+            .get_string('dynamoresults2', 'mod_dynamo').'">
+                  <td class="camera">'.print_group_picture($grp, $course->id, false, true, false)
+                    .' <a class="groupurl" href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'>'.$grp->name
+                    .'</a><div class="toolpit">&nbsp;<i style="margin-top:8px;" class="fas fa-camera"></i>
+                    <span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
+                  <td>'.$groupstat->participation.'</td>
+                  <td>'.$groupstat->implication.'</td>
+                  <td>'.$groupstat->confiance.'</td>
+                  <td>'.$groupstat->consistency.'</td>
+                  <td>'.$cohesion.'</td>
+                  <td>'.$groupstat->conflit.'</td>
+                  <td class="camera-border">'.$groupstat->remark.'</td>
+                  <td class="td-num">⏲️</td>
+             </tr>');
+             echo'</div>';
+        // Usefull for more than 50 groups or hundreds of students !.
+        ob_flush();
+        flush();
+    }
 }
-
 echo('
         </tbody>
     </table>

@@ -104,10 +104,10 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
                 $error++;
             }
 
-            if (trim($comment1 == '')) {
+            if (trim($comment1) == '') {
                 $error++;
             }
-            if (trim($comment2 == '')) {
+            if (trim($comment2) == '') {
                 $error++;
             }
 

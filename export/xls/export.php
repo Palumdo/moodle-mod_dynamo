@@ -137,7 +137,9 @@ foreach ($groups as $grp) {
         $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usr->id)[0];
         $conf = dynamo_get_conf($dynamo, $grpusrs, $usr->id)[0];
         $comments = dynamo_get_comment($usr->id, $dynamo);
-
+        if ($data->nbeval == 0) {
+            $data->nbeval = 1;
+        }
         $crit1s += $autoeval->crit1;
         $crit1p += round($data->autocritsum->total1 / $data->nbeval, 2);
         $crit2s += $autoeval->crit2;

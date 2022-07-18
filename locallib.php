@@ -199,7 +199,9 @@ function dynamo_rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
 
     // No goto icon for the first group at top !
     $nojumpclass = "nojump";
-
+    if ($dynamo->groupingid == 0) {
+        return;
+    }
     echo ('<h3 class="report_title">'.get_string('dynamoreport02', 'mod_dynamo').'</h3>');
     $groups = dynamo_get_groups($dynamo->groupingid);
 
@@ -275,8 +277,10 @@ function dynamo_rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
         for ($j = 0; $j < count($agridlib[$i]); $j++) {
             $niwf = $agridlib[$i][$j];
             $color = dynamo_get_color_niwf($niwf);
-            echo ('            <td class="change-color" style="color:'.$color.'">'.number_format($niwf, 2, ',', ' ').'<br>'
-                .(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
+            if ($nbstudent > 0) {
+                echo ('            <td class="change-color" style="color:'.$color.'">'.number_format($niwf, 2, ',', ' ').'<br>'
+                    .(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
+            }
         }
         echo ('          </tr>');
         echo ('     </tbody>
@@ -436,6 +440,10 @@ function dynamo_rep_list_all_group($dynamo, $jscript, $display6, $courseid) {
 function dynamo_rep_list_all_participant($dynamo, $jscript, $display6, $courseid) {
     global $OUTPUT;
     $nojumpclass = "nojump";
+    $groups = dynamo_get_groups($dynamo->groupingid);
+    if ($groups == null) {
+        return;
+    }
 
     echo ('<h3 class="report_title">'.get_string('dynamoreport03', 'mod_dynamo').'</h3>');
     echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
@@ -483,7 +491,7 @@ function dynamo_rep_list_all_participant($dynamo, $jscript, $display6, $courseid
             </label>
             </div>
             <div class="box-switch" style="max-width:350px;text-align:center;">
-            <button class="btn btn-default" style="margin:10px;"
+            <button class="btn btn-default" style="margin:10px;color:white;"
                 onclick="removeColors();$(this).css(\'display\',\'none\');hideBeforePrint();
                 $(\'#dynamorefresh\').css(\'display\',\'\');">'
                 .get_string('dynamoremovecolors', 'mod_dynamo')
@@ -492,7 +500,6 @@ function dynamo_rep_list_all_participant($dynamo, $jscript, $display6, $courseid
                 .'" style="background:transparent;cursor:pointer;display:none;"><i class="fas fa-redo-alt"></i></a>
             </div>
         </div>');
-    $groups = dynamo_get_groups($dynamo->groupingid);
     foreach ($groups as $grp) { // Loop to all groups of grouping.
         $grpusrs = dynamo_get_group_users($grp->id);
 
@@ -622,8 +629,10 @@ function dynamo_display_group_detail_table($dynamo, $grp) {
     $i = count($agridlib) - 1;
     for ($j = 0; $j < count($agridlib[$i]); $j++) {
         $niwf = $agridlib[$i][$j];
-        echo ('        <td class="change-color" style="color:'.dynamo_get_color_niwf($niwf).'">'.number_format($niwf, 2, ',', ' ')
-            .'<br>'.(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
+        if ($niwf > 0 && $nbstudent > 0) {
+            echo ('        <td class="change-color" style="color:'.dynamo_get_color_niwf($niwf).'">'.number_format($niwf, 2, ',', ' ')
+                .'<br>'.(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
+        }
     }
     echo ('          </tr>');
 
@@ -702,8 +711,12 @@ function dynamo_display_eval_others_table($dynamo, $usrid, $display6) {
             $dynamoautoeval[] = $dynamoeval;
         }
         $result = dynamo_print_compute_basis($dynamoeval, $display6, $color, $grpusrsub);
-        $dynamoeval->sum = $result->sum;
-        $dynamoeval->avg = $result->avg;
+        if (isset($result->sum)) {
+            $dynamoeval->sum = $result->sum;
+        }
+        if (isset($result->avg)) {
+            $dynamoeval->avg = $result->avg;
+        }
         $dynamoeval->grp = 0;
     }
     echo (' </tbody>
@@ -962,9 +975,11 @@ function dynamo_rep_all_confidence($dynamo, $jscript, $display6, $zoom) {
  */
 function dynamo_rep_yearbook($dynamo, $id) {
     global $OUTPUT;
-
-    echo ('<div id="main-yearbook" style="display:table;width:100%;">');
     $groups = dynamo_get_groups($dynamo->groupingid);
+    if ($groups == null) {
+        return;
+    }
+    echo ('<div id="main-yearbook" style="display:table;width:100%;">');
     foreach ($groups as $grp) { // Loop to all groups of grouping.
         $grpusrs = dynamo_get_group_users($grp->id);
         foreach ($grpusrs as $grpusr) {
@@ -1019,9 +1034,13 @@ function dynamo_print_compute_basis($dynamoeval, $display6, $color, $grpusrsub) 
 * @param object $data
 */
 function dynamo_get_peer_eval_str($data) {
-    return '['.round($data->autocritsum->total1 / $data->nbeval, 2).','
-        .round($data->autocritsum->total2 / $data->nbeval, 2).','
-        .round($data->autocritsum->total3 / $data->nbeval, 2).','
-        .round($data->autocritsum->total4 / $data->nbeval, 2).','
-        .round($data->autocritsum->total5 / $data->nbeval, 2);
+    if ($data->nbeval > 0 ) {
+        return '['.round($data->autocritsum->total1 / $data->nbeval, 2).','
+            .round($data->autocritsum->total2 / $data->nbeval, 2).','
+            .round($data->autocritsum->total3 / $data->nbeval, 2).','
+            .round($data->autocritsum->total4 / $data->nbeval, 2).','
+            .round($data->autocritsum->total5 / $data->nbeval, 2);
+    } else {
+        return '[0.0,0.0,0.0,0.0,0.0';
+    }
 }

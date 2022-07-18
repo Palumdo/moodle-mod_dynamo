@@ -91,9 +91,9 @@ switch($report) {
         dynamo_rep_excel($cm);
         break;
 }
-
-$jscript = $jscript.'
-    }; // End of onload...
-  </script>';
-
+if ($jscript != '') {
+    $jscript = $jscript.'
+        }; // End of onload...
+      </script>';
+}
 echo ($jscript);

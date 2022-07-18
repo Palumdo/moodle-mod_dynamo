@@ -1081,6 +1081,7 @@ function dynamo_get_body_table_teacher($dynamo) {
 
     $params = array('param1' => $dynamo->groupingid);
     $result = $DB->get_records_sql($sql, $params);
+    if ($result == null) return null;
     $groupid = reset($result)->id;
     $groupusers = dynamo_get_group_users($groupid);
 
@@ -1794,6 +1795,12 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     $list = [];
     // Get the list of students that have answer. The other are not take in computing and evaluation.
     $agrpusrs = [];
+    
+    $result = new stdClass();
+    $result->type = 0;
+    $result->list = null;
+    $result->varmean = 0;
+
     foreach ($grpusrs as $usr) {
         $autoeval = dynamo_get_autoeval($usr->id, $dynamo);
         if ($autoeval->crit1 > 0) {
@@ -1828,12 +1835,21 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
         $list[$i]->data = $datai;
         // Number of data is n-1 because auto-evaluations are excluded.
         $den = count($grpusrs) - 1;
-        $datavgi[0] = $datavgi[0] / $den;
-        $datavgi[1] = $datavgi[1] / $den;
-        $datavgi[2] = $datavgi[2] / $den;
-        $datavgi[3] = $datavgi[3] / $den;
-        $datavgi[4] = $datavgi[4] / $den;
-        $list[$i]->datavg = $datavgi;
+        if ($den > 0) {
+            $datavgi[0] = $datavgi[0] / $den;
+            $datavgi[1] = $datavgi[1] / $den;
+            $datavgi[2] = $datavgi[2] / $den;
+            $datavgi[3] = $datavgi[3] / $den;
+            $datavgi[4] = $datavgi[4] / $den;
+            $list[$i]->datavg = $datavgi;
+        } else {
+            $datavgi[0] = 0;
+            $datavgi[1] = 0;
+            $datavgi[2] = 0;
+            $datavgi[3] = 0;
+            $datavgi[4] = 0;
+            $list[$i]->datavg = 0;
+        }
     }
 
     // Compute variance value for each student and compute global variance mean (needed for cohesion indicator)).
@@ -1846,14 +1862,18 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
             $ind = $k % 5;
             $vari += ($datai[$k] - $datavgi[$ind]) * ($datai[$k] - $datavgi[$ind]);
         }
-        $vari = 12 * $vari / count($datai);
+        if ($datai != null) {
+          $vari = 12 * $vari / count($datai);
+        } else {
+          $vari = 0;
+        }
         $list[$i]->var = $vari;
         $varmean += $vari;
     }
-    $varmean = $varmean / count($grpusrs);
 
-    $result = new stdClass();
-    $result->type = 0;
+    if ($varmean > 0) {
+        $varmean = $varmean / count($grpusrs);
+    }
     $result->list = $list;
     $result->varmean = $varmean;
 
