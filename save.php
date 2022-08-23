@@ -162,6 +162,13 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
             // No auto evaluation save.
             $error = 0;
         } else {
+            $crit1 = required_param($user->id.'_1', PARAM_INT);
+            $crit2 = required_param($user->id.'_2', PARAM_INT);
+            $crit3 = required_param($user->id.'_3', PARAM_INT);
+            $crit4 = required_param($user->id.'_4', PARAM_INT);
+            $crit5 = required_param($user->id.'_5', PARAM_INT);
+            $crit6 = optional_param($user->id.'_6', 0, PARAM_INT);
+          
             $dynamoeval = new stdClass();
             $dynamoeval->builder = $cm->instance;
             $dynamoeval->evalbyid = $USER->id;
