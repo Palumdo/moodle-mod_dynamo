@@ -526,7 +526,7 @@ function dynamo_get_body_table($groupusers, $userid, $dynamo, $groupid) {
                     <tbody>-->
                 <tr><td colspan="6" style="border-bottom:1px solid black;"></td></tr>
                 <tr style="border:1px solid black;margin-top:2px;">
-                    <td style="min-width:200px;font-weight:bold;">Groupe</td>
+                    <td style="min-width:200px;font-weight:bold;">'.get_string('dynamogroup', 'mod_dynamo').'</td>
                     <td style="min-width:160px;">
                         <input class="savemegrp hiddenval" name="'.$groupid.'_g1"  id="'.$groupid.'_1" value="'
                         .$dynamoeval->crit1.'"><i data-id="'.$groupid
@@ -1863,9 +1863,9 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
             $vari += ($datai[$k] - $datavgi[$ind]) * ($datai[$k] - $datavgi[$ind]);
         }
         if ($datai != null) {
-          $vari = 12 * $vari / count($datai);
+            $vari = 12 * $vari / count($datai);
         } else {
-          $vari = 0;
+            $vari = 0;
         }
         $list[$i]->var = $vari;
         $varmean += $vari;

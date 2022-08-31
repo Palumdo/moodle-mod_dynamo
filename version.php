@@ -27,9 +27,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2022082900;
+$plugin->version = 2022083100;
 $plugin->requires = 2017051500;
 $plugin->component = 'mod_dynamo';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->cron = 0;
-$plugin->release = '1.0.0.3';
+$plugin->release = '1.0.0.4';
