@@ -254,7 +254,9 @@ function reloadZoom(zoom) {
 function gototag(obj) {
     val = $(obj).children(":selected").attr("id");
     aTag = $("."+val);
-    $('#page').animate({scrollTop: aTag.offset().top},'slow');
+    $("html, body").animate({scrollTop:aTag.offset().top},'slow');
+    $("#page").animate({scrollTop:aTag.offset().top},'slow');
+    return false;
 }
 
 // Remove color on values (orange, red green,...)
