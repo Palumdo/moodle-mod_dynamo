@@ -64,7 +64,6 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
 
         $data = (object)$data;
         $data->course = $this->get_courseid();
-        $data->groupid = $this->get_mappingid('group', $data->groupid);
         $data->groupingid = $this->get_mappingid('grouping', $data->groupingid);
 
         // Insert the dynamo record.
@@ -86,7 +85,13 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
         $oldid = $data->id;
 
         $data->builder = $this->get_new_parentid('dynamo');
-        $data->userid = $this->get_mappingid('user', $data->userid);
+        
+        // Bugfix:The user id of a group evaluation is a group id not a user id.
+        if ($data->critgrp == 1) {
+            $data->userid = $this->get_mappingid('group', $data->userid);
+        } else {
+            $data->userid = $this->get_mappingid('user', $data->userid);
+        }
         $data->evalbyid = $this->get_mappingid('user', $data->evalbyid);
 
         $newevalid = $DB->insert_record('dynamo_eval', $data);

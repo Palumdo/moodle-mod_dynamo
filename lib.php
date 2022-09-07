@@ -184,7 +184,7 @@ function dynamo_extend_settings_navigation(settings_navigation $settings, naviga
     $beforekey = null;
     $i = array_search('modedit', $keys);
 
-    if ($i === false and array_key_exists(0, $keys)) {
+    if ($i === false && array_key_exists(0, $keys)) {
         $beforekey = $keys[0];
     } else if (array_key_exists($i + 1, $keys)) {
         $beforekey = $keys[$i + 1];
@@ -1081,7 +1081,9 @@ function dynamo_get_body_table_teacher($dynamo) {
 
     $params = array('param1' => $dynamo->groupingid);
     $result = $DB->get_records_sql($sql, $params);
-    if ($result == null) return null;
+    if ($result == null) {
+        return null;
+    }
     $groupid = reset($result)->id;
     $groupusers = dynamo_get_group_users($groupid);
 
@@ -1795,7 +1797,7 @@ function dynamo_get_consistency($dynamo, $grpusrs) {
     $list = [];
     // Get the list of students that have answer. The other are not take in computing and evaluation.
     $agrpusrs = [];
-    
+
     $result = new stdClass();
     $result->type = 0;
     $result->list = null;

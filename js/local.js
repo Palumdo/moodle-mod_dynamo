@@ -525,4 +525,3 @@ if(getAllUrlParams().tab != 2) {
 
 $(".report-yearbook img").css("transform","scale(1.0)");
 $(".report-yearbook-descr").css("transform","scale(1.0)");
-

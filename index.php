@@ -81,7 +81,7 @@ foreach ($dynamos as $dynamo) {
         $link = '<a href="view.php?id='.$dynamo->coursemodule.'">'.format_string($dynamo->name).'</a>';
     }
 
-    if ($course->format == 'weeks' or $course->format == 'topics') {
+    if ($course->format == 'weeks' || $course->format == 'topics') {
         $table->data[] = array ($dynamo->section, $link);
     } else {
         $table->data[] = array ($link);
