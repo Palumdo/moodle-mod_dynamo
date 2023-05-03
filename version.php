@@ -32,4 +32,4 @@ $plugin->requires = 2017051500;
 $plugin->component = 'mod_dynamo';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->cron = 0;
-$plugin->release = '1.0.0.4';
+$plugin->release = '1.0.0.5';
