@@ -159,8 +159,12 @@ if ($grp->id != -1234) {
     $i = count($agridlib) - 1;
     for ($j = 0; $j < count($agridlib[$i]); $j++) {
         $niwf = $agridlib[$i][$j];
+        $valformated = 0;
+        if ($nbstudent > 0) {
+            $valformated = (number_format(($niwf / $nbstudent) * 100, 2, ',', ' '));
+        }
         echo('<td style="background-color:white;text-align:center;color:'.dynamo_get_color_niwf($niwf).'">'
-            .number_format($niwf, 2, ',', ' ').'<br>'.(number_format(($niwf / $nbstudent) * 100, 2, ',', ' ')).'&#37;</td>');
+            .number_format($niwf, 2, ',', ' ').'<br>'.$valformated.'&#37;</td>');
     }
     echo('</tr>');
     // Display the niwf formula in HTML.

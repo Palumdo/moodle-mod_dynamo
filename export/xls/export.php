@@ -214,41 +214,43 @@ foreach ($groups as $grp) {
     }
     // Page 1.
     $col = 3;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($totalp / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($totals / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1p / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1s / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2p / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2s / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3p / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3s / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4p / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4s / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5p / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5s / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6p / count($grpusrs), 2));
-    $col++;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6s / count($grpusrs), 2));
+    if (count($grpusrs) > 0) {
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($totalp / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($totals / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1p / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1s / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2p / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2s / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3p / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3s / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4p / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4s / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5p / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5s / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6p / count($grpusrs), 2));
+      $col++;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6s / count($grpusrs), 2));
 
-    $col = 1;
-    $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($typec));
-    $col++;
-    $notperfect = 0;
-    $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
-    $climattxt = get_string('dynamoaclimate'.$climat, 'mod_dynamo');
-    $worksheet[0]->write(3 + ($i * $nbline), $col, $climattxt);
+      $col = 1;
+      $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($typec));
+      $col++;
+      $notperfect = 0;
+      $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
+      $climattxt = get_string('dynamoaclimate'.$climat, 'mod_dynamo');
+      $worksheet[0]->write(3 + ($i * $nbline), $col, $climattxt);
+    }
     $i++;
 }
 

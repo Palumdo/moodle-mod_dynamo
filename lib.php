@@ -1266,7 +1266,7 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         foreach ($grpusrs as $grpusrname) {
             $text = \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate($comment);
             $text = preg_replace('/[^a-z\s]/', '', strtolower($text));
-            $text = preg_split('/\s+/', $text, null, PREG_SPLIT_NO_EMPTY);
+            $text = preg_split('/\s+/', $text, -1, PREG_SPLIT_NO_EMPTY);
             $text = array_flip($text);
             $firstname =
               \Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC')->transliterate(strtolower($grpusrname->firstname));
@@ -1295,7 +1295,11 @@ function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
         $groupstat->conflit = '';
     }
 
-    $notperfect = 2.5 * $notperfect / $nbuser;
+    if ($nbuser > 0)  {
+        $notperfect = 2.5 * $notperfect / $nbuser;
+    } else {
+        $notperfect = 0;
+    }
     if ($notperfect > 4) {
         $notperfect = 4;
     }

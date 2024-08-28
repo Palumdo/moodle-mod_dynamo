@@ -270,9 +270,13 @@ if ($usrid != 0) {
 
     // Bottom.
     $data = dynamo_compute_advanced($usrid, $dynamo);
+    $dataformatted = 0;
+    if ($data->nbeval > 0) {
+        $dataformatted = round(($data->sum / $data->nbeval) / $data->nbcrit, 2);
+    }
     echo ('<div class="single-box-comment"><table class="single-table-data">');
     echo ('<tr><td style="width:200px;"><b>'.get_string('dynamoavgeval', 'mod_dynamo').'</b>:</td><td>'
-        .round(($data->sum / $data->nbeval) / $data->nbcrit, 2).'<td><tr>');
+        .$dataformatted.'<td><tr>');
     echo ('<tr><td><b>'.get_string('dynamoautoeval', 'mod_dynamo').'</b>:</td><td>'
         .round($data->autosum / $data->nbcrit, 2).'<td><tr>');
     $niwf = dynamo_get_niwf($dynamo, $grpusrs, $usrid);
