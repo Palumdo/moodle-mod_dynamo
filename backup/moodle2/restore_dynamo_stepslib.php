@@ -32,14 +32,13 @@
  * Defines the structure step to restore one mod_dynamo activity.
  */
 class restore_dynamo_activity_structure_step extends restore_activity_structure_step {
-
     /**
      * Defines the structure to be restored.
      *
      * @return restore_path_element[].
      */
     protected function define_structure() {
-        $paths = array();
+        $paths = [];
         $userinfo = $this->get_setting_value('userinfo');
 
         $dynamo = new restore_path_element('dynamo', '/activity/dynamo');
@@ -62,7 +61,7 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
     protected function process_dynamo($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $data->course = $this->get_courseid();
         $data->groupingid = $this->get_mappingid('grouping', $data->groupingid);
 
@@ -81,11 +80,11 @@ class restore_dynamo_activity_structure_step extends restore_activity_structure_
      */
     protected function process_dynamo_eval($data) {
         global $DB;
-        $data = (object)$data;
+        $data = (object) $data;
         $oldid = $data->id;
 
         $data->builder = $this->get_new_parentid('dynamo');
-        
+
         // Bugfix:The user id of a group evaluation is a group id not a user id.
         if ($data->critgrp == 1) {
             $data->userid = $this->get_mappingid('group', $data->userid);

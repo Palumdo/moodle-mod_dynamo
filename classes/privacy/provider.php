@@ -43,7 +43,6 @@ class provider implements
 
     // This plugin is a core_user_data_provider.
     \core_privacy\local\request\plugin\provider {
-
     // This trait must be included.
     use \core_privacy\local\legacy_polyfill;
 
@@ -108,7 +107,7 @@ class provider implements
 
         $user = $contextlist->get_user();
 
-        list($contextsql, $contextparams) = $DB->get_in_or_equal($contextlist->get_contextids(), SQL_PARAMS_NAMED);
+        [$contextsql, $contextparams] = $DB->get_in_or_equal($contextlist->get_contextids(), SQL_PARAMS_NAMED);
 
         $sql = "SELECT cm.id AS cmid,
                        e.crit1,
@@ -174,7 +173,7 @@ class provider implements
         $contextdata = helper::get_context_data($context, $user);
 
         // Merge with dynamo data and write it.
-        $contextdata = (object)array_merge((array)$contextdata, $evaldata);
+        $contextdata = (object) array_merge((array) $contextdata, $evaldata);
         writer::with_context($context)->export_data([], $contextdata);
 
         // Write generic module intro files.

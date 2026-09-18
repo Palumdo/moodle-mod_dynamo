@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(dirname(__FILE__) . '/backup_dynamo_stepslib.php');
+require_once(__DIR__ . '/backup_dynamo_stepslib.php');
 
 /**
  * The class provides all the settings and steps to perform one complete backup of mod_dynamo.

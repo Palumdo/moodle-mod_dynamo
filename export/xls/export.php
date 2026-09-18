@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * Controller for creating excel export.
  *
@@ -24,18 +25,18 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__.'/../../../../config.php');
+require_once(__DIR__ . '/../../../../config.php');
 
 global $CFG, $SESSION, $DB;
-require_once($CFG->dirroot.'/lib/excellib.class.php');
-require_once($CFG->dirroot.'/user/profile/lib.php');
+require_once($CFG->dirroot . '/lib/excellib.class.php');
+require_once($CFG->dirroot . '/user/profile/lib.php');
 
 defined('MOODLE_INTERNAL') || die();
 
 $id = optional_param('id', 0, PARAM_INT); // The course_module ID, or...
 if ($id) {
-    list ($course, $cm) = get_course_and_cm_from_cmid($id, 'dynamo');
-    $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
+     [$course, $cm] = get_course_and_cm_from_cmid($id, 'dynamo');
+    $dynamo = $DB->get_record('dynamo', ['id' => $cm->instance], '*', MUST_EXIST);
 } else {
     die;
 }
@@ -53,11 +54,11 @@ $GLOBALS['dynamo_contextid'] = $coursecontext->id;
 $GLOBALS['dynamo_courseid'] = $course->id;
 
 
-$reportname = $course->shortname.'_'.$cm->id;
+$reportname = $course->shortname . '_' . $cm->id;
 $workbook = new MoodleExcelWorkbook('-');
 
 $workbook->send($reportname);
-$worksheet = array();
+$worksheet = [];
 $worksheet[0] = $workbook->add_worksheet(get_string('dynamoexportxlstab1', 'mod_dynamo'));
 $worksheet[1] = $workbook->add_worksheet(get_string('dynamoexportxlstab2', 'mod_dynamo'));
 $worksheet[2] = $workbook->add_worksheet(get_string('dynamoexportxlstab3', 'mod_dynamo'));
@@ -100,7 +101,7 @@ $worksheet[0]->write(2, $col, get_string('dynamoexportxlsTitle14', 'mod_dynamo')
 
 $groups = dynamo_get_groups($dynamo->groupingid);
 $i = 0;
-$format = $workbook->add_format(array("bold" => 1, "text_wrap" => true));
+$format = $workbook->add_format(["bold" => 1, "text_wrap" => true]);
 
 $worksheet[0]->set_column(0, 0, '30');
 $worksheet[0]->set_column(1, $col, '20');
@@ -215,41 +216,41 @@ foreach ($groups as $grp) {
     // Page 1.
     $col = 3;
     if (count($grpusrs) > 0) {
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($totalp / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($totals / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1p / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1s / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2p / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2s / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3p / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3s / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4p / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4s / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5p / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5s / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6p / count($grpusrs), 2));
-      $col++;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6s / count($grpusrs), 2));
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($totalp / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($totals / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1p / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit1s / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2p / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit2s / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3p / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit3s / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4p / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit4s / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5p / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit5s / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6p / count($grpusrs), 2));
+        $col++;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, round($crit6s / count($grpusrs), 2));
 
-      $col = 1;
-      $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($typec));
-      $col++;
-      $notperfect = 0;
-      $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
-      $climattxt = get_string('dynamoaclimate'.$climat, 'mod_dynamo');
-      $worksheet[0]->write(3 + ($i * $nbline), $col, $climattxt);
+        $col = 1;
+        $worksheet[0]->write(3 + ($i * $nbline), $col, dynamo_get_group_type_txt($typec));
+        $col++;
+        $notperfect = 0;
+        $climat = dynamo_get_group_climat($dynamo, $grpusrs, $notperfect)[1];
+        $climattxt = get_string('dynamoaclimate' . $climat, 'mod_dynamo');
+        $worksheet[0]->write(3 + ($i * $nbline), $col, $climattxt);
     }
     $i++;
 }
@@ -349,8 +350,10 @@ foreach ($users as $user) {
         $worksheet[2]->write($row, 5, $user->email);
         $worksheet[2]->write($row, 6, $usereva->firstname);
         $worksheet[2]->write($row, 7, $usereva->lastname);
-        $dynamoeval = $DB->get_record('dynamo_eval',
-            array('builder' => $dynamo->id, 'evalbyid' => $user->id , 'userid' => $usereva->id ));
+        $dynamoeval = $DB->get_record(
+            'dynamo_eval',
+            ['builder' => $dynamo->id, 'evalbyid' => $user->id, 'userid' => $usereva->id]
+        );
         if ($dynamoeval) {
             $worksheet[2]->write($row, 1, date('m/d/Y', $dynamoeval->timemodified));
             $worksheet[2]->write($row, 8, $dynamoeval->crit1);
@@ -363,7 +366,7 @@ foreach ($users as $user) {
         $comments = dynamo_get_comment($user->id, $dynamo);
         $worksheet[2]->write($row, 14, $comments->comment1);
         $worksheet[2]->write($row, 15, $comments->comment2);
-        $worksheet[2]->write_formula($row, 16, '= SUM(I'.($row + 1).':N'.($row + 1).')');
+        $worksheet[2]->write_formula($row, 16, '= SUM(I' . ($row + 1) . ':N' . ($row + 1) . ')');
 
         $row++;
     }

@@ -28,9 +28,9 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(__DIR__.'/../../config.php');
-require_once(__DIR__.'/lib.php');
-require_once(__DIR__.'/locallib.php');
+require(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/locallib.php');
 
 global $USER;
 
@@ -65,11 +65,11 @@ $groupid = optional_param('groupid', 0, PARAM_INT);
 
 if ($id) {
     $cm = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $dynamo = $DB->get_record('dynamo', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($d) {
-    $dynamo = $DB->get_record('dynamo', array('id' => $d), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
+    $dynamo = $DB->get_record('dynamo', ['id' => $d], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $dynamo->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);
 } else {
     throw new moodle_exception('missingidandcmid', 'dynamo');
@@ -104,7 +104,7 @@ $afcolor['[LSM]'] = '#90810d';
 $afcolor['[ILV]'] = '#032f5d';
 $afcolor['[ECOPOL]'] = '#032f5d';
 
-$rfaculty = $DB->get_record('course_categories', array('id' => $course->category), '*', MUST_EXIST);
+$rfaculty = $DB->get_record('course_categories', ['id' => $course->category], '*', MUST_EXIST);
 if (preg_match("/\[[a-zA-Z]+]/", $rfaculty->name, $matches, PREG_OFFSET_CAPTURE, 0)) {
     $faculty  = $matches[0][0];
 } else {
@@ -145,7 +145,7 @@ if ($dynamo->critoptname == '') {
     $display6 = 'none';
 }
 
-$PAGE->set_url('/mod/dynamo/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/dynamo/view.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($dynamo->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
@@ -153,41 +153,41 @@ echo $OUTPUT->header();
 
 if ($mode == 'student') {
     $comment = dynamo_get_comment($USER->id, $dynamo);
-    require_once(__DIR__.'/student.php');
+    require_once(__DIR__ . '/student.php');
 }
 
 if ($mode == 'teacher') {
     $usrid = optional_param('usrid', 0, PARAM_INT);
 
-    require_once(__DIR__.'/tabs.php');
-    switch($tab) {
+    require_once(__DIR__ . '/tabs.php');
+    switch ($tab) {
         case 1:
             // Get the comment of the current inspected user if no user was seen.
             // Comment will be empty. It's just for a preview... Dummy text can be OK ! or empty...
             // Preview of what student see for the teacher (no save button !).
             $comment = dynamo_get_comment($usrid, $dynamo);
-            require_once(__DIR__.'/student.php');
+            require_once(__DIR__ . '/student.php');
             break;
         case 2:
-            switch($results) {
+            switch ($results) {
                 case 0:
                 case 1:
-                    require_once(__DIR__.'/teacher.php');
+                    require_once(__DIR__ . '/teacher.php');
                     break;
                 case 2:
-                    require_once(__DIR__.'/teacherlvl0.php');
+                    require_once(__DIR__ . '/teacherlvl0.php');
                     break;
                 case 3:
-                    require_once(__DIR__.'/teacherlvl1.php');
+                    require_once(__DIR__ . '/teacherlvl1.php');
                     break;
             }
             break;
         case 3:
-            require_once(__DIR__.'/report.php');
+            require_once(__DIR__ . '/report.php');
             break;
 
         case 4:
-            require_once(__DIR__.'/help.php');
+            require_once(__DIR__ . '/help.php');
             break;
     }
 }

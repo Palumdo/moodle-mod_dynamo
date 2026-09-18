@@ -28,31 +28,58 @@
  * Backup task for mod_dynamo.
  */
 class backup_dynamo_activity_structure_step extends backup_activity_structure_step {
-
     /**
      * Define the structure of database tables for the backup
      *
      */
     protected function define_structure() {
         // Define each element separated.
-        $dynamo = new backup_nested_element('dynamo', array('id'), array(
-            'course', 'name', 'intro', 'introformat', 'groupid', 'allowupdate'
-            , 'crit1', 'crit2', 'crit3', 'crit4', 'crit5', 'critopt', 'critoptname', 'groupingid', 'autoeval'
-            , 'groupeval', 'timemodified', 'timecreated', 'comment1', 'comment2',
-        ));
+        $dynamo = new backup_nested_element('dynamo', ['id'], [
+            'course',
+            'name',
+            'intro',
+            'introformat',
+            'groupid',
+            'allowupdate',
+            'crit1',
+            'crit2',
+            'crit3',
+            'crit4',
+            'crit5',
+            'critopt',
+            'critoptname',
+            'groupingid',
+            'autoeval',
+            'groupeval',
+            'timemodified',
+            'timecreated',
+            'comment1',
+            'comment2',
+        ]);
 
         $evals = new backup_nested_element('evals');
-        $eval = new backup_nested_element('eval', array('id'), array(
-            'builder', 'evalbyid', 'userid', 'crit1', 'crit2', 'crit3', 'crit4', 'crit5', 'crit6', 'critgrp'
-            , 'comment1', 'comment2', 'timemodified',
-        ));
+        $eval = new backup_nested_element('eval', ['id'], [
+            'builder',
+            'evalbyid',
+            'userid',
+            'crit1',
+            'crit2',
+            'crit3',
+            'crit4',
+            'crit5',
+            'crit6',
+            'critgrp',
+            'comment1',
+            'comment2',
+            'timemodified',
+        ]);
 
         // Build the tree with these elements with $root as the root of the backup tree.
         $dynamo->add_child($evals);
         $evals->add_child($eval);
         // Define the source tables for the elements.
-        $dynamo->set_source_table('dynamo', array('id' => backup::VAR_ACTIVITYID));
-        $eval->set_source_table('dynamo_eval', array('builder' => backup::VAR_PARENTID));
+        $dynamo->set_source_table('dynamo', ['id' => backup::VAR_ACTIVITYID]);
+        $eval->set_source_table('dynamo_eval', ['builder' => backup::VAR_PARENTID]);
 
         // Define id annotations.
         $dynamo->annotate_ids('group', 'groupid');

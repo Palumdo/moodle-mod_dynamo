@@ -30,13 +30,12 @@ defined('MOODLE_INTERNAL') || die();
 // https://docs.moodle.org/dev/Backup_2.0_for_developers.
 // https://docs.moodle.org/dev/Restore_2.0_for_developers.
 
-require_once($CFG->dirroot.'//mod/dynamo/backup/moodle2/restore_dynamo_stepslib.php');
+require_once($CFG->dirroot . '/mod/dynamo/backup/moodle2/restore_dynamo_stepslib.php');
 
 /**
  * Restore task for mod_dynamo.
  */
 class restore_dynamo_activity_task extends restore_activity_task {
-
     /**
      * Defines particular settings that this activity can have.
      */
@@ -58,7 +57,7 @@ class restore_dynamo_activity_task extends restore_activity_task {
      * @return array.
      */
     public static function define_decode_contents() {
-        $contents = array();
+        $contents = [];
 
         // Define the contents.
 
@@ -71,7 +70,7 @@ class restore_dynamo_activity_task extends restore_activity_task {
      * @return array.
      */
     public static function define_decode_rules() {
-        $rules = array();
+        $rules = [];
         return $rules;
     }
 
@@ -83,7 +82,7 @@ class restore_dynamo_activity_task extends restore_activity_task {
      * @return array.
      */
     public static function define_restore_log_rules() {
-        $rules = array();
+        $rules = [];
 
         // Define the rules.
         $rules[] = new restore_log_rule('dynamo', 'add', 'view.php?id={course_module}', '{dynamo}');
@@ -105,7 +104,7 @@ class restore_dynamo_activity_task extends restore_activity_task {
      * @return array.
      */
     public static function define_restore_log_rules_for_course() {
-        $rules = array();
+        $rules = [];
 
         $rules[] = new restore_log_rule('dynamo', 'view all', 'index.php?id={course}', null);
 

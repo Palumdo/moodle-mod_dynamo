@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * This page is for the teacher. It will display all groups information on summary.
  *
@@ -44,31 +45,31 @@ $groups = dynamo_get_groups($dynamo->groupingid);
 // Sub tabulation for teacher to see student results in three levels.
 echo'<div class="dynamocontent">';
 echo '<ul class="dynnav dynnavtabs" style="margin-top:10px;">
-        <li class="active"><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=1">'
-            .get_string('dynamoresults1', 'mod_dynamo').'</a></li>
-        <li><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=2">'
-            .get_string('dynamoresults2', 'mod_dynamo').'</a></li>
-        <li><a href="view.php?id='.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&tab=2&results=3">'
-            .get_string('dynamoresults3', 'mod_dynamo').'</a></li>
+        <li class="active"><a href="view.php?id=' . $id . '&groupid=' . $groupid . '&usrid=' . $usrid . '&tab=2&results=1">'
+            . get_string('dynamoresults1', 'mod_dynamo') . '</a></li>
+        <li><a href="view.php?id=' . $id . '&groupid=' . $groupid . '&usrid=' . $usrid . '&tab=2&results=2">'
+            . get_string('dynamoresults2', 'mod_dynamo') . '</a></li>
+        <li><a href="view.php?id=' . $id . '&groupid=' . $groupid . '&usrid=' . $usrid . '&tab=2&results=3">'
+            . get_string('dynamoresults3', 'mod_dynamo') . '</a></li>
     </ul>';
 
-echo ('<h3>'.get_string('dynamostudenttitle', 'mod_dynamo').' : '
-    .$cm->name.'</h3><input id="activityid" type="hidden" value="'.$id.'">');
+echo ('<h3>' . get_string('dynamostudenttitle', 'mod_dynamo') . ' : '
+    . $cm->name . '</h3><input id="activityid" type="hidden" value="' . $id . '">');
 if ($stat->grouping != null && $stat->grouping->description != '') {
-    echo ('<div>'.$stat->grouping->name.' : '.$stat->grouping->description.'</div>');
+    echo ('<div>' . $stat->grouping->name . ' : ' . $stat->grouping->description . '</div>');
 }
-echo ('<div id="pleasewait">'.get_string('dynamopleasewait', 'mod_dynamo').'</div>');
+echo ('<div id="pleasewait">' . get_string('dynamopleasewait', 'mod_dynamo') . '</div>');
 
 // Custom chckboxes that look like switch to hide group with no problems or group where student answers are missing and switch view.
 // Table to div.
 echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;">
-        <div class="box-switch"><div class="box-switch-label">'.get_string('dynamoremovegroupnoprobs',  'mod_dynamo').'</div>
+        <div class="box-switch"><div class="box-switch-label">' . get_string('dynamoremovegroupnoprobs', 'mod_dynamo') . '</div>
           <label class="switch">
             <input type="checkbox" value="on" onclick="hidenoprob();">
             <span class="slider"></span>
           </label>
         </div>
-        <div class="box-switch"><div class="box-switch-label">'.get_string('dynamoremovegroupnotcomplete',  'mod_dynamo').'</div>
+        <div class="box-switch"><div class="box-switch-label">' . get_string('dynamoremovegroupnotcomplete', 'mod_dynamo') . '</div>
           <label class="switch">
             <input type="checkbox" onclick="hidenotcomplete();">
             <span class="slider"></span>
@@ -76,14 +77,14 @@ echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;
         </div>
 
         <div class="box-switch" style="text-align:left;max-width:300px;width:300px;"><div style="padding:15px;">
-         '.get_string('dynamogroupcount', 'mod_dynamo').' : '.$stat->nb_group.'<br>
-         '.get_string('dynamostudentcount', 'mod_dynamo').' : '.$stat->nb_participant.'<br>
-         '.get_string('dynamostudentnoanswerscount', 'mod_dynamo').' : <a href="/mod/dynamo/view.php?id=
-         '.$id.'&groupid='.$groupid.'&usrid='.$usrid.'&report=1&tab=3&results=1">'.$stat->nb_no_answer.'</a></div>
+         ' . get_string('dynamogroupcount', 'mod_dynamo') . ' : ' . $stat->nb_group . '<br>
+         ' . get_string('dynamostudentcount', 'mod_dynamo') . ' : ' . $stat->nb_participant . '<br>
+         ' . get_string('dynamostudentnoanswerscount', 'mod_dynamo') . ' : <a href="/mod/dynamo/view.php?id=
+         ' . $id . '&groupid=' . $groupid . '&usrid=' . $usrid . '&report=1&tab=3&results=1">' . $stat->nb_no_answer . '</a></div>
         </div>
         <div style="float: left; margin: 3px;">
             <button class="btn btn-default" onclick="removeColors();$(this).css(\'display\',\'none\');
-                $(\'#dynamorefresh\').css(\'display\',\'\');">'.get_string('dynamoremovecolors', 'mod_dynamo').'
+                $(\'#dynamorefresh\').css(\'display\',\'\');">' . get_string('dynamoremovecolors', 'mod_dynamo') . '
             </button>
             <br>
             <a id="dynamorefresh"
@@ -96,15 +97,15 @@ echo ('<div id="button-list-teacher" style="width:100%;margin:15px;display:none;
 echo('<div id="table-overview"><table class="tablelvlx">
         <thead>
           <tr>
-            <th style="background-color:'.$faccolor.'">&nbsp;</th>
-            <th>'.get_string('dynamoheadparticiaption', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadimplication', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadconfidence', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadconsistency', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadcohesion', 'mod_dynamo').'</th>
-            <th>'.get_string('dynamoheadconflit', 'mod_dynamo').'</th>
+            <th style="background-color:' . $faccolor . '">&nbsp;</th>
+            <th>' . get_string('dynamoheadparticiaption', 'mod_dynamo') . '</th>
+            <th>' . get_string('dynamoheadimplication', 'mod_dynamo') . '</th>
+            <th>' . get_string('dynamoheadconfidence', 'mod_dynamo') . '</th>
+            <th>' . get_string('dynamoheadconsistency', 'mod_dynamo') . '</th>
+            <th>' . get_string('dynamoheadcohesion', 'mod_dynamo') . '</th>
+            <th>' . get_string('dynamoheadconflit', 'mod_dynamo') . '</th>
             <th style="border-left:3px solid grey;text-align:center;cursor:pointer;">'
-                .get_string('dynamoheadremarque', 'mod_dynamo').' <i class="fas fa-sort"></th>
+                . get_string('dynamoheadremarque', 'mod_dynamo') . ' <i class="fas fa-sort"></th>
             <th></th>
           </tr>
         </thead>
@@ -114,25 +115,26 @@ $notperfect = 0;
 if ($groups != null) {
     foreach ($groups as $grp) { // Loop to all groups of grouping.
         $grpusrs = dynamo_get_group_users($grp->id);
-        $val = [0, 0, 0, 1, 3, 0 , 3];
+        $val = [0, 0, 0, 1, 3, 0, 3];
         $groupstat = dynamo_get_group_stat($dynamo, $grpusrs, $grp->id, $notperfect);
         // Add icon type conflit group.
         $cohesion = dynamo_get_cohesion_group_type($groupstat->type, $grp->id, $groupstat->cohesion);
         $notperfect += ($val[$groupstat->type] * count($grpusrs));
 
-        echo('<tr style="cursor:pointer;" onclick="location.href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'" title="'
-            .get_string('dynamoresults2', 'mod_dynamo').'">
-                  <td class="camera">'.print_group_picture($grp, $course->id, false, true, false)
-                    .' <a class="groupurl" href=\'view.php?id='.$id.'&groupid='.$grp->id.'&tab=2&results=2\'>'.$grp->name
-                    .'</a><div class="toolpit">&nbsp;<i style="margin-top:8px;" class="fas fa-camera"></i>
-                    <span class="toolpittext toolpit-corr">'.$groupstat->tooltips.'</span></div></td>
-                  <td>'.$groupstat->participation.'</td>
-                  <td>'.$groupstat->implication.'</td>
-                  <td>'.$groupstat->confiance.'</td>
-                  <td>'.$groupstat->consistency.'</td>
-                  <td>'.$cohesion.'</td>
-                  <td>'.$groupstat->conflit.'</td>
-                  <td class="camera-border">'.$groupstat->remark.'</td>
+        echo('<tr style="cursor:pointer;"
+            onclick="location.href=\'view.php?id=' . $id . '&groupid=' . $grp->id . '&tab=2&results=2\'"
+            title="' . get_string('dynamoresults2', 'mod_dynamo') . '">
+                  <td class="camera">' . print_group_picture($grp, $course->id, false, true, false)
+                    . ' <a class="groupurl" href=\'view.php?id=' . $id . '&groupid=' . $grp->id . '&tab=2&results=2\'>' . $grp->name
+                    . '</a><div class="toolpit">&nbsp;<i style="margin-top:8px;" class="fas fa-camera"></i>
+                    <span class="toolpittext toolpit-corr">' . $groupstat->tooltips . '</span></div></td>
+                  <td>' . $groupstat->participation . '</td>
+                  <td>' . $groupstat->implication . '</td>
+                  <td>' . $groupstat->confiance . '</td>
+                  <td>' . $groupstat->consistency . '</td>
+                  <td>' . $cohesion . '</td>
+                  <td>' . $groupstat->conflit . '</td>
+                  <td class="camera-border">' . $groupstat->remark . '</td>
                   <td class="td-num">⏲️</td>
              </tr>');
              echo'</div>';

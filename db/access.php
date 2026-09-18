@@ -25,37 +25,37 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
+$capabilities = [
     // Can add new dynamo activities.
-    'mod/dynamo:addinstance' => array(
+    'mod/dynamo:addinstance' => [
         'riskbitmask' => RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => array(
+        'archetypes' => [
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        ),
-        'clonepermissionsfrom' => 'moodle/course:manageactivities'
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+        'clonepermissionsfrom' => 'moodle/course:manageactivities',
+    ],
 
     // Create survey.
-    'mod/dynamo:create' => array(
+    'mod/dynamo:create' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
+        'legacy' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 
     // Respond to survey.
-    'mod/dynamo:respond' => array(
+    'mod/dynamo:respond' => [
         'riskbitmask' => RISK_SPAM,
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
-            'student' => CAP_ALLOW
-        )
-    ),
-);
+        'legacy' => [
+            'student' => CAP_ALLOW,
+        ],
+    ],
+];
