@@ -810,7 +810,7 @@ function dynamo_display_eval_by_others_table($dynamo, $usrid, $display6) {
             $color = "";
         } else {
             $dynamoeval = dynamo_get_evaluation($dynamo->id, $grpusrsub->id, $usrid);
-            $result = dynamo_print_compute_basis($dynamoeval, $display6, $color, $grpusrsub);
+            dynamo_print_compute_basis($dynamoeval, $display6, $color, $grpusrsub);
         }
     }
     echo (' </tbody>

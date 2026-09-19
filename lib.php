@@ -64,7 +64,7 @@ function dynamo_supports($feature) {
  * @return int The id of the newly inserted record.
  */
 function dynamo_add_instance($dynamo, $mform) {
-    global $DB, $CFG;
+    global $DB;
 
     $dynamo->timecreated = time();
     $formdata = $mform->get_data();
@@ -119,7 +119,7 @@ function dynamo_fill_data($formdata, $dynamo) {
  * @return bool True if successful, false otherwise.
  */
 function dynamo_update_instance($dynamo, $mform) {
-    global $DB, $CFG;
+    global $DB;
 
     $dynamo->timemodified = time();
     $dynamo->id = $dynamo->instance;
@@ -1170,7 +1170,8 @@ function dynamo_get_color_conf($val) {
  *
  * @param float $val that contain the self confidence/assurance
  * return string with the color...
- */function dynamo_get_color_consistency($val) {
+ */
+function dynamo_get_color_consistency($val) {
     if ($val > 0.6) {
         return '#fa0707';
     }
@@ -1291,7 +1292,7 @@ function dynamo_get_group_eval_avg($dynamo, $grpusrs, $grpid) {
  * return object with all indicators packed in HTML (display for teacher in global view)
  */
 function dynamo_get_group_stat($dynamo, $grpusrs, $grpid, $notperfect) {
-    global $DB, $OUTPUT, $USER;
+    global $DB, $OUTPUT;
 
     $groupstat = new stdClass();
     $participation = "";
