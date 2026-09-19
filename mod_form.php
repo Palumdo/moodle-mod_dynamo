@@ -203,7 +203,7 @@ class mod_dynamo_mod_form extends moodleform_mod {
     /**
      * Load all the values from dynamo of the current activity.
      *
-     * @param array &$defaultvalues with all the default values.
+     * @param array $defaultvalues with all the default values.
      */
     public function data_preprocessing(&$defaultvalues) {
         global $DB;

@@ -165,8 +165,8 @@ function dynamo_delete_instance($id) {
  * This function is called when the context for the page is a dynamo module.
  * This is not called by AJAX so it is safe to rely on the $PAGE.
  *
- * @param object $settings
- * @param object $navref
+ * @param settings_navigation $settings
+ * @param navigation_node $navref
  */
 function dynamo_extend_settings_navigation(settings_navigation $settings, navigation_node $navref) {
     global $PAGE;
