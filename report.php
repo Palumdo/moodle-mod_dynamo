@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * This create report about students and their group whith data and graphics
  *
@@ -52,20 +53,20 @@ $jscript = '
 $class = ['', '', '', '', '', '', ''];
 $class[$report] = ' class="active"';
 echo '<ul class="dynnav dynnavtabs">
-        <li'.$class[1].'><a href="#" onclick="reloadme(1);">'.get_string('dynamoreport01', 'mod_dynamo').'</a></li>
-        <li'.$class[5].'><a href="#" onclick="reloadme(5);">'.get_string('dynamoreport05', 'mod_dynamo').'</a></li>
-        <li'.$class[2].'><a href="#" onclick="reloadme(2);">'.get_string('dynamoreport02', 'mod_dynamo').'</a></li>
-        <li'.$class[3].'><a href="#" onclick="reloadme(3);">'.get_string('dynamoreport03', 'mod_dynamo').'</a></li>
-        <li'.$class[4].'><a href="#" onclick="reloadme(4);">'.get_string('dynamoreport04', 'mod_dynamo').'</a></li>
-        <li'.$class[6].'><a href="#" onclick="reloadme(6);">'.get_string('dynamoreport06', 'mod_dynamo').'</a></li>
+        <li' . $class[1] . '><a href="#" onclick="reloadme(1);">' . get_string('dynamoreport01', 'mod_dynamo') . '</a></li>
+        <li' . $class[5] . '><a href="#" onclick="reloadme(5);">' . get_string('dynamoreport05', 'mod_dynamo') . '</a></li>
+        <li' . $class[2] . '><a href="#" onclick="reloadme(2);">' . get_string('dynamoreport02', 'mod_dynamo') . '</a></li>
+        <li' . $class[3] . '><a href="#" onclick="reloadme(3);">' . get_string('dynamoreport03', 'mod_dynamo') . '</a></li>
+        <li' . $class[4] . '><a href="#" onclick="reloadme(4);">' . get_string('dynamoreport04', 'mod_dynamo') . '</a></li>
+        <li' . $class[6] . '><a href="#" onclick="reloadme(6);">' . get_string('dynamoreport06', 'mod_dynamo') . '</a></li>
      </ul>';
 
-echo ('<h3 id="top">'.get_string('dynamoreports', 'mod_dynamo').' : ('.$cm->name.')</h3>');
-echo ('<input id="activityid"   type="hidden" value="'.$id.'">');
-echo ('<input id="groupid"      type="hidden" value="'.$groupid.'">');
-echo ('<input id="usrid"        type="hidden" value="'.$usrid.'">');
+echo ('<h3 id="top">' . get_string('dynamoreports', 'mod_dynamo') . ' : (' . $cm->name . ')</h3>');
+echo ('<input id="activityid"   type="hidden" value="' . $id . '">');
+echo ('<input id="groupid"      type="hidden" value="' . $groupid . '">');
+echo ('<input id="usrid"        type="hidden" value="' . $usrid . '">');
 
-switch($report) {
+switch ($report) {
     case 1:
         $result = dynamo_get_report_001($dynamo);
         dynamo_rep_list_no_participant($result, $cm->name);
@@ -92,7 +93,7 @@ switch($report) {
         break;
 }
 if ($jscript != '') {
-    $jscript = $jscript.'
+    $jscript = $jscript . '
         }; // End of onload...
       </script>';
 }

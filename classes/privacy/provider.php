@@ -43,7 +43,6 @@ class provider implements
 
     // This plugin is a core_user_data_provider.
     \core_privacy\local\request\plugin\provider {
-
     // This trait must be included.
     use \core_privacy\local\legacy_polyfill;
 
@@ -53,7 +52,7 @@ class provider implements
      * @param collection $items a reference to the collection to use to store the metadata.
      * @return collection the updated collection of metadata items.
      */
-    public static function get_metadata(collection $items) {
+    public static function get_metadata(collection $items): collection {
         $items->add_database_table(
             'dynamo_eval',
             [
@@ -72,7 +71,7 @@ class provider implements
      * @param int $userid the userid.
      * @return contextlist the list of contexts containing user info for the user.
      */
-    public static function get_contexts_for_userid($userid) {
+    public static function get_contexts_for_userid($userid): contextlist {
         // Fetch all dynamo evals.
         $sql = "SELECT c.id
                 FROM {context} c
@@ -80,7 +79,7 @@ class provider implements
                 JOIN {modules} m            ON m.id = cm.module AND m.name = :modname
                 JOIN {dynamo} t             ON t.id = cm.instance
                 JOIN {dynamo_eval} e        ON e.builder = t.id
-                WHERE e.evalbyid = :evalbyid";
+                WHERE e.evalbyid = :evalbyid OR e.userid = :userid";
 
         $params = [
             'modname' => 'dynamo',
@@ -108,7 +107,7 @@ class provider implements
 
         $user = $contextlist->get_user();
 
-        list($contextsql, $contextparams) = $DB->get_in_or_equal($contextlist->get_contextids(), SQL_PARAMS_NAMED);
+        [$contextsql, $contextparams] = $DB->get_in_or_equal($contextlist->get_contextids(), SQL_PARAMS_NAMED);
 
         $sql = "SELECT cm.id AS cmid,
                        e.crit1,
@@ -174,7 +173,7 @@ class provider implements
         $contextdata = helper::get_context_data($context, $user);
 
         // Merge with dynamo data and write it.
-        $contextdata = (object)array_merge((array)$contextdata, $evaldata);
+        $contextdata = (object) array_merge((array) $contextdata, $evaldata);
         writer::with_context($context)->export_data([], $contextdata);
 
         // Write generic module intro files.
@@ -198,12 +197,11 @@ class provider implements
         }
 
         $instanceid = $DB->get_field('course_modules', 'instance', ['id' => $context->instanceid], MUST_EXIST);
-        $DB->delete_records_select('dynamo_eval',
-            "id IN (
-                SELECT e.id
-                FROM {dynamo_eval} e
-                WHERE q.builder = :instanceid
-            )", ['instanceid' => $instanceid]);
+        $DB->delete_records_select(
+            'dynamo_eval',
+            "builder = :instanceid",
+            ['instanceid' => $instanceid]
+        );
     }
 
     /**
@@ -224,12 +222,11 @@ class provider implements
                 continue;
             }
             $instanceid = $DB->get_field('course_modules', 'instance', ['id' => $context->instanceid], MUST_EXIST);
-            $DB->delete_records_select('dynamo_eval',
-                "id IN (
-                    SELECT e.id
-                    FROM {dynamo_eval} e
-                    WHERE q.builder = :instanceid AND (e.userid = :userid OR e.evalbyid = :evalbyid )
-                )", ['instanceid' => $instanceid, 'userid' => $userid, 'evalbyid' => $userid]);
+            $DB->delete_records_select(
+                'dynamo_eval',
+                "builder = :instanceid AND (userid = :userid OR evalbyid = :evalbyid)",
+                ['instanceid' => $instanceid, 'userid' => $userid, 'evalbyid' => $userid]
+            );
         }
     }
 }

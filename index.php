@@ -23,17 +23,17 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(dirname(__FILE__).'/../../config.php');
-require_once(dirname(__FILE__).'/lib.php');
+require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
 
 $id = required_param('id', PARAM_INT);
-$course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $id], '*', MUST_EXIST);
 
 require_course_login($course);
 
-$params = array(
-    'context' => context_course::instance($course->id)
-);
+$params = [
+    'context' => context_course::instance($course->id),
+];
 $event = \mod_dynamo\event\course_module_instance_list_viewed::create($params);
 $event->add_record_snapshot('course', $course);
 $event->trigger();
@@ -41,7 +41,7 @@ $event->trigger();
 $strdynamos = get_string('modulenameplural', 'dynamo');
 
 $PAGE->requires->css('/mod/dynamo/styles.css');
-$PAGE->set_url('/mod/dynamo/index.php', array('id' => $id));
+$PAGE->set_url('/mod/dynamo/index.php', ['id' => $id]);
 $PAGE->set_pagelayout('incourse');
 $PAGE->navbar->add($strdynamos);
 $PAGE->set_title($strdynamos);
@@ -62,29 +62,29 @@ $strtopic = get_string('topic');
 
 $table = new html_table();
 if ($course->format == 'weeks') {
-    $table->head = array ($strweek, $strname);
-    $table->align = array ('center', 'left');
+    $table->head = [$strweek, $strname];
+    $table->align = ['center', 'left'];
 } else if ($course->format == 'topics') {
-    $table->head = array ($strtopic, $strname);
-    $table->align = array ('center', 'left', 'left', 'left');
+    $table->head = [$strtopic, $strname];
+    $table->align = ['center', 'left', 'left', 'left'];
 } else {
-    $table->head = array ($strname);
-    $table->align = array ('left', 'left', 'left');
+    $table->head = [$strname];
+    $table->align = ['left', 'left', 'left'];
 }
 
 foreach ($dynamos as $dynamo) {
     if (!$dynamo->visible) {
         // Show dimmed if the mod is hidden.
-        $link = '<a class="dimmed" href="view.php?id='.$dynamo->coursemodule.'">'.format_string($dynamo->name).'</a>';
+        $link = '<a class="dimmed" href="view.php?id=' . $dynamo->coursemodule . '">' . format_string($dynamo->name) . '</a>';
     } else {
         // Show normal if the mod is visible.
-        $link = '<a href="view.php?id='.$dynamo->coursemodule.'">'.format_string($dynamo->name).'</a>';
+        $link = '<a href="view.php?id=' . $dynamo->coursemodule . '">' . format_string($dynamo->name) . '</a>';
     }
 
     if ($course->format == 'weeks' || $course->format == 'topics') {
-        $table->data[] = array ($dynamo->section, $link);
+        $table->data[] = [$dynamo->section, $link];
     } else {
-        $table->data[] = array ($link);
+        $table->data[] = [$link];
     }
 }
 

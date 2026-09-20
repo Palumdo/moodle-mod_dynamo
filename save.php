@@ -23,8 +23,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(__DIR__.'/../../config.php');
-require_once(__DIR__.'/lib.php');
+require(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
 $PAGE->requires->css('/mod/dynamo/css/style.css');
 
 global $USER;
@@ -37,12 +37,12 @@ $d = optional_param('d', 0, PARAM_INT);
 $id = optional_param('id', 0, PARAM_INT);
 if ($id) {
     $cm = get_coursemodule_from_id('dynamo', $id, 0, false, MUST_EXIST);
-    $dynamo = $DB->get_record('dynamo', array('id' => $cm->instance), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $dynamo = $DB->get_record('dynamo', ['id' => $cm->instance], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
 } else if ($d) {
     // Get dynamo data first.
-    $dynamo = $DB->get_record('dynamo', array('id' => $d), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $dynamo->course), '*', MUST_EXIST);
+    $dynamo = $DB->get_record('dynamo', ['id' => $d], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $dynamo->course], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('dynamo', $dynamo->id, $course->id, false, MUST_EXIST);
 } else {
     throw new moodle_exception('missingidandcmid', 'dynamo');
@@ -63,7 +63,7 @@ if ($group == null) {
 }
 
 $groupusers = dynamo_get_group_users($group->id);
-$PAGE->set_url('/mod/dynamo/save.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/dynamo/save.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($dynamo->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
@@ -79,14 +79,14 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
         if ($dynamo->autoeval == 0 && $user->id == $USER->id) { // No auto evaluation check...
             $error = 0;
         } else {
-            $crit1 = required_param($user->id.'_1', PARAM_INT);
-            $crit2 = required_param($user->id.'_2', PARAM_INT);
-            $crit3 = required_param($user->id.'_3', PARAM_INT);
-            $crit4 = required_param($user->id.'_4', PARAM_INT);
-            $crit5 = required_param($user->id.'_5', PARAM_INT);
+            $crit1 = required_param($user->id . '_1', PARAM_INT);
+            $crit2 = required_param($user->id . '_2', PARAM_INT);
+            $crit3 = required_param($user->id . '_3', PARAM_INT);
+            $crit4 = required_param($user->id . '_4', PARAM_INT);
+            $crit5 = required_param($user->id . '_5', PARAM_INT);
             $comment1 = required_param('comment1', PARAM_TEXT);
             $comment2 = required_param('comment2', PARAM_TEXT);
-            $crit6 = optional_param($user->id.'_6', 0, PARAM_INT);
+            $crit6 = optional_param($user->id . '_6', 0, PARAM_INT);
 
             if ($crit1 < 1 || $crit1 > 5) {
                 $error++;
@@ -123,12 +123,12 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
     if ($dynamo->groupeval == 1) {
         $error = 0;
 
-        $group1 = required_param($group->id.'_g1', PARAM_INT);
-        $group2 = required_param($group->id.'_g2', PARAM_INT);
-        $group3 = required_param($group->id.'_g3', PARAM_INT);
-        $group4 = required_param($group->id.'_g4', PARAM_INT);
-        $group5 = required_param($group->id.'_g5', PARAM_INT);
-        $group6 = optional_param($group->id.'_g6', 0, PARAM_INT);
+        $group1 = required_param($group->id . '_g1', PARAM_INT);
+        $group2 = required_param($group->id . '_g2', PARAM_INT);
+        $group3 = required_param($group->id . '_g3', PARAM_INT);
+        $group4 = required_param($group->id . '_g4', PARAM_INT);
+        $group5 = required_param($group->id . '_g5', PARAM_INT);
+        $group6 = optional_param($group->id . '_g6', 0, PARAM_INT);
 
         if ($group1 < 1 || $group1 > 5) {
               $error++;
@@ -162,13 +162,13 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
             // No auto evaluation save.
             $error = 0;
         } else {
-            $crit1 = required_param($user->id.'_1', PARAM_INT);
-            $crit2 = required_param($user->id.'_2', PARAM_INT);
-            $crit3 = required_param($user->id.'_3', PARAM_INT);
-            $crit4 = required_param($user->id.'_4', PARAM_INT);
-            $crit5 = required_param($user->id.'_5', PARAM_INT);
-            $crit6 = optional_param($user->id.'_6', 0, PARAM_INT);
-          
+            $crit1 = required_param($user->id . '_1', PARAM_INT);
+            $crit2 = required_param($user->id . '_2', PARAM_INT);
+            $crit3 = required_param($user->id . '_3', PARAM_INT);
+            $crit4 = required_param($user->id . '_4', PARAM_INT);
+            $crit5 = required_param($user->id . '_5', PARAM_INT);
+            $crit6 = optional_param($user->id . '_6', 0, PARAM_INT);
+
             $dynamoeval = new stdClass();
             $dynamoeval->builder = $cm->instance;
             $dynamoeval->evalbyid = $USER->id;
@@ -191,8 +191,11 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
             $dynamoeval->comment2 = format_string($comment2);
             $dynamoeval->timemodified = time();
 
-            if (!$id = $DB->get_record('dynamo_eval', array('builder' => $cm->instance, 'evalbyid' => $USER->id
-                    , 'userid' => $user->id ))) {
+            if (
+                !$id = $DB->get_record('dynamo_eval', [
+                    'builder' => $cm->instance, 'evalbyid' => $USER->id, 'userid' => $user->id,
+                ])
+            ) {
                 $id = $DB->insert_record('dynamo_eval', $dynamoeval);
             } else {
                 $dynamoeval->id = $id->id;
@@ -224,8 +227,12 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
         $dynamoeval->comment2 = format_string($comment2);
         $dynamoeval->timemodified = time();
 
-        if (!$id = $DB->get_record('dynamo_eval',
-                array('builder' => $cm->instance, 'evalbyid' => $USER->id , 'userid' => $group->id ))) {
+        if (
+            !$id = $DB->get_record(
+                'dynamo_eval',
+                ['builder' => $cm->instance, 'evalbyid' => $USER->id, 'userid' => $group->id]
+            )
+        ) {
             $id = $DB->insert_record('dynamo_eval', $dynamoeval);
         } else {
             $dynamoeval->id = $id->id;
@@ -239,7 +246,7 @@ if (confirm_sesskey() && $datarecord = data_submitted()) {
     echo("<div class='successmsgserver'>");
     echo(get_string('dynamosavedsuccessfully', 'mod_dynamo'));
     echo("</div>");
-    echo('<script>setInterval(function(){location.href = "/course/view.php?id='.$cm->course.'";},5000);</script>');
+    echo('<script>setInterval(function(){location.href = "/course/view.php?id=' . $cm->course . '";},5000);</script>');
 } else {
     echo("<div class='errormsgserver'>");
     echo(get_string('dynamosavedcorrupted', 'mod_dynamo'));

@@ -24,7 +24,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(__DIR__.'/../../config.php');
+require(__DIR__ . '/../../config.php');
 
 require_login($course, true, $cm);
 // Course module ID.
@@ -37,4 +37,4 @@ $itemnumber = optional_param('itemnumber', 0, PARAM_INT);
 $userid = optional_param('userid', 0, PARAM_INT);
 
 // In the simplest case just redirect to the view page.
-redirect('view.php?id='.$id);
+redirect('view.php?id=' . $id);

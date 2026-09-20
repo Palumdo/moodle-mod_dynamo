@@ -58,7 +58,7 @@ class course_module_viewed extends \core\event\course_module_viewed {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/mod/dynamo/view.php', array('a' => $this->objectid));
+        return new \moodle_url('/mod/dynamo/view.php', ['a' => $this->objectid]);
     }
 
     /**
@@ -67,8 +67,9 @@ class course_module_viewed extends \core\event\course_module_viewed {
      * @return array|null
      */
     protected function get_legacy_logdata() {
-        return array($this->courseid, 'dynamo', 'view', 'view.php?a=' . $this->objectid,
-            $this->objectid, $this->contextinstanceid);
+        return [
+            $this->courseid, 'dynamo', 'view', 'view.php?a=' . $this->objectid,
+            $this->objectid, $this->contextinstanceid,
+        ];
     }
-
 }

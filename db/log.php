@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$logs = array(
-    array('module' => 'dynamo', 'action' => 'view', 'mtable' => 'dynamo', 'field' => 'name'),
-    array('module' => 'dynamo', 'action' => 'view all', 'mtable' => 'dynamo', 'field' => 'name'),
-);
+$logs = [
+    ['module' => 'dynamo', 'action' => 'view', 'mtable' => 'dynamo', 'field' => 'name'],
+    ['module' => 'dynamo', 'action' => 'view all', 'mtable' => 'dynamo', 'field' => 'name'],
+];
