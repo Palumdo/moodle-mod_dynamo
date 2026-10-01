@@ -547,6 +547,86 @@ function dynamo_get_grouping_users($groupingid) {
     return $result;
 }
 /**
+ * Get the count of users in a specific grouping and the count of those who answered a dynamo evaluation.
+ *
+ * @param int $groupingid id of the grouping.
+ * @param int $builderid id of the dynamo builder (evaluation).
+ * @return \stdClass Object with ->total (int), ->done (int), ->remaining (int).
+ */
+function dynamo_get_grouping_users_stats(int $groupingid, int $builderid): \stdClass {
+    global $DB;
+
+    // 1) Récupérer le courseid du grouping
+    $courseid = $DB->get_field('groupings', 'courseid', ['id' => $groupingid], MUST_EXIST);
+
+    // 2) Récupérer le contextid du cours
+    $context = context_course::instance($courseid);
+    $contextid = $context->id;
+
+    // 3) Récupérer les IDs des utilisateurs du grouping (rôles non-respondants exclus)
+    $usersql = "
+        SELECT DISTINCT t4.id
+          FROM {groupings_groups} t1
+              ,{groups}           t2
+              ,{groups_members}   t3
+              ,(SELECT u.id
+                  FROM {user} u
+                 WHERE u.deleted = 0
+                   AND u.id IN (
+                        SELECT DISTINCT ra.userid
+                          FROM {role_assignments} ra, {context} ctx
+                         WHERE ra.contextid = ctx.id
+                           AND ctx.instanceid = :param2
+                           AND ra.roleid NOT IN (
+                                SELECT rc.roleid
+                                  FROM {role_capabilities} rc
+                                 WHERE rc.capability = :param4
+                                   AND rc.permission != 1
+                                   AND rc.contextid = :param3
+                           )
+                   )) t4
+         WHERE t1.groupingid = :param1
+           AND t1.groupid    = t2.id
+           AND t2.id         = t3.groupid
+           AND t3.userid     = t4.id
+    ";
+
+    $params = [
+        'param1' => $groupingid,
+        'param2' => $courseid,
+        'param3' => $contextid,
+        'param4' => 'mod/dynamo:respond',
+    ];
+
+    $userids = $DB->get_fieldset_sql($usersql, $params);
+    $total = count($userids);
+
+    $done = 0;
+
+    if ($total > 0) {
+        // 4) Compter ceux qui ont répondu, en restant limité au grouping
+        [$insql, $inparams] = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED, 'uid');
+
+        $sql = "SELECT COUNT(DISTINCT d.evalbyid) AS done
+                  FROM {dynamo_eval} d
+                 WHERE d.builder = :builderid
+                   AND d.evalbyid $insql";
+
+        $params2 = array_merge($inparams, ['builderid' => $builderid]);
+
+        $done = (int) $DB->get_field_sql($sql, $params2);
+    }
+
+    $result = new \stdClass();
+    $result->total     = $total;
+    $result->done      = $done;
+    $result->remaining = $total - $done;
+    $result->courseid  = $courseid;
+    $result->contextid = $contextid;
+
+    return $result;
+}
+/**
  * Get a formatted HTML string with a table of student survey answers.
  *
  *
