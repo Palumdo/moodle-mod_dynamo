@@ -1,11 +1,33 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 namespace mod_dynamo\courseformat;
 
 use core_courseformat\activityoverviewbase;
 use core_courseformat\local\overview\overviewitem;
 
+/**
+ * The mod_dynamo activity overview.
+ *
+ * @package    mod_dynamo
+ * @copyright  2026 UCLouvain
+ * @author     Dominique Palumbo
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class overview extends activityoverviewbase {
-
     /**
      * Adds custom items to the course overview table.
      * Use this method to display Dynamo-specific data,
@@ -43,9 +65,8 @@ class overview extends activityoverviewbase {
 
         // Fetch the Dynamo instance.
         $dynamo = $DB->get_record('dynamo', ['id' => $this->cm->instance], '*', MUST_EXIST);
-        // ------------------------------------------------------------------
+
         // TEACHER VIEW: aggregate summary over all the activity's groups.
-        // ------------------------------------------------------------------
         if ($cancreate) {
             // Cheap emptiness check: if no student has started answering,
             // there is nothing to report. This avoids loading every group
@@ -58,7 +79,7 @@ class overview extends activityoverviewbase {
             $totalusers = $stats->total;
             $completedusers = $stats->done;
 
-            $content = $completedusers.'/'.$totalusers;
+            $content = $completedusers . '/' . $totalusers;
 
             return new overviewitem(
                 name: get_string('dynamoresponded', 'mod_dynamo'),
@@ -67,9 +88,7 @@ class overview extends activityoverviewbase {
             );
         }
 
-        // ------------------------------------------------------------------
         // STUDENT VIEW: their own progress, in their own group.
-        // ------------------------------------------------------------------
         if ($canrespond) {
             $builderid = $dynamo->id;
             $userid    = $USER->id;
@@ -99,7 +118,6 @@ class overview extends activityoverviewbase {
             );
         }
 
-
         return null;
     }
 
@@ -110,8 +128,8 @@ class overview extends activityoverviewbase {
      */
     #[\Override]
     public function get_due_date_overview(): ?overviewitem {
-        // $this->cm (cm_info) already exposes the availability restrictions JSON,
-        // no need to query the DB again.
+        // No need to query the DB again, $this->cm (cm_info) already exposes
+        // the availability restrictions JSON.
         $availabilityjson = $this->cm->availability;
 
         if (empty($availabilityjson)) {
@@ -126,9 +144,8 @@ class overview extends activityoverviewbase {
         // Recursive search (the tree can combine several conditions via AND/OR)
         // for a condition of type "date" with the "until" direction.
         //
-        // NOTE: the 'd' field contains an operator, NOT the word "until":
-        //   '>' = available from
-        //   '<' = available until
+        // NOTE: the 'd' field contains an operator, NOT the word "until".
+        // Options: '>' = available from, '<' = available until.
         $enddate = $this->find_date_until_timestamp($availability);
 
         if (empty($enddate)) {
@@ -142,8 +159,11 @@ class overview extends activityoverviewbase {
         $isendofday = ($time['hours'] == 23 && $time['minutes'] == 59);
 
         if ($isendofday) {
-            $content = get_string('dynamoavailabilityuntilend', 'mod_dynamo',
-                userdate($enddate, get_string('strftimedatefullshort', 'langconfig')));
+            $content = get_string(
+                'dynamoavailabilityuntilend',
+                'mod_dynamo',
+                userdate($enddate, get_string('strftimedatefullshort', 'langconfig'))
+            );
         } else {
             $content = get_string('dynamoavailabilityuntil', 'mod_dynamo', userdate($enddate));
         }
